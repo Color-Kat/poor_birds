@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header class="header">
         <b-navbar fixed="top" toggleable="sm" type="light" variant="light">
             <b-navbar-brand to="/">
                 <img src="https://placekitten.com/g/30/30" class="d-inline-block align-top" alt="Kitten">
@@ -29,7 +29,7 @@
                             <em>{{getUserName}}</em>
                         </template>
                         <b-dropdown-item :to="{name: 'account'}">Профиль</b-dropdown-item>
-                        <b-dropdown-item to="#">Выйти</b-dropdown-item>
+                        <b-dropdown-item :to="{name: 'index'}" @click="logout">Выйти</b-dropdown-item>
                     </b-nav-item-dropdown>
 
 
@@ -47,7 +47,7 @@
 
 <script>
 
-import {mapState, mapGetters} from "vuex";
+import {mapState, mapGetters, mapActions} from "vuex";
 
 export default {
     name    : "header-component",
@@ -57,9 +57,8 @@ export default {
         }),
         ...mapGetters(['getUserName'])
     },
-    mounted() {
-        console.log(this.getUserName);
-    }
+    methods: mapActions(['logout']),
+
 }
 </script>
 

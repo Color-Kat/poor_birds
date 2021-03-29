@@ -37,9 +37,6 @@ const routes = [
     {
         path: '/store',
         component: StoreComponent,
-        render(){
-            console.log(123)
-        }
     }
 ];
 export default new VueRouter({

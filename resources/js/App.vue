@@ -4,6 +4,7 @@
 
         <main>
             <b-container class="container pt-5" type="light" variant="light">
+                    <Aside></Aside>
                     <router-view></router-view>
             </b-container>
         </main>
@@ -12,12 +13,14 @@
 
 <script>
 import Header from './components/Header';
+import Aside from './components/Aside';
 import {mapActions, mapGetters} from "vuex";
 
 export default {
     name      : "App",
     components: {
-        Header
+        Header,
+        Aside
     },
     methods: {
         ...mapActions(['init']),

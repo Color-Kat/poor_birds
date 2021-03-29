@@ -43,7 +43,6 @@ export default {
             // return promise<{success, error}>
             let result = await this.$store.dispatch('login', this.form);
 
-            console.log(result);
             // return result for display it in the parent component
             this.$emit('onMessage', result);
         },

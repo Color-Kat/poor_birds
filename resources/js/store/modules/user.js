@@ -2,11 +2,11 @@ export default {
     state    : {
         user        : null,
         auth        : null,
-        access_token: localStorage.getItem('access_token') ? localStorage.getItem('access_token') : false
+        access_token: localStorage.getItem('access_token') ? localStorage.getItem('access_token') : ''
     },
     getters  : {
         getUserName(state) {
-            if(state.user) {
+            if (state.user) {
                 return state.user.name;
             } else return '';
         },
@@ -14,8 +14,10 @@ export default {
     actions  : {
         checkAuth({
                       commit,
-                      state
+                      state,
+                      dispatch
                   }) {
+
             // we need access token for check auth
             if (!state.access_token) return false;
 
@@ -51,6 +53,7 @@ export default {
                     'api/auth/user',
                     {headers: {"Authorization": `Bearer ${state.access_token}`}}
                 ).then(response => {
+                    console.log(response);
                     if (response.status === 200) {
                         // user is logged in
                         commit('setUser', response.data);
@@ -93,13 +96,14 @@ export default {
                     }
                 });
         },
-        login({commit}, form) {
+        login({commit, dispatch}, form) {
             return axios.post('/api/auth/login', form)
                 .then(response => {
                     if (response.status === 201) {
                         // user is logged in
-                        commit('setAuth', true);
-                        commit('set_Access_token', response.data.access_token);
+                        commit('setAuth', true); // update auth
+                        commit('set_Access_token', response.data.access_token); // save jwt bearer token
+                        dispatch('fetchUser'); // get user to display
 
                         // return status
                         return {
@@ -121,12 +125,19 @@ export default {
                     }
                 });
         },
-        logout({commit}) {
-            if (this.auth) {
-                axios.get('/api/auth/logout')
+        logout({
+                   commit,
+                   state
+               }) {
+            if (state.auth) {
+                axios.get(
+                    '/api/auth/logout',
+                    {headers: {"Authorization": `Bearer ${state.access_token}`}}
+                )
                     .then(response => {
                         console.log(response);
                         commit('setAuth', false);
+                        commit('set_Access_token', '');
                     });
             }
         }
