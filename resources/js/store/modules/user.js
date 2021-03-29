@@ -10,6 +10,11 @@ export default {
                 return state.user.name;
             } else return '';
         },
+        getUserRole(state) {
+            if (state.user) {
+                return state.user.role;
+            } else return 0;
+        }
     },
     actions  : {
         checkAuth({

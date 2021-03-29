@@ -4,6 +4,7 @@ import Index from './views/Index';
 import StoreComponent from "./views/Store";
 import LoginPage from "./views/auth/LoginPage";
 import Account from "./views/auth/Account";
+import AdminArea from "./views/auth/AdminArea";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
         path: '/account',
         name: 'account',
         component: Account,
+    },
+    {
+        path: '/admin_area',
+        name: 'admin_area',
+        component: AdminArea,
     },
     {
         path: '/store',

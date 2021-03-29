@@ -18,6 +18,9 @@
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
 
+                    <b-nav-item v-if="auth && getUserRole === 1" :to="{name: 'admin_area'}">
+                        Админ панель
+                    </b-nav-item>
 
                     <b-nav-item v-if="!auth" :to="{name: 'login'}">
                         Войти
@@ -55,7 +58,7 @@ export default {
         ...mapState({
             auth: state => state.user.auth
         }),
-        ...mapGetters(['getUserName'])
+        ...mapGetters(['getUserName', 'getUserRole'])
     },
     methods: mapActions(['logout']),
 
