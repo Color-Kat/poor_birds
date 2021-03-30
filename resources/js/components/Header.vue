@@ -1,6 +1,6 @@
 <template>
-    <header class="header">
-        <b-navbar fixed="top" toggleable="sm" type="light" variant="light">
+    <header class="header mb-5">
+        <b-navbar fixed="top" toggleable="md" type="light" variant="light">
             <b-navbar-brand to="/">
                 <img src="https://placekitten.com/g/30/30" class="d-inline-block align-top" alt="Kitten">
                 Бедные птицы
@@ -16,7 +16,11 @@
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
-                <b-navbar-nav class="ml-auto">
+                <b-navbar-nav class="ml-auto d-flex align-items-center">
+<!--                TODO НУжно сделать, чтобы баланс и ник не были посередине-->
+                    <b-nav-item>
+                        <Balance/>
+                    </b-nav-item>
 
                     <b-nav-item v-if="auth && getUserRole === 1" :to="{name: 'admin_area'}">
                         Админ панель
@@ -27,9 +31,8 @@
                     </b-nav-item>
 
                     <b-nav-item-dropdown v-else>
-                        <!-- Using 'button-content' slot -->
                         <template #button-content>
-                            <em>{{getUserName}}</em>
+                            <em>{{ getUserName }}</em>
                         </template>
                         <b-dropdown-item :to="{name: 'account'}">Профиль</b-dropdown-item>
                         <b-dropdown-item :to="{name: 'index'}" @click="logout">Выйти</b-dropdown-item>
@@ -51,16 +54,18 @@
 <script>
 
 import {mapState, mapGetters, mapActions} from "vuex";
+import Balance from "./Balance";
 
 export default {
-    name    : "header-component",
-    computed: {
+    name      : "header-component",
+    components: {Balance},
+    computed  : {
         ...mapState({
             auth: state => state.user.auth
         }),
         ...mapGetters(['getUserName', 'getUserRole'])
     },
-    methods: mapActions(['logout']),
+    methods   : mapActions(['logout']),
 
 }
 </script>

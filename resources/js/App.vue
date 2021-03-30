@@ -4,7 +4,7 @@
 
         <main>
             <b-container class="container pt-5" type="light" variant="light">
-                    <Aside></Aside>
+<!--                    <Aside></Aside>-->
                     <router-view></router-view>
             </b-container>
         </main>

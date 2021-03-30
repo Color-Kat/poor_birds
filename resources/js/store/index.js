@@ -25,6 +25,7 @@ export default new Vuex.Store({
         async init({dispatch}) {
             await dispatch('checkAuth'); // initial auth
             await dispatch('fetchUser'); // if (auth) - initial user
+            await dispatch('fetchBirds'); // fetch birds
         }
     },
     // mutations: {

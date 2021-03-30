@@ -14,6 +14,36 @@ export default {
             if (state.user) {
                 return state.user.role;
             } else return 0;
+        },
+        getAuth(state) {
+            if (state.auth) {
+                return state.auth;
+            } else return false;
+        },
+        getBalance(state) {
+            if (state.user) {
+                return state.user.money
+            } else return false;
+        },
+        // return all user data
+        user(state) {
+            if (state.user) {
+                return state.user;
+            } else return false;
+        },
+        // return formatted user data
+        getUserData(state) {
+            console.log(123);
+            if (state.user) {
+                let user = state.user;
+                return [
+                    {name: 'Ник', value: user.name},
+                    {name: 'Деньги', value: user.money},
+                    {name: 'Почта', value: user.email},
+                    {name: 'Дата регистрации', value: new Date(user.created_at).toLocaleString('ru-RU', {year: 'numeric', month: 'numeric', day: 'numeric'})},
+                ]
+
+            }
         }
     },
     actions  : {
@@ -23,9 +53,9 @@ export default {
                       dispatch
                   }) {
 
+
             // we need access token for check auth
             if (!state.access_token) return false;
-
             // fetch to api check_auth
             return axios.get(
                 'api/auth/check_auth',
@@ -39,7 +69,6 @@ export default {
                     } else return false;
                 })
                 .catch((error) => {
-                    console.log('not auth', error, error.response);
                     if (error.response) {
                         commit('setAuth', false);
                         return false;
@@ -58,7 +87,6 @@ export default {
                     'api/auth/user',
                     {headers: {"Authorization": `Bearer ${state.access_token}`}}
                 ).then(response => {
-                    console.log(response);
                     if (response.status === 200) {
                         // user is logged in
                         commit('setUser', response.data);

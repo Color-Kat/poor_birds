@@ -4,7 +4,12 @@ import Index from './views/Index';
 import StoreComponent from "./views/Store";
 import LoginPage from "./views/auth/LoginPage";
 import Account from "./views/auth/Account";
-import AdminArea from "./views/auth/AdminArea";
+import AdminArea from "./views/auth/adminArea/AdminArea";
+
+import CreateBird from "./views/auth/adminArea/birds/CreateBird";
+import Birds from "./views/auth/adminArea/birds/Birds";
+
+import Sellers from "./views/auth/adminArea/sellers/Sellers";
 
 Vue.use(VueRouter);
 
@@ -20,7 +25,13 @@ const routes = [
         component: LoginPage,
         props: {
             currentForm: 'login'
-        }
+        },
+        // TODO Сделать защиту от логина, если вошел.
+        // beforeEnter(to, from, next) {
+        //     console.log(store.getters.getAuth)
+        //     if (!store.getters.getAuth) next(); // user is not logged in
+        //     else next({name: 'account'});
+        // }
     },
     {
         path: '/registration',
@@ -36,9 +47,41 @@ const routes = [
         component: Account,
     },
     {
-        path: '/admin_area',
+        path: '/admin_area/',
         name: 'admin_area',
         component: AdminArea,
+        children: [
+            {
+                path: 'birds',
+                component: Birds,
+                children: [
+                    // {
+                    //     path: 'show',
+                    //     component:
+                    // },
+                    {
+                        path: 'create',
+                        component: CreateBird
+                    },
+                    {
+                        path: 'update',
+                        component: CreateBird,
+                    }
+                ]
+            },
+            {
+                path: 'sellers',
+                component: Sellers,
+            },
+            {
+                path: 'birdhouses',
+                component: Birds,
+            },
+            {
+                path: 'instruments',
+                component: Birds,
+            }
+        ]
     },
     {
         path: '/store',

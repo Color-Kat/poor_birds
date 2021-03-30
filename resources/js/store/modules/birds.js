@@ -11,6 +11,7 @@ export default {
         fetchBirds(context) {
             axios.get('/api/birds')
                 .then(response => {
+                    console.log(response)
                     context.commit('setBirds', response.data);
                 }).catch(err => {
                 console.log('ERROR: ' + err);
