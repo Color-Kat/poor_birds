@@ -1,6 +1,6 @@
 <template>
-    <div class="createPanel mb-2">
-        <b-button variant="primary" :to="{name: routeName}">
+    <div class="createPanel m-3">
+        <b-button variant="primary" :to="route">
             {{message}}}
         </b-button>
     </div>
@@ -9,7 +9,7 @@
 <script>
 export default {
     name: "CreatePanel",
-    props: ['routeName', 'message']
+    props: ['route', 'message']
 }
 </script>
 

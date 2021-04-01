@@ -20,33 +20,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('birds', 'api\BirdsController');
 
-//Route::group([
-//
-//    'prefix'     => 'auth',
-//    'namespace'  => 'Auth'
-//
-//], function ($router) {
-//
-//    Route::post('login', 'LoginController')->name('login');
-//    Route::post('logout', 'LogoutController')->name('logout');
-//
-//    Route::get('account', 'AccountController')->name('account');
-//});
-
-
-
 Route::group([
 
     'middleware' => 'api',
     'prefix'     => 'auth',
 
 ], function ($router) {
-
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login')->name('login');
     Route::get('logout', 'AuthController@logout');
     Route::get('user', 'AuthController@user');
     Route::get('check_auth', 'AuthController@checkAuth');
-
 });
 
