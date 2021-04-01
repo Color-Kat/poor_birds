@@ -12,7 +12,7 @@ export default new Vuex.Store({
         user
     },
     state: {
-        active_sideBar: true
+        active_sideBar: false
     },
     actions: {
         // add initial state for application
@@ -21,8 +21,9 @@ export default new Vuex.Store({
             await dispatch('fetchUser'); // if (auth) - initial user
             await dispatch('fetchBirds'); // fetch birds
         },
-        toggle_sideBar({commit, state}) {
-            commit('toggle_active_sideBar', !state.active_sideBar);
+        toggle_sideBar({commit, state}, payload = null) {
+            if( payload !== null ) commit('toggle_active_sideBar', payload);
+            else commit('toggle_active_sideBar', !state.active_sideBar);
         }
     },
     mutations: {

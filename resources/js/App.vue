@@ -2,6 +2,8 @@
     <div>
         <Header></Header>
 
+
+
         <main>
             <div
                 id="main-container"
@@ -25,12 +27,14 @@
 import Header from './components/header/Header';
 import SideBar from './components/SideBar';
 import {mapActions, mapGetters} from "vuex";
+import BlackOut from "./components/BlackOut";
 
 export default {
     name      : "App",
     components: {
         Header,
-        SideBar
+        SideBar,
+        BlackOut
     },
     computed  : {
         ...mapGetters(['getAuth'])

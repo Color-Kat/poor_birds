@@ -6,7 +6,7 @@
             class=" position-relative d-flex justify-content-between"
         >
             <div class="d-flex align-items-center">
-                <b-button class="d-block d-md-none mr-2 p-1" variant="primary" @click="toggle_sideBar">
+                <b-button class="d-block d-md-none mr-2 p-1" variant="primary" @click="() => toggle_sideBar()">
                     <b-icon icon="text-left"></b-icon>
                 </b-button>
 
@@ -59,7 +59,7 @@
             <!--            </b-collapse>-->
         </b-navbar>
         <!--    NAVBAR 1    -->
-
+        <BlackOut/>
         <!--    NAVBAR 2    -->
         <b-navbar class="position-relative nav justify-content-center">
             <b-navbar-brand to="/" class="d-flex d-sm-none align-items-center">
@@ -81,16 +81,18 @@
 import {mapState, mapGetters, mapActions} from "vuex";
 import Balance from "../Balance";
 import Logo from "./Logo";
+import BlackOut from "../BlackOut";
 
 export default {
     name: "header-component",
     components: {
         Balance,
-        Logo
+        Logo,
+        BlackOut
     },
     computed: {
         ...mapState({
-            auth: state => state.user.auth
+            auth: state => state.user.auth,
         }),
         ...mapGetters(['getUserName', 'getUserRole'])
     },

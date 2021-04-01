@@ -7,7 +7,6 @@
                     <UserAvatar :balance="true"/>
                 </b-nav-item>
 
-
                 <b-nav-item to="/account/birds" active-class="active">Мои птицы</b-nav-item>
                 <b-nav-item to="/account/bazaar" active-class="active">Базар</b-nav-item>
                 <b-nav-item to="/store" active-class="active">Магазин</b-nav-item>
@@ -18,7 +17,7 @@
 </template>
 
 <script>
-import {mapGetters, mapState} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 import UserAvatar from "./auth/account/UserAvatar";
 
 export default {
@@ -30,6 +29,16 @@ export default {
     components: {
         UserAvatar
     },
+    methods: {
+        ...mapActions(['toggle_sideBar'])
+    },
+    // close sidebar on resize
+    created() {
+        window.addEventListener('resize', ()=>this.toggle_sideBar(false));
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize');
+    }
 }
 </script>
 
