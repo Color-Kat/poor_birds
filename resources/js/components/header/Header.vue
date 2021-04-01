@@ -6,7 +6,7 @@
             class=" position-relative d-flex justify-content-between"
         >
             <div class="d-flex align-items-center">
-                <b-button class="d-block d-md-none mr-2 p-1" variant="primary" v-b-toggle.sidebar-1>
+                <b-button class="d-block d-md-none mr-2 p-1" variant="primary" @click="toggle_sideBar">
                     <b-icon icon="text-left"></b-icon>
                 </b-button>
 
@@ -94,7 +94,7 @@ export default {
         }),
         ...mapGetters(['getUserName', 'getUserRole'])
     },
-    methods: mapActions(['logout']),
+    methods: mapActions(['logout', 'toggle_sideBar']),
 
 }
 </script>

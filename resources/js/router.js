@@ -11,7 +11,7 @@ import Birds from "./views/auth/adminArea/birds/Birds";
 
 import Sellers from "./views/auth/adminArea/sellers/Sellers";
 
-import store from './components/header/store/index';
+import store from './store/index';
 import Auth from "./views/auth/Auth";
 
 Vue.use(VueRouter);

@@ -3,20 +3,16 @@
         <Header></Header>
 
         <main>
+            <!--    SIDEBAR    -->
+            <SideBar id="main-sidebar"/>
+            <!--    SIDEBAR    -->
+
             <div
                 id="main-container"
                 class="container-lg"
                 type="light"
                 variant="light"
             >
-                <!--                 :style="{-->
-                <!--                    display: getAuth ? 'grid' : 'block'-->
-                <!--                 }"-->
-
-                <!--    SIDEBAR    -->
-                <SideBar id="main-sidebar"/>
-                <!--    SIDEBAR    -->
-
                 <!--    CONTENT    -->
                 <router-view id="main-content" style="width: 100% !important;"></router-view>
                 <!--    CONTENT    -->

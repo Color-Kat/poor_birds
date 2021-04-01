@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import router from './router';
-import store from './components/header/store'; // не пишем index, он сам подтянется
+import store from './store'; // не пишем index, он сам подтянется
 
 // ---bootstrap-vue--- //
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
