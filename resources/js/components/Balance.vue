@@ -1,5 +1,5 @@
 <template>
-    <b-badge variant="primary">{{getBalance}} &#8381;</b-badge>
+    <b-badge v-if="getBalance" variant="primary">{{getBalance}} &#8381;</b-badge>
 </template>
 
 <script>

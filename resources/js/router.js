@@ -11,6 +11,9 @@ import Birds from "./views/auth/adminArea/birds/Birds";
 
 import Sellers from "./views/auth/adminArea/sellers/Sellers";
 
+import store from './components/header/store/index';
+import Auth from "./views/auth/Auth";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -19,27 +22,54 @@ const routes = [
         name: 'index',
         component: Index
     },
+    // {
+    //     path: '/login',
+    //     name: 'login',
+    //     component: LoginPage,
+    //     props: {
+    //         currentForm: 'login'
+    //     },
+    //     // TODO Сделать защиту от логина, если вошел.
+    //     beforeEnter(to, from, next) {
+    //         console.log(store.getters.getAuth)
+    //         if (!store.getters.getAuth) next(); // user is not logged in
+    //         else next({name: 'account'});
+    //     }
+    // },
+    // {
+    //     path: '/registration',
+    //     name: 'registration',
+    //     component: LoginPage,
+    //     props: {
+    //         currentForm: 'registration'
+    //     }
+    // },
     {
-        path: '/login',
-        name: 'login',
-        component: LoginPage,
-        props: {
-            currentForm: 'login'
+        path: '/auth',
+        component: Auth,
+        // redirect authorized user to account
+        beforeEnter(to, from, next) {
+            if (!store.getters.getAuth) next(); // user is not logged in, redirec to to login or registration
+            else next({name: 'account'}); // user is authorized, redirect to account
         },
-        // TODO Сделать защиту от логина, если вошел.
-        // beforeEnter(to, from, next) {
-        //     console.log(store.getters.getAuth)
-        //     if (!store.getters.getAuth) next(); // user is not logged in
-        //     else next({name: 'account'});
-        // }
-    },
-    {
-        path: '/registration',
-        name: 'registration',
-        component: LoginPage,
-        props: {
-            currentForm: 'registration'
-        }
+        children: [
+            {
+                path: 'login',
+                name: 'login',
+                component: LoginPage,
+                props: {
+                    currentForm: 'login'
+                },
+            },
+            {
+                path: 'registration',
+                name: 'registration',
+                component: LoginPage,
+                props: {
+                    currentForm: 'registration'
+                }
+            }
+        ]
     },
     {
         path: '/account',

@@ -11,14 +11,10 @@
         <!--    PROFILE    -->
         <b-card v-else>
             <b-list-group>
-                <b-list-group-item class="d-flex align-items-center">
-                    <b-avatar variant="primary" class="mr-3" src="https://placekitten.com/300/300"></b-avatar>
-                    <span class="mr-auto">{{user.name}}</span>
-                    <Balance />
-                </b-list-group-item>
+                <UserAvatar :balance="true"/>
 
-<!--                <b-list-group-item class="d-flex align-items-center">-->
-<!--                </b-list-group-item>-->
+                <!--                <b-list-group-item class="d-flex align-items-center">-->
+                <!--                </b-list-group-item>-->
 
                 <AccountField v-for="field in getUserData" :field="field" :key="field.name"/>
 
@@ -31,14 +27,16 @@
 import {mapState, mapGetters} from "vuex";
 import AccountField from '../../components/auth/account/AccountField';
 import Balance from '../../components/Balance';
+import UserAvatar from "../../components/auth/account/UserAvatar";
 
 export default {
-    name    : "Account",
+    name      : "Account",
     components: {
         AccountField,
-        Balance
+        Balance,
+        UserAvatar
     },
-    computed: {
+    computed  : {
         ...mapGetters(['user', 'getUserData'])
     },
     mounted() {

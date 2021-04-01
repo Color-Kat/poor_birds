@@ -3,26 +3,43 @@
         <Header></Header>
 
         <main>
-            <b-container class="container pt-5" type="light" variant="light">
-<!--                    <Aside></Aside>-->
-                    <router-view></router-view>
-            </b-container>
+            <div
+                id="main-container"
+                class="container-lg"
+                type="light"
+                variant="light"
+            >
+                <!--                 :style="{-->
+                <!--                    display: getAuth ? 'grid' : 'block'-->
+                <!--                 }"-->
+
+                <!--    SIDEBAR    -->
+                <SideBar id="main-sidebar"/>
+                <!--    SIDEBAR    -->
+
+                <!--    CONTENT    -->
+                <router-view id="main-content" style="width: 100% !important;"></router-view>
+                <!--    CONTENT    -->
+            </div>
         </main>
     </div>
 </template>
 
 <script>
-import Header from './components/Header';
-import Aside from './components/Aside';
+import Header from './components/header/Header';
+import SideBar from './components/SideBar';
 import {mapActions, mapGetters} from "vuex";
 
 export default {
     name      : "App",
     components: {
         Header,
-        Aside
+        SideBar
     },
-    methods: {
+    computed  : {
+        ...mapGetters(['getAuth'])
+    },
+    methods   : {
         ...mapActions(['init']),
     },
     // computed: mapGetters(['getAuth', 'getUser']),
@@ -32,5 +49,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+#main-container {
+    display: flex;
+    align-items: flex-start;
+
+}
 </style>
