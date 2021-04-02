@@ -1,6 +1,7 @@
 <template>
     <div class="p-3">
-        <b-form @submit.prevent="onSubmit">
+        <b-form @submit.prevent="onSubmit" multipart>
+            <b-alert variant="danger" :show="error">Произошла какая-то ошибка</b-alert>
 
             <!--      NAME      -->
             <b-form-group
@@ -14,6 +15,7 @@
                     type="text"
                     placeholder="Засёрыш"
                     required
+                    minLength="3"
                 ></b-form-input>
             </b-form-group>
 
@@ -24,18 +26,20 @@
                     v-model="form.description"
                     placeholder="Срет много"
                     required
+                    minLength="7"
                 ></b-form-input>
             </b-form-group>
 
             <!--      IMAGE      -->
             <b-form-group id="input-image" label="Изображение птицы:" label-for="image">
                 <b-form-file
+                    accept="image/jpeg, image/png, image/gif"
                     v-model="form.image"
                     :state="Boolean(form.image)"
                     placeholder="Выберите файл или перетащите его сюда..."
                     drop-placeholder="Перетащите файл сюда..."
                 ></b-form-file>
-                <!--                <p class="mt-2">Selected file: <b>{{ form.image ? form.image.name : '' }}</b></p>-->
+                <p class="mt-2">Selected file: <b>{{ form.image ? form.image.name : '' }}</b></p>
             </b-form-group>
 
             <!--    DEMAND (спрос)    -->
@@ -101,13 +105,15 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
     name: "CreateBird",
     data() {
         return {
             form: {
-                name       : 'Z',
-                description: 'S',
+                name       : 'Tester',
+                description: 'Тестирует приложение',
                 image      : null,
                 demand     : 50,
                 fertility  : 1,
@@ -115,11 +121,17 @@ export default {
                 litter     : 10,
                 price      : 100
             },
+            error: false
         }
     },
     methods: {
-        onSubmit() {
-            alert(JSON.stringify(this.form))
+        ...mapActions(['createBirds']),
+        async onSubmit() {
+            console.log(this.form.image)
+            this.error = !(await this.createBirds(this.form));
+            console.log(this.error);
+
+            if(!this.error) this.$router.push({name: 'admin-birds'})
         },
         // onReset() {
         //     // Reset our form values
