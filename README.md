@@ -1,61 +1,64 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+У игрока есть всего 100 рублей на старте.
+-----------------------------------
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Цель - покупать птиц у РАЗНЫХ поставщиков\продавцов,
+затем ждать, когда птицы снесут яйца.
+А после продавать их. Будь то на базаре или целым компаниям
 
-## About Laravel
+----------------------ПОКУПКА------------------
+Будет несколько видов магазинов
+Вначале это базар
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+У базара такие характеристики:
+    1. Птицы дешевые (+5% от их цены)
+    2. На птиц нет справки (см.далее, что такое справка)
+    3. Дешевые яйца, так как птицы без справки
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+....
+///////////////////////////////////
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+--------------------СПРАВКА---------------------------
+Если у птицы нет справки, то продажа яиц этой птицы нелегальный бизнес.
+За продажу яиц птиц без справки будет взниматься штраф в размере 5% от текущей продажи
+Плюс такие яйца буду стоить дешевле, (-10% от цены)
 
-## Learning Laravel
+На каждую птицу можно сделать справку (200р)
+//////////////////////////////////////////////////////
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+------------------------ПРОДАЖА--------------------------
+Вначале игроку доступен только базар, когда у игрока будет больше птиц, 
+больше продажи, то он сможет сотрудничать с птицефермами, частниками и другими.
+---------------------------------------------------------
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Птицы будут нести яйца, учитывая их текущую плодоносность.
+Потом игрок будет собирать яйца
+(А если их не собирать более 2х дней, то они портятся и исчезают.
+А плодоносность птиц от этого уменьшится)
 
-## Laravel Sponsors
+---------------------------------------------------------
+Собранные яйца можно продавать.
+Как и магазинов, мест продажи будет несколько:
+Базар, частные компании по продаже яиц, обычные люди
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Характеристики базара:
+    1 Стоимость яиц уменьшается на 5%
+    2 Не нужна справка на птиц для продажи
+    3 Маленький спрос (В день до 100 яиц)
+    4 Нужна справка за 50 рублей для продажи (необязательно, 10 рублей штраф)
 
-### Premium Partners
+Характеристики компании ООО «Чебаркульская птица»:
+    1 Стоимость яиц увеличивается на 5%
+    2 Справка на птиц обязательна
+    3 Средний спрос (В день до 1000 яиц)
+    4 Нужна справка за 3000р о доходаъ (>1000р в день) и кол-во птиц(>30)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+....
+////////////////////////////////////////////////////////////
 
-## Contributing
+                                
+-------------------------ПТИЦЫ----------------------------
+В игре будет куча самых разнообразных птиц.
+От просто красивых, которые почти не несут яйца, и яйца их дешевые.
+До уродов, которые постоянно срут и требуют заботы, но их яйца очень дорогие
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

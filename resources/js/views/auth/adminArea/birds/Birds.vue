@@ -1,38 +1,48 @@
 <template>
     <div id="admin-birds-panel">
 
-        <!--    NO BIRDS    -->
-        <b-card v-if="getBirds.length == 0">
-            Птичек нет :( <br>
-            Чума или птичий гриб??
-        </b-card>
-        <!--    NO BIRDS    -->
+        <!--   Create Update Delete   -->
+        <!--   Current route is /admin_area/birds/some     -->
+        <router-view v-if="$route.name != 'admin-birds'"></router-view>
+        <!--   Create Update Delete   -->
 
+        <!--   Show all birds    -->
+        <!--Current route is /admin_area/birds-->
         <div v-else>
-            <CreatePanel message="Создать птицу" route="/admin_area/birds/create"/>
 
-            <b-table striped hover :items="getBirds" :fields="fields">
+            <!--    No birds   -->
+            <b-card v-if="getBirds.length == 0">
+                Птичек нет :( <br>
+                Чума или птичий гриб??
+            </b-card>
+            <!--    No birds    -->
 
-                <!--      IMAGE      -->
-                <template #cell(image)="data">
-                    <img height="80px" :src="data.item.image" alt="">
-                </template>
-                <!--      IMAGE      -->
+            <div v-else>
+                <CreatePanel message="Создать птицу" route="/admin_area/birds/create"/>
 
-                <!--      ACTIONS      -->
-                <template #cell(actions)="data">
-                    <b-button variant="success">
-                        <b-icon icon="eye-fill"></b-icon>
-                    </b-button>
-                    <b-button variant="warning">
-                        <b-icon icon="pencil-fill"></b-icon>
-                    </b-button>
-                    <b-button variant="danger">
-                        <b-icon icon="trash-fill"></b-icon>
-                    </b-button>
-                </template>
-                <!--      ACTIONS      -->
-            </b-table>
+                <b-table striped hover :items="getBirds" :fields="fields">
+
+                    <!--      IMAGE      -->
+                    <template #cell(image)="data">
+                        <img height="80px" :src="data.item.image" alt="">
+                    </template>
+                    <!--      IMAGE      -->
+
+                    <!--      ACTIONS      -->
+                    <template #cell(actions)="data">
+                        <b-button variant="success">
+                            <b-icon icon="eye-fill"></b-icon>
+                        </b-button>
+                        <b-button variant="warning">
+                            <b-icon icon="pencil-fill"></b-icon>
+                        </b-button>
+                        <b-button variant="danger">
+                            <b-icon icon="trash-fill"></b-icon>
+                        </b-button>
+                    </template>
+                    <!--      ACTIONS      -->
+                </b-table>
+            </div>
         </div>
 
     </div>
@@ -79,13 +89,9 @@ export default {
             }
         ]
     }),
-    // methods: {
-    //     birds() {
-    //         let b = this.getBirds;
-    //
-    //         return
-    //     }
-    // }
+    created() {
+        console.log(this.$route)
+    }
 }
 </script>
 

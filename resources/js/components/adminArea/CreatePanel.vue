@@ -1,7 +1,7 @@
 <template>
     <div class="createPanel m-3">
         <b-button variant="primary" :to="route">
-            {{message}}}
+            {{message}}
         </b-button>
     </div>
 </template>

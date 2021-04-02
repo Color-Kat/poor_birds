@@ -32,7 +32,7 @@
                 <Balance class="mr-2"/>
 
                 <b-nav-item
-                    class="mr-2" v-if="auth && getUserRole === 1" :to="{name: 'admin_area'}" active-class="active"
+                    class="mr-2" v-if="auth && getUserRole === 1" :to="{name: 'admin-birds'}" active-class="active"
                 >
                     Админ панель
                 </b-nav-item>

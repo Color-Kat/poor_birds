@@ -16,7 +16,10 @@ export default {
                 }).catch(err => {
                 console.log('ERROR: ' + err);
             })
-        }
+        },
+        // createBirds({commit}) {
+        //
+        // }
     },
     mutations: {
         setBirds(state, birds) {

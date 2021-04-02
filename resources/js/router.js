@@ -84,6 +84,7 @@ const routes = [
             {
                 path: 'birds',
                 component: Birds,
+                name: 'admin-birds',
                 children: [
                     // {
                     //     path: 'show',
