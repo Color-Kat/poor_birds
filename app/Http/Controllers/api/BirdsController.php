@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BirdsRequest;
 use App\models\Bird;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BirdsController extends Controller
 {
@@ -17,7 +18,7 @@ class BirdsController extends Controller
      */
     public function index()
     {
-
+dd(Auth::user());
         return Bird::all();
     }
 
