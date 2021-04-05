@@ -24,7 +24,7 @@
 
                     <!--      IMAGE      -->
                     <template #cell(image)="data">
-                        <img height="80px" :src="data.item.image" alt="">
+                        <img height="80px" :src="`/storage/${data.item.image}`" alt="">
                     </template>
                     <!--      IMAGE      -->
 
@@ -36,7 +36,7 @@
                         <b-button variant="warning">
                             <b-icon icon="pencil-fill"></b-icon>
                         </b-button>
-                        <b-button variant="danger">
+                        <b-button variant="danger" @click="()=>{deleteBird(data.item.id);}">
                             <b-icon icon="trash-fill"></b-icon>
                         </b-button>
                     </template>
@@ -49,13 +49,16 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import CreatePanel from "../../../../components/adminArea/CreatePanel";
 
 export default {
     name    : "Birds",
     computed: {
         ...mapGetters(['getBirds'])
+    },
+    methods: {
+        ...mapActions(['deleteBird'])
     },
     components: {
         CreatePanel
@@ -89,9 +92,9 @@ export default {
             }
         ]
     }),
-    created() {
-        console.log(this.$route)
-    }
+    // created() {
+    //     console.log(this.$route)
+    // }
 }
 </script>
 

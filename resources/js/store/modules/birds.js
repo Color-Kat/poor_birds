@@ -17,7 +17,18 @@ export default {
             })
         },
         createBirds({commit}, form) {
-            return axios.post('api/birds', form)
+            // convert object to form data
+            let formData = new FormData();
+            for ( let key in form ) {
+                formData.append(key, form[key]);
+            }
+
+            // set header to upload image file
+            return axios.post(
+                'api/birds',
+                formData,
+                {headers: {'Content-Type': 'multipart/form-data'}}
+                )
                 .then(response => {
                     console.log(response)
                     if (response.status === 201) {
@@ -30,6 +41,20 @@ export default {
                     console.log(error.response);
                     return false
                 });
+        },
+        deleteBird({commit}, id) {
+            axios.delete(
+                `api/birds/${id}`
+            )
+                .then(response => {
+                    // successfully deleting
+                    if(response) {
+                        commit('deleteBird', id)
+                    }
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                });
         }
     },
     mutations: {
@@ -38,6 +63,13 @@ export default {
         },
         addBird(state, bird) {
             state.birds.push(bird);
+        },
+        deleteBird(state, id) {
+            state.birds.foreach((bird, i) => {
+                if (bird.id === id) {
+                    delete state.birds[i];
+                }
+            })
         }
     }
 }

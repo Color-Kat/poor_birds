@@ -27,6 +27,17 @@ class BirdsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+    public function store(BirdsRequest $request)
+    {
+//        dd($request->file('image'));
+        $path = $request->file('image')->store('birds');
+//
+
+        $params = $request->all();
+        $params['image'] = $path;
+
+        return Bird::create($params);
+    }
 
     /**
      * Display the specified resource.
@@ -71,6 +82,6 @@ class BirdsController extends Controller
      */
     public function destroy($id)
     {
-        //
+//        return Bird::destroy($id);
     }
 }
