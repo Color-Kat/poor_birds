@@ -13,6 +13,7 @@ export default {
     name: "Store",
     mounted() {
         this.$store.dispatch('fetchBirds');
+        console.log(this.getBirds);
     },
     computed: {
         ...mapGetters([

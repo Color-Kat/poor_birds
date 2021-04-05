@@ -29,10 +29,6 @@ class BirdsRequest extends FormRequest
             'price'       => 'required|numeric:min:0'
         ];
 
-        if ($this->route()->named('products.store')) {
-            $rules['code'] .= '|unique:products,code';
-        }
-
         return $rules;
     }
 

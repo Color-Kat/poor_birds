@@ -16,8 +16,8 @@ class CreateBirdsTable extends Migration
         Schema::create('birds', function (Blueprint $table) {
             $table->id();
             $table->string('name')->default('');
-            $table->double('price')->default(0);
-            $table->double('fertility')->default(0);
+            $table->integer('price')->default(0);
+            $table->integer('fertility')->default(0);
             $table->text('description')->nullable();
             $table->text('image')->nullable();
             $table->timestamps();

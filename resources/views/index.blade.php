@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
+    <script src="/js/app.js" defer></script>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
@@ -31,6 +31,6 @@
 <div id="app">
     <app></app>
 </div>
-    <script src="./js/app.js"></script>
+{{--    <script src="/js/app.js"></script>--}}
 </body>
 </html>

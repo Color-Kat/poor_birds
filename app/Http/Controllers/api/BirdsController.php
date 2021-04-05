@@ -18,7 +18,6 @@ class BirdsController extends Controller
      */
     public function index()
     {
-dd(Auth::user());
         return Bird::all();
     }
 
@@ -28,11 +27,6 @@ dd(Auth::user());
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BirdsRequest $request)
-    {
-        //
-        return Bird::create($request->all());
-    }
 
     /**
      * Display the specified resource.
