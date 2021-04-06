@@ -13,6 +13,7 @@ import Sellers from "./views/auth/adminArea/sellers/Sellers";
 
 import store from './store/index';
 import Auth from "./views/auth/Auth";
+import BirdPage from "./views/BirdPage";
 
 Vue.use(VueRouter);
 
@@ -93,6 +94,10 @@ const routes = [
                 component: Birds,
             }
         ]
+    },
+    {
+        path: '/birds/:id',
+        component: BirdPage
     },
     {
         path: '/store',

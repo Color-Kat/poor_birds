@@ -82,6 +82,6 @@ class BirdsController extends Controller
      */
     public function destroy($id)
     {
-//        return Bird::destroy($id);
+        return Bird::destroy($id);
     }
 }

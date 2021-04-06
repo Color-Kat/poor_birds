@@ -30,7 +30,7 @@
 
                     <!--      ACTIONS      -->
                     <template #cell(actions)="data">
-                        <b-button variant="success">
+                        <b-button variant="success" :to="`/birds/${data.item.id}`">
                             <b-icon icon="eye-fill"></b-icon>
                         </b-button>
                         <b-button variant="warning">

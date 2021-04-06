@@ -1,10 +1,28 @@
 export default {
     state    : {
-        birds: []
+        birds      : [],
+        currentBird: null
     },
     getters  : {
         getBirds(state) {
             return state.birds;
+        },
+        getBird(state) {
+            const bird = state.currentBird;
+
+            console.log(bird)
+            if (bird) {
+                return {
+                    image      : bird.image,
+                    name       : ['Название', bird.name],
+                    description: ['Описание', bird.description],
+                    fertility  : ['Плодоносность', `${bird.fertility} яиц/час`],
+                    care       : ['Бонус за заботу', `${bird.care}% к плодовитости на 1 час`],
+                    demand     : ['Спрос на яйца', `${bird.demand} яиц/час`],
+                    litter     : ['Кол-во помета', `${bird.litter} ед./час`],
+                    price      : ['Цена', `${bird.price}`]
+                };
+            } else return false
         }
     },
     actions  : {
@@ -19,7 +37,7 @@ export default {
         createBirds({commit}, form) {
             // convert object to form data
             let formData = new FormData();
-            for ( let key in form ) {
+            for (let key in form) {
                 formData.append(key, form[key]);
             }
 
@@ -28,7 +46,7 @@ export default {
                 'api/birds',
                 formData,
                 {headers: {'Content-Type': 'multipart/form-data'}}
-                )
+            )
                 .then(response => {
                     console.log(response)
                     if (response.status === 201) {
@@ -48,12 +66,25 @@ export default {
             )
                 .then(response => {
                     // successfully deleting
-                    if(response) {
+                    if (response) {
                         commit('deleteBird', id)
                     }
                 })
                 .catch((error) => {
-                    console.log(error.response);
+                    console.log(error);
+                });
+        },
+        fetchBird({commit}, id) {
+            return axios.get(
+                `api/birds/${id}`
+            )
+                .then(response => {
+                    if (response.data.status) {
+                        commit('setCurrentBird', response.data.messages);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
                 });
         }
     },
@@ -65,11 +96,13 @@ export default {
             state.birds.push(bird);
         },
         deleteBird(state, id) {
-            state.birds.foreach((bird, i) => {
-                if (bird.id === id) {
-                    delete state.birds[i];
-                }
-            })
+            state.birds.forEach((bird, i) => {
+                if (bird.id === id)
+                    state.birds.splice(i, 1);
+            });
+        },
+        setCurrentBird(state, bird) {
+            state.currentBird = bird;
         }
     }
 }
