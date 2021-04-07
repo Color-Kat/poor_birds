@@ -34,7 +34,7 @@ export default {
                 console.log('ERROR: ' + err);
             })
         },
-        createBirds({commit}, form) {
+        createBird({commit}, form) {
             // convert object to form data
             let formData = new FormData();
             for (let key in form) {
@@ -86,7 +86,35 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 });
-        }
+        },
+        updateBird({commit}, form) {
+            console.log(form);
+            return
+            // convert object to form data
+            let formData = new FormData();
+            for (let key in form) {
+                formData.append(key, form[key]);
+            }
+
+            // set header to upload image file
+            return axios.post(
+                'api/birds',
+                formData,
+                {headers: {'Content-Type': 'multipart/form-data'}}
+            )
+                .then(response => {
+                    console.log(response)
+                    if (response.status === 201) {
+                        commit('addBird', response.data);
+
+                        return true;
+                    } else return false
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                    return false
+                });
+        },
     },
     mutations: {
         setBirds(state, birds) {

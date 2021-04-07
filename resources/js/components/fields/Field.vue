@@ -1,7 +1,7 @@
 <template>
-    <b-list-group-item class="d-flex justify-content-between align-items-center">
-        {{ field[0] }}
-        <b-badge variant="none">{{ field[1] }}</b-badge>
+    <b-list-group-item class="d-flex justify-content-between align-items-center" style="height: max-content">
+        <span class="mr-4 top-0">{{ field[0] }}</span>
+        <span variant="none">{{ field[1] }}</span>
     </b-list-group-item>
 </template>
 

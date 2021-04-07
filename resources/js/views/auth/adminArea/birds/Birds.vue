@@ -33,9 +33,18 @@
                         <b-button variant="success" :to="`/birds/${data.item.id}`">
                             <b-icon icon="eye-fill"></b-icon>
                         </b-button>
-                        <b-button variant="warning">
+
+                        <b-button variant="warning" :to="{
+                            // path: `/admin_area/birds/update/${data.item.id}`,
+                            path: `/admin_area/birds/create`,
+                            // transfer the bird to create form
+                            query: {
+                                ...data.item
+                            }
+                        }">
                             <b-icon icon="pencil-fill"></b-icon>
                         </b-button>
+
                         <b-button variant="danger" @click="()=>{deleteBird(data.item.id);}">
                             <b-icon icon="trash-fill"></b-icon>
                         </b-button>

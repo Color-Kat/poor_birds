@@ -29,12 +29,14 @@ class BirdsController extends Controller
      */
     public function store(BirdsRequest $request)
     {
-//        dd($request->file('image'));
-        $path = $request->file('image')->store('birds');
-//
-
         $params = $request->all();
-        $params['image'] = $path;
+        $params['image'] = null;
+
+        // non image
+        if($request->image != "null") {
+            $path = $request->file('image')->store('birds');
+            $params['image'] = $path;
+        }
 
         return Bird::create($params);
     }

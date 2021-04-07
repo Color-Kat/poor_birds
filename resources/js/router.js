@@ -73,12 +73,18 @@ const routes = [
                     // },
                     {
                         path: 'create',
-                        component: CreateBird
+                        component: CreateBird,
+                        props: true
                     },
                     {
-                        path: 'update',
+                        path: 'update/:id',
                         component: CreateBird,
-                    }
+                        props: true
+                    },
+                    // {
+                    //     path: 'update',
+                    //     component: CreateBird,
+                    // }
                 ]
             },
             {

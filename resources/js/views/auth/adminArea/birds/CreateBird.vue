@@ -103,7 +103,6 @@
         <b-card class="mt-3" header="Form Data Result">
             <pre class="m-0">{{ form }}</pre>
         </b-card>
-
     </div>
 </template>
 
@@ -115,38 +114,39 @@ export default {
     data() {
         return {
             form: {
-                name       : 'Tester',
-                description: 'Тестирует приложение',
+                name       : this.$route.query.name || 'Tester',
+                description: this.$route.query.description || 'Тестирует приложение',
                 image      : null,
-                demand     : 50,
-                fertility  : 1,
-                care       : 10,
-                litter     : 10,
-                price      : 100
+                imagePath  : this.$route.query.image || '',
+                demand     : this.$route.query.demand || 50,
+                fertility  : this.$route.query.fertility || 1,
+                care       : this.$route.query.care || 10,
+                litter     : this.$route.query.litter || 10,
+                price      : this.$route.query.price || 100
             },
             error: false
         }
     },
     methods: {
-        ...mapActions(['createBirds']),
-        async onSubmit() {
-            console.log(this.form.image)
-            this.error = !(await this.createBirds(this.form));
-            console.log(this.error);
+        ...mapActions(['createBird', 'updateBird']),
 
+        async onSubmit() {
+            if (Object.keys(this.$route.query).length !== 0) {
+                let form = {...this.form, image: this.form.image || this.form.imagePath}
+                delete form.imagePath
+                this.error = !(await this.updateBird(form));
+            }else {
+                // check errors
+                this.error = !(await this.createBird(this.form));
+            }
+
+            // redirect to admin page
             if(!this.error) this.$router.push({name: 'admin-birds'})
         },
-        // onReset() {
-        //     // Reset our form values
-        //     // this.form.name = '',
-        //     // this.form.description = '',
-        //     // this.form.image = null,
-        //     // this.form.demand = 50,
-        //     // this.form.fertility = 1,
-        //     // this.form.care = 10,
-        //     // this.form.litter = 10,
-        //     // this.form.price = 100
-        // }
+
+    },
+    mounted(){
+        // console.log(this.$route.query)
     }
 }
 </script>
