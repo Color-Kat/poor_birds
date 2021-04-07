@@ -8,6 +8,7 @@ use App\Http\Requests\BirdsRequest;
 use App\models\Bird;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BirdsController extends Controller
 {
@@ -71,9 +72,21 @@ class BirdsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Bird $bird)
     {
-        //
+        $params = $request->all();
+
+        /* --- IMAGE --- */
+        if($request->file('image')) {
+            // image is set
+            unset($params['image']); // delete image from params
+            Storage::delete($bird->image); // delete old image
+            $params['image'] = $request->file('image')->store('birds');
+        }
+        // else image path is old
+        /* --- IMAGE --- */
+
+        return $bird->update($params); // U{^DAT#
     }
 
     /**

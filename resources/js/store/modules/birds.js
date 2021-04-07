@@ -88,31 +88,25 @@ export default {
                 });
         },
         updateBird({commit}, form) {
-            console.log(form);
-            return
             // convert object to form data
             let formData = new FormData();
             for (let key in form) {
                 formData.append(key, form[key]);
             }
 
-            // set header to upload image file
+            formData.append('_method', 'PATCH'); // set PATCH method
+
             return axios.post(
-                'api/birds',
-                formData,
+                `api/birds/${form.id}`,
+                 formData,
                 {headers: {'Content-Type': 'multipart/form-data'}}
             )
                 .then(response => {
-                    console.log(response)
-                    if (response.status === 201) {
-                        commit('addBird', response.data);
-
-                        return true;
-                    } else return false
+                    return response;
                 })
                 .catch((error) => {
                     console.log(error.response);
-                    return false
+                    return false;
                 });
         },
     },

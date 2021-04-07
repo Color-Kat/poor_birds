@@ -96,8 +96,8 @@
             >
                 <b-form-input id="price" v-model="form.price" type="number" min="0"></b-form-input>
             </b-form-group>
-
-            <b-button type="submit" variant="primary">Снести яйцо)</b-button>
+            <b-button type="submit" variant="primary">{{Object.keys($route.query).length == 0 ? 'Снести яйцо)' :
+                'Мутировать'}}</b-button>
             <b-button type="reset" variant="danger">Сбросить</b-button>
         </b-form>
         <b-card class="mt-3" header="Form Data Result">
@@ -114,6 +114,7 @@ export default {
     data() {
         return {
             form: {
+                id         : this.$route.query.id || null,
                 name       : this.$route.query.name || 'Tester',
                 description: this.$route.query.description || 'Тестирует приложение',
                 image      : null,
@@ -131,9 +132,11 @@ export default {
         ...mapActions(['createBird', 'updateBird']),
 
         async onSubmit() {
+            // there are parameters, so need to update the bird
             if (Object.keys(this.$route.query).length !== 0) {
-                let form = {...this.form, image: this.form.image || this.form.imagePath}
-                delete form.imagePath
+                // if the image is already there, then we replace it
+                let form = {...this.form, image: this.form.image || this.form.imagePath};
+                delete form.imagePath; // remove unnecessary
                 this.error = !(await this.updateBird(form));
             }else {
                 // check errors
@@ -141,7 +144,7 @@ export default {
             }
 
             // redirect to admin page
-            if(!this.error) this.$router.push({name: 'admin-birds'})
+            if(!this.error) await this.$router.push({name: 'admin-birds'})
         },
 
     },

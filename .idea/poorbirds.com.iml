@@ -114,5 +114,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="vuex-learn" />
+    <orderEntry type="module" module-name="laravel" />
   </component>
 </module>
