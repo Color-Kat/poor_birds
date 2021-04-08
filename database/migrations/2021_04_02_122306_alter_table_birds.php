@@ -20,8 +20,8 @@ class AlterTableBirds extends Migration
             // demand - сколько в среднем можно продать яиц этой птицы
             $table->mediumInteger('demand')->default(50)->after('litter');
 
-            // care(-100 - 100) - на сколько процентов увеличивается плодоносность от ухода
-            $table->tinyInteger('care')->default(5)->after('demand');
+            // care - на сколько процентов увеличивается плодоносность от ухода
+            $table->mediumInteger('care')->default(5)->after('demand');
         });
     }
 

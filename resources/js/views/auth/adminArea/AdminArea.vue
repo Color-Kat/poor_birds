@@ -8,7 +8,7 @@
                     <b-nav-item :to="{name: 'admin-birds'}" active-class="active">
                         Птички
                     </b-nav-item>
-                    <b-nav-item to="/admin_area/sellers" active-class="active">
+                    <b-nav-item :to="{name: 'admin-sellers'}" active-class="active">
                         Продавцы
                     </b-nav-item>
                     <b-nav-item to="/admin_area/birdhouses" active-class="active">

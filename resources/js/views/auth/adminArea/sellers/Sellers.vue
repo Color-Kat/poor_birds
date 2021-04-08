@@ -2,25 +2,25 @@
     <div id="admin-birds-panel">
 
         <!--   Create Update Delete   -->
-        <!--   Current route is /admin_area/birds/some     -->
-        <router-view v-if="$route.name != 'admin-birds'"></router-view>
+        <!--   Current route is /admin_area/sellers/some     -->
+        <router-view v-if="$route.name != 'admin-sellers'"></router-view>
         <!--   Create Update Delete   -->
 
-        <!--   Show all birds    -->
-        <!--Current route is /admin_area/birds-->
+        <!--   Show all sellers    -->
+        <!--   Current route is /admin_area/sellers  -->
         <div v-else>
 
-            <!--    No birds   -->
-            <b-card v-if="getBirds.length == 0">
-                Птичек нет :( <br>
-                Чума или птичий гриб??
+            <!--    No sellers   -->
+            <b-card v-if="getSellers.length == 0">
+                Никого нет :( <br>
+                Хоть кто-нибудь хочет себе яйца?
             </b-card>
             <!--    No birds    -->
 
             <div v-else>
-                <CreatePanel message="Создать птицу" route="/admin_area/birds/create"/>
+                <CreatePanel message="Зарегистрировать нового продавца" route="/admin_area/sellers/create"/>
 
-                <b-table striped hover :items="getBirds" :fields="fields">
+                <b-table striped hover :items="getSellers" :fields="fields">
 
                     <!--      IMAGE      -->
                     <template #cell(image)="data">
@@ -53,9 +53,9 @@ import {mapGetters} from "vuex";
 import CreatePanel from "../../../../components/adminArea/CreatePanel";
 
 export default {
-    name    : "Birds",
+    name    : "Sellers",
     computed: {
-        ...mapGetters(['getBirds'])
+        ...mapGetters(['getSellers'])
     },
     components: {
         CreatePanel
@@ -69,15 +69,15 @@ export default {
 
             {
                 key  : 'image',
-                label: 'Птичка'
+                label: 'Логотип'
             },
             {
                 key  : 'name',
                 label: 'Название'
             },
             {
-                key  : 'price',
-                label: 'Цена'
+                key  : 'demand',
+                label: 'Спрос'
             },
             {
                 key  : 'fertility',
