@@ -28,6 +28,12 @@ class CreateSellersTable extends Migration
             // бонус на цену в процентах +/-
             $table->mediumInteger('discount')->default(0);
 
+            // Кол-во птиц у игрока ,чтобы получить доступ к продавцу
+            $table->mediumInteger('birds_count')->default(0);
+
+            // Цена договора, чтобы получить доступ к продавцу
+            $table->mediumInteger('price')->default(0);
+
             $table->timestamps();
         });
     }
@@ -39,6 +45,6 @@ class CreateSellersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('birds');
+        Schema::dropIfExists('sellers');
     }
 }

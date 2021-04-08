@@ -11,6 +11,9 @@
                     <b-nav-item :to="{name: 'admin-sellers'}" active-class="active">
                         Продавцы
                     </b-nav-item>
+                    <b-nav-item to="/admin_area/certificates" active-class="active">
+                        Сертификаты
+                    </b-nav-item>
                     <b-nav-item to="/admin_area/birdhouses" active-class="active">
                         Скворечники
                     </b-nav-item>

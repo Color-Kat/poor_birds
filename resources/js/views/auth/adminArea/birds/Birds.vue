@@ -9,7 +9,8 @@
         <!--   Show all birds    -->
         <!--Current route is /admin_area/birds-->
         <div v-else>
-
+            <CreatePanel message="Создать птицу" route="/admin_area/birds/create"/>
+            
             <!--    No birds   -->
             <b-card v-if="getBirds.length == 0">
                 Птичек нет :( <br>
@@ -18,7 +19,6 @@
             <!--    No birds    -->
 
             <div v-else>
-                <CreatePanel message="Создать птицу" route="/admin_area/birds/create"/>
 
                 <b-table striped hover :items="getBirds" :fields="fields">
 

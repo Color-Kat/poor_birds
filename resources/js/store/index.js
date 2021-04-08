@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex';
 import birds from './modules/birds.js';
 import user from './modules/user.js';
+import sellers from './modules/sellers.js';
 
 // import Axios from "axios";
 
@@ -9,7 +10,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
         birds,
-        user
+        user,
+        sellers
     },
     state: {
         active_sideBar: false
