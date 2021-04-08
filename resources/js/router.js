@@ -14,6 +14,7 @@ import Sellers from "./views/auth/adminArea/sellers/Sellers";
 import store from './store/index';
 import Auth from "./views/auth/Auth";
 import BirdPage from "./views/BirdPage";
+import CreateSeller from "./views/auth/adminArea/sellers/CreateSeller";
 
 Vue.use(VueRouter);
 
@@ -67,10 +68,6 @@ const routes = [
                 component: Birds,
                 name: 'admin-birds',
                 children: [
-                    // {
-                    //     path: 'show',
-                    //     component:
-                    // },
                     {
                         path: 'create',
                         component: CreateBird,
@@ -81,15 +78,24 @@ const routes = [
                         component: CreateBird,
                         props: true
                     },
-                    // {
-                    //     path: 'update',
-                    //     component: CreateBird,
-                    // }
                 ]
             },
             {
                 path: 'sellers',
                 component: Sellers,
+                name: 'admin-sellers',
+                children: [
+                    {
+                        path: 'create',
+                        component: CreateSeller,
+                        props: true
+                    },
+                    {
+                        path: 'update/:id',
+                        component: CreateSeller,
+                        props: true
+                    },
+                ]
             },
             {
                 path: 'birdhouses',

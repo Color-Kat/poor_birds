@@ -87,7 +87,7 @@ export default {
                     console.log(error);
                 });
         },
-        updateBird({commit}, form) {
+        updateBird({commit, dispatch}, form) {
             // convert object to form data
             let formData = new FormData();
             for (let key in form) {
@@ -102,6 +102,7 @@ export default {
                 {headers: {'Content-Type': 'multipart/form-data'}}
             )
                 .then(response => {
+                    dispatch('fetchBirds');
                     return response;
                 })
                 .catch((error) => {
