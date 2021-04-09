@@ -5,7 +5,8 @@ export default {
     },
     getters  : {
         getSellers(state) {
-            return state.birds;
+            console.log(state.sellers)
+            return state.sellers;
         },
         getSeller(state) {
             const seller = state.currentBird;
@@ -25,8 +26,9 @@ export default {
     },
     actions  : {
         fetchSellers(context) {
-            axios.get('/api/sellers')
+            return axios.get('/api/sellers')
                 .then(response => {
+                    console.log(response)
                     context.commit('setSellers', response.data);
                 }).catch(err => {
                 console.log('ERROR: ' + err);
@@ -34,95 +36,82 @@ export default {
         },
         createSeller({commit}, form) {
             // convert object to form data
-            // let formData = new FormData();
-            // for (let key in form) {
-            //     formData.append(key, form[key]);
-            // }
-            //
-            // // set header to upload image file
-            // return axios.post(
-            //     'api/sellers',
-            //     formData,
-            //     {headers: {'Content-Type': 'multipart/form-data'}}
-            // )
-            //     .then(response => {
-            //         console.log(response)
-            //         if (response.status === 201) {
-            //             commit('addBird', response.data);
-            //
-            //             return true;
-            //         } else return false
-            //     })
-            //     .catch((error) => {
-            //         console.log(error.response);
-            //         return false
-            //     });
+            let formData = new FormData();
+            for (let key in form) {
+                formData.append(key, form[key]);
+            }
+
+            // set header to upload image file
+            return axios.post(
+                'api/sellers',
+                formData,
+                {headers: {'Content-Type': 'multipart/form-data'}}
+            )
+                .then(response => {
+                    console.log(response)
+                    if (response.status === 201) {
+                        commit('addSeller', response.data);
+
+                        return true;
+                    } else return false
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                    return false
+                });
         },
-        // deleteSeller({commit}, id) {
-        //     axios.delete(
-        //         `api/sellers/${id}`
-        //     )
-        //         .then(response => {
-        //             // successfully deleting
-        //             if (response) {
-        //                 commit('deleteBird', id)
-        //             }
-        //         })
-        //         .catch((error) => {
-        //             console.log(error);
-        //         });
-        // },
-        // fetchBird({commit}, id) {
-        //     return axios.get(
-        //         `api/birds/${id}`
-        //     )
-        //         .then(response => {
-        //             if (response.data.status) {
-        //                 commit('setCurrentBird', response.data.messages);
-        //             }
-        //         })
-        //         .catch((error) => {
-        //             console.log(error);
-        //         });
-        // },
-        // updateBird({
-        //                commit,
-        //                dispatch
-        //            }, form) {
-        //     // convert object to form data
-        //     let formData = new FormData();
-        //     for (let key in form) {
-        //         formData.append(key, form[key]);
-        //     }
-        //
-        //     formData.append('_method', 'PATCH'); // set PATCH method
-        //
-        //     return axios.post(
-        //         `api/birds/${form.id}`,
-        //         formData,
-        //         {headers: {'Content-Type': 'multipart/form-data'}}
-        //     )
-        //         .then(response => {
-        //             dispatch('fetchBirds');
-        //             return response;
-        //         })
-        //         .catch((error) => {
-        //             console.log(error.response);
-        //             return false;
-        //         });
-        // },
+        deleteSeller({commit}, id) {
+            axios.delete(
+                `api/sellers/${id}`
+            )
+                .then(response => {
+                    // successfully deleting
+                    if (response) {
+                        commit('deleteSeller', id)
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        updateSeller({
+                       commit,
+                       dispatch
+                   }, form) {
+            // convert object to form data
+            let formData = new FormData();
+            for (let key in form) {
+                formData.append(key, form[key]);
+            }
+
+            formData.append('_method', 'PATCH'); // set PATCH method
+
+            return axios.post(
+                `api/sellers/${form.id}`,
+                formData,
+                {headers: {'Content-Type': 'multipart/form-data'}}
+            )
+                .then(response => {
+                    dispatch('fetchSellers');
+                    return response;
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                    return false;
+                });
+        }
     },
     mutations: {
-        setSellers(state, birds) {
-            state.birds = birds;
+        setSellers(state, sellers) {
+            state.sellers = sellers;
         },
-        addSeller(state, bird) {
-            state.birds.push(bird);
+        addSeller(state, seller) {
+            state.sellers.push(seller);
         },
         deleteSeller(state, id) {
-            state.birds.forEach((bird, i) => {
-                if (bird.id === id)
-                    state.birds.splice(i, 1);
+            state.sellers.forEach((sellers, i) => {
+                if (sellers.id === id)
+                    state.sellers.splice(i, 1);
             });
         },
         // setCurrentBird(state, bird) {

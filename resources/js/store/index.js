@@ -22,6 +22,7 @@ export default new Vuex.Store({
             await dispatch('checkAuth'); // initial auth
             await dispatch('fetchUser'); // if (auth) - initial user
             await dispatch('fetchBirds'); // fetch birds
+            await dispatch('fetchSellers'); // fetch birds
         },
         toggle_sideBar({commit, state}, payload = null) {
             if( payload !== null ) commit('toggle_active_sideBar', payload);

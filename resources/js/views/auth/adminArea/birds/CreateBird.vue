@@ -100,9 +100,6 @@
                 'Мутировать'}}</b-button>
             <b-button type="reset" variant="danger">Сбросить</b-button>
         </b-form>
-        <b-card class="mt-3" header="Form Data Result">
-            <pre class="m-0">{{ form }}</pre>
-        </b-card>
     </div>
 </template>
 
@@ -137,6 +134,7 @@ export default {
                 // if the image is already there, then we replace it
                 let form = {...this.form, image: this.form.image || this.form.imagePath};
                 delete form.imagePath; // remove unnecessary
+                console.log(form)
                 this.error = !(await this.updateBird(form));
             }else {
                 // check errors

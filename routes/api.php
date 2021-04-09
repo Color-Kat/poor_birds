@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::apiResource('birds', 'api\BirdsController');
+Route::apiResource('birds', 'api\BirdController');
+Route::apiResource('sellers', 'api\SellerController');
 
 Route::group([
 

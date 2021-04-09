@@ -8,12 +8,13 @@ import AdminArea from "./views/auth/adminArea/AdminArea";
 
 import CreateBird from "./views/auth/adminArea/birds/CreateBird";
 import Birds from "./views/auth/adminArea/birds/Birds";
+import BirdPage from "./views/BirdPage";
 
 import Sellers from "./views/auth/adminArea/sellers/Sellers";
+import SellerPage from "./views/SellerPage";
 
 import store from './store/index';
 import Auth from "./views/auth/Auth";
-import BirdPage from "./views/BirdPage";
 import CreateSeller from "./views/auth/adminArea/sellers/CreateSeller";
 
 Vue.use(VueRouter);
@@ -73,11 +74,11 @@ const routes = [
                         component: CreateBird,
                         props: true
                     },
-                    {
-                        path: 'update/:id',
-                        component: CreateBird,
-                        props: true
-                    },
+                    // {
+                    //     path: 'update/:id',
+                    //     component: CreateBird,
+                    //     props: true
+                    // },
                 ]
             },
             {
@@ -89,12 +90,7 @@ const routes = [
                         path: 'create',
                         component: CreateSeller,
                         props: true
-                    },
-                    {
-                        path: 'update/:id',
-                        component: CreateSeller,
-                        props: true
-                    },
+                    }
                 ]
             },
             {
@@ -110,6 +106,10 @@ const routes = [
     {
         path: '/birds/:id',
         component: BirdPage
+    },
+    {
+        path: '/sellers/:id',
+        component: SellerPage
     },
     {
         path: '/store',

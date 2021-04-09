@@ -10,6 +10,8 @@
         <!--   Current route is /admin_area/sellers  -->
         <div v-else>
 
+            <CreatePanel message="Зарегистрировать нового продавца" route="/admin_area/sellers/create"/>
+
             <!--    No sellers   -->
             <b-card v-if="getSellers.length == 0">
                 Никого нет :( <br>
@@ -18,8 +20,6 @@
             <!--    No birds    -->
 
             <div v-else>
-                <CreatePanel message="Зарегистрировать нового продавца" route="/admin_area/sellers/create"/>
-
                 <b-table striped hover :items="getSellers" :fields="fields">
 
                     <!--      IMAGE      -->
@@ -30,13 +30,24 @@
 
                     <!--      ACTIONS      -->
                     <template #cell(actions)="data">
-                        <b-button variant="success">
+                        <b-button variant="success" :to="`/sellers/${data.item.id}`">
                             <b-icon icon="eye-fill"></b-icon>
                         </b-button>
-                        <b-button variant="warning">
+
+                        <b-button
+                            variant="warning" :to="{
+                            // path: `/admin_area/birds/update/${data.item.id}`,
+                            path: `/admin_area/sellers/create`,
+                            // transfer the bird to create form
+                            query: {
+                                ...data.item
+                            }
+                        }"
+                        >
                             <b-icon icon="pencil-fill"></b-icon>
                         </b-button>
-                        <b-button variant="danger">
+
+                        <b-button variant="danger" @click="()=>{deleteSeller(data.item.id);}">
                             <b-icon icon="trash-fill"></b-icon>
                         </b-button>
                     </template>
@@ -49,18 +60,19 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import CreatePanel from "../../../../components/adminArea/CreatePanel";
 
 export default {
-    name    : "Sellers",
-    computed: {
+    name      : "Sellers",
+    computed  : {
         ...mapGetters(['getSellers'])
     },
-    components: {
-        CreatePanel
+    components: {CreatePanel},
+    methods: {
+        ...mapActions(['deleteSeller'])
     },
-    data    : () => ({
+    data      : () => ({
         fields: [
             {
                 key  : 'id',
@@ -76,12 +88,12 @@ export default {
                 label: 'Название'
             },
             {
-                key  : 'demand',
-                label: 'Спрос'
+                key  : 'discount',
+                label: 'Скидка'
             },
             {
-                key  : 'fertility',
-                label: 'Яиц/час'
+                key  : 'price',
+                label: 'Цена контракта'
             },
             {
                 key  : 'actions',
@@ -90,13 +102,13 @@ export default {
         ]
     }),
     created() {
-        console.log(this.$route)
+        // console.log(this.getSellers)
     }
 }
 </script>
 
 <style scoped>
-.table th, .table td{
+.table th, .table td {
     vertical-align: center !important;
 }
 </style>
