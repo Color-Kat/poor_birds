@@ -9,8 +9,8 @@ export default {
             return state.sellers;
         },
         getSeller(state) {
-            const seller = state.currentBird;
-
+            const seller = state.currentSeller;
+            console.log(seller)
             if (seller) {
                 return {
                     image      : seller.image,
@@ -28,7 +28,6 @@ export default {
         fetchSellers(context) {
             return axios.get('/api/sellers')
                 .then(response => {
-                    console.log(response)
                     context.commit('setSellers', response.data);
                 }).catch(err => {
                 console.log('ERROR: ' + err);
@@ -99,7 +98,20 @@ export default {
                     console.log(error.response);
                     return false;
                 });
-        }
+        },
+        fetchSeller({commit}, id) {
+            return axios.get(
+                `api/sellers/${id}`
+            )
+                .then(response => {
+                    if (response.data.status) {
+                        commit('setCurrentSeller', response.data.messages);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
     },
     mutations: {
         setSellers(state, sellers) {
@@ -114,8 +126,8 @@ export default {
                     state.sellers.splice(i, 1);
             });
         },
-        // setCurrentBird(state, bird) {
-        //     state.currentBird = bird;
-        // }
+        setCurrentSeller(state, seller) {
+            state.currentSeller = seller;
+        }
     }
 }

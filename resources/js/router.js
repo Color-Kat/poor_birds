@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Index from './views/Index';
-import StoreComponent from "./views/Store";
+import Shops from "./views/Shops";
 import LoginPage from "./views/auth/LoginPage";
 import Account from "./views/auth/Account";
 import AdminArea from "./views/auth/adminArea/AdminArea";
@@ -112,8 +112,9 @@ const routes = [
         component: SellerPage
     },
     {
-        path: '/store',
-        component: StoreComponent,
+        path: '/shops',
+        name: 'shops',
+        component: Shops,
     }
 ];
 export default new VueRouter({
