@@ -88,6 +88,26 @@
                 <b-form-input id="litter" v-model="form.litter" type="number" min="0" max="10000000"></b-form-input>
             </b-form-group>
 
+            <b-form-group
+                id="input-sellers"
+                :label="`У каких продавцов продается птица:`"
+                label-for="sellers"
+                description="Сколько единиц помета в час производит птица"
+            >
+                <b-form-checkbox
+                    v-for="seller of getSellers"
+                    :id="`sellers-${seller.id}`"
+                    :name="`sellers-${seller.id}`"
+                    v-model="form.sellers"
+
+                    :key="seller.id"
+                    :value="seller.id"
+                >
+                    {{ seller.name }}
+                </b-form-checkbox>
+            </b-form-group>
+
+
             <!--    price    -->
             <b-form-group
                 id="input-price"
@@ -104,7 +124,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "CreateBird",
@@ -120,10 +140,14 @@ export default {
                 fertility  : this.$route.query.fertility || 1,
                 care       : this.$route.query.care || 10,
                 litter     : this.$route.query.litter || 10,
+                sellers    : this.$route.query.sellers ||[],
                 price      : this.$route.query.price || 100
             },
             error: false
         }
+    },
+    computed: {
+        ...mapGetters(['getSellers'])
     },
     methods: {
         ...mapActions(['createBird', 'updateBird']),

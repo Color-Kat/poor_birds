@@ -31,6 +31,7 @@ class BirdController extends Controller
     public function store(BirdRequest $request)
     {
         $params = $request->all();
+        dd($params);
         $params['image'] = null;
 
         // non image

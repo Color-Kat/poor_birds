@@ -49,9 +49,10 @@ class SellerController extends Controller
      */
     public function show($id)
     {
-        $bird = Seller::find($id);
+        $seller = Seller::find($id);
+//        dump($seller->birds);
 
-        if ($bird == null) {
+        if ($seller == null) {
             return response()->json([
                 "status" => false,
                 "messages" => "Seller not found"
@@ -60,7 +61,7 @@ class SellerController extends Controller
 
         return response()->json([
             "status" => true,
-            "messages" => $bird
+            "messages" => $seller
         ]);
     }
 

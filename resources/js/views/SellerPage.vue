@@ -14,7 +14,8 @@
             <Field :field="getSeller.birds_count"></Field>
             <Field :field="getSeller.price"></Field>
 
-            <b-button class="m-2" variant="primary">Посмотреть товары</b-button>
+            <hr>
+            <h2>Птицы продавца</h2>
         </b-card>
     </div>
 </template>
