@@ -109,7 +109,13 @@ const routes = [
     },
     {
         path: '/sellers/:id',
-        component: SellerPage
+        component: SellerPage,
+        children: [
+            {
+                path: 'birds/:bird_id',
+                component: BirdPage,
+            }
+        ]
     },
     {
         path: '/shops',

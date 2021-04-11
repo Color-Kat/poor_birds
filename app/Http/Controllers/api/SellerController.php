@@ -49,7 +49,7 @@ class SellerController extends Controller
      */
     public function show($id)
     {
-        $seller = Seller::find($id);
+        $seller = Seller::with('birds')->find($id);
 //        dump($seller->birds);
 
         if ($seller == null) {

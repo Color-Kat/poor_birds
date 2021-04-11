@@ -115,8 +115,10 @@ class BirdController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Bird $bird)
     {
-        return Bird::destroy($id);
+        // delete bird->seller relationship
+        $bird->sellers()->detach();
+        return $bird->delete();
     }
 }

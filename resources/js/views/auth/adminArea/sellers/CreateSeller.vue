@@ -88,7 +88,7 @@
             </b-form-group>
 
             <b-button type="submit" variant="primary">Огранизовать компанию</b-button>
-            <b-button type="reset" variant="danger">Сбросить</b-button>
+<!--            <b-button type="reset" variant="danger">Сбросить</b-button>-->
         </b-form>
 
     </div>

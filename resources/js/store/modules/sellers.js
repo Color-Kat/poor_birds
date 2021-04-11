@@ -13,13 +13,16 @@ export default {
             console.log(seller)
             if (seller) {
                 return {
-                    image      : seller.image,
-                    name       : ['Название', seller.name],
-                    description: ['Описание', seller.description],
-                    demand     : ['Бонус на спрос', `${seller.demand}%`],
-                    discount   : ['Бонус к цене', `${seller.discount}%`],
-                    birds_count: ['Кол-во птиц для договора', `${seller.birds_count}`],
-                    price      : ['Цена договора', `${seller.price}руб`],
+                    id          : seller.id,
+                    image       : seller.image,
+                    name        : ['Название', seller.name],
+                    description : ['Описание', seller.description],
+                    demand      : ['Бонус на спрос', `${seller.demand}%`],
+                    discountText: ['Бонус к цене', `${seller.discount}%`],
+                    discount    : seller.discount,
+                    birds_count : ['Кол-во птиц для договора', `${seller.birds_count}`],
+                    price       : ['Цена договора', `${seller.price}руб`],
+                    birds       : seller.birds
                 };
             } else return false
         }
@@ -30,8 +33,8 @@ export default {
                 .then(response => {
                     context.commit('setSellers', response.data);
                 }).catch(err => {
-                console.log('ERROR: ' + err);
-            })
+                    console.log('ERROR: ' + err);
+                })
         },
         createSeller({commit}, form) {
             // convert object to form data
@@ -74,9 +77,9 @@ export default {
                 });
         },
         updateSeller({
-                       commit,
-                       dispatch
-                   }, form) {
+                         commit,
+                         dispatch
+                     }, form) {
             // convert object to form data
             let formData = new FormData();
             for (let key in form) {

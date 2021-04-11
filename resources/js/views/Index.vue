@@ -10,7 +10,7 @@
             покупать им зерно, скворечники, просто гладить и убирать помет😅
         </b-card-text>
 
-        <b-button :to="{name: 'store'}" variant="primary">Купить пташку!</b-button>
+        <b-button :to="{name: 'birds'}" variant="primary">Купить пташку!</b-button>
 
     </b-card>
 </template>

@@ -10,7 +10,6 @@ export default {
         getBird(state) {
             const bird = state.currentBird;
 
-            console.log(bird)
             if (bird) {
                 return {
                     image      : bird.image,

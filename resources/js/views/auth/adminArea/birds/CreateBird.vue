@@ -116,9 +116,12 @@
             >
                 <b-form-input id="price" v-model="form.price" type="number" min="0"></b-form-input>
             </b-form-group>
-            <b-button type="submit" variant="primary">{{Object.keys($route.query).length == 0 ? 'Снести яйцо)' :
-                'Мутировать'}}</b-button>
-            <b-button type="reset" variant="danger">Сбросить</b-button>
+            <b-button type="submit" variant="primary">{{
+                    Object.keys($route.query).length == 0 ? 'Снести яйцо)' :
+                        'Мутировать'
+                }}
+            </b-button>
+            <!--            <b-button type="reset" variant="danger">Сбросить</b-button>-->
         </b-form>
     </div>
 </template>
@@ -130,7 +133,7 @@ export default {
     name: "CreateBird",
     data() {
         return {
-            form: {
+            form : {
                 id         : this.$route.query.id || null,
                 name       : this.$route.query.name || 'Tester',
                 description: this.$route.query.description || 'Тестирует приложение',
@@ -140,7 +143,8 @@ export default {
                 fertility  : this.$route.query.fertility || 1,
                 care       : this.$route.query.care || 10,
                 litter     : this.$route.query.litter || 10,
-                sellers    : JSON.parse(this.$route.query.sellers).map(seller => seller.id) || [],
+                sellers    : this.$route.query.sellers ? JSON.parse(this.$route.query.sellers).map(seller => seller.id)
+                    : [],
                 price      : this.$route.query.price || 100
             },
             error: false
@@ -149,28 +153,31 @@ export default {
     computed: {
         ...mapGetters(['getSellers'])
     },
-    methods: {
+    methods : {
         ...mapActions(['createBird', 'updateBird']),
 
         async onSubmit() {
             // there are parameters, so need to update the bird
             if (Object.keys(this.$route.query).length !== 0) {
                 // if the image is already there, then we replace it
-                let form = {...this.form, image: this.form.image || this.form.imagePath};
+                let form = {
+                    ...this.form,
+                    image: this.form.image || this.form.imagePath
+                };
                 delete form.imagePath; // remove unnecessary
 
                 this.error = !(await this.updateBird(form));
-            }else {
+            } else {
                 // check errors
                 this.error = !(await this.createBird(this.form));
             }
 
             // redirect to admin page
-            if(!this.error) await this.$router.push({name: 'admin-birds'})
+            if (!this.error) await this.$router.push({name: 'admin-birds'})
         },
 
     },
-    mounted(){
+    mounted() {
         console.log(this.$route.query)
         console.log(this.form)
     }

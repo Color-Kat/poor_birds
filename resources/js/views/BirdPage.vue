@@ -15,12 +15,13 @@
             <Field :field="getBird.demand"></Field>
             <Field :field="getBird.litter"></Field>
             <Field :field="getBird.price"></Field>
-
+<!--// TODO получать не птиц, а товар продавцов-->
             <!--            <b-button class="m-2" variant="primary">Купить</b-button>-->
             <hr>
             <h2 class="text-center">Где купить?</h2>
+<!--            TODO описание   -->
             <span class="mb-2">Птицы могут продаваться у разных продавцов. У каких-то дешевле, у каких-то дороже.
-            Но птицы у разных продавцов отличаются: у кого-то продаются птицы с сертификатом, у кого-то</span>
+            Но птицы у разных продавцов отличаются: у кого-то бонус к спросу, у кого-то на кол-во поноса...</span>
             <b-button
                 v-for="seller of getBird.sellers"
                 :to="`/sellers/${seller.id}`"

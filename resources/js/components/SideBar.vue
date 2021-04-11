@@ -8,8 +8,8 @@
                 </b-nav-item>
 
                 <b-nav-item to="/account/birds" active-class="active">Мои птицы</b-nav-item>
-                <b-nav-item :to="{name: 'shops'}" active-class="active">Купить птиц</b-nav-item>
-                <b-nav-item to="/store" active-class="active">Магазин</b-nav-item>
+                <b-nav-item :to="{name: 'shops'}" active-class="active">Продавцы</b-nav-item>
+                <b-nav-item to="/store" active-class="active">Купить птиц</b-nav-item>
             </b-navbar-nav>
         </b-card>
     </aside>
