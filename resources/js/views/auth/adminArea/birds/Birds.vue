@@ -10,7 +10,7 @@
         <!--Current route is /admin_area/birds-->
         <div v-else>
             <CreatePanel message="Создать птицу" route="/admin_area/birds/create"/>
-            
+
             <!--    No birds   -->
             <b-card v-if="getBirds.length == 0">
                 Птичек нет :( <br>
@@ -39,7 +39,8 @@
                             path: `/admin_area/birds/create`,
                             // transfer the bird to create form
                             query: {
-                                ...data.item
+                                ...data.item,
+                                sellers: JSON.stringify(data.item.sellers) // vue router not support nested objects
                             }
                         }">
                             <b-icon icon="pencil-fill"></b-icon>

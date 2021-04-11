@@ -5,7 +5,7 @@ export default {
     },
     getters  : {
         getSellers(state) {
-            console.log(state.sellers)
+            // console.log(state.sellers)
             return state.sellers;
         },
         getSeller(state) {

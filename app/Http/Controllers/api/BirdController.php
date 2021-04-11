@@ -19,7 +19,8 @@ class BirdController extends Controller
      */
     public function index()
     {
-        return Bird::all();
+//        dump();
+        return Bird::with('sellers')->get();
     }
 
     /**
@@ -30,17 +31,26 @@ class BirdController extends Controller
      */
     public function store(BirdRequest $request)
     {
-        $params = $request->all();
-        dd($params);
+        $params          = $request->all();
         $params['image'] = null;
 
-        // non image
-        if($request->image != "null") {
-            $path = $request->file('image')->store('birds');
+
+        // none image
+        if ($request->image != "null") {
+            $path            = $request->file('image')->store('birds');
             $params['image'] = $path;
         }
 
-        return Bird::create($params);
+
+        $bird = Bird::create($params);
+
+        // set relationships bird -> sellers
+        $sellers = $request->input('sellers');
+        if ($sellers) {
+            $bird->sellers()->attach(explode(',', $sellers));
+        }
+
+        return $bird;
     }
 
     /**
@@ -51,17 +61,17 @@ class BirdController extends Controller
      */
     public function show($id)
     {
-        $bird = Bird::find($id);
+        $bird = Bird::with('sellers')->find($id);
 
         if ($bird == null) {
             return response()->json([
-                "status" => false,
+                "status"   => false,
                 "messages" => "Bird not found"
             ])->setStatusCode(404);
         }
 
         return response()->json([
-            "status" => true,
+            "status"   => true,
             "messages" => $bird
         ]);
     }
@@ -78,7 +88,7 @@ class BirdController extends Controller
         $params = $request->all();
 
         /* --- IMAGE --- */
-        if($request->file('image')) {
+        if ($request->file('image')) {
             // image is set
             unset($params['image']); // delete image from params
             Storage::delete($bird->image); // delete old image
@@ -86,6 +96,15 @@ class BirdController extends Controller
         }
         // else image path is old
         /* --- IMAGE --- */
+
+        // set relationships bird -> sellers
+        $sellers = $request->input('sellers');
+        if ($sellers) {
+            // delete all sellers on bird
+            $bird->sellers()->detach();
+
+            $bird->sellers()->attach(explode(',', $sellers));
+        }
 
         return $bird->update($params); // U{^DAT#
     }

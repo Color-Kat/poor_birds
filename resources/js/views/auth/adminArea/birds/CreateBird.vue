@@ -140,7 +140,7 @@ export default {
                 fertility  : this.$route.query.fertility || 1,
                 care       : this.$route.query.care || 10,
                 litter     : this.$route.query.litter || 10,
-                sellers    : this.$route.query.sellers ||[],
+                sellers    : JSON.parse(this.$route.query.sellers).map(seller => seller.id) || [],
                 price      : this.$route.query.price || 100
             },
             error: false
@@ -158,7 +158,7 @@ export default {
                 // if the image is already there, then we replace it
                 let form = {...this.form, image: this.form.image || this.form.imagePath};
                 delete form.imagePath; // remove unnecessary
-                console.log(form)
+
                 this.error = !(await this.updateBird(form));
             }else {
                 // check errors
@@ -171,7 +171,8 @@ export default {
 
     },
     mounted(){
-        // console.log(this.$route.query)
+        console.log(this.$route.query)
+        console.log(this.form)
     }
 }
 </script>
