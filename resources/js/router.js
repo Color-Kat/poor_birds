@@ -33,14 +33,13 @@ const routes = [
         name     : 'index',
         component: Index
     },
-    //     // TODO Сделать защиту от логина, если вошел.
     {
         path     : '/auth/',
         component: Auth,
         // redirect authorized user to account
-        beforeEnter(to, from, next) {
-            console.log(store.getters.getAuth)
-            if (!store.getters.getAuth) next(); // user is not logged in, redirect to to login or registration
+        async beforeEnter(to, from, next) {
+            let auth = await store.dispatch('checkAuth');
+            if (!auth) next(); // user is not logged in, redirect to to login or registration
             else next({name: 'account'}); // user is authorized, redirect to account
         },
         children: [
