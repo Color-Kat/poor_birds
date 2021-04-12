@@ -1,33 +1,41 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Index from './views/Index';
-import Shops from "./views/Shops";
+
 import LoginPage from "./views/auth/LoginPage";
 import Account from "./views/auth/Account";
 import AdminArea from "./views/auth/adminArea/AdminArea";
 
-import CreateBird from "./views/auth/adminArea/birds/CreateBird";
-import Birds from "./views/auth/adminArea/birds/Birds";
-import BirdPage from "./views/BirdPage";
+/* birds */
+import Birds from "./views/birds/Birds"; // birds list
+import BirdPage from "./views/birds/BirdPage"; // bird page
+import Birds_admin from "./views/auth/adminArea/birds/Birds"; // birds list on admin
+import CreateBird from "./views/auth/adminArea/birds/CreateBird"; // create bird on admin
 
-import Sellers from "./views/auth/adminArea/sellers/Sellers";
-import SellerPage from "./views/SellerPage";
+/* sellers */
+import Sellers from "./views/sellers/Sellers";
+import SellerPage from "./views/sellers/SellerPage";
+import Sellers_admin from "./views/auth/adminArea/sellers/Sellers";
+import CreateSeller from "./views/auth/adminArea/sellers/CreateSeller";
+
+/* certificates */
+import Certificates_admin from "./views/auth/adminArea/certificates/Certificates";
+
+import Auth from "./views/auth/Auth";
 
 import store from './store/index';
-import Auth from "./views/auth/Auth";
-import CreateSeller from "./views/auth/adminArea/sellers/CreateSeller";
 
 Vue.use(VueRouter);
 
 const routes = [
     {
-        path: '/',
-        name: 'index',
+        path     : '/',
+        name     : 'index',
         component: Index
     },
     //     // TODO Сделать защиту от логина, если вошел.
     {
-        path: '/auth/',
+        path     : '/auth/',
         component: Auth,
         // redirect authorized user to account
         beforeEnter(to, from, next) {
@@ -37,91 +45,107 @@ const routes = [
         },
         children: [
             {
-                path: 'login',
-                name: 'login',
+                path     : 'login',
+                name     : 'login',
                 component: LoginPage,
-                props: {
+                props    : {
                     currentForm: 'login'
                 },
             },
             {
-                path: 'registration',
-                name: 'registration',
+                path     : 'registration',
+                name     : 'registration',
                 component: LoginPage,
-                props: {
+                props    : {
                     currentForm: 'registration'
                 }
             }
         ]
     },
     {
-        path: '/account',
-        name: 'account',
+        path     : '/account',
+        name     : 'account',
         component: Account,
     },
     {
-        path: '/admin_area/',
-        name: 'admin_area',
+        path     : '/admin_area/',
+        name     : 'admin_area',
         component: AdminArea,
-        children: [
+        children : [
             {
-                path: 'birds',
-                component: Birds,
-                name: 'admin-birds',
-                children: [
-                    {
-                        path: 'create',
-                        component: CreateBird,
-                        props: true
-                    },
-                    // {
-                    //     path: 'update/:id',
-                    //     component: CreateBird,
-                    //     props: true
-                    // },
-                ]
+                path     : 'birds',
+                component: Birds_admin,
+                name     : 'admin-birds',
+                children : [{
+                    path     : 'create',
+                    component: CreateBird,
+                    props    : true
+                }]
             },
             {
-                path: 'sellers',
-                component: Sellers,
-                name: 'admin-sellers',
-                children: [
-                    {
-                        path: 'create',
+                path     : 'sellers',
+                component: Sellers_admin,
+                name     : 'admin-sellers',
+                children : [{
+                        path     : 'create',
                         component: CreateSeller,
-                        props: true
-                    }
-                ]
+                        props    : true
+                    }]
             },
             {
-                path: 'birdhouses',
-                component: Birds,
+                path     : 'certificates',
+                component: Certificates_admin,
+                name     : 'admin-certificates',
+                // children : [{
+                //     path     : 'create',
+                //     component: CreateCertificate,
+                //     props    : true
+                // }]
             },
             {
-                path: 'instruments',
-                component: Birds,
+                path     : 'instruments',
+                component: Birds_admin,
             }
         ]
     },
+    /* ------------ BIRDS ------------- */
     {
-        path: '/birds/:id',
+        path     : '/birds',
+        name     : 'birds',
+        component: Birds,
+    },
+    {
+        // just bird page
+        path     : '/birds/:bird_id',
         component: BirdPage
     },
     {
-        path: '/sellers/:id',
-        component: SellerPage,
-        children: [
-            {
-                path: 'birds/:bird_id',
-                component: BirdPage,
-            }
-        ]
+        // page with seller's bird
+        path     : '/sellers/:seller_id/birds/:bird_id',
+        component: BirdPage
+    },
+
+    /* ---------- SELLERS -----------*/
+    {
+        path     : '/sellers',
+        name     : 'sellers',
+        component: Sellers,
     },
     {
-        path: '/shops',
-        name: 'shops',
-        component: Shops,
-    }
+        path     : '/sellers/:id',
+        component: SellerPage,
+    },
+
+    /* ---------- CERTIFICATE ----------*/
+    // {
+    //     path     : '/certificates',
+    //     name     : 'certificates',
+    //     component: Certificates,
+    // },
+    // {
+    //     path     : '/certificates/:id',
+    //     component: CertificatePage,
+    // },
 ];
 export default new VueRouter({
     mode: 'history',

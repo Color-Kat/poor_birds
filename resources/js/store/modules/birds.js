@@ -74,20 +74,50 @@ export default {
                     console.log(error);
                 });
         },
-        fetchBird({commit}, id) {
-            return axios.get(
-                `api/birds/${id}`
-            )
-                .then(response => {
-                    if (response.data.status) {
-                        commit('setCurrentBird', response.data.messages);
+        fetchBird({commit}, ids) {
+            const bird_id   = ids.bird_id,
+                  seller_id = ids.seller_id;
+            // console.log(bird_id, seller_id)
+            // need to find just bird
+            if (!seller_id) {
+                return axios.get(
+                    `api/birds/${bird_id}`
+                )
+                    .then(response => {
+                        if (response.data.status) {
+                            commit('setCurrentBird', response.data.messages);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+            // need to fin bird of specific seller
+            if (seller_id) {
+                return axios.post(
+                    `api/sellers/getBird`,
+                    {
+                        seller_id,
+                        bird_id
                     }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+                )
+                    .then(response => {
+                        // console.log(response)
+                        // TODO получать птиц продавца уже с сертификатом
+                        // console.log(123)
+                        if (response.data.status) {
+                            commit('setCurrentBird', response.data.messages);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
         },
-        updateBird({commit, dispatch}, form) {
+        updateBird({
+                       commit,
+                       dispatch
+                   }, form) {
             // convert object to form data
             let formData = new FormData();
             for (let key in form) {
@@ -98,7 +128,7 @@ export default {
 
             return axios.post(
                 `api/birds/${form.id}`,
-                 formData,
+                formData,
                 {headers: {'Content-Type': 'multipart/form-data'}}
             )
                 .then(response => {

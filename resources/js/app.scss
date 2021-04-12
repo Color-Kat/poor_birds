@@ -64,19 +64,21 @@ $body-color: #4a4a4a;
 
     @media screen and (min-width: 2000px) {
         & {
-            grid-template-columns: 1fr 1fr 1fr 1fr !important;
+            //grid-template-columns: 1fr 1fr 1fr 1fr !important;
             column-count: 4 !important;
         }
     }
     @media screen and (min-width: 1300px) {
         & {
-            grid-template-columns: 1fr 1fr 1fr;
+            //grid-template-columns: 1fr 1fr 1fr;
             column-count: 3;
         }
     }
-    @media screen and (max-width: 950px) {
+    @media screen and (max-width: 470px) {
         & {
-            grid-template-columns: 1fr !important;
+            h4{font-size: 1.3em;}
+            .card-text{font-size: 0.9em}
+            //grid-template-columns: 1fr !important;
             column-count: 1 !important;
         }
     }
@@ -134,7 +136,7 @@ $body-color: #4a4a4a;
     @media screen and (min-width: 1300px) {
         & {grid-template-columns: 1fr 1fr 1fr;}
     }
-    @media screen and (max-width: 950px) {
+    @media screen and (max-width: 500px) {
         & {grid-template-columns: 1fr !important;}
     }
 

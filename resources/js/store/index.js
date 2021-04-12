@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex';
+
 import birds from './modules/birds.js';
 import user from './modules/user.js';
 import sellers from './modules/sellers.js';
+import certificates from './modules/certificates.js';
 
 // import Axios from "axios";
 
@@ -11,7 +13,8 @@ export default new Vuex.Store({
     modules: {
         birds,
         user,
-        sellers
+        sellers,
+        certificates
     },
     state: {
         active_sideBar: false
@@ -23,6 +26,7 @@ export default new Vuex.Store({
             await dispatch('fetchUser'); // if (auth) - initial user
             await dispatch('fetchBirds'); // fetch birds
             await dispatch('fetchSellers'); // fetch birds
+            await dispatch('fetchCertificates'); // fetch certificates
         },
         toggle_sideBar({commit, state}, payload = null) {
             if( payload !== null ) commit('toggle_active_sideBar', payload);
