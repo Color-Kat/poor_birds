@@ -24,6 +24,7 @@ import Certificates_admin from "./views/auth/adminArea/certificates/Certificates
 import Auth from "./views/auth/Auth";
 
 import store from './store/index';
+import CreateCertificate from "./views/auth/adminArea/certificates/CreateCertificate";
 
 Vue.use(VueRouter);
 
@@ -95,11 +96,11 @@ const routes = [
                 path     : 'certificates',
                 component: Certificates_admin,
                 name     : 'admin-certificates',
-                // children : [{
-                //     path     : 'create',
-                //     component: CreateCertificate,
-                //     props    : true
-                // }]
+                children : [{
+                    path     : 'create',
+                    component: CreateCertificate,
+                    props    : true
+                }]
             },
             {
                 path     : 'instruments',

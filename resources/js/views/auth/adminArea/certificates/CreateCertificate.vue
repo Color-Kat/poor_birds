@@ -1,0 +1,166 @@
+<template>
+    <div class="p-3">
+        <b-form
+            @submit.prevent="onSubmit"
+        >
+            <b-alert variant="danger" :show="error">Произошла какая-то ошибка</b-alert>
+
+            <!--      NAME      -->
+            <b-form-group
+                id="input-name"
+                label="Название сертификата:"
+                label-for="name"
+            >
+                <b-form-input
+                    id="name"
+                    v-model="form.name"
+                    type="text"
+                    placeholder=""
+                    required
+                    minLength="3"
+                ></b-form-input>
+            </b-form-group>
+
+            <!--    DEMAND_BONUS (спрос)    -->
+            <b-form-group
+                id="input-demand"
+                :label="`Бонус к спросу на яйца:`"
+                label-for="demand"
+                description='На сколько % изменится характеристика "спрос" у птицы с этим сертификатом'
+            >
+                <b-form-input id="demand" v-model="form.demand_bonus" type="number" min="-100"></b-form-input>
+            </b-form-group>
+
+            <!--    fertility_bonus (плодоносность)    -->
+            <b-form-group
+                id="input-fertility"
+                :label="`Бонуск к плодоносности:`"
+                label-for="fertility"
+                description='На сколько % изменится характеристика "плодоносность" у птицы с этим сертификатом'
+            >
+                <b-form-input
+                    id="fertility" v-model="form.fertility_bonus" type="number" min="-100"
+                ></b-form-input>
+            </b-form-group>
+
+            <!--    care_bonus (забота)    -->
+            <b-form-group
+                id="input-care"
+                :label="`Бонус к заботе:`"
+                label-for="care"
+                description='На сколько % изменится характеристика "бонус за заботу" у птицы с этим сертификатом'
+            >
+                <b-form-input id="care" v-model="form.care_bonus" type="number" min="-100"></b-form-input>
+            </b-form-group>
+
+            <!--    litter_bonus (помёт)    -->
+            <b-form-group
+                id="input-litter"
+                :label="`Бонус к кол-ву помета:`"
+                label-for="litter"
+                description='На сколько % изменится характеристика "помет" у птицы с этим сертификатом'
+            >
+                <b-form-input id="litter" v-model="form.litter_bonus" type="number" min="-100"></b-form-input>
+            </b-form-group>
+
+            <!--    price_bonus    -->
+            <b-form-group
+                id="input-price-bonus"
+                :label="`Бонус к цене яиц:`"
+                label-for="price-bonus"
+                description='На сколько % изменится характеристика "цена яиц" у птицы с этим сертификатом'
+            >
+                <b-form-input id="price-bonus" v-model="form.price_bonus" type="number" min="-100"></b-form-input>
+            </b-form-group>
+
+            <!--    price    -->
+            <b-form-group
+                id="input-price"
+                :label="`Цена сертификата:`"
+                label-for="price"
+            >
+                <b-form-input id="price" v-model="form.price" type="number" min="0"></b-form-input>
+            </b-form-group>
+
+            <!--    minimum_birds_price    -->
+            <b-form-group
+                id="input-minimum_birds_price"
+                :label="`Цена птиц:`"
+                label-for="minimum_birds_price"
+                description="Минимальная цена птиц, на которых будет действовать сертификат"
+            >
+                <b-form-input
+                    id="minimum_birds_price" v-model="form.minimum_birds_price" type="number" min="0"
+                ></b-form-input>
+            </b-form-group>
+
+            <b-button type="submit" variant="primary">
+                {{
+                    Object.keys($route.query).length == 0 ?
+                        'Зарегистрировать' :
+                        'Обновить'
+                }}
+            </b-button>
+            <!--            <b-button type="reset" variant="danger">Сбросить</b-button>-->
+        </b-form>
+    </div>
+</template>
+
+<script>
+import {mapActions, mapGetters} from "vuex";
+
+export default {
+    name: "CreateBird",
+    data() {
+        return {
+            form : {
+                id                 : this.$route.query.id || null,
+                name               : this.$route.query.name || 'Сертификат',
+                demand_bonus       : this.$route.query.demand_bonus || 0,
+                fertility_bonus    : this.$route.query.fertility_bonus || 0,
+                care_bonus         : this.$route.query.care_bonus || 0,
+                litter_bonus       : this.$route.query.litter_bonus || 0,
+                minimum_birds_price: this.$route.query.minimum_birds_price || 0,
+                price_bonus        : this.$route.query.price_bonus || 0,
+                price              : this.$route.query.price || 100,
+            },
+            error: false
+        }
+    },
+    computed: {
+        ...mapGetters(['getSellers'])
+    },
+    methods : {
+        ...mapActions(['createBird', 'updateBird']),
+
+        async onSubmit() {
+            // there are parameters, so need to update the bird
+            if (Object.keys(this.$route.query).length !== 0) {
+                // if the image is already there, then we replace it
+                let form = {
+                    ...this.form,
+                    image: this.form.image || this.form.imagePath
+                };
+                delete form.imagePath; // remove unnecessary
+
+                this.error = !(await this.updateBird(form));
+            } else {
+                // check errors
+                this.error = !(await this.createBird(this.form));
+            }
+
+            // redirect to admin page
+            if (!this.error) await this.$router.push({name: 'admin-birds'})
+        },
+
+    },
+    mounted() {
+        console.log(this.$route.query)
+        console.log(this.form)
+    }
+}
+</script>
+
+<style scoped>
+
+</style>

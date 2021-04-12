@@ -9,7 +9,7 @@
         <!--   Show all birds    -->
         <!--Current route is /admin_area/birds-->
         <div v-else>
-            <CreatePanel message="Создать птицу" route="/admin_area/birds/create"/>
+            <CreatePanel message="Зарегистрировать сертификат" route="/admin_area/certificates/create"/>
 <!--{{getCertificates}}-->
             <!--    No birds   -->
             <b-card v-if="getCertificates.length == 0">
@@ -22,19 +22,14 @@
             <div v-else>
 
                 <b-table striped hover :items="getCertificates" :fields="fields">
-
-                    <!--      IMAGE      -->
-                    <template #cell(image)="data">
-                        <img height="80px" :src="`/storage/${data.item.image}`" alt="">
-                    </template>
-                    <!--      IMAGE      -->
-
                     <!--      ACTIONS      -->
                     <template #cell(actions)="data">
+                        <!--          view           -->
                         <b-button variant="success" :to="`/certificates/${data.item.id}`">
                             <b-icon icon="eye-fill"></b-icon>
                         </b-button>
 
+                        <!--          edit           -->
                         <b-button variant="warning" :to="{
                             // path: `/admin_area/birds/update/${data.item.id}`,
                             path: `/admin_area/certificate/create`,
@@ -47,6 +42,7 @@
                             <b-icon icon="pencil-fill"></b-icon>
                         </b-button>
 
+                        <!--          delete           -->
                         <b-button variant="danger" @click="()=>{deleteCertificate(data.item.id);}">
                             <b-icon icon="trash-fill"></b-icon>
                         </b-button>
@@ -80,11 +76,6 @@ export default {
                 key  : 'id',
                 label: 'Id'
             },
-
-            {
-                key  : 'image',
-                label: 'Птичка'
-            },
             {
                 key  : 'name',
                 label: 'Название'
@@ -92,10 +83,6 @@ export default {
             {
                 key  : 'price',
                 label: 'Цена'
-            },
-            {
-                key  : 'fertility',
-                label: 'Яиц/час'
             },
             {
                 key  : 'actions',
