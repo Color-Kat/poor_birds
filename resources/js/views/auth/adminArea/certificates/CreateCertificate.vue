@@ -94,6 +94,17 @@
                 ></b-form-input>
             </b-form-group>
 
+            <b-form-group
+                id="input-grade"
+                :label="`Оценка сертификата:`"
+                label-for="grade"
+                description="То на сколько сертификат крутой :) Определяет иконку сертификата"
+            >
+                <b-form-input
+                    id="grade" v-model="form.grade" type="number" min="0" max="10"
+                ></b-form-input>
+            </b-form-group>
+
             <b-button type="submit" variant="primary">
                 {{
                     Object.keys($route.query).length == 0 ?
@@ -122,41 +133,35 @@ export default {
                 litter_bonus       : this.$route.query.litter_bonus || 0,
                 minimum_birds_price: this.$route.query.minimum_birds_price || 0,
                 price_bonus        : this.$route.query.price_bonus || 0,
+                grade              : this.$route.query.grade || 0,
                 price              : this.$route.query.price || 100,
             },
             error: false
         }
     },
     computed: {
-        ...mapGetters(['getSellers'])
+        ...mapGetters(['getCertificates'])
     },
     methods : {
-        ...mapActions(['createBird', 'updateBird']),
+        ...mapActions(['createCertificate', 'updateCertificate']),
 
         async onSubmit() {
-            // there are parameters, so need to update the bird
-            if (Object.keys(this.$route.query).length !== 0) {
-                // if the image is already there, then we replace it
-                let form = {
-                    ...this.form,
-                    image: this.form.image || this.form.imagePath
-                };
-                delete form.imagePath; // remove unnecessary
-
-                this.error = !(await this.updateBird(form));
-            } else {
+            // there are parameters, so need to update the certificate
+            if (Object.keys(this.$route.query).length !== 0)
+                this.error = !(await this.updateCertificate(this.form));
+            else
                 // check errors
-                this.error = !(await this.createBird(this.form));
-            }
+                this.error = !(await this.createCertificate(this.form));
 
+            console.log(this.error);
             // redirect to admin page
-            if (!this.error) await this.$router.push({name: 'admin-birds'})
+            if (!this.error) await this.$router.push({name: 'admin-certificates'})
         },
 
     },
     mounted() {
         console.log(this.$route.query)
-        console.log(this.form)
+        // console.log(this.form)
     }
 }
 </script>

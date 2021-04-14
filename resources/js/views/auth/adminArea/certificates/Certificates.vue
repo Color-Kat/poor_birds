@@ -22,6 +22,12 @@
             <div v-else>
 
                 <b-table striped hover :items="getCertificates" :fields="fields">
+                    <!--      IMAGE      -->
+                    <template #cell(grade)="data">
+                        <img height="80px" :src="`/storage/certificates/${data.item.grade}.jpg`" alt="">
+                    </template>
+                    <!--      IMAGE      -->
+
                     <!--      ACTIONS      -->
                     <template #cell(actions)="data">
                         <!--          view           -->
@@ -32,7 +38,7 @@
                         <!--          edit           -->
                         <b-button variant="warning" :to="{
                             // path: `/admin_area/birds/update/${data.item.id}`,
-                            path: `/admin_area/certificate/create`,
+                            path: `/admin_area/certificates/create`,
                             // transfer the bird to create form
                             query: {
                                 ...data.item,
@@ -75,6 +81,10 @@ export default {
             {
                 key  : 'id',
                 label: 'Id'
+            },
+            {
+                key: 'grade',
+                label: 'Иконка'
             },
             {
                 key  : 'name',

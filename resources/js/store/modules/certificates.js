@@ -9,20 +9,54 @@ export default {
         },
         getCertificate(state) {
             const certificate = state.currentCertificate;
+            let grade         = '';
+            if (certificate.grade === 0) {
+                grade = 'поддельный'
+            }
+            if (certificate.grade === 1) {
+                grade = 'с опечаткой'
+            }
+            if (certificate.grade === 2) {
+                grade = 'палёный'
+            }
+            if (certificate.grade === 3) {
+                grade = 'плохой'
+            }
+            if (certificate.grade === 4) {
+                grade = 'обычный'
+            }
+            if (certificate.grade === 5) {
+                grade = 'путный'
+            }
+            if (certificate.grade === 6) {
+                grade = 'хороший'
+            }
+            if (certificate.grade === 7) {
+                grade = 'бронзовый'
+            }
+            if (certificate.grade === 8) {
+                grade = 'серебряный'
+            }
+            if (certificate.grade === 9) {
+                grade = 'золотой'
+            }
+            if (certificate.grade === 10) {
+                grade = 'легендарный'
+            }
 
-            // if (bird) {
-            //     return {
-            //         image      : bird.image,
-            //         name       : ['Название', bird.name],
-            //         description: ['Описание', bird.description],
-            //         fertility  : ['Плодоносность', `${bird.fertility} яиц/час`],
-            //         care       : ['Бонус за заботу', `${bird.care}% к плодовитости на 1 час`],
-            //         demand     : ['Спрос на яйца', `${bird.demand} яиц/час`],
-            //         litter     : ['Кол-во помета', `${bird.litter} ед./час`],
-            //         price      : ['Цена', `${bird.price}`],
-            //         sellers    : bird.sellers
-            //     };
-            // } else return false
+            if (certificate) {
+                return {
+                    name           : ['Название', certificate.name],
+                    grade          : grade,
+                    grade_id       : certificate.grade,
+                    fertility_bonus: ['Бонус к плодоносности', `${certificate.fertility_bonus} яиц/час`],
+                    care_bonus     : ['Бонус к заботу', `${certificate.care_bonus}%`],
+                    demand_bonus   : ['Бонус на спрос', `${certificate.demand_bonus}%`],
+                    litter_bonus   : ['Бонус на кол-во помета', `${certificate.litter_bonus} %`],
+                    price_bonus    : ['Бонус к цене яиц', `${certificate.price_bonus}%`],
+                    price          : ['Цена', `${certificate.price}руб.`],
+                };
+            } else return false
         }
     },
     actions  : {
@@ -35,28 +69,18 @@ export default {
             })
         },
         createCertificate({commit}, form) {
-            // convert object to form data
-            let formData = new FormData();
-            for (let key in form) {
-                formData.append(key, form[key]);
-            }
-
-            // set header to upload image file
             return axios.post(
                 'api/certificates',
-                formData,
-                {headers: {'Content-Type': 'multipart/form-data'}}
+                form
             )
                 .then(response => {
-                    console.log(response)
                     if (response.status === 201) {
                         commit('addCertificate', response.data);
-
                         return true;
-                    } else return false
+                    } else return false;
                 })
                 .catch((error) => {
-                    console.log(error.response);
+                    console.log(error, error.response);
                     return false
                 });
         },
@@ -65,20 +89,19 @@ export default {
                               dispatch
                           }, form) {
             // convert object to form data
-            let formData = new FormData();
-            for (let key in form) {
-                formData.append(key, form[key]);
-            }
-
-            formData.append('_method', 'PATCH'); // set PATCH method
-
+            // let formData = new FormData();
+            // for (let key in form) {
+            //     formData.append(key, form[key]);
+            // }
+            //
+            // formData.append('_method', 'PATCH'); // set PATCH method
             return axios.post(
                 `api/certificates/${form.id}`,
-                formData,
-                {headers: {'Content-Type': 'multipart/form-data'}}
+                {...form, _method: 'PATCH'}
             )
                 .then(response => {
-                    dispatch('fetchCertificate');
+                    console.log(response)
+                    dispatch('fetchCertificates');
                     return response;
                 })
                 .catch((error) => {
@@ -102,7 +125,7 @@ export default {
         },
         fetchCertificate({commit}, id) {
             return axios.get(
-                `api/certificate/${id}`
+                `api/certificates/${id}`
             )
                 .then(response => {
                     if (response.data.status) {
@@ -121,12 +144,12 @@ export default {
             state.certificates = certificate;
         },
         addCertificate(state, certificate) {
-            state.certificate.push(certificate);
+            state.certificates.push(certificate);
         },
         deleteCertificate(state, id) {
             state.certificates.forEach((certificate, i) => {
                 if (certificate.id === id)
-                    state.certificate.splice(i, 1);
+                    state.certificates.splice(i, 1);
             });
         },
         setCurrentCertificate(state, certificate) {

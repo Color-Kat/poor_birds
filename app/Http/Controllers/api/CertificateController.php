@@ -27,7 +27,7 @@ class CertificateController extends Controller
     public function store(Request $request)
     {
 
-        return Certificate::create($request->all);
+        return Certificate::create($request->all());
     }
 
     /**

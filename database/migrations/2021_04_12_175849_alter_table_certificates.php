@@ -14,6 +14,7 @@ class AlterTableCertificates extends Migration
     public function up()
     {
         Schema::table('certificates', function (Blueprint $table) {
+            $table->tinyInteger('grade')->default(0)->after('name');
             $table->mediumInteger('price_bonus')->default(50)->after('name');
             $table->mediumInteger('fertility_bonus')->default(50)->after('name');
             $table->mediumInteger('litter_bonus')->default(50)->after('name');
@@ -35,6 +36,7 @@ class AlterTableCertificates extends Migration
             $table->dropColumn('litter_bonus');
             $table->dropColumn('demand_bonus');
             $table->dropColumn('care_bonus');
+            $table->dropColumn('grade');
         });
     }
 }
