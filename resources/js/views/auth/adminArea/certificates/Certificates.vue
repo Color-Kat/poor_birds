@@ -66,7 +66,7 @@ import {mapGetters, mapActions} from "vuex";
 import CreatePanel from "../../../../components/adminArea/CreatePanel";
 
 export default {
-    name    : "Birds",
+    name    : "Certificates",
     computed: {
         ...mapGetters(['getCertificates'])
     },

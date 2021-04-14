@@ -1,29 +1,34 @@
 <template>
     <div id="store">
         <b-card>
-            <h2 class="text-center">Списко птиц</h2>
-            <span>В этом списке находятся все птицы. Но купить их можно только у продавцов, у каких именно -
-                выбирать вам. Вы можете купить птицу задешево на базаре, но за торговлю ее яйцами вам будут
-                прилетать штрафы. </span>
+            <h2 class="text-center">Сертификаты</h2>
+            <span>Сертификат - бумага, которая выдается врачом после осмотра, лечения или
+                    генного усовершенствования птицы. Птица, у которой есть сертификат будет получать различные
+                    бонусы, прописанные в сертификате. Например, увеличенная плодоносность, повышенный спрос на
+                    яйца и тд. Каждой птице можно купить только один сертификат. При покупке второго, первый
+                    удаляется. Так же, если покупать птиц у некоторых продавцов, у них уже будет готовый
+                    сертификат (Какой сертификат, зависит от продавца)</span>
 
             <hr>
-            <h2>Птицы:</h2>
+            <h2>Сертификаты:</h2>
 
-            <div class="mt-2 grid-cards-columns">
+            <div class="mt-2 grid-cards-columns grid-cards-columns-small">
                 <b-card
-                    v-for="bird of getBirds"
+                    v-for="certificate of getCertificates"
                     class="mb-2 card-item"
-                    :title="bird.name"
-                    :img-src="`/storage/${bird.image}`"
-                    :img-alt="bird.name"
+                    :title="certificate.name"
+                    :img-src="`/storage/certificates/${certificate.grade}.jpg`"
+                    :img-alt="certificate.name"
                     img-top
                     tag="article"
 
-                    @click="()=>redirect(bird.id)"
-                    :key="bird.id"
+                    @click="()=>redirect(certificate.id)"
+                    :key="certificate.id"
                 >
                     <b-card-text>
-                        {{ bird.description }}
+                        <b-badge>Бонус к плодовитости {{ certificate.fertility_bonus }}%</b-badge>
+                        <b-badge>Бонус к цене {{ certificate.fertility_bonus }}%</b-badge>
+                        <b-badge>Цена {{ certificate.price }}руб</b-badge>
                     </b-card-text>
 
                     <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
@@ -39,16 +44,16 @@ import {mapGetters} from 'vuex';
 export default {
     name: "Store",
     mounted() {
-        // this.$store.dispatch('fetchBirds');
+        // this.$store.dispatch('fetchcertificates');
     },
     computed: {
         ...mapGetters([
-            'getBirds',
+            'getCertificates',
         ])
     },
     methods : {
         redirect(id) {
-            this.$router.push(`/birds/${id}`)
+            this.$router.push(`/certificates/${id}`)
         }
     }
 }

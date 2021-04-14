@@ -26,6 +26,7 @@ import Auth from "./views/auth/Auth";
 import store from './store/index';
 import CreateCertificate from "./views/auth/adminArea/certificates/CreateCertificate";
 import CertificatePage from "./views/certificates/CertificatePage";
+import Certificates from "./views/certificates/Certificates";
 
 Vue.use(VueRouter);
 
@@ -138,11 +139,11 @@ const routes = [
     },
 
     /* ---------- CERTIFICATE ----------*/
-    // {
-    //     path     : '/certificates',
-    //     name     : 'certificates',
-    //     component: Certificates,
-    // },
+    {
+        path     : '/certificates',
+        name     : 'certificates',
+        component: Certificates,
+    },
     {
         path     : '/certificates/:id',
         component: CertificatePage,
