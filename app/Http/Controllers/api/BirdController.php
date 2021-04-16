@@ -19,7 +19,6 @@ class BirdController extends Controller
      */
     public function index()
     {
-//        dump();
         return Bird::with('sellers')->get();
     }
 

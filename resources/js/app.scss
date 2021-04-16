@@ -23,9 +23,13 @@ $body-color: #4a4a4a;
     .card-item {
         display: inline-block;
         height: max-content;
-        margin: 25px 0;
+        margin-bottom: 25px;
         width: 100%;
         cursor: pointer;
+
+        float: left;
+        page-break-inside: avoid;
+        break-inside: avoid;
 
         transition: all .1s ease-in-out;
 
@@ -92,7 +96,7 @@ $body-color: #4a4a4a;
             }
 
             .card-body {
-
+                border: none;
                 height: 100% !important;
             }
         }

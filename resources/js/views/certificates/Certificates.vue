@@ -28,7 +28,7 @@
                     <b-card-text>
                         <b-badge>Бонус к плодовитости {{ certificate.fertility_bonus }}%</b-badge>
                         <b-badge>Бонус к цене {{ certificate.fertility_bonus }}%</b-badge>
-                        <b-badge>Цена {{ certificate.price }}руб</b-badge>
+                        <b-badge variant="primary">Цена {{ certificate.price }}руб</b-badge>
                     </b-card-text>
 
                     <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->

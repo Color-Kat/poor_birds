@@ -20,6 +20,18 @@ class User extends Authenticatable implements JWTSubject
         'name', 'email', 'password',
     ];
 
+    public function my_birds() {
+        // sold_bird is alias. Real table is bird_seller
+//        return $this->belongsToMany('App\models\Sold_bird', 'bird_seller_user', 'user_id', 'bird_seller_id')
+
+        return $this->belongsToMany(
+            'App\models\Sold_bird',
+            'bird_seller_user',
+            'user_id',
+            'bird_seller_id');
+//            ->with('birds');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *
