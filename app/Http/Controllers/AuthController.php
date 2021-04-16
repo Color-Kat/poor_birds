@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use App\User;
-use Illuminate\Validation\Validator;
 use Validator;
 
 
@@ -142,9 +141,10 @@ class AuthController extends Controller
 //        dump(User::with('sold_birds')->find(1));
 //        dump(auth()->user()->with('sold_birds')->get());
 //        return response()->json(auth()->user());
-//        dump(auth()->user()->load('sold_birds'));
+//        dump(auth()->user()->with('my_birds')->get());
 //        return response()->json(auth()->user()->with('sold_birds')->get());
         return response()->json(auth()->user()->load('my_birds'));
+//        return response()->json(auth()->user());
     }
 
     /**

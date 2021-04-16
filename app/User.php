@@ -28,8 +28,8 @@ class User extends Authenticatable implements JWTSubject
             'App\models\Sold_bird',
             'bird_seller_user',
             'user_id',
-            'bird_seller_id');
-//            ->with('birds');
+            'bird_seller_id')
+            ->with('birds');
     }
 
     /**
