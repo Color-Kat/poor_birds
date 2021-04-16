@@ -29,7 +29,8 @@ class User extends Authenticatable implements JWTSubject
             'bird_seller_user',
             'user_id',
             'bird_seller_id')
-            ->with('birds');
+            ->with('bird')
+            ->with('seller');
     }
 
     /**

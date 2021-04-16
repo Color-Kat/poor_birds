@@ -12,4 +12,8 @@ class Seller extends Model
     {
         return $this->belongsToMany('App\models\Bird');
     }
+
+    public function certificate() {
+        return $this->belongsTo('App\models\Certificate');
+    }
 }

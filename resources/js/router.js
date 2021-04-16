@@ -27,6 +27,7 @@ import store from './store/index';
 import CreateCertificate from "./views/auth/adminArea/certificates/CreateCertificate";
 import CertificatePage from "./views/certificates/CertificatePage";
 import Certificates from "./views/certificates/Certificates";
+import MyBirdsPage from "./views/auth/MyBirdsPage";
 
 Vue.use(VueRouter);
 
@@ -64,11 +65,21 @@ const routes = [
             }
         ]
     },
+    /* ACCOUNT */
     {
         path     : '/account',
         name     : 'account',
         component: Account,
     },
+
+    /* MY BIRDS PAGE */
+    {
+        path: '/account/my_birds',
+        name: 'my_birds',
+        component: MyBirdsPage
+    },
+
+    /* ADMIN AREA */
     {
         path     : '/admin_area/',
         name     : 'admin_area',

@@ -143,8 +143,20 @@ class AuthController extends Controller
 //        return response()->json(auth()->user());
 //        dump(auth()->user()->with('my_birds')->get());
 //        return response()->json(auth()->user()->with('sold_birds')->get());
-        return response()->json(auth()->user()->load('my_birds'));
-//        return response()->json(auth()->user());
+//        return response()->json(auth()->user()->load('my_birds'));
+        return response()->json(auth()->user());
+    }
+
+    public function get_user_birds()
+    {
+        $user = auth()->user()->my_birds()->get();
+//        dump($user);
+//        dd($user->my);
+//        $birds = $user->my_birds->birds;
+//        $sellers = $user->my_birds->sellers;
+//        dd($sellers);
+//        return response()->json(auth()->user()->my_birds);
+        return response()->json($user);
     }
 
     /**

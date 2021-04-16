@@ -2,7 +2,8 @@ export default {
     state    : {
         user        : null,
         auth        : null,
-        access_token: localStorage.getItem('access_token') ? localStorage.getItem('access_token') : ''
+        access_token: localStorage.getItem('access_token') ? localStorage.getItem('access_token') : '',
+        user_birds  : []
     },
     getters  : {
         getUserName(state) {
@@ -173,18 +174,39 @@ export default {
                         commit('set_Access_token', '');
                     });
             }
-        }
+        },
+        fetchUserBirds({commit, state}) {
+            if (!state.access_token) return false;
+
+            // fetch to api check_auth
+            return axios.get(
+                'api/auth/get_user_birds',
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    if (response.status === 200) {
+                        commit('setUserBirds', response.data); // update auth
+                    }
+                })
+                .catch((error) => {
+                    console.log('ERROR: ', error, error.response);
+                });
+        },
     },
     mutations: {
         setUser(state, user) {
-            return state.user = user;
+            state.user = user;
         },
         setAuth(state, auth) {
-            return state.auth = auth;
+            state.auth = auth;
         },
         set_Access_token(state, token) {
             localStorage.setItem('access_token', token);
-            return state.access_token = token;
+            state.access_token = token;
+        },
+        setUserBirds(state, birds) {
+            console.log(birds)
+            state.user_birds.push(birds);
         }
     }
 }
