@@ -34,12 +34,13 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
     name: "Store",
     mounted() {
         // this.$store.dispatch('fetchBirds');
+        this.fetchBirds();
     },
     computed: {
         ...mapGetters([
@@ -49,7 +50,8 @@ export default {
     methods : {
         redirect(id) {
             this.$router.push(`/birds/${id}`)
-        }
+        },
+        ...mapActions(['fetchBirds'])
     }
 }
 </script>

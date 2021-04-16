@@ -70,7 +70,7 @@ export default {
     },
     components: {CreatePanel},
     methods: {
-        ...mapActions(['deleteSeller'])
+        ...mapActions(['deleteSeller', 'fetchSellers'])
     },
     data      : () => ({
         fields: [
@@ -101,8 +101,8 @@ export default {
             }
         ]
     }),
-    created() {
-        // console.log(this.getSellers)
+    mounted() {
+        this.fetchSellers();
     }
 }
 </script>

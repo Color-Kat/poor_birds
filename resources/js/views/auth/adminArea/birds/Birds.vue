@@ -68,7 +68,7 @@ export default {
         ...mapGetters(['getBirds'])
     },
     methods: {
-        ...mapActions(['deleteBird'])
+        ...mapActions(['deleteBird', 'fetchBirds'])
     },
     components: {
         CreatePanel
@@ -102,6 +102,9 @@ export default {
             }
         ]
     }),
+    mounted() {
+        this.fetchBirds();
+    }
     // created() {
     //     console.log(this.$route)
     // }

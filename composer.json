@@ -15,6 +15,7 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.5",
+        "maximebf/debugbar": "^1.16",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
