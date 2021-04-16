@@ -39,13 +39,10 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
     name: "Store",
-    mounted() {
-        // this.$store.dispatch('fetchcertificates');
-    },
     computed: {
         ...mapGetters([
             'getCertificates',
@@ -54,8 +51,12 @@ export default {
     methods : {
         redirect(id) {
             this.$router.push(`/certificates/${id}`)
-        }
-    }
+        },
+        ...mapActions(['fetchCertificates'])
+    },
+    mounted() {
+        this.fetchCertificates();
+    },
 }
 </script>
 

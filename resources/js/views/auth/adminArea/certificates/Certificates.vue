@@ -71,7 +71,7 @@ export default {
         ...mapGetters(['getCertificates'])
     },
     methods: {
-        ...mapActions(['deleteCertificate'])
+        ...mapActions(['deleteCertificate', 'fetchCertificates'])
     },
     components: {
         CreatePanel
@@ -100,6 +100,9 @@ export default {
             }
         ]
     }),
+    mounted() {
+        this.fetchCertificates();
+    }
     // created() {
     //     console.log(this.$route)
     // }
