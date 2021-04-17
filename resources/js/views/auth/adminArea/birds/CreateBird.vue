@@ -92,7 +92,6 @@
                 id="input-sellers"
                 :label="`У каких продавцов продается птица:`"
                 label-for="sellers"
-                description="Сколько единиц помета в час производит птица"
             >
                 <b-form-checkbox
                     v-for="seller of getSellers"
@@ -107,6 +106,14 @@
                 </b-form-checkbox>
             </b-form-group>
 
+            <!--    price    -->
+            <b-form-group
+                id="input-egg-price"
+                :label="`Цена яйца: `"
+                label-for="egg-price"
+            >
+                <b-form-input id="egg-price" v-model="form.egg_price" type="number" min="0"></b-form-input>
+            </b-form-group>
 
             <!--    price    -->
             <b-form-group
@@ -145,6 +152,7 @@ export default {
                 litter     : this.$route.query.litter || 10,
                 sellers    : this.$route.query.sellers ? JSON.parse(this.$route.query.sellers).map(seller => seller.id)
                     : [],
+                egg_price  : this.$route.query.egg_price || 1,
                 price      : this.$route.query.price || 100
             },
             error: false

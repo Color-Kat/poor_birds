@@ -99,10 +99,11 @@ class BirdController extends Controller
         // set relationships bird -> sellers
         $sellers = $request->input('sellers');
         if ($sellers) {
-            // delete all sellers on bird
-            $bird->sellers()->detach();
+//            $bird->sellers()->detach();
+//            $bird->sellers()->attach(explode(',', $sellers));
 
-            $bird->sellers()->attach(explode(',', $sellers));
+            // update sellers during pivot table
+            $bird->sellers()->sync(explode(',', $sellers));
         }
 
         return $bird->update($params); // U{^DAT#

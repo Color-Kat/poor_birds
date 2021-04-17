@@ -149,15 +149,23 @@ class AuthController extends Controller
 
     public function get_user_birds()
     {
-        $user = auth()->user()->my_birds()->get();
-//        dump($user);
+//        $my_birds = auth()->user()->my_birds;
+        $my_birds = auth()->user()->my_birds;
+//        dump($my_birds);
 //        dd($user->my);
 //        $birds = $user->my_birds->birds;
 //        $sellers = $user->my_birds->sellers;
 //        dd($sellers);
 //        return response()->json(auth()->user()->my_birds);
-        return response()->json($user);
+
+        return response()->json($my_birds);
+//        return $my_birds;
     }
+
+//    public function get_user_birds_with_certificate()
+//    {
+//        dump($this->get_user_birds()->with('bird'));
+//    }
 
     /**
      * Get the token array structure.

@@ -21,6 +21,7 @@
                 <Field :field="getBird.care"></Field>
                 <Field :field="getBird.demand"></Field>
                 <Field :field="getBird.litter"></Field>
+                <Field :field="getBird.egg_price"></Field>
                 <Field :field="getBird.price"></Field>
 
                 <!--            Если страница продавца, то отобразить кнопку купить-->

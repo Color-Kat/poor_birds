@@ -19,6 +19,7 @@ export default {
                     care       : ['Бонус за заботу', `${bird.care}% к плодовитости на 1 час`],
                     demand     : ['Спрос на яйца', `${bird.demand} яиц/час`],
                     litter     : ['Кол-во помета', `${bird.litter} ед./час`],
+                    egg_price  : ['Цена одного яйца', `${bird.egg_price} руб`],
                     price      : ['Цена', `${bird.price}`],
                     sellers    : bird.sellers
                 };

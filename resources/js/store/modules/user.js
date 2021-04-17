@@ -23,7 +23,7 @@ export default {
         },
         getBalance(state) {
             if (state.user) {
-                return state.user.money
+                return state.user.money;
             } else return false;
         },
         // return all user data
@@ -41,9 +41,49 @@ export default {
                     {name: 'Деньги', value: user.money},
                     {name: 'Почта', value: user.email},
                     {name: 'Дата регистрации', value: new Date(user.created_at).toLocaleString('ru-RU', {year: 'numeric', month: 'numeric', day: 'numeric'})},
-                ]
+                ];
 
             }
+        },
+        getMyBirds(state) {
+            let my_birds = state.user_birds;
+            console.log(my_birds)
+            // if (!my_birds) return false ;
+            let birds = my_birds.map(elem => {
+                    const bird = elem.bird;
+                    const certificate = elem.seller.certificate;
+
+                    // get bonuses of certificate
+                    let fertility_bonus = certificate ? 1 + certificate.fertility_bonus/100 : 1,
+                        demand_bonus = certificate ? 1 + certificate.demand_bonus/100 : 1,
+                        care_bonus = certificate ? 1 + certificate.care_bonus/100 : 1,
+                        litter_bonus = certificate ? 1 + certificate.litter_bonus/100 : 1,
+                        price_bonus = certificate ? 1 + certificate.price_bonus/100 : 1;
+
+                    return {
+                        id: elem.id,
+                        image: bird.image,
+                        name: bird.name,
+                        fertility: Math.round(bird.fertility * fertility_bonus),
+                        demand: Math.round(bird.demand * demand_bonus),
+                        care: +(bird.care * care_bonus).toFixed(2),
+                        litter: Math.round(bird.litter * litter_bonus),
+                        egg_price: Math.round(bird.egg_price * price_bonus),
+                    }
+
+                });
+
+            console.log(birds)
+
+            // let birds = my_birds.map(elem => {
+            //     console.log(elem)
+            //         elem.bird.name
+            //
+            // });
+            // console.log(birds)
+            // return [
+            //     ...state.user_birds.
+            // ];
         }
     },
     actions  : {
@@ -205,8 +245,7 @@ export default {
             state.access_token = token;
         },
         setUserBirds(state, birds) {
-            console.log(birds)
-            state.user_birds.push(birds);
+            state.user_birds = birds;
         }
     }
 }
