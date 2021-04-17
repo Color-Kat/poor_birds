@@ -64,6 +64,7 @@ export default {
                         id: elem.id,
                         image: bird.image,
                         name: bird.name,
+                        description: bird.description,
                         fertility: Math.round(bird.fertility * fertility_bonus),
                         demand: Math.round(bird.demand * demand_bonus),
                         care: +(bird.care * care_bonus).toFixed(2),
@@ -75,15 +76,7 @@ export default {
 
             console.log(birds)
 
-            // let birds = my_birds.map(elem => {
-            //     console.log(elem)
-            //         elem.bird.name
-            //
-            // });
-            // console.log(birds)
-            // return [
-            //     ...state.user_birds.
-            // ];
+            return birds;
         }
     },
     actions  : {
