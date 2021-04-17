@@ -166,7 +166,22 @@ class AuthController extends Controller
 
     public function buyBird(Request $request)
     {
-        dump($request);
+//        $my_birds = auth()->user()->my_birds()->get();
+        $my_birds = auth()->user()->my_birds()->get();
+        dump($request->all());
+
+        foreach ($my_birds as $key => $bird) {
+            // this bird has already been purchased
+            if($my_birds[$key]->pivot->bird_seller_id === $request->bird_seller_id){
+                // increase count
+                $bird->pivot->count++;
+                $bird->pivot->update();
+                return true;
+            }
+        }
+
+        // bird has not been purchased yet
+        dump(auth()->user()->my_birds()->attach($request->bird_seller_id));
     }
 
     /**

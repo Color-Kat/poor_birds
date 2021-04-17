@@ -53,7 +53,8 @@
 
                         <hr>
 
-                        <b-button variant="primary" @click="()=>{buyBird(bird.pivot.id)}">
+                        <b-button variant="primary"
+                                  @click="()=>{buyBird({bird_id: bird.id, sold_bird_id: bird.pivot.id})}">
                             купить за {{Math.round(bird.price * (1 + getSeller.discount / 100)) }}&#8381;
                         </b-button>
                     </b-card-text>

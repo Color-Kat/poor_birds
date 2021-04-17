@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTableBirdsAddEgsPrice extends Migration
+class AlterBirdSellerUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AlterTableBirdsAddEgsPrice extends Migration
      */
     public function up()
     {
-        Schema::table('birds', function (Blueprint $table) {
-            // litter - кол-во помета в час
-            $table->integer('egg_price')->default(1)->after('fertility');
+        Schema::table('bird_seller_user', function (Blueprint $table) {
+            $table->integer('count')->default(1)->after('bird_seller_id');
         });
     }
 
@@ -26,8 +25,8 @@ class AlterTableBirdsAddEgsPrice extends Migration
      */
     public function down()
     {
-        Schema::table('birds', function (Blueprint $table) {
-            $table->dropColumn('egg_price');
+        Schema::table('bird_seller_user', function (Blueprint $table) {
+            $table->dropColumn('count');
         });
     }
 }

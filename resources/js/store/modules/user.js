@@ -37,10 +37,26 @@ export default {
             if (state.user) {
                 let user = state.user;
                 return [
-                    {name: 'Ник', value: user.name},
-                    {name: 'Деньги', value: user.money},
-                    {name: 'Почта', value: user.email},
-                    {name: 'Дата регистрации', value: new Date(user.created_at).toLocaleString('ru-RU', {year: 'numeric', month: 'numeric', day: 'numeric'})},
+                    {
+                        name : 'Ник',
+                        value: user.name
+                    },
+                    {
+                        name : 'Деньги',
+                        value: user.money
+                    },
+                    {
+                        name : 'Почта',
+                        value: user.email
+                    },
+                    {
+                        name : 'Дата регистрации',
+                        value: new Date(user.created_at).toLocaleString('ru-RU', {
+                            year : 'numeric',
+                            month: 'numeric',
+                            day  : 'numeric'
+                        })
+                    },
                 ];
 
             }
@@ -50,30 +66,31 @@ export default {
             console.log(my_birds)
             // if (!my_birds) return false ;
             let birds = my_birds.map(elem => {
-                    const bird = elem.bird;
-                    const certificate = elem.seller.certificate;
+                const bird        = elem.bird;
+                const certificate = elem.seller.certificate;
 
-                    // get bonuses of certificate
-                    let fertility_bonus = certificate ? 1 + certificate.fertility_bonus/100 : 1,
-                        demand_bonus = certificate ? 1 + certificate.demand_bonus/100 : 1,
-                        care_bonus = certificate ? 1 + certificate.care_bonus/100 : 1,
-                        litter_bonus = certificate ? 1 + certificate.litter_bonus/100 : 1,
-                        price_bonus = certificate ? 1 + certificate.price_bonus/100 : 1;
+                // get bonuses of certificate
+                let fertility_bonus = certificate ? 1 + certificate.fertility_bonus / 100 : 1,
+                    demand_bonus    = certificate ? 1 + certificate.demand_bonus / 100 : 1,
+                    care_bonus      = certificate ? 1 + certificate.care_bonus / 100 : 1,
+                    litter_bonus    = certificate ? 1 + certificate.litter_bonus / 100 : 1,
+                    price_bonus     = certificate ? 1 + certificate.price_bonus / 100 : 1;
 
-                    return {
-                        id: elem.id,
-                        image: bird.image,
-                        name: bird.name,
-                        description: bird.description,
-                        fertility: Math.round(bird.fertility * fertility_bonus),
-                        demand: Math.round(bird.demand * demand_bonus),
-                        care: +(bird.care * care_bonus).toFixed(2),
-                        litter: Math.round(bird.litter * litter_bonus),
-                        egg_price: Math.round(bird.egg_price * price_bonus),
-                        certificate_id: certificate ? certificate.id : 0
-                    }
+                return {
+                    id            : elem.id,
+                    image         : bird.image,
+                    name          : bird.name,
+                    description   : bird.description,
+                    fertility     : Math.round(bird.fertility * fertility_bonus),
+                    demand        : Math.round(bird.demand * demand_bonus),
+                    care          : +(bird.care * care_bonus).toFixed(2),
+                    litter        : Math.round(bird.litter * litter_bonus),
+                    egg_price     : Math.round(bird.egg_price * price_bonus),
+                    count         : elem.pivot.count,
+                    certificate_id: certificate ? certificate.id : 0
+                }
 
-                });
+            });
 
             console.log(birds)
 
@@ -163,7 +180,10 @@ export default {
                     }
                 });
         },
-        login({commit, dispatch}, form) {
+        login({
+                  commit,
+                  dispatch
+              }, form) {
             return axios.post('/api/auth/login', form)
                 .then(response => {
                     if (response.status === 201) {
@@ -209,7 +229,10 @@ export default {
                     });
             }
         },
-        fetchUserBirds({commit, state}) {
+        fetchUserBirds({
+                           commit,
+                           state
+                       }) {
             if (!state.access_token) return false;
 
             // fetch to api check_auth
@@ -226,10 +249,17 @@ export default {
                     console.log('ERROR: ', error, error.response);
                 });
         },
-        buyBird(context, sold_bird_id) {
-            console.log(sold_bird_id)
-            return;
-            return axios.post('api/auth/buyBird', sold_bird_id)
+        buyBird({context, state}, ids) {
+            if (!state.access_token) return false;
+
+            return axios.post(
+                'api/auth/buyBird',
+                {
+                    bird_id       : ids.bird_id,
+                    bird_seller_id: ids.sold_bird_id
+                },
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
                 .then(response => {
                     console.log(response);
                 })
