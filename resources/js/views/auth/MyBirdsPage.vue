@@ -61,10 +61,11 @@
 
                         <!--     characteristics      -->
                         <div class="d-flex justify-content-end flex-wrap">
-                            <b-badge class="m-1 d-flex align-items-center" variant="warning">Плодоносность: {{ my_bird.fertility
-                                }}</b-badge>
+                            <b-badge class="m-1 d-flex align-items-center" variant="warning">Плодоносность:
+                                {{my_bird.fertility}} ({{my_bird.fertility * my_bird.count }})</b-badge>
                             <b-badge class="m-1 d-flex align-items-center" variant="primary">Цена яйца: {{ my_bird.egg_price }}</b-badge>
-                            <b-badge class="m-1 d-flex align-items-center" variant="dark">Помет: {{ my_bird.litter }} ед/час</b-badge>
+                            <b-badge class="m-1 d-flex align-items-center" variant="dark">Помет: {{ my_bird.litter }}
+                                ({{my_bird.litter * my_bird.count }}) ед/час</b-badge>
                             <b-badge class="m-1 d-flex align-items-center" variant="danger">Спрос: {{ my_bird.demand }} яиц/час</b-badge>
                             <b-badge class="m-1 d-flex align-items-center" variant="success">Бонус за заботу: {{ my_bird.care }}%</b-badge>
                         </div>
