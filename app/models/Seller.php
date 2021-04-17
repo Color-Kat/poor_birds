@@ -10,7 +10,7 @@ class Seller extends Model
 
     public function birds()
     {
-        return $this->belongsToMany('App\models\Bird');
+        return $this->belongsToMany('App\models\Bird')->withPivot('id');
     }
 
     public function certificate() {

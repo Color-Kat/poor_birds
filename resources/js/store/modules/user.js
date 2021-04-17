@@ -227,6 +227,8 @@ export default {
                 });
         },
         buyBird(context, sold_bird_id) {
+            console.log(sold_bird_id)
+            return;
             return axios.post('api/auth/buyBird', sold_bird_id)
                 .then(response => {
                     console.log(response);

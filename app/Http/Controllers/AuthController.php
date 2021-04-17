@@ -164,6 +164,11 @@ class AuthController extends Controller
 //        dump($this->get_user_birds()->with('bird'));
 //    }
 
+    public function buyBird(Request $request)
+    {
+        dump($request);
+    }
+
     /**
      * Get the token array structure.
      *
