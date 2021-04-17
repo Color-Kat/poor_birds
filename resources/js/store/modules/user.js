@@ -70,6 +70,7 @@ export default {
                         care: +(bird.care * care_bonus).toFixed(2),
                         litter: Math.round(bird.litter * litter_bonus),
                         egg_price: Math.round(bird.egg_price * price_bonus),
+                        certificate_id: certificate ? certificate.id : 0
                     }
 
                 });
@@ -223,6 +224,15 @@ export default {
                 })
                 .catch((error) => {
                     console.log('ERROR: ', error, error.response);
+                });
+        },
+        buyBird(context, sold_bird_id) {
+            return axios.post('api/auth/buyBird', sold_bird_id)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(response);
                 });
         },
     },

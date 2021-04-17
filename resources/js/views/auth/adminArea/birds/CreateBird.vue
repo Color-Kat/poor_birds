@@ -162,7 +162,7 @@ export default {
         ...mapGetters(['getSellers'])
     },
     methods : {
-        ...mapActions(['createBird', 'updateBird']),
+        ...mapActions(['createBird', 'updateBird', 'fetchSellers']),
 
         async onSubmit() {
             // there are parameters, so need to update the bird
@@ -186,8 +186,7 @@ export default {
 
     },
     mounted() {
-        console.log(this.$route.query)
-        console.log(this.form)
+        this.fetchSellers();
     }
 }
 </script>

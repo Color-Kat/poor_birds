@@ -149,13 +149,10 @@ class AuthController extends Controller
 
     public function get_user_birds()
     {
-//        $my_birds = auth()->user()->my_birds;
         $my_birds = auth()->user()->my_birds;
 //        dump($my_birds);
-//        dd($user->my);
 //        $birds = $user->my_birds->birds;
 //        $sellers = $user->my_birds->sellers;
-//        dd($sellers);
 //        return response()->json(auth()->user()->my_birds);
 
         return response()->json($my_birds);

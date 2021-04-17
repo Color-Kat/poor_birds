@@ -67,6 +67,17 @@
                 ></b-form-input>
             </b-form-group>
 
+            <!--    certificate    -->
+            <b-form-group
+                id="input-price"
+                :label="`Сертификат:`"
+                label-for="certificate"
+                description="Сертификат, который выдает компания rаждой птице"
+            >
+                <b-form-select v-model="form.certificate_id"
+                               :options="getCertificates.map(i => ({text: i.name, value: i.id}))"></b-form-select>
+            </b-form-group>
+
             <!--    price    -->
             <b-form-group
                 id="input-price"
@@ -88,37 +99,37 @@
             </b-form-group>
 
             <b-button type="submit" variant="primary">Огранизовать компанию</b-button>
-<!--            <b-button type="reset" variant="danger">Сбросить</b-button>-->
+            <!--            <b-button type="reset" variant="danger">Сбросить</b-button>-->
         </b-form>
 
     </div>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "CreateBird",
     data() {
         return {
             form : {
-                id         : this.$route.query.id || null,
-                name       : this.$route.query.name || 'OOO "Райские петухи"',
-                description: this.$route.query.description || 'OOO "Райские петухи" - райское наслаждение от петухов',
-                image      : null,
-                imagePath  : this.$route.query.image || '',
-                discount   : this.$route.query.discount || -20,
-                price      : this.$route.query.price || 0,
-                birds_count: this.$route.query.birds_count || 0
-                // demand     : 50,
+                id            : this.$route.query.id || null,
+                name          : this.$route.query.name || 'OOO "Райские петухи"',
+                description   : this.$route.query.description || 'OOO "Райские петухи" - райское наслаждение от петухов',
+                image         : null,
+                imagePath     : this.$route.query.image || '',
+                discount      : this.$route.query.discount || -20,
+                price         : this.$route.query.price || 0,
+                birds_count   : this.$route.query.birds_count || 0,
+                certificate_id: this.$route.query.certificate_id || 0
             },
             error: false
         }
     },
+    computed: mapGetters(['getCertificates']),
     methods: {
-        ...mapActions(['createSeller', 'updateSeller']),
+        ...mapActions(['createSeller', 'updateSeller', 'fetchCertificates']),
         async onSubmit() {
-
             // there are parameters, so need to update the seller
             if (Object.keys(this.$route.query).length !== 0) {
                 // if the image is already there, then we replace it
@@ -128,7 +139,6 @@ export default {
                 };
                 delete form.imagePath; // remove unnecessary
 
-                console.log(form)
                 // update birds, check errors
                 this.error = !(await this.updateSeller(form));
             } else {
@@ -139,6 +149,9 @@ export default {
             // redirect to admin page
             if (!this.error) this.$router.push({name: 'admin-sellers'})
         },
+    },
+    mounted() {
+        this.fetchCertificates(); // get certificates for select
     }
 }
 </script>
