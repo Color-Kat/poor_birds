@@ -42,7 +42,7 @@
                         <span class="description">{{ bird.description }}</span>
                         <hr>
 
-<!--                        // TODO добавить серитификат-->
+<!--                        // TODO добавить сертификат-->
                         <h6 class="d-inline" style="width: 10px !important; margin: 0 !important;">
                             <b-badge variant="danger">Спрос: {{ bird.demand }} яиц/час</b-badge>
                             <b-badge variant="warning">Плодоносность: {{ bird.fertility }} яиц/час</b-badge>

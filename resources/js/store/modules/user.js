@@ -63,9 +63,8 @@ export default {
         },
         getMyBirds(state) {
             let my_birds = state.user_birds;
-            console.log(my_birds)
-            // if (!my_birds) return false ;
-            let birds = my_birds.map(elem => {
+
+            return my_birds.map(elem => {
                 const bird        = elem.bird;
                 const certificate = elem.seller.certificate;
 
@@ -81,6 +80,7 @@ export default {
                     image         : bird.image,
                     name          : bird.name,
                     description   : bird.description,
+                    price         : bird.price,
                     fertility     : Math.round(bird.fertility * fertility_bonus),
                     demand        : Math.round(bird.demand * demand_bonus),
                     care          : +(bird.care * care_bonus).toFixed(2),
@@ -91,17 +91,12 @@ export default {
                 }
 
             });
-
-            console.log(birds)
-
-            return birds;
         }
     },
     actions  : {
         checkAuth({
                       commit,
-                      state,
-                      dispatch
+                      state
                   }) {
 
 
@@ -147,7 +142,7 @@ export default {
                 })
                     // some error, user is not logged in
                     .catch((error) => {
-                        console.log('lox')
+                        console.log('Error', error)
                         commit('setUser', null);
                     });
             } else {
@@ -264,7 +259,7 @@ export default {
                     console.log(response);
                 })
                 .catch((error) => {
-                    console.log(response);
+                    console.log(error, error.response);
                 });
         },
     },

@@ -32,7 +32,7 @@ export default {
     transition: all .2s;
 
     &.active {
-        z-index: 20000;
+        z-index: 1005;
         opacity: 1;
         pointer-events: all;
     }

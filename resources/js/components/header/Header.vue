@@ -2,7 +2,7 @@
     <header class="header mb-2">
         <!--    NAVBAR 1    -->
         <b-navbar
-            style="z-index: 10003" fixed="top" type="light" variant="light"
+            style="z-index: 1010" fixed="top" type="light" variant="light"
             class=" position-relative d-flex justify-content-between"
         >
             <div class="d-flex align-items-center">

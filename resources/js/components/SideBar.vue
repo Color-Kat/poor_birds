@@ -47,7 +47,7 @@ export default {
 <style scoped lang="scss">
 aside {
     width: 28rem;
-    z-index: 20000;
+    z-index: 1006;
 
     @media screen and (max-width: 767px) {
         // not active
