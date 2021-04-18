@@ -8,7 +8,7 @@
         >
             <p class="my-4">{{
                     selectedBird ? `Вы уверены, что хотите продать птицу "${selectedBird.name}" за
-${selectedBird.price/2}` :
+${selectedBird.price/2}&#8381;?` :
                         'Ошибка'
                 }}
             </p>
@@ -103,11 +103,13 @@ ${selectedBird.price/2}` :
                         <!--     characteristics      -->
                         <div class="d-flex justify-content-end flex-wrap">
                             <b-badge class="m-1 d-flex align-items-center" variant="warning">Плодоносность:
-                                {{ my_bird.fertility }} {{ my_bird.count > 1 ? `(${my_bird.fertility *
-                                my_bird.count})` : '' }}
+                                {{ my_bird.fertility }} {{
+                                    my_bird.count > 1 ? `(${my_bird.fertility *
+                                    my_bird.count})` : ''
+                                }}
                             </b-badge>
                             <b-badge class="m-1 d-flex align-items-center" variant="primary">Цена яйца:
-                                {{ my_bird.egg_price }}
+                                {{ my_bird.egg_price }}&#8381;
                             </b-badge>
                             <b-badge class="m-1 d-flex align-items-center" variant="dark">Помет: {{ my_bird.litter }}
                                 ({{ my_bird.litter * my_bird.count }}) ед/час

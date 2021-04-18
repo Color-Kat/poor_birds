@@ -2,8 +2,6 @@
     <div>
         <Header></Header>
 
-
-
         <main>
             <div
                 id="main-container"

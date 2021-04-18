@@ -65,7 +65,6 @@ export default {
             let my_birds = state.user_birds;
 
             return my_birds.map(elem => {
-                console.log(elem)
                 const bird        = elem.bird;
                 const certificate = elem.seller.certificate;
 
@@ -269,6 +268,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error, error.response);
+                    return false;
                 });
         },
         sellBird({
@@ -311,17 +311,13 @@ export default {
             state.user.money = sum
         },
         reduceBird(state, id) {
-            console.log();
             let birdIndex = state.user_birds.findIndex(item => {
-                console.log(item.pivot.id, id)
                 if (item.pivot.id === id) return true;
             });
 
             // bird count is more that 1
             if (state.user_birds[birdIndex].pivot.count > 1) state.user_birds[birdIndex].pivot.count--;
             else state.user_birds.splice(birdIndex, 1)
-
-            console.log(state.user_birds);
         }
     }
 }

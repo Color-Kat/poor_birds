@@ -1,6 +1,17 @@
 <template>
     <div>
+        <b-modal id="modal-bird-buy" title="Поздравляем! Вы купили птицу" hide-header>
+            <p class="my-2">Поздравляем! Вы купили птицу "{{purchasedBirdName}}"</p>
+
+            <template #modal-footer="{ ok, cancel, hide }">
+                <b-button size="sm" variant="success" @click="ok()">
+                    Oк
+                </b-button>
+            </template>
+        </b-modal>
+
         <router-view></router-view>
+
         <b-card
             v-if="!loading"
 
@@ -36,26 +47,51 @@
                     tag="article"
                     :key="bird.id"
                 >
-<!--                    @click="()=>redirect(getSeller.id, bird.id)"-->
+                    <!--                    @click="()=>redirect(getSeller.id, bird.id)"-->
                     <b-card-text>
                         <!--                        <div class="d-flex justify-content-between align-items-center">-->
                         <span class="description">{{ bird.description }}</span>
                         <hr>
 
-<!--                        // TODO добавить сертификат-->
                         <h6 class="d-inline" style="width: 10px !important; margin: 0 !important;">
-                            <b-badge variant="danger">Спрос: {{ bird.demand }} яиц/час</b-badge>
-                            <b-badge variant="warning">Плодоносность: {{ bird.fertility }} яиц/час</b-badge>
-                            <b-badge variant="success">Бонус за заботу: {{ bird.fertility }} яиц/час</b-badge>
-                            <b-badge variant="dark">Помет: {{ bird.litter }} ед/час</b-badge>
-                            <b-badge variant="primary">Цена яйца: {{ bird.egg_price }}&#8381;</b-badge>
+                            <b-badge variant="warning">Плодоносность: {{
+                                    Math.round(bird.fertility * (1 +
+                                        getSeller.certificate.fertility_bonus / 100))
+                                }} яиц/час
+                            </b-badge>
+                            <b-badge variant="danger">Спрос: {{
+                                    Math.round(bird.demand * (1 +
+                                        getSeller.certificate.demand_bonus / 100))
+                                }} яиц/час
+                            </b-badge>
+                            <b-badge variant="success">Бонус за заботу: {{
+                                    Math.round(bird.care * (1 +
+                                        getSeller.certificate.care_bonus / 100))
+                                }}%
+                            </b-badge>
+                            <b-badge variant="dark">Помет: {{
+                                    Math.round(bird.litter * (1 +
+                                        getSeller.certificate.litter_bonus / 100))
+                                }} ед/час
+                            </b-badge>
+                            <b-badge variant="primary">Цена яйца: {{
+                                    Math.round(bird.egg_price * (1 +
+                                        getSeller.certificate.price_bonus / 100))
+                                }}&#8381;
+                            </b-badge>
                         </h6>
 
                         <hr>
 
-                        <b-button variant="primary"
-                                  @click="()=>{buyBird({bird_id: bird.id, sold_bird_id: bird.pivot.id})}">
-                            купить за {{Math.round(bird.price * (1 + getSeller.discount / 100)) }}&#8381;
+                        <b-button
+                            variant="primary"
+                            @click="()=>{
+                                birdBuy({bird_id: bird.id, sold_bird_id: bird.pivot.id});
+                                purchasedBirdName = bird.name
+                            }"
+
+                        >
+                            купить за {{ Math.round(bird.price * (1 + getSeller.discount / 100)) }}&#8381;
                         </b-button>
                     </b-card-text>
                 </b-card>
@@ -74,8 +110,8 @@ export default {
         Field,
     },
     data      : () => ({
-        bird   : null,
-        loading: true
+        loading: true,
+        purchasedBirdName: null
     }),
     computed  : {
         ...mapGetters(['getSeller'])
@@ -83,9 +119,13 @@ export default {
     methods   : {
         ...mapActions(['fetchSeller', 'buyBird']),
         redirect(seller_id, bird_id) {
-            // <!--TODO сделать страницу с птицей продавца-->
+            // TODO сделать страницу с птицей продавца. Необязательно
             this.$router.push(`/sellers/${seller_id}/birds/${bird_id}`)
         },
+        async birdBuy(ids) {
+            let result = await this.buyBird(ids);
+            if (result) this.$bvModal.show('modal-bird-buy');
+        }
     },
     async mounted() {
         await this.fetchSeller(this.$route.params.id);

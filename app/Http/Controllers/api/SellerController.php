@@ -49,8 +49,7 @@ class SellerController extends Controller
      */
     public function show($id)
     {
-        $seller = Seller::with(['birds'])->find($id);
-//        dump($seller->pivot);
+        $seller = Seller::with(['birds'])->with('certificate')->find($id);
 
         if ($seller == null) {
             return response()->json([

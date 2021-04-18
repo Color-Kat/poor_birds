@@ -10,7 +10,7 @@ export default {
         },
         getSeller(state) {
             const seller = state.currentSeller;
-            console.log(seller)
+            console.log(seller);
             if (seller) {
                 return {
                     id          : seller.id,
@@ -22,7 +22,8 @@ export default {
                     discount    : seller.discount,
                     birds_count : ['Кол-во птиц для договора', `${seller.birds_count}`],
                     price       : ['Цена договора', `${seller.price}руб`],
-                    birds       : seller.birds
+                    birds       : seller.birds,
+                    certificate : seller.certificate
                 };
             } else return false
         }
