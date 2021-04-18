@@ -244,7 +244,7 @@ export default {
                     console.log('ERROR: ', error, error.response);
                 });
         },
-        buyBird({context, state}, ids) {
+        buyBird({commit, state}, ids) {
             if (!state.access_token) return false;
 
             return axios.post(
@@ -256,12 +256,32 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    console.log(response);
+                    console.log(!!response.data)
+                    if(!response.data) return false
+                    else {
+                        commit('changeBalance', response.data);
+                        return true;
+                    }
                 })
                 .catch((error) => {
                     console.log(error, error.response);
                 });
         },
+        sellBird({context, state}, bird_id) {
+            if (!state.access_token) return false;
+
+            return axios.post(
+                'api/auth/sellBird',
+                {bird_id},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                });
+        }
     },
     mutations: {
         setUser(state, user) {
@@ -276,6 +296,9 @@ export default {
         },
         setUserBirds(state, birds) {
             state.user_birds = birds;
+        },
+        changeBalance(state, sum) {
+            state.user.money = sum
         }
     }
 }

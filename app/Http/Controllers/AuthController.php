@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\models\Seller;
+use App\models\Sold_bird;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -166,9 +168,15 @@ class AuthController extends Controller
 
     public function buyBird(Request $request)
     {
-//        $my_birds = auth()->user()->my_birds()->get();
         $my_birds = auth()->user()->my_birds()->get();
-        dump($request->all());
+        $pivotRow = Sold_bird::find($request->bird_seller_id);
+
+        $price = round($pivotRow->bird->price * (1 + $pivotRow->seller->discount / 100));
+        $userMoney = auth()->user()->money;
+
+        if ($price > $userMoney)  return false; // not enough money
+        auth()->user()->money -= $price; // decrease user money
+        auth()->user()->update(); // update
 
         foreach ($my_birds as $key => $bird) {
             // this bird has already been purchased
@@ -176,12 +184,17 @@ class AuthController extends Controller
                 // increase count
                 $bird->pivot->count++;
                 $bird->pivot->update();
-                return true;
+                return auth()->user()->money;
             }
         }
 
         // bird has not been purchased yet
-        dump(auth()->user()->my_birds()->attach($request->bird_seller_id));
+        auth()->user()->my_birds()->attach($request->bird_seller_id);
+        return auth()->user()->money;
+    }
+
+    public function sellBird() {
+
     }
 
     /**
