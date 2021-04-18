@@ -14,7 +14,7 @@ ${selectedBird.price/2}` :
             </p>
             <template #modal-footer="{ ok, cancel }">
                 <!--        Sell bird        -->
-                <b-button size="sm" variant="success" @click="()=>{sellBird(); ok();}">
+                <b-button size="sm" variant="success" @click="()=>{sellBird(selectedBird.bird_seller_user_id); ok();}">
                     Ок
                 </b-button>
                 <!--        cancel       -->
@@ -92,7 +92,7 @@ ${selectedBird.price/2}` :
                                     v-b-tooltip.hover
                                     title="Продать птицу за половину ее стоимости"
                                     v-b-modal.modal-sell
-                                    @click="()=>{selectedBird = my_bird;}"
+                                    @click="()=>{selectedBird = my_bird}"
                                 >
                                     <b-icon icon="cash-stack"></b-icon>
                                 </b-button>

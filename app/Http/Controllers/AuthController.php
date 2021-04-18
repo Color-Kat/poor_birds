@@ -31,10 +31,6 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-//        $validator = Validator::make($request->all(), [
-//            'email'    => 'required|email',
-//            'password' => 'required|string|min:6',
-//        ]);
 
         $rules = [
             'email'    => 'required|string|email|max:100',
@@ -67,14 +63,6 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-// ------ For RegisterRequest ---------------------------------
-//  |    $user = User::create([
-//  |        'email' => $request->email,
-//  |        'name' => $request->name,
-//  |        'password' => bcrypt($request->password),
-//  |    ]);
-// ------------------------------------------------------------
-
         // it is not right! So mush code in one place!!!(((
         $rules = [
             'name'     => 'required|string|between:2,100',
@@ -152,15 +140,12 @@ class AuthController extends Controller
     public function get_user_birds()
     {
         $my_birds = auth()->user()->my_birds;
-//        dump($my_birds);
 //        $birds = $user->my_birds->birds;
 //        $sellers = $user->my_birds->sellers;
 //        return response()->json(auth()->user()->my_birds);
 
         return response()->json($my_birds);
-//        return $my_birds;
     }
-
 //    public function get_user_birds_with_certificate()
 //    {
 //        dump($this->get_user_birds()->with('bird'));
@@ -171,16 +156,16 @@ class AuthController extends Controller
         $my_birds = auth()->user()->my_birds()->get();
         $pivotRow = Sold_bird::find($request->bird_seller_id);
 
-        $price = round($pivotRow->bird->price * (1 + $pivotRow->seller->discount / 100));
+        $price     = round($pivotRow->bird->price * (1 + $pivotRow->seller->discount / 100));
         $userMoney = auth()->user()->money;
 
-        if ($price > $userMoney)  return false; // not enough money
+        if ($price > $userMoney) return false; // not enough money
         auth()->user()->money -= $price; // decrease user money
         auth()->user()->update(); // update
 
         foreach ($my_birds as $key => $bird) {
             // this bird has already been purchased
-            if($my_birds[$key]->pivot->bird_seller_id === $request->bird_seller_id){
+            if ($my_birds[$key]->pivot->bird_seller_id === $request->bird_seller_id) {
                 // increase count
                 $bird->pivot->count++;
                 $bird->pivot->update();
@@ -193,8 +178,34 @@ class AuthController extends Controller
         return auth()->user()->money;
     }
 
-    public function sellBird() {
+    public function sellBird(Request $request)
+    {
+        $my_birds = auth()->user()->my_birds;
 
+        // looking for bird_seller_user_id
+        foreach ($my_birds as $key => $bird) {
+            if ($my_birds[$key]->pivot->id === $request->bird_seller_user_id) {
+                // get bird price
+                $bird_price = round($my_birds[$key]->bird->price * (1 + $my_birds[$key]->seller->discount / 100));
+
+                // reduce user money
+                auth()->user()->money += $bird_price / 2;
+                auth()->user()->update(); // update
+
+                if ($bird->pivot->count > 1) {
+                    // user has several birds
+                    // reduce count
+                    $bird->pivot->count--;
+                    $bird->pivot->update();
+                    return auth()->user()->money;
+                } else {
+                    // user has only one bird
+                    // delete it
+                    auth()->user()->my_birds()->wherePivot('id', '=', $request->bird_seller_user_id)->detach();
+                    return auth()->user()->money;
+                }
+            }
+        }
     }
 
     /**

@@ -65,6 +65,7 @@ export default {
             let my_birds = state.user_birds;
 
             return my_birds.map(elem => {
+                console.log(elem)
                 const bird        = elem.bird;
                 const certificate = elem.seller.certificate;
 
@@ -76,18 +77,19 @@ export default {
                     price_bonus     = certificate ? 1 + certificate.price_bonus / 100 : 1;
 
                 return {
-                    id            : elem.id,
-                    image         : bird.image,
-                    name          : bird.name,
-                    description   : bird.description,
-                    price         : bird.price,
-                    fertility     : Math.round(bird.fertility * fertility_bonus),
-                    demand        : Math.round(bird.demand * demand_bonus),
-                    care          : +(bird.care * care_bonus).toFixed(2),
-                    litter        : Math.round(bird.litter * litter_bonus),
-                    egg_price     : Math.round(bird.egg_price * price_bonus),
-                    count         : elem.pivot.count,
-                    certificate_id: certificate ? certificate.id : 0
+                    id                 : elem.id,
+                    image              : bird.image,
+                    name               : bird.name,
+                    description        : bird.description,
+                    price              : bird.price,
+                    fertility          : Math.round(bird.fertility * fertility_bonus),
+                    demand             : Math.round(bird.demand * demand_bonus),
+                    care               : +(bird.care * care_bonus).toFixed(2),
+                    litter             : Math.round(bird.litter * litter_bonus),
+                    egg_price          : Math.round(bird.egg_price * price_bonus),
+                    count              : elem.pivot.count,
+                    certificate_id     : certificate ? certificate.id : 0,
+                    bird_seller_user_id: elem.pivot.id
                 }
 
             });
@@ -244,7 +246,10 @@ export default {
                     console.log('ERROR: ', error, error.response);
                 });
         },
-        buyBird({commit, state}, ids) {
+        buyBird({
+                    commit,
+                    state
+                }, ids) {
             if (!state.access_token) return false;
 
             return axios.post(
@@ -257,7 +262,7 @@ export default {
             )
                 .then(response => {
                     console.log(!!response.data)
-                    if(!response.data) return false
+                    if (!response.data) return false
                     else {
                         commit('changeBalance', response.data);
                         return true;
@@ -267,12 +272,15 @@ export default {
                     console.log(error, error.response);
                 });
         },
-        sellBird({context, state}, bird_id) {
+        sellBird({
+                     context,
+                     state
+                 }, bird_seller_user_id) {
             if (!state.access_token) return false;
 
             return axios.post(
                 'api/auth/sellBird',
-                {bird_id},
+                {bird_seller_user_id},
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
