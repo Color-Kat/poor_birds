@@ -103,7 +103,8 @@ ${selectedBird.price/2}` :
                         <!--     characteristics      -->
                         <div class="d-flex justify-content-end flex-wrap">
                             <b-badge class="m-1 d-flex align-items-center" variant="warning">Плодоносность:
-                                {{ my_bird.fertility }} ({{ my_bird.fertility * my_bird.count }})
+                                {{ my_bird.fertility }} {{ my_bird.count > 1 ? `(${my_bird.fertility *
+                                my_bird.count})` : '' }}
                             </b-badge>
                             <b-badge class="m-1 d-flex align-items-center" variant="primary">Цена яйца:
                                 {{ my_bird.egg_price }}
