@@ -18,7 +18,7 @@ class CreateEggsTable extends Migration
             $table->integer('price'); // цена одного яйца
             $table->integer('demand'); // спрос - сколько за час можно продавать яиц
             $table->integer('count'); // кол-во яиц
-            $table->foreignId('user_id');
+//            $table->foreignId('user_id');
             $table->foreignId('bird_seller_id'); // чтобы различать яйца разных птиц
             $table->timestamps();
         });
