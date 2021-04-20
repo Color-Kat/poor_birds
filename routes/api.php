@@ -35,6 +35,7 @@ Route::group([
     Route::get('user', 'AuthController@user');
     Route::get('check_auth', 'AuthController@checkAuth');
     Route::get('get_user_birds', 'AuthController@get_user_birds');
+    Route::get('get_my_birds_with_certificate', 'AuthController@get_my_birds_with_certificate');
     Route::post('buyBird', 'AuthController@buyBird');
     Route::post('sellBird', 'AuthController@sellBird');
 //    Route::get('get_user_birds', 'AuthController@get_user_birds_with_certificate');

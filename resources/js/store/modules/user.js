@@ -61,37 +61,39 @@ export default {
 
             }
         },
+        // getMyBirds(state) {
+        //     let my_birds = state.user_birds;
+        //
+        //     return my_birds.map(elem => {
+        //         const bird        = elem.bird;
+        //         const certificate = elem.seller.certificate;
+        //
+        //         // get bonuses of certificate
+        //         let fertility_bonus = certificate ? 1 + certificate.fertility_bonus / 100 : 1,
+        //             demand_bonus    = certificate ? 1 + certificate.demand_bonus / 100 : 1,
+        //             care_bonus      = certificate ? 1 + certificate.care_bonus / 100 : 1,
+        //             litter_bonus    = certificate ? 1 + certificate.litter_bonus / 100 : 1,
+        //             price_bonus     = certificate ? 1 + certificate.price_bonus / 100 : 1;
+        //
+        //         return {
+        //             id                 : elem.id,
+        //             image              : bird.image,
+        //             name               : bird.name,
+        //             description        : bird.description,
+        //             price              : bird.price,
+        //             fertility          : Math.round(bird.fertility * fertility_bonus),
+        //             demand             : Math.round(bird.demand * demand_bonus),
+        //             care               : +(bird.care * care_bonus).toFixed(2),
+        //             litter             : Math.round(bird.litter * litter_bonus),
+        //             egg_price          : Math.round(bird.egg_price * price_bonus),
+        //             count              : elem.pivot.count,
+        //             certificate_id     : certificate ? certificate.id : 0,
+        //             bird_seller_user_id: elem.pivot.id
+        //         }
+        //     });
         getMyBirds(state) {
-            let my_birds = state.user_birds;
-
-            return my_birds.map(elem => {
-                const bird        = elem.bird;
-                const certificate = elem.seller.certificate;
-
-                // get bonuses of certificate
-                let fertility_bonus = certificate ? 1 + certificate.fertility_bonus / 100 : 1,
-                    demand_bonus    = certificate ? 1 + certificate.demand_bonus / 100 : 1,
-                    care_bonus      = certificate ? 1 + certificate.care_bonus / 100 : 1,
-                    litter_bonus    = certificate ? 1 + certificate.litter_bonus / 100 : 1,
-                    price_bonus     = certificate ? 1 + certificate.price_bonus / 100 : 1;
-
-                return {
-                    id                 : elem.id,
-                    image              : bird.image,
-                    name               : bird.name,
-                    description        : bird.description,
-                    price              : bird.price,
-                    fertility          : Math.round(bird.fertility * fertility_bonus),
-                    demand             : Math.round(bird.demand * demand_bonus),
-                    care               : +(bird.care * care_bonus).toFixed(2),
-                    litter             : Math.round(bird.litter * litter_bonus),
-                    egg_price          : Math.round(bird.egg_price * price_bonus),
-                    count              : elem.pivot.count,
-                    certificate_id     : certificate ? certificate.id : 0,
-                    bird_seller_user_id: elem.pivot.id
-                }
-
-            });
+            console.log(state.user_birds)
+            return state.user_birds;
         }
     },
     actions  : {
@@ -225,6 +227,26 @@ export default {
                     });
             }
         },
+        // fetchUserBirds({
+        //                    commit,
+        //                    state
+        //                }) {
+        //     if (!state.access_token) return false;
+        //
+        //     // fetch to api check_auth
+        //     return axios.get(
+        //         'api/auth/get_user_birds',
+        //         {headers: {"Authorization": `Bearer ${state.access_token}`}}
+        //     )
+        //         .then(response => {
+        //             if (response.status === 200) {
+        //                 commit('setUserBirds', response.data); // update auth
+        //             }
+        //         })
+        //         .catch((error) => {
+        //             console.log('ERROR: ', error, error.response);
+        //         });
+        // },
         fetchUserBirds({
                            commit,
                            state
@@ -233,10 +255,11 @@ export default {
 
             // fetch to api check_auth
             return axios.get(
-                'api/auth/get_user_birds',
+                'api/auth/get_my_birds_with_certificate',
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
+                    console.log(response);
                     if (response.status === 200) {
                         commit('setUserBirds', response.data); // update auth
                     }
@@ -283,7 +306,7 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    if(response.data) {
+                    if (response.data) {
                         commit('changeBalance', response.data);
                         commit('reduceBird', bird_seller_user_id);
                     }
@@ -310,13 +333,22 @@ export default {
         changeBalance(state, sum) {
             state.user.money = sum
         },
+        // reduceBird(state, id) {
+        //     let birdIndex = state.user_birds.findIndex(item => {
+        //         if (item.pivot.id === id) return true;
+        //     });
+        //
+        //     // bird count is more that 1
+        //     if (state.user_birds[birdIndex].pivot.count > 1) state.user_birds[birdIndex].pivot.count--;
+        //     else state.user_birds.splice(birdIndex, 1)
+        // }
         reduceBird(state, id) {
             let birdIndex = state.user_birds.findIndex(item => {
-                if (item.pivot.id === id) return true;
+                if (item.bird_seller_user_id === id) return true;
             });
 
             // bird count is more that 1
-            if (state.user_birds[birdIndex].pivot.count > 1) state.user_birds[birdIndex].pivot.count--;
+            if (state.user_birds[birdIndex].count > 1) state.user_birds[birdIndex].count--;
             else state.user_birds.splice(birdIndex, 1)
         }
     }

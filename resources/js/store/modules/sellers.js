@@ -32,6 +32,7 @@ export default {
         fetchSellers(context) {
             return axios.get('/api/sellers')
                 .then(response => {
+
                     context.commit('setSellers', response.data);
                 }).catch(err => {
                     console.log('ERROR: ' + err);

@@ -140,16 +140,18 @@ class AuthController extends Controller
     public function get_user_birds()
     {
         $my_birds = auth()->user()->my_birds;
+
 //        $birds = $user->my_birds->birds;
 //        $sellers = $user->my_birds->sellers;
 //        return response()->json(auth()->user()->my_birds);
 
         return response()->json($my_birds);
     }
-//    public function get_user_birds_with_certificate()
-//    {
-//        dump($this->get_user_birds()->with('bird'));
-//    }
+
+    public function get_my_birds_with_certificate()
+    {
+        return response()->json(User::get_my_birds_with_certificate(auth()->user()->my_birds));
+    }
 
     public function buyBird(Request $request)
     {

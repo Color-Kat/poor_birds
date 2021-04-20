@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\CollectEggs::class
     ];
 
     /**
@@ -25,12 +25,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->call(function () {
-//            DB::table('recent_users')->delete();
-//            $user = User::first();
-            dump(123);
-        })->everyMinute();
+//         $schedule->command('inspire')->hourly();
+//        dump('running');
+        $schedule->command('collect:egg')->everyMinute();
+//        $schedule->call(function (){
+//            dump(123);
+//        })->everyMinute();
     }
 
     /**
