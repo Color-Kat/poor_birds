@@ -10,7 +10,8 @@ export default {
         },
         getSeller(state) {
             const seller = state.currentSeller;
-            console.log(seller);
+            const certificate = seller.certificate;
+
             if (seller) {
                 return {
                     id          : seller.id,
@@ -23,7 +24,12 @@ export default {
                     birds_count : ['Кол-во птиц для договора', `${seller.birds_count}`],
                     price       : ['Цена договора', `${seller.price}руб`],
                     birds       : seller.birds,
-                    certificate : seller.certificate
+
+                    demand_bonus : certificate ? certificate.demand_bonus : 1,
+                    fertility_bonus : certificate ?  certificate.fertility_bonus : 1,
+                    care_bonus : certificate ? certificate.care_bonus : 1,
+                    litter_bonus : certificate ? certificate.litter_bonus : 1,
+                    price_bonus : certificate ? certificate.price_bonus : 1
                 };
             } else return false
         }

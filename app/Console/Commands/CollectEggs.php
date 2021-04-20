@@ -41,7 +41,7 @@ class CollectEggs extends Command
     {
 //        Log::info(User::all());
 
-        dump(User::first()->get_my_birds_with_certificate());
+        dump(User::first()->get_all_user_birds_with_certificate());
 
 //        Log::info('Master3)');
     }

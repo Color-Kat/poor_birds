@@ -55,28 +55,27 @@
 
                         <h6 class="d-inline" style="width: 10px !important; margin: 0 !important;">
                             <b-badge variant="warning">Плодоносность: {{
-                                    Math.round(bird.fertility * (1 +
-                                        getSeller.certificate.fertility_bonus / 100))
+                                    Math.round(bird.fertility * (1 + getSeller.fertility_bonus / 100))
                                 }} яиц/час
                             </b-badge>
                             <b-badge variant="danger">Спрос: {{
                                     Math.round(bird.demand * (1 +
-                                        getSeller.certificate.demand_bonus / 100))
+                                        getSeller.demand_bonus / 100))
                                 }} яиц/час
                             </b-badge>
                             <b-badge variant="success">Бонус за заботу: {{
                                     Math.round(bird.care * (1 +
-                                        getSeller.certificate.care_bonus / 100))
+                                        getSeller.care_bonus / 100))
                                 }}%
                             </b-badge>
                             <b-badge variant="dark">Помет: {{
                                     Math.round(bird.litter * (1 +
-                                        getSeller.certificate.litter_bonus / 100))
+                                        getSeller.litter_bonus / 100))
                                 }} ед/час
                             </b-badge>
                             <b-badge variant="primary">Цена яйца: {{
                                     Math.round(bird.egg_price * (1 +
-                                        getSeller.certificate.price_bonus / 100))
+                                        getSeller.price_bonus / 100))
                                 }}&#8381;
                             </b-badge>
                         </h6>

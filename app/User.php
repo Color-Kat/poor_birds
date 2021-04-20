@@ -68,8 +68,16 @@ class User extends Authenticatable implements JWTSubject
             ];
         }
 
-//        dump($this->my_birds[0]->bird);
         return $my_bird_with_certificate;
+    }
+
+    public static function get_all_user_birds_with_certificate() {
+        $birds = [];
+
+        foreach (User::all() as $user) {
+            $birds[] = self::get_my_birds_with_certificate($user->my_birds);
+        }
+        return $birds;
     }
 
     public function my_eggs()
