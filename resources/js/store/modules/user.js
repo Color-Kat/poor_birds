@@ -3,7 +3,8 @@ export default {
         user        : null,
         auth        : null,
         access_token: localStorage.getItem('access_token') ? localStorage.getItem('access_token') : '',
-        user_birds  : []
+        user_birds  : [],
+        eggs        : []
     },
     getters  : {
         getUserName(state) {
@@ -63,7 +64,10 @@ export default {
         },
         getMyBirds(state) {
             return state.user_birds;
-        }
+        },
+        getEggs(state) {
+            return state.eggs;
+        },
     },
     actions  : {
         checkAuth({
@@ -258,7 +262,28 @@ export default {
                 .catch((error) => {
                     console.log(error, error.response);
                 });
-        }
+        },
+        fetchUserEggs({
+                          commit,
+                          state
+                      }) {
+            if (!state.access_token) return false;
+
+            // fetch to api check_auth
+            return axios.get(
+                'api/auth/get_my_eggs',
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    console.log(response);
+                    if (response.status === 200) {
+                        commit('setEggs', response.data); // update auth
+                    }
+                })
+                .catch((error) => {
+                    console.log('ERROR: ', error, error.response);
+                });
+        },
     },
     mutations: {
         setUser(state, user) {
@@ -285,6 +310,9 @@ export default {
             // bird count is more that 1
             if (state.user_birds[birdIndex].count > 1) state.user_birds[birdIndex].count--;
             else state.user_birds.splice(birdIndex, 1)
+        },
+        setEggs(state, eggs) {
+            state.eggs = eggs;
         }
     }
 }

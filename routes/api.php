@@ -32,10 +32,13 @@ Route::group([
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login')->name('login');
     Route::get('logout', 'AuthController@logout');
+
     Route::get('user', 'AuthController@user');
     Route::get('check_auth', 'AuthController@checkAuth');
     Route::get('get_user_birds', 'AuthController@get_user_birds');
     Route::get('get_my_birds_with_certificate', 'AuthController@get_my_birds_with_certificate');
+    Route::get('get_my_eggs', 'AuthController@get_my_eggs');
+
     Route::post('buyBird', 'AuthController@buyBird');
     Route::post('sellBird', 'AuthController@sellBird');
 //    Route::get('get_user_birds', 'AuthController@get_user_birds_with_certificate');

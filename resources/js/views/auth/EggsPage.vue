@@ -13,32 +13,33 @@
         <hr>
         <h2>Склад:</h2>
 
-        <div class="mt-2 grid-cards-columns">
-            <!--                <b-card-->
-            <!--                    v-for="seller of getSellers"-->
-            <!--                    class="mb-2 card-item"-->
-            <!--                    :title="seller.name"-->
-            <!--                    :img-src="`/storage/${seller.image}`"-->
-            <!--                    :img-alt="seller.name"-->
-            <!--                    img-top-->
-            <!--                    tag="article"-->
+        <div class="mt-2">
+            <b-card
+                v-for="egg of getEggs"
+                class="mb-2 w-100"
+                tag="article"
+                :key="egg.id"
+            >
+                <b-card-text>
+                    {{ egg }}
+                </b-card-text>
 
-            <!--                    @click="()=>redirect(seller.id)"-->
-            <!--                    :key="seller.id"-->
-            <!--                >-->
-            <!--                    <b-card-text>-->
-            <!--                        {{ seller.description }}-->
-            <!--                    </b-card-text>-->
-
-            <!--                    &lt;!&ndash;                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>&ndash;&gt;-->
-            <!--                </b-card>-->
+                <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
+            </b-card>
         </div>
     </b-card>
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+
 export default {
-    name: "EggsPage"
+    name    : "EggsPage",
+    methods : {...mapActions(['fetchUserEggs'])},
+    computed: {...mapGetters(['getEggs'])},
+    mounted() {
+        this.fetchUserEggs();
+    }
 }
 </script>
 

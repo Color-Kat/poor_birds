@@ -127,31 +127,21 @@ class AuthController extends Controller
      */
     public function user()
     {
-//        dump(User::find(1)->sold_birds);
-//        dump(User::with('sold_birds')->find(1));
-//        dump(auth()->user()->with('sold_birds')->get());
-//        return response()->json(auth()->user());
-//        dump(auth()->user()->with('my_birds')->get());
-//        return response()->json(auth()->user()->with('sold_birds')->get());
-//        return response()->json(auth()->user()->load('my_birds'));
         return response()->json(auth()->user());
     }
 
     public function get_user_birds()
     {
-        $my_birds = auth()->user()->my_birds;
-
-//        $birds = $user->my_birds->birds;
-//        $sellers = $user->my_birds->sellers;
-//        return response()->json(auth()->user()->my_birds);
-
-        return response()->json($my_birds);
+        return response()->json(auth()->user()->my_birds);
     }
 
     public function get_my_birds_with_certificate()
     {
-//        dump(auth()->user()->my_birds()->withPivot('id')->get());
         return response()->json(User::get_my_birds_with_certificate(auth()->user()->my_birds));
+    }
+
+    public function get_my_eggs() {
+        return response()->json(auth()->user()->my_eggs);
     }
 
     public function buyBird(Request $request)
