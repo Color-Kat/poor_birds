@@ -1,5 +1,4 @@
 <template>
-    <div id="store">
         <b-card>
             <h2 class="text-center">Списко птиц</h2>
             <span>В этом списке находятся все птицы. Но купить их можно только у продавцов, у каких именно -
@@ -30,7 +29,6 @@
                 </b-card>
             </div>
         </b-card>
-    </div>
 </template>
 
 <script>

@@ -61,36 +61,6 @@ export default {
 
             }
         },
-        // getMyBirds(state) {
-        //     let my_birds = state.user_birds;
-        //
-        //     return my_birds.map(elem => {
-        //         const bird        = elem.bird;
-        //         const certificate = elem.seller.certificate;
-        //
-        //         // get bonuses of certificate
-        //         let fertility_bonus = certificate ? 1 + certificate.fertility_bonus / 100 : 1,
-        //             demand_bonus    = certificate ? 1 + certificate.demand_bonus / 100 : 1,
-        //             care_bonus      = certificate ? 1 + certificate.care_bonus / 100 : 1,
-        //             litter_bonus    = certificate ? 1 + certificate.litter_bonus / 100 : 1,
-        //             price_bonus     = certificate ? 1 + certificate.price_bonus / 100 : 1;
-        //
-        //         return {
-        //             id                 : elem.id,
-        //             image              : bird.image,
-        //             name               : bird.name,
-        //             description        : bird.description,
-        //             price              : bird.price,
-        //             fertility          : Math.round(bird.fertility * fertility_bonus),
-        //             demand             : Math.round(bird.demand * demand_bonus),
-        //             care               : +(bird.care * care_bonus).toFixed(2),
-        //             litter             : Math.round(bird.litter * litter_bonus),
-        //             egg_price          : Math.round(bird.egg_price * price_bonus),
-        //             count              : elem.pivot.count,
-        //             certificate_id     : certificate ? certificate.id : 0,
-        //             bird_seller_user_id: elem.pivot.id
-        //         }
-        //     });
         getMyBirds(state) {
             return state.user_birds;
         }
@@ -100,10 +70,9 @@ export default {
                       commit,
                       state
                   }) {
-
-
             // we need access token for check auth
             if (!state.access_token) return false;
+
             // fetch to api check_auth
             return axios.get(
                 'api/auth/check_auth',
@@ -136,11 +105,9 @@ export default {
                     {headers: {"Authorization": `Bearer ${state.access_token}`}}
                 ).then(response => {
                     if (response.status === 200) {
-                        // user is logged in
-                        commit('setUser', response.data);
+                        commit('setUser', response.data); // user is logged in
                     }
-                    // user is not logged in
-                    else commit('setUser', null);
+                    else commit('setUser', null); // user is not logged in
                 })
                     // some error, user is not logged in
                     .catch((error) => {
@@ -148,15 +115,14 @@ export default {
                         commit('setUser', null);
                     });
             } else {
-                // user is not logged in
-                commit('setUser', null);
+                commit('setUser', null); // user is not logged in
             }
         },
         registration(context, form) {
             return axios.post('api/auth/register', form)
                 .then(response => {
                     if (response.status === 201) {
-                        console.log(response.data);
+                        // console.log(response.data);
                         context.commit('setUser', response.data);
 
                         return {
@@ -218,34 +184,14 @@ export default {
                     '/api/auth/logout',
                     {headers: {"Authorization": `Bearer ${state.access_token}`}}
                 )
-                    .then(response => {
-                        console.log(response);
+                    .then(() => {
                         commit('setAuth', false);
                         commit('setUser', null);
                         commit('set_Access_token', '');
                     });
             }
         },
-        // fetchUserBirds({
-        //                    commit,
-        //                    state
-        //                }) {
-        //     if (!state.access_token) return false;
-        //
-        //     // fetch to api check_auth
-        //     return axios.get(
-        //         'api/auth/get_user_birds',
-        //         {headers: {"Authorization": `Bearer ${state.access_token}`}}
-        //     )
-        //         .then(response => {
-        //             if (response.status === 200) {
-        //                 commit('setUserBirds', response.data); // update auth
-        //             }
-        //         })
-        //         .catch((error) => {
-        //             console.log('ERROR: ', error, error.response);
-        //         });
-        // },
+
         fetchUserBirds({
                            commit,
                            state

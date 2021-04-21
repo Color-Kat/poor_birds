@@ -28,6 +28,7 @@ import CreateCertificate from "./views/auth/adminArea/certificates/CreateCertifi
 import CertificatePage from "./views/certificates/CertificatePage";
 import Certificates from "./views/certificates/Certificates";
 import MyBirdsPage from "./views/auth/MyBirdsPage";
+import EggsPage from "./views/auth/EggsPage";
 
 Vue.use(VueRouter);
 
@@ -42,8 +43,7 @@ const routes = [
         component: Auth,
         // redirect authorized user to account
         async beforeEnter(to, from, next) {
-            let auth = await store.dispatch('checkAuth');
-            if (!auth) next(); // user is not logged in, redirect to to login or registration
+            if (!await store.dispatch('checkAuth')) next(); // user is not logged in, redirect to to login or registration
             else next({name: 'account'}); // user is authorized, redirect to account
         },
         children: [
@@ -70,22 +70,45 @@ const routes = [
         path     : '/account',
         name     : 'account',
         component: Account,
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'index'});
+        },
     },
 
     /* MY BIRDS PAGE */
     {
-        path: '/account/my_birds',
-        name: 'my_birds',
-        component: MyBirdsPage
+        path     : '/account/my_birds',
+        name     : 'my_birds',
+        component: MyBirdsPage,
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'index'});
+        },
+    },
+
+    /* ---------- My EGGS ----------------- */
+    {
+        path     : '/account/eggs',
+        component: EggsPage,
+        name     : 'eggs',
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'index'});
+        },
     },
 
     /* ADMIN AREA */
     {
-        //TODO добавить защиту от не вошедшего в систему не админа)
+        //TODO добавить защиту от не админа)
         path     : '/admin_area/',
         name     : 'admin_area',
         component: AdminArea,
-        children : [
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'index'});
+        },
+        children: [
             {
                 path     : 'birds',
                 component: Birds_admin,
@@ -101,10 +124,10 @@ const routes = [
                 component: Sellers_admin,
                 name     : 'admin-sellers',
                 children : [{
-                        path     : 'create',
-                        component: CreateSeller,
-                        props    : true
-                    }]
+                    path     : 'create',
+                    component: CreateSeller,
+                    props    : true
+                }]
             },
             {
                 path     : 'certificates',
