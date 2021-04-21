@@ -40,26 +40,38 @@ class CollectEggs extends Command
      */
     public function handle()
     {
-//        Log::info(User::all());
         $birds_users = User::get_all_users_birds_with_certificate();
 
         foreach ($birds_users as $key => $birds_user) {
+            // get user by key (key is user id)
             $user = User::with('my_eggs')->find($key);
 
-            dump('user '.$key, $birds_user);
-            Egg::create([
-                'user_id' => $key,
-                'bird_seller_id' => 20,
-                'price' => 100,
-                'demand' => 2,
-                'count' => 20,
-
-            ]);
-            dump('user '.$key, $birds_user);
+            // iterate all user birds
+            foreach ($birds_user[0] as $bird) {
+                // and add eggs in table
+                if (
+                    $user->my_eggs->contains('user_id', '===', $key) &&
+                    $user->my_eggs->contains('bird_seller_id', '===', $bird["bird_seller_id"])
+                ){
+                    $birdRow = Egg::where('user_id', $key)->where('bird_seller_id', $bird["bird_seller_id"])->first();
+                    // TODO добавить колонку manipulated, чтобы можно было понять, что пользователь продавал яйца в
+                    // этом часу
+                    $birdRow->demand = $bird["demand"]; // if the characteristics of the bird will change
+                    $birdRow->count += $bird["count"] * $bird["fertility"]; // increase eggs
+                    $birdRow->update();
+                } else {
+                    // new kind of eggs, need to create it
+                    Egg::create([
+                        'user_id' => $key,
+                        'bird_seller_id' => $bird["bird_seller_id"],
+                        'price' => $bird["egg_price"],
+                        'demand' => $bird["demand"],
+                        'count' => $bird["count"] * $bird["fertility"],
+                    ]);
+                }
+            }
         }
 
-//        dump($birds_users);
-//        User
-//        Log::info($birds);
+//        Log::info(234);
     }
 }

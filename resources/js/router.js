@@ -81,6 +81,7 @@ const routes = [
 
     /* ADMIN AREA */
     {
+        //TODO добавить защиту от не вошедшего в систему не админа)
         path     : '/admin_area/',
         name     : 'admin_area',
         component: AdminArea,

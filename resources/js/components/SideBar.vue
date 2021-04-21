@@ -7,6 +7,13 @@
                     <UserAvatar :balance="true"/>
                 </b-nav-item>
 
+                <b-nav-item :to="{name: 'eggs'}">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <span class="text-success">Склад яиц</span>
+                        <b-badge variant="success">131241 &#8381;</b-badge>
+                    </div>
+                </b-nav-item>
+
                 <b-nav-item :to="{name: 'my_birds'}" active-class="active">Мои птицы</b-nav-item>
                 <b-nav-item :to="{name: 'birds'}" active-class="active">Список птиц</b-nav-item>
                 <b-nav-item :to="{name: 'sellers'}" active-class="active">Продавцы</b-nav-item>
