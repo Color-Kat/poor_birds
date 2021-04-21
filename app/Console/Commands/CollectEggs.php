@@ -40,9 +40,10 @@ class CollectEggs extends Command
     public function handle()
     {
 //        Log::info(User::all());
-
-        dump(User::first()->get_all_user_birds_with_certificate());
-
-//        Log::info('Master3)');
+        $birds = User::get_all_user_birds_with_certificate();
+//        $birds->
+        dump($birds);
+//        User
+        Log::info('Master long)');
     }
 }

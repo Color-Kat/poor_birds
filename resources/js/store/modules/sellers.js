@@ -29,7 +29,10 @@ export default {
                     fertility_bonus : certificate ?  certificate.fertility_bonus : 1,
                     care_bonus : certificate ? certificate.care_bonus : 1,
                     litter_bonus : certificate ? certificate.litter_bonus : 1,
-                    price_bonus : certificate ? certificate.price_bonus : 1
+                    price_bonus : certificate ? certificate.price_bonus : 1,
+
+                    certificate_name : certificate ? certificate.name : false,
+                    certificate_id : certificate ? certificate.id : false,
                 };
             } else return false
         }

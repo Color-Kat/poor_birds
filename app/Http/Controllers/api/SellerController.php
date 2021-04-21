@@ -49,7 +49,15 @@ class SellerController extends Controller
      */
     public function show($id)
     {
-        $seller = Seller::with(['birds'])->with(['certificate'])->find($id);
+        $seller = Seller::with(['certificate', 'birds'])->find($id);
+
+        $sellerBirds = $seller->birds;
+        $certificate = $seller->certificate;
+
+        // apply seller's certificate to bird
+        $seller->birds->transform(function ($bird) use ($certificate) {
+            return Bird::apply_certificate_to_bird($bird, $certificate);
+        });
 
         if ($seller == null) {
             return response()->json([

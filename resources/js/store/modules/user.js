@@ -92,7 +92,6 @@ export default {
         //         }
         //     });
         getMyBirds(state) {
-            console.log(state.user_birds)
             return state.user_birds;
         }
     },
@@ -259,7 +258,6 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    console.log(response);
                     if (response.status === 200) {
                         commit('setUserBirds', response.data); // update auth
                     }
@@ -333,15 +331,6 @@ export default {
         changeBalance(state, sum) {
             state.user.money = sum
         },
-        // reduceBird(state, id) {
-        //     let birdIndex = state.user_birds.findIndex(item => {
-        //         if (item.pivot.id === id) return true;
-        //     });
-        //
-        //     // bird count is more that 1
-        //     if (state.user_birds[birdIndex].pivot.count > 1) state.user_birds[birdIndex].pivot.count--;
-        //     else state.user_birds.splice(birdIndex, 1)
-        // }
         reduceBird(state, id) {
             let birdIndex = state.user_birds.findIndex(item => {
                 if (item.bird_seller_user_id === id) return true;
