@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\models\Egg;
 use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -40,10 +41,25 @@ class CollectEggs extends Command
     public function handle()
     {
 //        Log::info(User::all());
-        $birds = User::get_all_user_birds_with_certificate();
-//        $birds->
-        dump($birds);
+        $birds_users = User::get_all_users_birds_with_certificate();
+
+        foreach ($birds_users as $key => $birds_user) {
+            $user = User::with('my_eggs')->find($key);
+
+            dump('user '.$key, $birds_user);
+            Egg::create([
+                'user_id' => $key,
+                'bird_seller_id' => 20,
+                'price' => 100,
+                'demand' => 2,
+                'count' => 20,
+
+            ]);
+            dump('user '.$key, $birds_user);
+        }
+
+//        dump($birds_users);
 //        User
-        Log::info('Master long)');
+//        Log::info($birds);
     }
 }

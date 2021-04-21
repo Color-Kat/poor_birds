@@ -27,7 +27,7 @@ class Bird extends Model
         $price_bonus     = $certificate ? 1 + $certificate->price_bonus / 100 : 1;
 
         return [
-//                "id"                  => $sold_birds->id,
+            "id"             => $bird->pivot ? $bird->pivot->id : null,
             "image"          => $bird->image,
             "name"           => $bird->name,
             "description"    => $bird->description,

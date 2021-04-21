@@ -150,6 +150,7 @@ class AuthController extends Controller
 
     public function get_my_birds_with_certificate()
     {
+//        dump(auth()->user()->my_birds()->withPivot('id')->get());
         return response()->json(User::get_my_birds_with_certificate(auth()->user()->my_birds));
     }
 

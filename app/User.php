@@ -41,22 +41,15 @@ class User extends Authenticatable implements JWTSubject
         $my_bird_with_certificate = [];
 
         foreach ($my_birds as $key => $my_bird ) {
+//            dd($my_birds);
             $bird        = $my_bird->bird;
             $certificate = $my_bird->seller->certificate;
-
             $my_bird_with_certificate[$key] = Bird::apply_certificate_to_bird($bird, $certificate);
             $my_bird_with_certificate[$key]["id"] = $my_bird->id;
             $my_bird_with_certificate[$key]["bird_seller_user_id"] = $my_bird->pivot->id;
+            $my_bird_with_certificate[$key]["bird_seller_id"] = $my_bird->pivot->bird_seller_id;
             $my_bird_with_certificate[$key]["count"] = $my_bird->pivot->count;
 
-//            // certificate bonuses
-//            $fertility_bonus = $certificate ? 1 + $certificate->fertility_bonus / 100 : 1;
-//            $demand_bonus    = $certificate ? 1 + $certificate->demand_bonus / 100: 1;
-//            $care_bonus      = $certificate ? 1 + $certificate->care_bonus / 100: 1;
-//            $litter_bonus    = $certificate ? 1 + $certificate->litter_bonus / 100: 1;
-//            $price_bonus     = $certificate ? 1 + $certificate->price_bonus / 100: 1;
-//
-//            $my_bird_with_certificate[] = [
 //                "id"                  => $my_bird->id,
 //                "image"               => $bird->image,
 //                "name"                => $bird->name,
@@ -71,24 +64,28 @@ class User extends Authenticatable implements JWTSubject
 //                "certificate_id"      => $certificate ? $certificate->id : 0,
 //                "bird_seller_user_id" => $my_bird->pivot->id,
 //                "pivot"               => $my_bird->pivot
-//            ];
         }
 
         return $my_bird_with_certificate;
     }
 
-    public static function get_all_user_birds_with_certificate() {
+    public static function get_all_users_birds_with_certificate() {
         $birds = [];
 
-        foreach (User::all() as $user) {
-            $birds[] = self::get_my_birds_with_certificate($user->my_birds);
+        foreach (User::with('my_birds')->get() as $user) {
+//            dd($user->my_birds()->with(['sellers'])->get());
+//            $birds[] = self::get_my_birds_with_certificate($user->my_birds()->with(['sellers'])->get());
+            $birds[$user->id][] = self::get_my_birds_with_certificate($user->my_birds()->get());
         }
+
+
+
         return $birds;
     }
 
     public function my_eggs()
     {
-        return $this->belongsToMany('App\models\Egg');
+        return $this->hasMany('App\models\Egg');
     }
 
     /**
