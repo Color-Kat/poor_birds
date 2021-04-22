@@ -40,42 +40,42 @@ class CollectEggs extends Command
      */
     public function handle()
     {
-        $birds_users = User::get_all_users_birds_with_certificate();
-
-        foreach ($birds_users as $key => $birds_user) {
-            // get user by key (key is user id)
-            $user = User::with('my_eggs')->find($key);
-
-            // iterate all user birds
-            foreach ($birds_user[0] as $bird) {
-                // and add eggs in table
-                if (
-                    $user->my_eggs->contains('user_id', '===', $key) &&
-                    $user->my_eggs->contains('bird_seller_id', '===', $bird["bird_seller_id"])
-                ) {
-                    $birdRow = Egg::where('user_id', $key)->where('bird_seller_id', $bird["bird_seller_id"])->first();
-                    // TODO добавить колонку manipulated, чтобы можно было понять, что пользователь продавал яйца в
-                    // этом часу
-                    $birdRow->demand = $bird["demand"]; // if the characteristics of the bird will change
-                    $birdRow->count  += $bird["count"] * $bird["fertility"]; // increase eggs
-                    $birdRow->birds_count = $bird["count"];
-                    $birdRow->collected = false;
-                    $birdRow->update();
-                } else {
-                    // new kind of eggs, need to create it
-                    Egg::create([
-                        'user_id'        => $key,
-                        'bird_seller_id' => $bird["bird_seller_id"],
-                        'name'           => $bird["name"],
-                        'birds_count'    => $bird["count"],
-                        'collected'      => false,
-                        'price'          => $bird["egg_price"],
-                        'demand'         => $bird["demand"],
-                        'count'          => $bird["count"] * $bird["fertility"],
-                    ]);
-                }
-            }
-        }
+//        $birds_users = User::get_all_users_birds_with_certificate();
+//
+//        foreach ($birds_users as $key => $birds_user) {
+//            // get user by key (key is user id)
+//            $user = User::with('my_eggs')->find($key);
+//
+//            // iterate all user birds
+//            foreach ($birds_user[0] as $bird) {
+//                // and add eggs in table
+//                if (
+//                    $user->my_eggs->contains('user_id', '===', $key) &&
+//                    $user->my_eggs->contains('bird_seller_id', '===', $bird["bird_seller_id"])
+//                ) {
+//                    $birdRow = Egg::where('user_id', $key)->where('bird_seller_id', $bird["bird_seller_id"])->first();
+//                    // TODO добавить колонку manipulated, чтобы можно было понять, что пользователь продавал яйца в
+//                    // этом часу
+//                    $birdRow->demand = $bird["demand"]; // if the characteristics of the bird will change
+//                    $birdRow->count  += $bird["count"] * $bird["fertility"]; // increase eggs
+//                    $birdRow->birds_count = $bird["count"];
+//                    $birdRow->collected = false;
+//                    $birdRow->update();
+//                } else {
+//                    // new kind of eggs, need to create it
+//                    Egg::create([
+//                        'user_id'        => $key,
+//                        'bird_seller_id' => $bird["bird_seller_id"],
+//                        'name'           => $bird["name"],
+//                        'birds_count'    => $bird["count"],
+//                        'collected'      => false,
+//                        'price'          => $bird["egg_price"],
+//                        'demand'         => $bird["demand"],
+//                        'count'          => $bird["count"] * $bird["fertility"],
+//                    ]);
+//                }
+//            }
+//        }
 
 //        Log::info(234);
     }
