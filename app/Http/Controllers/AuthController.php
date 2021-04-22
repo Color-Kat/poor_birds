@@ -214,7 +214,6 @@ class AuthController extends Controller
         auth()->user()->money += $profit;
         auth()->user()->update();
 
-        dump($eggs, $profit);
         return response()->json([
             'eggs_count' => $eggs->count,
             'balance' => auth()->user()->money,
