@@ -46,7 +46,10 @@
                             <b-badge variant="success" class="my-1 ml-1">{{ egg.count }}🥚</b-badge>
                             <b-badge variant="danger" class="my-1 ml-1">Спрос {{ egg.demand }} яиц/час</b-badge>
                             <b-badge class="my-1 ml-1">{{ egg.price }}&#8381; цена яйца</b-badge>
-                            <b-badge variant="warning" class="my-1 ml-1">Всего: {{ egg.price * egg.count }}&#8381;</b-badge>
+                            <b-badge variant="warning" class="my-1 ml-1">Всего: {{
+                                    egg.price * egg.count
+                                }}&#8381;
+                            </b-badge>
                         </div>
 
                         <span>
@@ -55,8 +58,8 @@
                                 class="mt-2"
                                 @click="()=>{sellEggs(egg.id);egg.count -= egg.demand < egg.count ? egg.demand : egg.count}"
                             >
-                                Продать {{egg.demand < egg.count ? egg.demand : egg.count}}🥚
-                                за {{(egg.demand < egg.count ? egg.demand : egg.count) * egg.price}}&#8381;
+                                Продать {{ egg.demand < egg.count ? egg.demand : egg.count }}🥚
+                                за {{ (egg.demand < egg.count ? egg.demand : egg.count) * egg.price }}&#8381;
                             </b-button>
                         </span>
                     </h5>

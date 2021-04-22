@@ -140,7 +140,8 @@ class AuthController extends Controller
         return response()->json(User::get_my_birds_with_certificate(auth()->user()->my_birds));
     }
 
-    public function get_my_eggs() {
+    public function get_my_eggs()
+    {
         return response()->json(auth()->user()->my_eggs);
     }
 
@@ -202,21 +203,34 @@ class AuthController extends Controller
         return false;
     }
 
-    public function sellEggs(Request $request){
+    public function sellEggs(Request $request)
+    {
         $eggs = auth()->user()->my_eggs()->where('id', $request->id)->first();
 
+        // eggs is already collected
+        if ($eggs->collected || !$eggs) {
+            return response()->json([
+                "message" => 'Яйца уже собраны!',
+                "result"  => false
+            ]);
+        }
+
         // get number of available eggs (demand or less)
-        $availableEggs = $eggs->count > $eggs->demand ? $eggs->demand : $eggs->count;
-        $eggs->count -= $availableEggs; // decrease eggs count
-        $profit = $availableEggs * $eggs->price; // get profit
+        $availableEggs   = $eggs->count > $eggs->demand ? $eggs->demand : $eggs->count;
+        $eggs->count     -= $availableEggs; // decrease eggs count
+        $eggs->collected = true; // eggs is collected
+        $profit          = $availableEggs * $eggs->price; // get profit
 
         $eggs->update();
         auth()->user()->money += $profit;
         auth()->user()->update();
 
         return response()->json([
-            'eggs_count' => $eggs->count,
-            'balance' => auth()->user()->money,
+            "message" => '',
+            "result"  => [
+                'eggs_count' => $eggs->count,
+                'balance'    => auth()->user()->money,
+            ]
         ]);
     }
 

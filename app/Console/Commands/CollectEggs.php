@@ -59,6 +59,7 @@ class CollectEggs extends Command
                     $birdRow->demand = $bird["demand"]; // if the characteristics of the bird will change
                     $birdRow->count  += $bird["count"] * $bird["fertility"]; // increase eggs
                     $birdRow->birds_count = $bird["count"];
+                    $birdRow->collected = false;
                     $birdRow->update();
                 } else {
                     // new kind of eggs, need to create it
@@ -67,6 +68,7 @@ class CollectEggs extends Command
                         'bird_seller_id' => $bird["bird_seller_id"],
                         'name'           => $bird["name"],
                         'birds_count'    => $bird["count"],
+                        'collected'      => false,
                         'price'          => $bird["egg_price"],
                         'demand'         => $bird["demand"],
                         'count'          => $bird["count"] * $bird["fertility"],
