@@ -15,6 +15,8 @@ class CreateEggsTable extends Migration
     {
         Schema::create('eggs', function (Blueprint $table) {
             $table->id();
+            $table->string('name'); // название птицы
+            $table->integer('birds_count'); // кол-во птиц, которые несут яйца
             $table->integer('price'); // цена одного яйца
             $table->integer('demand'); // спрос - сколько за час можно продавать яиц
             $table->integer('count'); // кол-во яиц

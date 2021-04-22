@@ -19,9 +19,42 @@
                 class="mb-2 w-100"
                 tag="article"
                 :key="egg.id"
+                body-class="p-3"
             >
-                <b-card-text>
-                    {{ egg }}
+                <b-card-text
+                    class="d-flex justify-content-between"
+                >
+                    <!--                    {{ egg }}-->
+                    <div
+                        style="font-size: 1.1em; width: max-content"
+                        class="d-flex align-items-center mr-3"
+                    >
+                        <span class="d-flex justify-content-center">
+                            <b>{{ egg.name }}</b>
+                            <span class="ml-1">x{{ egg.birds_count }}</span>
+                        </span>
+                    </div>
+
+
+                    <h5 class="d-flex justify-content-end  flex-wrap">
+                        <div class="d-flex justify-content-end flex-wrap">
+                            <b-badge variant="success" class="my-1 ml-1">{{ egg.count }}🥚</b-badge>
+                            <b-badge variant="danger" class="my-1 ml-1">Спрос {{ egg.demand }} яиц/час</b-badge>
+                            <b-badge class="my-1 ml-1">{{ egg.price }}&#8381; цена яйца</b-badge>
+                            <b-badge variant="warning" class="my-1 ml-1">Всего: {{ egg.price * egg.count }}&#8381;</b-badge>
+                        </div>
+
+                        <span>
+                            <b-button
+                                variant="primary"
+                                class="mt-2"
+                                @click="()=>{sellEggs(egg.id);}"
+                            >
+                                Продать {{egg.demand < egg.count ? egg.demand : egg.count}}🥚
+                                за {{(egg.demand < egg.count ? egg.demand : egg.count) * egg.price}}&#8381;
+                            </b-button>
+                        </span>
+                    </h5>
                 </b-card-text>
 
                 <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
@@ -35,7 +68,7 @@ import {mapActions, mapGetters} from "vuex";
 
 export default {
     name    : "EggsPage",
-    methods : {...mapActions(['fetchUserEggs'])},
+    methods : {...mapActions(['fetchUserEggs', 'sellEggs'])},
     computed: {...mapGetters(['getEggs'])},
     mounted() {
         this.fetchUserEggs();

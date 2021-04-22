@@ -202,6 +202,25 @@ class AuthController extends Controller
         return false;
     }
 
+    public function sellEggs(Request $request){
+        $eggs = auth()->user()->my_eggs()->where('id', $request->id)->first();
+
+        // get number of available eggs (demand or less)
+        $availableEggs = $eggs->count > $eggs->demand ? $eggs->demand : $eggs->count;
+        $eggs->count -= $availableEggs; // decrease eggs count
+        $profit = $availableEggs * $eggs->price; // get profit
+
+        $eggs->update();
+        auth()->user()->money += $profit;
+        auth()->user()->update();
+
+        dump($eggs, $profit);
+        return response()->json([
+            'eggs_count' => $eggs->count,
+            'balance' => auth()->user()->money,
+        ]);
+    }
+
     /**
      * Get the token array structure.
      *

@@ -110,8 +110,7 @@ export default {
                 ).then(response => {
                     if (response.status === 200) {
                         commit('setUser', response.data); // user is logged in
-                    }
-                    else commit('setUser', null); // user is not logged in
+                    } else commit('setUser', null); // user is not logged in
                 })
                     // some error, user is not logged in
                     .catch((error) => {
@@ -284,6 +283,30 @@ export default {
                     console.log('ERROR: ', error, error.response);
                 });
         },
+        sellEggs({
+                     commit,
+                     state
+                 }, id) {
+            if (!state.access_token) return false;
+            return axios.post(
+                'api/auth/sellEggs',
+                {id},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    console.log(response);
+                    if (!response.data) return false
+                    else {
+                        // commit('changeBalance', response.data);
+                        return true;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+
+        }
     },
     mutations: {
         setUser(state, user) {

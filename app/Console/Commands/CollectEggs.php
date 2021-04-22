@@ -52,21 +52,24 @@ class CollectEggs extends Command
                 if (
                     $user->my_eggs->contains('user_id', '===', $key) &&
                     $user->my_eggs->contains('bird_seller_id', '===', $bird["bird_seller_id"])
-                ){
+                ) {
                     $birdRow = Egg::where('user_id', $key)->where('bird_seller_id', $bird["bird_seller_id"])->first();
                     // TODO добавить колонку manipulated, чтобы можно было понять, что пользователь продавал яйца в
                     // этом часу
                     $birdRow->demand = $bird["demand"]; // if the characteristics of the bird will change
-                    $birdRow->count += $bird["count"] * $bird["fertility"]; // increase eggs
+                    $birdRow->count  += $bird["count"] * $bird["fertility"]; // increase eggs
+                    $birdRow->birds_count = $bird["count"];
                     $birdRow->update();
                 } else {
                     // new kind of eggs, need to create it
                     Egg::create([
-                        'user_id' => $key,
+                        'user_id'        => $key,
                         'bird_seller_id' => $bird["bird_seller_id"],
-                        'price' => $bird["egg_price"],
-                        'demand' => $bird["demand"],
-                        'count' => $bird["count"] * $bird["fertility"],
+                        'name'           => $bird["name"],
+                        'birds_count'    => $bird["count"],
+                        'price'          => $bird["egg_price"],
+                        'demand'         => $bird["demand"],
+                        'count'          => $bird["count"] * $bird["fertility"],
                     ]);
                 }
             }
