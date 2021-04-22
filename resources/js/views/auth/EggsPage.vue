@@ -1,5 +1,16 @@
 <template>
     <b-card>
+        <b-modal
+            id="modal-eggs"
+            title="Продажа яиц"
+            hide-footer
+            header-bg-variant="danger"
+            header-text-variant="light"
+        >
+            <p class="my-2">Вы не можете продавать один вид яиц чаще, чем один раз в час :((</p>
+        </b-modal>
+        <b-button v-b-modal.modal-eggs>Launch demo modal</b-button>
+
         <h2 class="text-center">Склад ваших яиц ;)</h2>
         <span>
             Эти яйца несут ваши птицы. И у каждого вида птиц - свои яйца!
@@ -56,7 +67,10 @@
                             <b-button
                                 variant="primary"
                                 class="mt-2"
-                                @click="()=>{sellEggs(egg.id);egg.count -= egg.demand < egg.count ? egg.demand : egg.count}"
+                                @click="e=>{
+                                    sellingEggs(egg, e);
+                                }"
+                                :disabled="!!egg.collected"
                             >
                                 Продать {{ egg.demand < egg.count ? egg.demand : egg.count }}🥚
                                 за {{ (egg.demand < egg.count ? egg.demand : egg.count) * egg.price }}&#8381;
@@ -77,7 +91,20 @@ import {mapActions, mapGetters} from "vuex";
 
 export default {
     name    : "EggsPage",
-    methods : {...mapActions(['fetchUserEggs', 'sellEggs'])},
+    methods : {
+        ...mapActions(['fetchUserEggs', 'sellEggs']),
+        async sellingEggs(egg, event) {
+            let eggs_count = await this.sellEggs(egg.id);
+
+            if (eggs_count !== false) {
+                egg.count             = eggs_count; // update number of eggs
+                event.target.disabled = true; // disable button to ban selling eggs
+            } else {
+                // show modal ( на всякий случай)) )
+                this.$bvModal.show('modal-eggs');
+            }
+        }
+    },
     computed: {...mapGetters(['getEggs'])},
     mounted() {
         this.fetchUserEggs();

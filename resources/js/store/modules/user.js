@@ -294,9 +294,11 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    if (response.status == 200) {
-                        commit('changeBalance', response.data.balance);
+                    if (response.status == 200 && response.data.result) {
+                        commit('changeBalance', response.data.result.balance);
+                        return response.data.result.eggs_count;
                     }
+                    return false
                 })
                 .catch((error) => {
                     console.log(error, error.response);
