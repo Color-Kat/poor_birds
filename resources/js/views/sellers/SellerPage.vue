@@ -116,7 +116,6 @@ export default {
             this.$router.push(`/sellers/${seller_id}/birds/${bird_id}`)
         },
         async birdBuy(ids) {
-            console.log(ids)
             let result = await this.buyBird(ids);
             if (result) this.$bvModal.show('modal-bird-buy');
         }

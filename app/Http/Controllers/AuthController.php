@@ -154,6 +154,7 @@ class AuthController extends Controller
         $userMoney = auth()->user()->money;
 
         if ($price > $userMoney) return false; // not enough money
+
         auth()->user()->money -= $price; // decrease user money
         auth()->user()->update(); // update
 
