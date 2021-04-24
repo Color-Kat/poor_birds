@@ -62,23 +62,38 @@ class CollectEggs extends Command
         // SET
         // e.count = (birds.fertility * (1 + IFNULL(certs.fertility_bonus, 0) / 100))
 
-//        DB::select("UPDATE eggs AS e -- select eggs data
-//JOIN users AS u ON( u.id = e.user_id) -- join users table
-//JOIN bird_seller AS b_s ON (b_s.id = e.bird_seller_id) -- join bird_seller table
-//
-//LEFT JOIN bird_seller_user AS b_s_u ON (b_s_u.bird_seller_id = b_s.id AND (b_s_u.user_id = u.id)) -- join bird_seller_user table
-//
-//
-//JOIN birds ON (b_s.bird_id = birds.id) -- join birds table
-//LEFT JOIN certificates AS certs ON ((SELECT certificate_id FROM sellers WHERE id = b_s.seller_id) = certs.id)
-//-- fill eggs fields
-//SET
-//e.count = e.count + (birds.fertility * (1 + IFNULL(certs.fertility_bonus, 0) / 100)),
-//e.price = (birds.egg_price * (1 + IFNULL(certs.price_bonus, 0) / 100)),
-//e.demand = birds.demand,
-//e.name = birds.name,
-//e.birds_count = b_s_u.count,
-//e.collected = 0");
+        DB::select("
+            INSERT INTO eggs (id, name, birds_count, price, demand, count, collected, user_id, bird_seller_id)
+
+            SELECT
+                CONCAT(u.id, b_s.id), -- create UID from user_id and bird_seller_id
+                birds.name, -- bird name
+                count, -- count of birds from bird_seller_user table
+                birds.egg_price * (1 + IFNULL(price_bonus, 0) / 100), -- egg price with certificate
+                birds.demand * (1 + IFNULL(demand_bonus, 0) / 100), -- demand with certificate bonus
+                count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100), -- get count of eggs from birds_count * fertility with certificate bonus
+                0, -- change collected
+                user_id,
+                bird_seller_id
+
+            FROM users AS u -- get all users
+
+            LEFT JOIN bird_seller_user AS b_s_u ON (b_s_u.user_id = u.id) -- join bird_seller_user table to get sold_bird
+
+            JOIN bird_seller AS b_s ON (b_s.id = b_s_u.bird_seller_id) -- join bird_seller table (this id sol_bird)
+
+            JOIN birds ON (b_s.bird_id = birds.id) -- join birds table
+
+            LEFT JOIN certificates AS certs ON ((SELECT certificate_id FROM sellers WHERE id = b_s.seller_id) = certs.id) -- and join certificate table
+
+            ON DUPLICATE KEY UPDATE
+                name = birds.name, -- update bird name (just in case)
+                birds_count = b_s_u.count,
+                price = birds.egg_price * (1 + IFNULL(price_bonus, 0) / 100),
+                demand = birds.demand,
+                count = eggs.count + b_s_u.count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100), -- increase eggs count
+                collected = 0
+        ");
 
 
 //        $birds_users = User::get_all_users_birds_with_certificate();
@@ -95,7 +110,6 @@ class CollectEggs extends Command
 //                    $user->my_eggs->contains('bird_seller_id', '===', $bird["bird_seller_id"])
 //                ) {
 //                    $birdRow = Egg::where('user_id', $key)->where('bird_seller_id', $bird["bird_seller_id"])->first();
-//                    // TODO добавить колонку manipulated, чтобы можно было понять, что пользователь продавал яйца в
 //                    // этом часу
 //                    $birdRow->demand = $bird["demand"]; // if the characteristics of the bird will change
 //                    $birdRow->count  += $bird["count"] * $bird["fertility"]; // increase eggs
