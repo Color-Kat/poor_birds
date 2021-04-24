@@ -1,23 +1,35 @@
 <template>
     <aside v-if="getAuth" :class="{ active: active_sideBar }">
         <b-card>
-            <b-navbar-nav>
+            <b-navbar-nav class="nav-pills red">
 
-                <b-nav-item to="/account" active-class="active">
+                <b-nav-item to="/account" class="border-bottom">
                     <UserAvatar :balance="true"/>
                 </b-nav-item>
 
-                <b-nav-item :to="{name: 'eggs'}">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <span class="text-success">Склад яиц</span>
-                        <b-badge variant="success">131241 &#8381;</b-badge>
-                    </div>
+
+                <b-nav-item :to="{name: 'eggs'}" active-class="active">
+                    <h5 class="d-flex align-items-center justify-content-between">
+                        <span>🥚Склад яиц</span>
+                        <b-badge variant="light">131241 &#8381;</b-badge>
+                    </h5>
                 </b-nav-item>
 
-                <b-nav-item :to="{name: 'my_birds'}" active-class="active">Мои птицы</b-nav-item>
-                <b-nav-item :to="{name: 'birds'}" active-class="active">Список птиц</b-nav-item>
-                <b-nav-item :to="{name: 'sellers'}" active-class="active">Продавцы</b-nav-item>
-                <b-nav-item :to="{name: 'certificates'}" active-class="active">Сертификаты</b-nav-item>
+                <h5 class="mb-3 border-bottom">
+                    <b-nav-item :to="{name: 'my_birds'}" active-class="active"><b>🦅</b>Мои
+                        птицы
+                    </b-nav-item>
+                </h5>
+
+                <h5>
+                    <b-nav-item :to="{name: 'birds'}" active-class="active"><b>🐔</b>Список птиц</b-nav-item>
+                </h5>
+                <h5>
+                    <b-nav-item :to="{name: 'sellers'}" active-class="active"><b>🛒</b>Продавцы</b-nav-item>
+                </h5>
+                <h5>
+                    <b-nav-item :to="{name: 'certificates'}" active-class="active"><b>📋</b>Сертификаты</b-nav-item>
+                </h5>
 
             </b-navbar-nav>
         </b-card>
@@ -38,12 +50,12 @@ export default {
     components: {
         UserAvatar
     },
-    methods: {
+    methods   : {
         ...mapActions(['toggle_sideBar'])
     },
     // close sidebar on resize
     created() {
-        window.addEventListener('resize', ()=>this.toggle_sideBar(false));
+        window.addEventListener('resize', () => this.toggle_sideBar(false));
     },
     beforeDestroy() {
         window.removeEventListener('resize');

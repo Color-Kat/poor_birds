@@ -44,5 +44,7 @@ Route::group([
 
     Route::post('buyBird', 'AuthController@buyBird');
     Route::post('sellBird', 'AuthController@sellBird');
+
+    Route::post('openSeller', 'AuthController@openSeller');
 //    Route::get('get_user_birds', 'AuthController@get_user_birds_with_certificate');
 });

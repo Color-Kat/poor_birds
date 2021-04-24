@@ -91,7 +91,7 @@ class AuthController extends Controller
             ['password' => bcrypt($request->password)]
         ));
 
-        $user->my_sellers()->attach(1);
+//        $user->my_sellers()->attach(1); // attach bazaar to available sellers
 
         return response()->json([
             'message' => 'Пользователь успешно зарегестрирован',
@@ -246,6 +246,20 @@ class AuthController extends Controller
         $egg->update();
 
         return $egg->litter;
+    }
+
+    public function openSeller(Request $request) {
+        $user = auth()->user();
+        $seller = Seller::find($request->id);
+
+        if ($user->money >= $seller->price) {
+            auth()->user()->money -= $seller->price; // decrease user money
+            auth()->user()->update(); // update balance
+            $user->my_sellers()->attach($seller->id); // set seller available
+            return auth()->user()->money ;
+        } else return false;
+
+
     }
 
     /**

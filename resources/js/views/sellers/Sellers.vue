@@ -45,8 +45,8 @@
                             Посмотреть продавца
                         </b-button>
 
-                        <b-button variant="primary">
-                            Открыть продавца за {{seller.price}}₽
+                        <b-button variant="primary" @click="()=>openThisSeller(seller.id)">
+                            Открыть продавца за {{ seller.price }}₽
                         </b-button>
                     </div>
                 </div>
@@ -73,21 +73,24 @@ export default {
         redirect(id) {
             this.$router.push(`/sellers/${id}`)
         },
-        ...mapActions(['fetchSellers']),
+        ...mapActions(['fetchSellers', 'openSeller']),
         checkAvailable(sellerId) {
             console.log(2132)
             return this.getUserSellers.find(elem => {
                 console.log(elem)
             });
+        },
+        async openThisSeller(sellerId) {
+            if (await this.openSeller(sellerId)) this.$router.go();
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    .seller-overlay{
-        position: absolute;
-        background: rgba(255, 255, 255, 0.7);
-        z-index: 1000;
-    }
+.seller-overlay {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
+}
 </style>

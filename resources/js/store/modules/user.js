@@ -332,6 +332,30 @@ export default {
                 });
 
         },
+        openSeller({
+                  commit,
+                  state
+              }, id) {
+            if (!state.access_token) return false;
+
+            return axios.post(
+                'api/auth/openSeller',
+                {id},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    console.log(response)
+                    if (response.status == 200) {
+                        commit('changeBalance', response.data);
+                        return true;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+
+        },
     },
     mutations: {
         setUser(state, user) {

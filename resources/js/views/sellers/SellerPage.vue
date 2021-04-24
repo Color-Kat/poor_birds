@@ -56,15 +56,15 @@
             <hr>
             <h2>Птицы продавца: </h2>
 
+            <!--      open seller      -->
             <b-button
-                v-if="getUserSellers
-                            ? !getUserSellers.find(elem => {
-                                return elem.id == getSeller.id
-                            })
-                            : true"
+                v-if="this.getUserSellers ? !this.getUserSellers.find(elem => {
+                    return elem.id == this.getSeller.id
+                }) : true"
                 variant="primary"
+                @click="() => {openThisSeller(getSeller.id)}"
             >
-                Открыть продавца за {{getSeller.price[1]}}
+                Открыть продавца за {{ getSeller.price[1] }}
             </b-button>
 
             <div
@@ -125,15 +125,21 @@ export default {
     components: {
         Field,
     },
-    data      : () => ({
-        loading          : true,
-        purchasedBirdName: null
-    }),
+    data: function (){
+        return {
+            loading          : true,
+            purchasedBirdName: null,
+            sellerAvailable  : (this.getUserSellers ? !this.getUserSellers.find(elem => {
+                console.log(elem)
+                    return elem.id == this.getSeller.id
+                }) : true)
+        }
+    },
     computed  : {
         ...mapGetters(['getSeller', 'getUserSellers'])
     },
     methods   : {
-        ...mapActions(['fetchSeller', 'buyBird']),
+        ...mapActions(['fetchSeller', 'buyBird', 'openSeller']),
         redirect(seller_id, bird_id) {
             // TODO сделать страницу с птицей продавца. Необязательно
             this.$router.push(`/sellers/${seller_id}/birds/${bird_id}`)
@@ -142,6 +148,12 @@ export default {
             let result = await this.buyBird(ids);
             if (result) this.$bvModal.show('modal-bird-buy');
             else this.$bvModal.show('modal-no-money');
+        },
+        async openThisSeller(sellerId) {
+            // TODO сделать без перезагрузки
+            if (await this.openSeller(sellerId)) this.$router.go();
+
+            // this.sellerAvailable = true;
         }
     },
     async mounted() {
