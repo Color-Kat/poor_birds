@@ -80,7 +80,7 @@ class CollectEggs extends Command
 
         ");
 
-//        Log::info('litter');
+        Log::info('litter');
 
 
 //        $birds_users = User::get_all_users_birds_with_certificate();
@@ -97,6 +97,7 @@ class CollectEggs extends Command
 //                    $user->my_eggs->contains('bird_seller_id', '===', $bird["bird_seller_id"])
 //                ) {
 //                    $birdRow = Egg::where('user_id', $key)->where('bird_seller_id', $bird["bird_seller_id"])->first();
+
 //                    // этом часу
 //                    $birdRow->demand = $bird["demand"]; // if the characteristics of the bird will change
 //                    $birdRow->count  += $bird["count"] * $bird["fertility"]; // increase eggs
@@ -118,5 +119,7 @@ class CollectEggs extends Command
 //                }
 //            }
 //        }
+
+//        Log::info(234);
     }
 }
