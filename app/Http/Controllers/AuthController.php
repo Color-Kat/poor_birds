@@ -91,6 +91,7 @@ class AuthController extends Controller
             ['password' => bcrypt($request->password)]
         ));
 
+        $user->my_sellers()->attach(1);
 
         return response()->json([
             'message' => 'Пользователь успешно зарегестрирован',
@@ -128,7 +129,7 @@ class AuthController extends Controller
      */
     public function user()
     {
-        return response()->json(auth()->user());
+        return response()->json(auth()->user()->load('my_sellers:id'));
     }
 
     public function get_user_birds()

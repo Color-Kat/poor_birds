@@ -48,21 +48,6 @@ class User extends Authenticatable implements JWTSubject
             $my_bird_with_certificate[$key]["bird_seller_user_id"] = $my_bird->pivot->id;
             $my_bird_with_certificate[$key]["bird_seller_id"] = $my_bird->pivot->bird_seller_id;
             $my_bird_with_certificate[$key]["count"] = $my_bird->pivot->count;
-
-//                "id"                  => $my_bird->id,
-//                "image"               => $bird->image,
-//                "name"                => $bird->name,
-//                "description"         => $bird->description,
-//                "price"               => $bird->price,
-//                "fertility"           => round($bird->fertility * $fertility_bonus),
-//                "demand"              => round($bird->demand * $demand_bonus),
-//                "care"                => round($bird->care * $care_bonus),
-//                "litter"              => round($bird->litter * $litter_bonus),
-//                "egg_price"           => round($bird->egg_price * $price_bonus),
-//                "count"               => $my_bird->pivot->count,
-//                "certificate_id"      => $certificate ? $certificate->id : 0,
-//                "bird_seller_user_id" => $my_bird->pivot->id,
-//                "pivot"               => $my_bird->pivot
         }
 
         return $my_bird_with_certificate;
@@ -82,6 +67,10 @@ class User extends Authenticatable implements JWTSubject
     public function my_eggs()
     {
         return $this->hasMany('App\models\Egg');
+    }
+
+    public function my_sellers() {
+        return $this->belongsToMany('App\models\Seller');
     }
 
     /**
@@ -122,47 +111,3 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 }
-
-
-
-// ------------------------------------------
-
-// OLD CODE OF LARAVEL AUTH
-//
-//namespace App;
-//
-//use Illuminate\Contracts\Auth\MustVerifyEmail;
-//use Illuminate\Foundation\Auth\User as Authenticatable;
-//use Illuminate\Notifications\Notifiable;
-//
-//class User extends Authenticatable
-//{
-//    use Notifiable;
-//
-//    /**
-//     * The attributes that are mass assignable.
-//     *
-//     * @var array
-//     */
-//    protected $fillable = [
-//        'name', 'email', 'password',
-//    ];
-//
-//    /**
-//     * The attributes that should be hidden for arrays.
-//     *
-//     * @var array
-//     */
-//    protected $hidden = [
-//        'password', 'remember_token',
-//    ];
-//
-//    /**
-//     * The attributes that should be cast to native types.
-//     *
-//     * @var array
-//     */
-//    protected $casts = [
-//        'email_verified_at' => 'datetime',
-//    ];
-//}

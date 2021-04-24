@@ -18,7 +18,7 @@ class SellerController extends Controller
      */
     public function index()
     {
-        return Seller::all();
+        return Seller::orderBy('price')->get();
     }
 
     /**

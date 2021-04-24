@@ -68,6 +68,12 @@ export default {
         getEggs(state) {
             return state.eggs;
         },
+        // return unlocked sellers
+        getUserSellers(state) {
+            if (state.user) {
+                return state.user.my_sellers;
+            } else return false;
+        }
     },
     actions  : {
         checkAuth({

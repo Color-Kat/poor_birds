@@ -1,17 +1,28 @@
 <template>
     <div>
-<!--        TODO add no money modal-->
-        <b-modal id="modal-bird-buy" title="Поздравляем! Вы купили птицу" hide-header>
-            <p class="my-2">Поздравляем! Вы купили птицу "{{purchasedBirdName}}"</p>
+        <!--    NO MONEY MODAL    -->
+        <b-modal id="modal-no-money" header-bg-variant="danger">
+            <p class="my-2">К сожалению у вас нет денег на птицу "{{ purchasedBirdName }}"</p>
 
-            <template #modal-footer="{ ok, cancel, hide }">
+            <template #modal-footer="{ ok }">
+                <b-button size="sm" @click="ok()">
+                    Oк(
+                </b-button>
+            </template>
+        </b-modal>
+
+        <!--    YOU BUY BIRD MODAL    -->
+        <b-modal id="modal-bird-buy" title="Поздравляем! Вы купили птицу" hide-header>
+            <p class="my-2">Поздравляем! Вы купили птицу "{{ purchasedBirdName }}"</p>
+
+            <template #modal-footer="{ ok }">
                 <b-button size="sm" variant="success" @click="ok()">
                     Oк
                 </b-button>
             </template>
         </b-modal>
 
-        <router-view></router-view>
+        <!--        <router-view></router-view>-->
 
         <b-card
             v-if="!loading"
@@ -31,10 +42,11 @@
             <Field :field="getSeller.discountText"></Field>
             <Field :field="getSeller.birds_count"></Field>
             <Field :field="getSeller.price"></Field>
-            <b-button v-if="getSeller.certificate_id"
-                      class="mt-2"
-                      variant="primary"
-                      :to="`/certificates/${getSeller.certificate_id}`"
+            <b-button
+                v-if="getSeller.certificate_id"
+                class="mt-2"
+                variant="warning"
+                :to="`/certificates/${getSeller.certificate_id}`"
             >
                 {{
                     getSeller.certificate_name
@@ -42,12 +54,23 @@
             </b-button>
 
             <hr>
-            <h2>Птицы продавца</h2>
+            <h2>Птицы продавца: </h2>
 
-            <!--            <pre>{{ getSeller.birds }}</pre>-->
-            <!--                    -->
+            <b-button
+                v-if="getUserSellers
+                            ? !getUserSellers.find(elem => {
+                                return elem.id == getSeller.id
+                            })
+                            : true"
+                variant="primary"
+            >
+                Открыть продавца за {{getSeller.price[1]}}
+            </b-button>
 
-            <div class="mt-2 grid-cards-columns">
+            <div
+                class="mt-2 grid-cards-columns"
+                v-else
+            >
                 <b-card
                     v-for="bird of getSeller.birds"
                     class="mb-2 card-item"
@@ -62,15 +85,15 @@
                         <hr>
 
                         <h6 class="d-inline" style="width: 10px !important; margin: 0 !important;">
-                            <b-badge variant="warning">Плодоносность: {{bird.fertility}} яиц/час
+                            <b-badge variant="warning">Плодоносность: {{ bird.fertility }} яиц/час
                             </b-badge>
-                            <b-badge variant="danger">Спрос: {{bird.demand }} яиц/час
+                            <b-badge variant="danger">Спрос: {{ bird.demand }} яиц/час
                             </b-badge>
-                            <b-badge variant="success">Бонус за заботу: {{bird.care}}%
+                            <b-badge variant="success">Бонус за заботу: {{ bird.care }}%
                             </b-badge>
-                            <b-badge variant="dark">Помет: {{bird.litter}} ед/час
+                            <b-badge variant="dark">Помет: {{ bird.litter }} ед/час
                             </b-badge>
-                            <b-badge variant="primary">Цена яйца: {{bird.egg_price}}&#8381;
+                            <b-badge variant="primary">Цена яйца: {{ bird.egg_price }}&#8381;
                             </b-badge>
                         </h6>
 
@@ -103,11 +126,11 @@ export default {
         Field,
     },
     data      : () => ({
-        loading: true,
+        loading          : true,
         purchasedBirdName: null
     }),
     computed  : {
-        ...mapGetters(['getSeller'])
+        ...mapGetters(['getSeller', 'getUserSellers'])
     },
     methods   : {
         ...mapActions(['fetchSeller', 'buyBird']),
@@ -118,6 +141,7 @@ export default {
         async birdBuy(ids) {
             let result = await this.buyBird(ids);
             if (result) this.$bvModal.show('modal-bird-buy');
+            else this.$bvModal.show('modal-no-money');
         }
     },
     async mounted() {
