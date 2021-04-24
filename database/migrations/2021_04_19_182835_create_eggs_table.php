@@ -19,7 +19,7 @@ class CreateEggsTable extends Migration
             $table->bigInteger('birds_count'); // кол-во птиц, которые несут яйца
             $table->integer('price'); // цена одного яйца
             $table->integer('demand'); // спрос - сколько за час можно продавать яиц
-            $table->integer('litter'); // кол-во помета
+            $table->unsignedBigInteger('litter'); // кол-во помета
             $table->bigInteger('count'); // кол-во яиц
             $table->boolean('collected')->default(0); // собраны ли яйца в этом часу
             $table->foreignId('user_id');

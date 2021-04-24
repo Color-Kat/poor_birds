@@ -40,6 +40,7 @@ Route::group([
 
     Route::get('get_my_eggs', 'AuthController@get_my_eggs');
     Route::post('sellEggs', 'AuthController@sellEggs');
+    Route::post('clean', 'AuthController@clean');
 
     Route::post('buyBird', 'AuthController@buyBird');
     Route::post('sellBird', 'AuthController@sellBird');

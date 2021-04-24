@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\models\Egg;
 use App\models\Seller;
 use App\models\Sold_bird;
 use Illuminate\Http\Request;
@@ -233,6 +234,17 @@ class AuthController extends Controller
                 'balance'    => auth()->user()->money,
             ]
         ]);
+    }
+
+    public function clean(Request $request) {
+        $egg = Egg::find($request->id); // get egg row
+
+        $shovel = 100; // get shovel effectivity to clean litter
+
+        $egg->litter -= $egg->litter > $shovel ? $shovel: $egg->litter;
+        $egg->update();
+
+        return $egg->litter;
     }
 
     /**

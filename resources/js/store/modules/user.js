@@ -305,7 +305,27 @@ export default {
                     return false;
                 });
 
-        }
+        },
+        clean({
+                  commit,
+                  state
+              }, id) {
+            if (!state.access_token) return false;
+
+            return axios.post(
+                'api/auth/clean',
+                {id},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+
+        },
     },
     mutations: {
         setUser(state, user) {

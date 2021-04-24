@@ -119,7 +119,5 @@ class CollectEggs extends Command
 //                }
 //            }
 //        }
-
-//        Log::info(234);
     }
 }
