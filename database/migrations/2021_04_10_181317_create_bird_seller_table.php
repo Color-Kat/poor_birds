@@ -15,8 +15,8 @@ class CreateBirdSellerTable extends Migration
     {
         Schema::create('bird_seller', function (Blueprint $table) {
             $table->id();
-            $table->integer('bird_id');
-            $table->integer('seller_id');
+            $table->foreignId('bird_id');
+            $table->foreignId('seller_id');
             $table->timestamps();
         });
     }

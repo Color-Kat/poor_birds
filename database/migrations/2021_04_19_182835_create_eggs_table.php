@@ -16,11 +16,11 @@ class CreateEggsTable extends Migration
         Schema::create('eggs', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // название птицы
-            $table->bigInteger('birds_count'); // кол-во птиц, которые несут яйца
-            $table->integer('price'); // цена одного яйца
-            $table->integer('demand'); // спрос - сколько за час можно продавать яиц
+            $table->unsignedBigInteger('birds_count'); // кол-во птиц, которые несут яйца
+            $table->unsignedInteger('price'); // цена одного яйца
+            $table->unsignedInteger('demand'); // спрос - сколько за час можно продавать яиц
             $table->unsignedBigInteger('litter'); // кол-во помета
-            $table->bigInteger('count'); // кол-во яиц
+            $table->unsignedBigInteger('count'); // кол-во яиц
             $table->boolean('collected')->default(0); // собраны ли яйца в этом часу
             $table->foreignId('user_id');
             $table->foreignId('bird_seller_id'); // чтобы различать яйца разных птиц

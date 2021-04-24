@@ -14,7 +14,7 @@ class AlterBirdSellerUser extends Migration
     public function up()
     {
         Schema::table('bird_seller_user', function (Blueprint $table) {
-            $table->integer('count')->default(1)->after('bird_seller_id');
+            $table->bigInteger('count')->default(1)->after('bird_seller_id');
         });
     }
 

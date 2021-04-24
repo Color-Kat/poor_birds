@@ -14,7 +14,6 @@ class AlterTableBirdsAddEgsPrice extends Migration
     public function up()
     {
         Schema::table('birds', function (Blueprint $table) {
-            // litter - кол-во помета в час
             $table->integer('egg_price')->default(1)->after('fertility');
         });
     }
