@@ -41,29 +41,9 @@ class CollectEggs extends Command
      */
     public function handle()
     {
-        // Яйца и их пользователей
-        // SELECT * FROM eggs JOIN users ON( users.id = eggs.user_id)
-
-        // Получаем яйца, их пользователей, птицу, которая снесла яйцо и ее сертификат
-        // SELECT * FROM eggs -- select eggs data
-        // JOIN users AS u ON( u.id = eggs.user_id) -- join users table
-        // JOIN bird_seller AS b_s ON (b_s.id = eggs.bird_seller_id) -- join bird_seller table
-        // JOIN birds ON (b_s.bird_id = birds.id) -- join birds table
-        // LEFT JOIN certificates AS certs ON ((SELECT certificate_id FROM sellers WHERE id = b_s.seller_id) = certs.id)
-        // -- join certificate of seller by seller_id
-
-        // Получает все, что написано выше и считает count
-        // UPDATE eggs AS e -- select eggs data
-        // JOIN users AS u ON( u.id = e.user_id) -- join users table
-        // JOIN bird_seller AS b_s ON (b_s.id = e.bird_seller_id) -- join bird_seller table
-        // JOIN birds ON (b_s.bird_id = birds.id) -- join birds table
-        // LEFT JOIN certificates AS certs ON ((SELECT certificate_id FROM sellers WHERE id = b_s.seller_id) = certs.id)
-        // -- fill eggs fields
-        // SET
-        // e.count = (birds.fertility * (1 + IFNULL(certs.fertility_bonus, 0) / 100))
-
+        // counting eggs and litter for all users
         DB::select("
-            INSERT INTO eggs (id, name, birds_count, price, demand, count, collected, user_id, bird_seller_id)
+            INSERT INTO eggs (id, name, birds_count, price, demand, count, litter, collected, user_id, bird_seller_id)
 
             SELECT
                 CONCAT(u.id, b_s.id), -- create UID from user_id and bird_seller_id
@@ -72,6 +52,7 @@ class CollectEggs extends Command
                 birds.egg_price * (1 + IFNULL(price_bonus, 0) / 100), -- egg price with certificate
                 birds.demand * (1 + IFNULL(demand_bonus, 0) / 100), -- demand with certificate bonus
                 count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100), -- get count of eggs from birds_count * fertility with certificate bonus
+                count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100),
                 0, -- change collected
                 user_id,
                 bird_seller_id
@@ -91,9 +72,15 @@ class CollectEggs extends Command
                 birds_count = b_s_u.count,
                 price = birds.egg_price * (1 + IFNULL(price_bonus, 0) / 100),
                 demand = birds.demand,
-                count = eggs.count + b_s_u.count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100), -- increase eggs count
+                count = eggs.count +
+                    b_s_u.count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100) *
+                    IF (( 1 - (eggs.litter/20) / 100 ) < 0, 0, ( 1 - (eggs.litter/20) / 100 )), -- increase eggs count
+                litter = eggs.litter + b_s_u.count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100),
                 collected = 0
+
         ");
+
+//        Log::info('litter');
 
 
 //        $birds_users = User::get_all_users_birds_with_certificate();
@@ -131,7 +118,5 @@ class CollectEggs extends Command
 //                }
 //            }
 //        }
-
-        Log::info('work?');
     }
 }
