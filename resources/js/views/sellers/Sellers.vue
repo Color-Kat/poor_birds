@@ -81,7 +81,8 @@ export default {
             });
         },
         async openThisSeller(sellerId) {
-            if (await this.openSeller(sellerId)) this.$router.go();
+            if (await this.openSeller(sellerId))
+                this.getUserSellers.push({id: sellerId})
         }
     }
 }

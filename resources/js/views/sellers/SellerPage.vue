@@ -57,10 +57,12 @@
             <h2>Птицы продавца: </h2>
 
             <!--      open seller      -->
+            <!--            v-if="this.getUserSellers ? !this.getUserSellers.find(elem => {-->
+            <!--            return elem.id == this.getSeller.id-->
+            <!--            }) : true"-->
             <b-button
-                v-if="this.getUserSellers ? !this.getUserSellers.find(elem => {
-                    return elem.id == this.getSeller.id
-                }) : true"
+                v-if="!checkSellerAvailable"
+
                 variant="primary"
                 @click="() => {openThisSeller(getSeller.id)}"
             >
@@ -125,35 +127,37 @@ export default {
     components: {
         Field,
     },
-    data: function (){
+    data      : function () {
         return {
             loading          : true,
             purchasedBirdName: null,
-            sellerAvailable  : (this.getUserSellers ? !this.getUserSellers.find(elem => {
-                console.log(elem)
-                    return elem.id == this.getSeller.id
-                }) : true)
+            sellerAvailable  : false
         }
     },
     computed  : {
-        ...mapGetters(['getSeller', 'getUserSellers'])
+        ...mapGetters(['getSeller', 'getUserSellers']),
+        checkSellerAvailable: function () {
+            return this.sellerAvailable || (
+                this.getUserSellers
+                    ? this.getUserSellers.find(elem => {
+                        return elem.id == this.getSeller.id
+                    })
+                    : false
+            );
+        }
     },
     methods   : {
         ...mapActions(['fetchSeller', 'buyBird', 'openSeller']),
-        redirect(seller_id, bird_id) {
-            // TODO сделать страницу с птицей продавца. Необязательно
-            this.$router.push(`/sellers/${seller_id}/birds/${bird_id}`)
-        },
+        // redirect(seller_id, bird_id) {
+        //     this.$router.push(`/sellers/${seller_id}/birds/${bird_id}`)
+        // },
         async birdBuy(ids) {
             let result = await this.buyBird(ids);
             if (result) this.$bvModal.show('modal-bird-buy');
             else this.$bvModal.show('modal-no-money');
         },
         async openThisSeller(sellerId) {
-            // TODO сделать без перезагрузки
-            if (await this.openSeller(sellerId)) this.$router.go();
-
-            // this.sellerAvailable = true;
+            if (await this.openSeller(sellerId)) this.sellerAvailable = true;
         }
     },
     async mounted() {
