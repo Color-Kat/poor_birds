@@ -1,5 +1,5 @@
 <template>
-    <div id="admin-birds-panel">
+    <div id="admin-seller-panel">
 
         <!--   Create Update Delete   -->
         <!--   Current route is /admin_area/sellers/some     -->

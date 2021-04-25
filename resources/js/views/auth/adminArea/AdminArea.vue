@@ -14,11 +14,8 @@
                     <b-nav-item :to="{name: 'admin-certificates'}" active-class="active">
                         Сертификаты
                     </b-nav-item>
-                    <b-nav-item to="/admin_area/birdhouses" active-class="active">
-                        Скворечники
-                    </b-nav-item>
-                    <b-nav-item to="/admin_area/instruments" active-class="active">
-                        Инструменты
+                    <b-nav-item :to="{name: 'admin-shovels'}" active-class="active">
+                        Лопаты
                     </b-nav-item>
                 </b-nav>
                 <div class="tab-content">

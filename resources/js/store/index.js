@@ -5,6 +5,7 @@ import birds from './modules/birds.js';
 import user from './modules/user.js';
 import sellers from './modules/sellers.js';
 import certificates from './modules/certificates.js';
+import shovels from './modules/shovels.js';
 
 // import Axios from "axios";
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
         birds,
         user,
         sellers,
-        certificates
+        certificates,
+        shovels
     },
     state: {
         active_sideBar: false
@@ -23,7 +25,7 @@ export default new Vuex.Store({
         // add initial state for application
         async init({dispatch}) {
             await dispatch('checkAuth'); // initial auth
-            await dispatch('fetchUser'); // if (auth) - initial user
+            // await dispatch('fetchUser'); // if (auth) - initial user
             // await dispatch('fetchBirds'); // fetch birds
             // await dispatch('fetchSellers'); // fetch birds
             // await dispatch('fetchCertificates'); // fetch certificates

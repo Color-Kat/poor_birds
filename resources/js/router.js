@@ -21,6 +21,12 @@ import CreateSeller from "./views/auth/adminArea/sellers/CreateSeller";
 /* certificates */
 import Certificates_admin from "./views/auth/adminArea/certificates/Certificates";
 
+/* shovels */
+// import Shovel from "./views/sellers/Sellers";
+// import ShovelPage from "./views/sellers/SellerPage";
+import Shovels_admin from "./views/auth/adminArea/shovels/Shovels";
+import CreateShovel from "./views/auth/adminArea/shovels/CreateShovel";
+
 import Auth from "./views/auth/Auth";
 
 import store from './store/index';
@@ -29,6 +35,7 @@ import CertificatePage from "./views/certificates/CertificatePage";
 import Certificates from "./views/certificates/Certificates";
 import MyBirdsPage from "./views/auth/MyBirdsPage";
 import EggsPage from "./views/auth/EggsPage";
+import Shovels from "./views/auth/adminArea/shovels/Shovels";
 
 Vue.use(VueRouter);
 
@@ -100,12 +107,13 @@ const routes = [
 
     /* ADMIN AREA */
     {
-        //TODO добавить защиту от не админа)
         path     : '/admin_area/',
         name     : 'admin_area',
         component: AdminArea,
         async beforeEnter(to, from, next) {
-            if (!await store.dispatch('checkAuth')) next({name: 'index'});
+            let auth = await store.dispatch('checkAuth');
+            console.log(store.getters.getUserRole)
+            if (!auth) next({name: 'index'});
             else if (store.getters.getUserRole === 1) next();
             else next({name: 'index'});
         },
@@ -141,9 +149,15 @@ const routes = [
                 }]
             },
             {
-                path     : 'instruments',
-                component: Birds_admin,
-            }
+                path     : 'shovels',
+                component: Shovels_admin,
+                name     : 'admin-shovels',
+                children : [{
+                    path     : 'create',
+                    component: CreateShovel,
+                    props    : true
+                }]
+            },
         ]
     },
     /* ------------ BIRDS ------------- */

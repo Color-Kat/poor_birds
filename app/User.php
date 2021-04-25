@@ -75,6 +75,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany('App\models\Seller');
     }
 
+    public function my_shovels() {
+        return $this->belongsToMany('App\models\Shovel');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

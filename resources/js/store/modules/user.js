@@ -76,10 +76,11 @@ export default {
         }
     },
     actions  : {
-        checkAuth({
-                      commit,
-                      state
-                  }) {
+        async checkAuth({
+                            commit,
+                            dispatch,
+                            state
+                        }) {
             // we need access token for check auth
             if (!state.access_token) return false;
 
@@ -89,9 +90,10 @@ export default {
                 // send token
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
-                .then(response => {
+                .then(async response => {
                     if (response.status === 200) {
                         commit('setAuth', true); // update auth
+                        await dispatch('fetchUser');
                         return true;
                     } else return false;
                 })
@@ -332,9 +334,9 @@ export default {
 
         },
         openSeller({
-                  commit,
-                  state
-              }, id) {
+                       commit,
+                       state
+                   }, id) {
             if (!state.access_token) return false;
 
             return axios.post(
@@ -356,9 +358,9 @@ export default {
 
         },
         cares({
-                       commit,
-                       state
-                   }, id) {
+                  commit,
+                  state
+              }, id) {
             if (!state.access_token) return false;
             console.log(id)
             return axios.post(
