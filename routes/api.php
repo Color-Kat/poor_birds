@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('birds', 'api\BirdController');
 Route::apiResource('sellers', 'api\SellerController');
-//Route::get('sellers/getBird', 'api\SellerController@getBird');
 Route::apiResource('certificates', 'api\CertificateController');
+Route::apiResource('shovels', 'api\ShovelController');
 
 Route::group([
 

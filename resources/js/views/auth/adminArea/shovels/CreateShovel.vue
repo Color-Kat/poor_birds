@@ -9,32 +9,32 @@
             <!--      NAME      -->
             <b-form-group
                 id="input-name"
-                label="Название компании:"
+                label="Название лопаты:"
                 label-for="name"
             >
                 <b-form-input
                     id="name"
                     v-model="form.name"
                     type="text"
-                    placeholder='ООО "Деревенские петухи"'
+                    placeholder='Шкрябалка'
                     required
                     minLength="3"
                 ></b-form-input>
             </b-form-group>
 
-            <!--      DESCRIPTION      -->
-            <b-form-group id="input-description" label="Описание компании:" label-for="description">
-                <b-form-input
-                    id="description"
-                    v-model="form.description"
-                    placeholder='ООО "Деревенские петухи" - райское наслождение"'
-                    required
-                    minLength="7"
-                ></b-form-input>
-            </b-form-group>
+<!--            &lt;!&ndash;      DESCRIPTION      &ndash;&gt;-->
+<!--            <b-form-group id="input-description" label="Описание компании:" label-for="description">-->
+<!--                <b-form-input-->
+<!--                    id="description"-->
+<!--                    v-model="form.description"-->
+<!--                    placeholder='ООО "Деревенские петухи" - райское наслождение"'-->
+<!--                    required-->
+<!--                    minLength="7"-->
+<!--                ></b-form-input>-->
+<!--            </b-form-group>-->
 
             <!--      IMAGE      -->
-            <b-form-group id="input-image" label="Логотип компании:" label-for="image">
+            <b-form-group id="input-image" label="Фотография лопаты:" label-for="image">
                 <b-form-file
                     accept="image/jpeg, image/png, image/gif"
                     v-model="form.image"
@@ -45,57 +45,36 @@
                 <p class="mt-2">Selected file: <b>{{ form.image ? form.image.name : '' }}</b></p>
             </b-form-group>
 
-            <!--            &lt;!&ndash;    DEMAND (спрос)    &ndash;&gt;-->
-            <!--            <b-form-group-->
-            <!--                id="input-demand"-->
-            <!--                :label="`Спрос на яйца этой птицы:`"-->
-            <!--                label-for="demand"-->
-            <!--                description="Сколько яиц в среднем можно продать за час"-->
-            <!--            >-->
-            <!--                <b-form-input id="demand" v-model="form.demand" type="number" min="0" max="100000"></b-form-input>-->
-            <!--            </b-form-group>-->
-
-            <!--    discount (помёт)    -->
+            <!--    efficiency    -->
             <b-form-group
-                id="input-discount"
-                :label="`Бонус к цене %:`"
-                label-for="discount"
-                description="На сколько процентов дешевле/дороже продается птица относительно ее начальной стоимости"
+                id="input-efficiency"
+                :label="`Эффективность лопаты:`"
+                label-for="efficiency"
+                description="Сколько ед.помёта за раз убирает лопата"
             >
                 <b-form-input
-                    id="discount" v-model="form.discount" type="number" min="-100000" max="100000"
+                    id="efficiency" v-model="form.efficiency" type="number" min="0" max="1000000000"
                 ></b-form-input>
-            </b-form-group>
-
-            <!--    certificate    -->
-            <b-form-group
-                id="input-price"
-                :label="`Сертификат:`"
-                label-for="certificate"
-                description="Сертификат, который выдает компания rаждой птице"
-            >
-                <b-form-select v-model="form.certificate_id"
-                               :options="getCertificates.map(i => ({text: i.name, value: i.id}))"></b-form-select>
             </b-form-group>
 
             <!--    price    -->
             <b-form-group
                 id="input-price"
-                :label="`Цена контракта:`"
+                :label="`Цена лопаты:`"
                 label-for="price"
-                description="Сколько нужно заплатить, чтобы получить доступ к продавцу"
+                description="Цена в игровых рублях (Оставить пустым, если есть цена доната)"
             >
                 <b-form-input id="price" v-model="form.price" type="number" min="0"></b-form-input>
             </b-form-group>
 
-            <!--    bird_count    -->
+            <!--    donate_price    -->
             <b-form-group
-                id="input-birds_count"
-                :label="`Кол-во птиц в контракте:`"
-                label-for="birds_count"
-                description="Сколько нужно иметь птиц, чтобы получить доступ к продавцу"
+                id="input-donate_price"
+                :label="`Цена лопаты (за донат):`"
+                label-for="donate_price"
+                description="Цена в реальных рублях"
             >
-                <b-form-input id="birds_count" v-model="form.birds_count" type="number" min="0"></b-form-input>
+                <b-form-input id="donate_price" v-model="form.donate_price" type="number" min="0"></b-form-input>
             </b-form-group>
 
             <b-button type="submit" variant="primary">Огранизовать компанию</b-button>
@@ -114,14 +93,13 @@ export default {
         return {
             form : {
                 id            : this.$route.query.id || null,
-                name          : this.$route.query.name || 'OOO "Райские петухи"',
-                description   : this.$route.query.description || 'OOO "Райские петухи" - райское наслаждение от петухов',
+                name          : this.$route.query.name || 'Шкрябалка',
+                // description   : this.$route.query.description || 'OOO "Райские петухи" - райское наслаждение от петухов',
                 image         : null,
                 imagePath     : this.$route.query.image || '',
-                discount      : this.$route.query.discount || -20,
+                efficiency    : this.$route.query.efficiency || 100,
                 price         : this.$route.query.price || 0,
-                birds_count   : this.$route.query.birds_count || 0,
-                certificate_id: this.$route.query.certificate_id || 0
+                donat_price   : this.$route.query.price || 0,
             },
             error: false
         }
