@@ -199,6 +199,9 @@ class AuthController extends Controller
                     // user has only one bird
                     // delete it
                     auth()->user()->my_birds()->wherePivot('id', '=', $request->bird_seller_user_id)->detach();
+                    // delete eggs and litter of bird
+                    auth()->user()->my_eggs()->delete(auth()->user()->id . $bird->pivot->bird_seller_id);
+
                     return auth()->user()->money;
                 }
             }
