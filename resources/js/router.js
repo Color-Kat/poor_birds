@@ -105,7 +105,8 @@ const routes = [
         name     : 'admin_area',
         component: AdminArea,
         async beforeEnter(to, from, next) {
-            if (await store.dispatch('checkAuth')) next();
+            if (!await store.dispatch('checkAuth')) next({name: 'index'});
+            else if (store.getters.getUserRole === 1) next();
             else next({name: 'index'});
         },
         children: [
@@ -149,28 +150,40 @@ const routes = [
     {
         path     : '/birds',
         name     : 'birds',
-        component: Birds,
+        component: Birds
     },
     {
         // just bird page
         path     : '/birds/:bird_id',
-        component: BirdPage
+        component: BirdPage,
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'login'});
+        },
     },
-    {
-        // page with seller's bird
-        path     : '/sellers/:seller_id/birds/:bird_id',
-        component: BirdPage
-    },
+    // {
+    //     // page with seller's bird
+    //     path     : '/sellers/:seller_id/birds/:bird_id',
+    //     component: BirdPage
+    // },
 
     /* ---------- SELLERS -----------*/
     {
         path     : '/sellers',
         name     : 'sellers',
         component: Sellers,
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'account'});
+        },
     },
     {
         path     : '/sellers/:id',
         component: SellerPage,
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'account'});
+        },
     },
 
     /* ---------- CERTIFICATE ----------*/
@@ -182,6 +195,10 @@ const routes = [
     {
         path     : '/certificates/:id',
         component: CertificatePage,
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'account'});
+        },
     },
 ];
 export default new VueRouter({

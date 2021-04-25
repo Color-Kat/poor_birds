@@ -143,13 +143,15 @@ export default {
     methods : {
         ...mapActions(['fetchUserBirds', 'sellBird', 'cares']),
         caresHandler(my_bird, e) {
-            // alert('Вы погладили птицу ' + my_bird.name);
             // transfer bird_seller_user_id to cares function to increase bird fertility
             if (this.cares(my_bird.bird_seller_id)) {
                 // TODO добавить сертификат
                 my_bird.fertility = Math.round(my_bird.fertility * (1 + my_bird.care / 100));
                 my_bird.cared = true; // to hide the tooltip on the button
                 e.target.disabled = true;
+
+                // TODO подумать о модальном окне (вы погладили птицу)
+                // alert('Вы погладили птицу ' + my_bird.name);
             }
         }
     },
