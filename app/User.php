@@ -33,6 +33,8 @@ class User extends Authenticatable implements JWTSubject
             ->with('bird')
             ->with(['seller' => function ($query) {
                 $query->select('id', 'certificate_id'); // return only certificate that seller give
+//                dump($seller);
+                // TODO получать сертификат
             }]);
     }
 

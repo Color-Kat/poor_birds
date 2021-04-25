@@ -268,6 +268,8 @@ class AuthController extends Controller
     public function cares(Request $request) {
         $eggRow = auth()->user()->my_eggs()->where('id', '=', auth()->user()->id . $request->id);
         $eggRow->update(["cared"=> 1]);
+
+        return true;
     }
 
     /**

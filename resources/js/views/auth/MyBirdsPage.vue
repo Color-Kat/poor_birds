@@ -60,15 +60,16 @@ ${selectedBird.price/2}&#8381;? При продаже так же удаляют
                     <div class="d-flex justify-content-between">
                         <!--     actions      -->
                         <div class="d-flex justify-content-center flex-wrap flex-md-nowrap m-1">
-                            <div class="m-1 d-inline" style="height: max-content; width: max-content">
+                            <div class="m-1 d-inline" style="height: max-content; width: max-content;">
                                 <b-button
                                     variant="success"
                                     pill
                                     v-b-tooltip.hover
-                                    :title="`Нажмите, чтобы погладить птицу (Увеличивает плодоносность на ${my_bird.care}% в течение часа)`"
-                                    @click="()=>caresHandler(my_bird)"
+                                    :title="!my_bird.cared ?
+                                    `Нажмите, чтобы погладить птицу (Увеличивает плодоносность на ${my_bird.care}% в течение часа)`: false"
+                                    @click="(e)=>caresHandler(my_bird, e)"
                                 >
-                                    <b-icon icon="hand-index"></b-icon>
+                                    <b-icon style="pointer-events: none" icon="hand-index"></b-icon>
                                 </b-button>
                             </div>
                             <div
@@ -85,12 +86,11 @@ ${selectedBird.price/2}&#8381;? При продаже так же удаляют
                                     <b-icon icon="bookmark-star"></b-icon>
                                 </b-button>
                             </div>
-                            <div class="m-1" style="height: max-content; width: max-content">
+                            <div class="m-1" style="height: max-content; width: max-content"  v-b-tooltip.hover
+                                 title="Продать птицу за половину ее стоимости">
                                 <b-button
                                     variant="danger"
                                     pill
-                                    v-b-tooltip.hover
-                                    title="Продать птицу за половину ее стоимости"
                                     v-b-modal.modal-sell
                                     @click="()=>{selectedBird = my_bird}"
                                 >
@@ -142,11 +142,15 @@ export default {
     }),
     methods : {
         ...mapActions(['fetchUserBirds', 'sellBird', 'cares']),
-        caresHandler(my_bird) {
+        caresHandler(my_bird, e) {
             // alert('Вы погладили птицу ' + my_bird.name);
-            console.log(my_bird)
             // transfer bird_seller_user_id to cares function to increase bird fertility
-            this.cares(my_bird.bird_seller_id)
+            if (this.cares(my_bird.bird_seller_id)) {
+                // TODO добавить сертификат
+                my_bird.fertility = Math.round(my_bird.fertility * (1 + my_bird.care / 100));
+                my_bird.cared = true; // to hide the tooltip on the button
+                e.target.disabled = true;
+            }
         }
     },
     mounted() {
