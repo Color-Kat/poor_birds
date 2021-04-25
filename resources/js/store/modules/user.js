@@ -280,7 +280,6 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    console.log(response);
                     if (response.status === 200) {
                         commit('setEggs', response.data); // update auth
                     }
@@ -347,6 +346,30 @@ export default {
                     console.log(response)
                     if (response.status == 200) {
                         commit('changeBalance', response.data);
+                        return true;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+
+        },
+        cares({
+                       commit,
+                       state
+                   }, id) {
+            if (!state.access_token) return false;
+            console.log(id)
+            return axios.post(
+                'api/auth/cares',
+                {id},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    console.log(response)
+                    if (response.status == 200) {
+                        // commit('changeBalance', response.data);
                         return true;
                     }
                 })

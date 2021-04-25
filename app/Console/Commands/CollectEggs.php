@@ -43,7 +43,7 @@ class CollectEggs extends Command
     {
         // counting eggs and litter for all users
         DB::select("
-            INSERT INTO eggs (id, name, birds_count, price, demand, count, litter, collected, user_id, bird_seller_id)
+            INSERT INTO eggs (id, name, birds_count, price, demand, count, litter, collected, cared, user_id, bird_seller_id)
 
             SELECT
                 CONCAT(u.id, b_s.id), -- create UID from user_id and bird_seller_id
@@ -54,6 +54,7 @@ class CollectEggs extends Command
                 count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100), -- get count of eggs from birds_count * fertility with certificate bonus
                 count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100),
                 0, -- change collected
+                0, -- remove care bonus
                 user_id,
                 bird_seller_id
 
@@ -73,11 +74,12 @@ class CollectEggs extends Command
                 price = birds.egg_price * (1 + IFNULL(price_bonus, 0) / 100),
                 demand = birds.demand,
                 count = eggs.count +
-                    b_s_u.count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100) *
-                    IF (( 1 - (eggs.litter/20) / 100 ) < 0, 0, ( 1 - (eggs.litter/20) / 100 )), -- increase eggs count
+                    b_s_u.count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100) * -- count eggs with certificate bonus
+                    IF ( (1 - (eggs.litter/20) / 100 ) < 0, 0, ( 1 - (eggs.litter/20) / 100 )) * -- litter deduction
+                    IF (eggs.cared = 1, ( 1 + (birds.care / 100 * ( 1 + IFNULL(care_bonus, 0) / 100 ))), 1), -- care bonus
                 litter = eggs.litter + b_s_u.count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100),
-                collected = 0
-
+                collected = 0,
+                cared = 0 -- remove care bonus
         ");
 
         Log::info('litter');

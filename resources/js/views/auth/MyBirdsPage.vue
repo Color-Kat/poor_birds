@@ -8,7 +8,7 @@
         >
             <p class="my-4">{{
                     selectedBird ? `Вы уверены, что хотите продать птицу "${selectedBird.name}" за
-${selectedBird.price/2}&#8381;?` :
+${selectedBird.price/2}&#8381;? При продаже так же удаляются яйца.` :
                         'Ошибка'
                 }}
             </p>
@@ -66,7 +66,7 @@ ${selectedBird.price/2}&#8381;?` :
                                     pill
                                     v-b-tooltip.hover
                                     :title="`Нажмите, чтобы погладить птицу (Увеличивает плодоносность на ${my_bird.care}% в течение часа)`"
-                                    @click="()=>cares(my_bird.name)"
+                                    @click="()=>caresHandler(my_bird)"
                                 >
                                     <b-icon icon="hand-index"></b-icon>
                                 </b-button>
@@ -141,9 +141,12 @@ export default {
         selectedBird: null
     }),
     methods : {
-        ...mapActions(['fetchUserBirds', 'sellBird']),
-        cares(name) {
-            alert('Вы погладили птицу ' + name);
+        ...mapActions(['fetchUserBirds', 'sellBird', 'cares']),
+        caresHandler(my_bird) {
+            // alert('Вы погладили птицу ' + my_bird.name);
+            console.log(my_bird)
+            // transfer bird_seller_user_id to cares function to increase bird fertility
+            this.cares(my_bird.bird_seller_id)
         }
     },
     mounted() {
