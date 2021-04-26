@@ -13,11 +13,12 @@ export default {
             if (shovel) {
                 return {
                     // description: ['Описание', shovel.description],
+                    id        : shovel.id,
                     image     : shovel.image,
                     name      : ['Название', shovel.name],
                     efficiency: ['Эффективность', `${shovel.efficiency} ед.помёта`],
                     price     : ['Цена лопаты', `${shovel.price ? shovel.price + '₽' : shovel.donate_price + ' руб'} `],
-                    isDonate   : shovel.price ? false : true,
+                    isDonate  : shovel.price ? false : true,
                 };
             } else return false
         }

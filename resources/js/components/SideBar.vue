@@ -21,12 +21,12 @@
                     </b-nav-item>
                 </h5>
 
-                <h5>
+                <h6>
                     <b-nav-item :to="{name: 'birds'}" active-class="active"><b>🐔</b>Список птиц</b-nav-item>
-                </h5>
-                <h5>
+                </h6>
+                <h6>
                     <b-nav-item :to="{name: 'sellers'}" active-class="active"><b>🛒</b>Продавцы</b-nav-item>
-                </h5>
+                </h6>
                 <h5>
                     <b-nav-item :to="{name: 'certificates'}" active-class="active"><b>📋</b>Сертификаты</b-nav-item>
                 </h5>

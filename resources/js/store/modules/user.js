@@ -73,6 +73,11 @@ export default {
             if (state.user) {
                 return state.user.my_sellers;
             } else return false;
+        },
+        getUserShovels(state) {
+            if (state.user) {
+                return state.user.my_shovels.map(elem => elem.id);
+            } else return false;
         }
     },
     actions  : {
@@ -378,6 +383,29 @@ export default {
                     return false;
                 });
 
+        },
+        buyShovel({
+                    commit,
+                    state
+                }, id) {
+            if (!state.access_token) return false;
+
+            return axios.post(
+                'api/auth/buyShovel',
+                {id},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    if (response.data) {
+                        commit('changeBalance', response.data);
+                        return true;
+                    }
+                    return false;
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
         },
     },
     mutations: {

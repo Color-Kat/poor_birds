@@ -1,5 +1,13 @@
 <template>
     <div>
+        <b-modal id="modal-shovel-buy" header-bg-variant="success" hide-footer>
+            <p class="my-4">Поздравляем! Вы купили новую лопату</p>
+        </b-modal>
+
+        <b-modal id="modal-shovel-error" header-bg-variant="danger" hide-footer>
+            <p class="my-4">У вас уже есть эта лопата</p>
+        </b-modal>
+
         <b-card
             v-if="!loading"
         >
@@ -19,8 +27,19 @@
                 <Field :field="getShovel.efficiency"></Field>
                 <Field :field="getShovel.price"></Field>
 
-                <b-button v-if="!getShovel.isDonate" class="mt-3" variant="primary">Купить</b-button>
-                <b-button v-else class="mt-3" variant="primary">Купить за донат</b-button>
+                <div v-if="getUserShovels.indexOf(getShovel.id) == -1">
+                    <b-button
+                        v-if="!getShovel.isDonate"
+                        class="mt-3"
+                        variant="primary"
+                        @click="(e)=>{buy(getShovel, e);}"
+                    >
+                        Купить
+                    </b-button>
+                    <b-button v-else class="mt-3" variant="primary">Купить за донат</b-button>
+                </div>
+
+                <b-alert show variant="warning" class="mt-3" v-else>Эта лопата уже куплена!</b-alert>
 
                 <hr>
 
@@ -49,10 +68,21 @@ export default {
         loading: true,
     }),
     computed  : {
-        ...mapGetters(['getShovel'])
+        ...mapGetters(['getShovel', 'getUserShovels'])
     },
     methods   : {
-        ...mapActions(['fetchShovel'])
+        ...mapActions(['fetchShovel', 'buyShovel']),
+        async buy(shovel, e) {
+            let result = await this.buyShovel(shovel.id);
+
+            // shovel is buying
+            if (result) {
+                e.target.disabled=true; // disable button
+                this.$bvModal.show('modal-shovel-buy');
+            } else {
+                this.$bvModal.show('modal-shovel-error');
+            }
+        }
     },
     async mounted() {
         await this.fetchShovel(this.$route.params.id);

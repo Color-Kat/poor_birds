@@ -29,23 +29,30 @@ Route::group([
     'prefix'     => 'auth',
 
 ], function ($router) {
+    /* user auth */
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login')->name('login');
     Route::get('logout', 'AuthController@logout');
 
+    /* user */
     Route::get('user', 'AuthController@user');
     Route::get('check_auth', 'AuthController@checkAuth');
-    Route::get('get_user_birds', 'AuthController@get_user_birds');
-    Route::get('get_my_birds_with_certificate', 'AuthController@get_my_birds_with_certificate');
 
+    /* user - eggs */
     Route::get('get_my_eggs', 'AuthController@get_my_eggs');
     Route::post('sellEggs', 'AuthController@sellEggs');
     Route::post('clean', 'AuthController@clean');
 
+    /* user - birds */
+    Route::get('get_user_birds', 'AuthController@get_user_birds');
+    Route::get('get_my_birds_with_certificate', 'AuthController@get_my_birds_with_certificate');
     Route::post('buyBird', 'AuthController@buyBird');
     Route::post('sellBird', 'AuthController@sellBird');
     Route::post('cares', 'AuthController@cares');
 
+    /* user - sellers */
     Route::post('openSeller', 'AuthController@openSeller');
-//    Route::get('get_user_birds', 'AuthController@get_user_birds_with_certificate');
+
+    /* user - shovels */
+    Route::post('buyShovel', 'AuthController@buyShovel');
 });

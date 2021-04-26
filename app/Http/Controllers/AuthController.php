@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RegisterRequest;
 use App\models\Egg;
 use App\models\Seller;
+use App\models\Shovel;
 use App\models\Sold_bird;
 use Illuminate\Http\Request;
 
@@ -129,7 +130,7 @@ class AuthController extends Controller
      */
     public function user()
     {
-        return response()->json(auth()->user()->load('my_sellers:id'));
+        return response()->json(auth()->user()->load(['my_sellers:id', 'my_shovels']));
     }
 
     public function get_user_birds()
@@ -270,6 +271,18 @@ class AuthController extends Controller
         $eggRow->update(["cared"=> 1]);
 
         return true;
+    }
+
+    public function buyShovel(Request $request)
+    {
+        $shovel = Shovel::find($request->id);
+        if ($shovel->price > auth()->user()->money ) return false; // not enough money
+        if(auth()->user()->my_shovels->contains($request->id)) return false; // shovel is already exists
+
+        auth()->user()->money -= $shovel->price; // decrease user money
+        auth()->user()->update(); // update
+        auth()->user()->my_shovels()->attach($shovel->id); // attach shovel
+        return auth()->user()->money;
     }
 
     /**
