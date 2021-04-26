@@ -19,7 +19,7 @@
                 <Field :field="getShovel.efficiency"></Field>
                 <Field :field="getShovel.price"></Field>
 
-                <b-button v-if="!getShovel.isDonat" class="mt-3" variant="primary">Купить</b-button>
+                <b-button v-if="!getShovel.isDonate" class="mt-3" variant="primary">Купить</b-button>
                 <b-button v-else class="mt-3" variant="primary">Купить за донат</b-button>
 
                 <hr>

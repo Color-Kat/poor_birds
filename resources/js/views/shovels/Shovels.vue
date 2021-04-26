@@ -1,28 +1,28 @@
 <template>
         <b-card>
-            <h2 class="text-center">Списко птиц</h2>
-            <span>В этом списке находятся все птицы. Но купить их можно только у продавцов, у каких именно -
-                выбирать вам. Вы можете купить птицу задешево на базаре, но за торговлю ее яйцами вам будут
-                прилетать штрафы. </span>
+            <h2 class="text-center">Лопаты</h2>
+            <span>Здесь можно купить лопаты, чтобы убираться за вашими птицами</span>
 
             <hr>
             <h2>Птицы:</h2>
 
             <div class="mt-2 grid-cards-columns">
                 <b-card
-                    v-for="bird of getBirds"
+                    v-for="shovel of getShovels"
                     class="mb-2 card-item"
-                    :title="bird.name"
-                    :img-src="`/storage/${bird.image}`"
-                    :img-alt="bird.name"
+                    :title="shovel.name"
+                    :img-src="`/storage/${shovel.image}`"
+                    :img-alt="shovel.name"
                     img-top
                     tag="article"
 
-                    @click="()=>redirect(bird.id)"
-                    :key="bird.id"
+                    @click="()=>redirect(shovel.id)"
+                    :key="shovel.id"
                 >
-                    <b-card-text>
-                        {{ bird.description }}
+                    <b-card-text class="d-flex justify-content-between flex-wrap">
+                        <b-badge variant="success" class="mb-1">Эффективность: {{shovel.efficiency}}ед.</b-badge>
+                        <b-badge v-if="shovel.price ? true : false" variant="primary">Цена: {{shovel.price}}₽</b-badge>
+                        <b-badge v-else variant="primary">Купить за донат: {{shovel.donate_price}} Руб.</b-badge>
                     </b-card-text>
 
                     <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
@@ -37,19 +37,18 @@ import {mapActions, mapGetters} from 'vuex';
 export default {
     name: "Store",
     mounted() {
-        // this.$store.dispatch('fetchBirds');
-        this.fetchBirds();
+        this.fetchShovels();
     },
     computed: {
         ...mapGetters([
-            'getBirds',
+            'getShovels',
         ])
     },
     methods : {
         redirect(id) {
-            this.$router.push(`/birds/${id}`)
+            this.$router.push(`/shovels/${id}`)
         },
-        ...mapActions(['fetchBirds'])
+        ...mapActions(['fetchShovels'])
     }
 }
 </script>

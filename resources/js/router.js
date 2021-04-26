@@ -26,6 +26,8 @@ import Certificates_admin from "./views/auth/adminArea/certificates/Certificates
 // import ShovelPage from "./views/sellers/SellerPage";
 import Shovels_admin from "./views/auth/adminArea/shovels/Shovels";
 import CreateShovel from "./views/auth/adminArea/shovels/CreateShovel";
+import Shovels from "./views/shovels/Shovels";
+import ShovelPage from "./views/shovels/ShovelPage";
 
 import Auth from "./views/auth/Auth";
 
@@ -35,8 +37,7 @@ import CertificatePage from "./views/certificates/CertificatePage";
 import Certificates from "./views/certificates/Certificates";
 import MyBirdsPage from "./views/auth/MyBirdsPage";
 import EggsPage from "./views/auth/EggsPage";
-import Shovels from "./views/auth/adminArea/shovels/Shovels";
-import ShovelPage from "./views/shovels/ShovelPage";
+
 
 Vue.use(VueRouter);
 
