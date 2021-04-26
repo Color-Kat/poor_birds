@@ -27,7 +27,7 @@
                 <Field :field="getShovel.efficiency"></Field>
                 <Field :field="getShovel.price"></Field>
 
-                <div v-if="getUserShovels.indexOf(getShovel.id) == -1">
+                <div v-if="getUserShovelsIds.indexOf(getShovel.id) == -1">
                     <b-button
                         v-if="!getShovel.isDonate"
                         class="mt-3"
@@ -68,7 +68,7 @@ export default {
         loading: true,
     }),
     computed  : {
-        ...mapGetters(['getShovel', 'getUserShovels'])
+        ...mapGetters(['getShovel', 'getUserShovelsIds'])
     },
     methods   : {
         ...mapActions(['fetchShovel', 'buyShovel']),

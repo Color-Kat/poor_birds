@@ -74,9 +74,14 @@ export default {
                 return state.user.my_sellers;
             } else return false;
         },
-        getUserShovels(state) {
+        getUserShovelsIds(state) {
             if (state.user) {
                 return state.user.my_shovels.map(elem => elem.id);
+            } else return false;
+        },
+        getUserShovels(state) {
+            if (state.user) {
+                return state.user.my_shovels;
             } else return false;
         }
     },

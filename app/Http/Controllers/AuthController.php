@@ -244,9 +244,10 @@ class AuthController extends Controller
     public function clean(Request $request) {
         $egg = Egg::find($request->id); // get egg row
 
-        $shovel = 100; // get shovel effectivity to clean litter
+        // get shovel effectivity to clean litter
+        $shovelEfficiency = auth()->user()->my_shovels()->where('isActive', '=', 1)->first()->efficiency;
 
-        $egg->litter -= $egg->litter > $shovel ? $shovel: $egg->litter;
+        $egg->litter -= $egg->litter > $shovelEfficiency ? $shovelEfficiency: $egg->litter;
         $egg->update();
 
         return $egg->litter;
@@ -282,6 +283,7 @@ class AuthController extends Controller
         auth()->user()->money -= $shovel->price; // decrease user money
         auth()->user()->update(); // update
         auth()->user()->my_shovels()->attach($shovel->id); // attach shovel
+
         return auth()->user()->money;
     }
 

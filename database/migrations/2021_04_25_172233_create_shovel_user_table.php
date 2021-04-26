@@ -17,6 +17,7 @@ class CreateShovelUserTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('shovel_id');
+            $table->boolean('isActive')->default(0);
             $table->timestamps();
         });
     }
