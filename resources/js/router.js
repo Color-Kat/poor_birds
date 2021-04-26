@@ -217,15 +217,11 @@ const routes = [
     },
 
     /* ---------- SHOVELS -----------*/
-    // {
-    //     path     : '/shovels',
-    //     name     : 'shovels',
-    //     component: Sellers,
-    //     async beforeEnter(to, from, next) {
-    //         if (await store.dispatch('checkAuth')) next();
-    //         else next({name: 'account'});
-    //     },
-    // },
+    {
+        path     : '/shovels',
+        name     : 'shovels',
+        component: Shovels,
+    },
     {
         path     : '/shovels/:id',
         component: ShovelPage,

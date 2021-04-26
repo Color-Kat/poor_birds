@@ -18,15 +18,14 @@
                 :title="certificate.name"
                 :img-src="`/storage/certificates/${certificate.grade}.jpg`"
                 :img-alt="certificate.name"
-                img-top
                 tag="article"
 
                 @click="()=>redirect(certificate.id)"
                 :key="certificate.id"
             >
                 <b-card-text>
-                    <b-badge>Бонус к плодовитости {{ certificate.fertility_bonus }}%</b-badge>
-                    <b-badge>Бонус к цене {{ certificate.fertility_bonus }}%</b-badge>
+                    <b-badge variant="success">Бонус к плодовитости {{ certificate.fertility_bonus }}%</b-badge>
+                    <b-badge variant="warning">Бонус к цене {{ certificate.fertility_bonus }}%</b-badge>
                     <b-badge variant="primary">Цена {{ certificate.price }}руб</b-badge>
                 </b-card-text>
 
@@ -58,6 +57,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 </style>

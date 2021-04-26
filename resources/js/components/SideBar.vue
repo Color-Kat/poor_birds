@@ -30,6 +30,9 @@
                 <h5>
                     <b-nav-item :to="{name: 'certificates'}" active-class="active"><b>📋</b>Сертификаты</b-nav-item>
                 </h5>
+                <h5>
+                    <b-nav-item :to="{name: 'shovels'}" active-class="active"><b>🧹</b>Лопаты</b-nav-item>
+                </h5>
 
             </b-navbar-nav>
         </b-card>
