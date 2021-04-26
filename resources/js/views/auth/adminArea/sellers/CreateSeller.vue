@@ -109,7 +109,7 @@
 import {mapActions, mapGetters} from "vuex";
 
 export default {
-    name: "CreateBird",
+    name: "CreateSeller",
     data() {
         return {
             form : {

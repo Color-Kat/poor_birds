@@ -36,6 +36,7 @@ import Certificates from "./views/certificates/Certificates";
 import MyBirdsPage from "./views/auth/MyBirdsPage";
 import EggsPage from "./views/auth/EggsPage";
 import Shovels from "./views/auth/adminArea/shovels/Shovels";
+import ShovelPage from "./views/shovels/ShovelPage";
 
 Vue.use(VueRouter);
 
@@ -212,6 +213,25 @@ const routes = [
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'account'});
+        },
+    },
+
+    /* ---------- SHOVELS -----------*/
+    // {
+    //     path     : '/shovels',
+    //     name     : 'shovels',
+    //     component: Sellers,
+    //     async beforeEnter(to, from, next) {
+    //         if (await store.dispatch('checkAuth')) next();
+    //         else next({name: 'account'});
+    //     },
+    // },
+    {
+        path     : '/shovels/:id',
+        component: ShovelPage,
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'login'});
         },
     },
 ];

@@ -16,10 +16,10 @@ class CreateShovelsTable extends Migration
         Schema::create('shovels', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('image');
+            $table->text('image')->nullable();
             $table->unsignedInteger('efficiency');
-            $table->unsignedInteger('price');
-            $table->unsignedInteger('donate_price');
+            $table->unsignedInteger('price')->nullable();
+            $table->unsignedInteger('donate_price')->nullable();
             $table->timestamps();
         });
     }

@@ -77,7 +77,7 @@
                 <b-form-input id="donate_price" v-model="form.donate_price" type="number" min="0"></b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="primary">Огранизовать компанию</b-button>
+            <b-button type="submit" variant="primary">Создать</b-button>
             <!--            <b-button type="reset" variant="danger">Сбросить</b-button>-->
         </b-form>
 
@@ -88,7 +88,7 @@
 import {mapActions, mapGetters} from "vuex";
 
 export default {
-    name: "CreateBird",
+    name: "CreateShovel",
     data() {
         return {
             form : {
@@ -104,9 +104,9 @@ export default {
             error: false
         }
     },
-    computed: mapGetters(['getCertificates']),
+    computed: mapGetters(['getShovel']),
     methods: {
-        ...mapActions(['createSeller', 'updateSeller', 'fetchCertificates']),
+        ...mapActions(['createShovel', 'updateShovel']),
         async onSubmit() {
             // there are parameters, so need to update the seller
             if (Object.keys(this.$route.query).length !== 0) {
@@ -118,19 +118,16 @@ export default {
                 delete form.imagePath; // remove unnecessary
 
                 // update birds, check errors
-                this.error = !(await this.updateSeller(form));
+                this.error = !(await this.updateShovel(form));
             } else {
                 // create seller, check errors
-                this.error = !(await this.createSeller(this.form));
+                this.error = !(await this.createShovel(this.form));
             }
 
             // redirect to admin page
-            if (!this.error) this.$router.push({name: 'admin-sellers'})
+            if (!this.error) this.$router.push({name: 'admin-shovels'})
         },
     },
-    mounted() {
-        this.fetchCertificates(); // get certificates for select
-    }
 }
 </script>
 

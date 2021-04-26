@@ -25,7 +25,7 @@ class ShovelController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BirdRequest $request)
+    public function store(Request $request)
     {
         $params          = $request->all();
         $params['image'] = null;
@@ -35,6 +35,8 @@ class ShovelController extends Controller
             $path            = $request->file('image')->store('shovels');
             $params['image'] = $path;
         }
+
+        if($request->price == "null ") $params['price'] = null;
 
         $shovel = Shovel::create($params);
 
@@ -47,20 +49,18 @@ class ShovelController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Shovel $shovel)
     {
-        $bird = Bird::with('sellers')->find($id);
-
-        if ($bird == null) {
+        if ($shovel == null) {
             return response()->json([
                 "status"   => false,
-                "messages" => "Bird not found"
+                "messages" => "Shovel not found"
             ])->setStatusCode(404);
         }
 
         return response()->json([
             "status"   => true,
-            "messages" => $bird
+            "messages" => $shovel
         ]);
     }
 
@@ -71,7 +71,7 @@ class ShovelController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bird $bird)
+    public function update(Request $request, Shovel $shovel)
     {
         $params = $request->all();
 
@@ -79,23 +79,13 @@ class ShovelController extends Controller
         if ($request->file('image')) {
             // image is set
             unset($params['image']); // delete image from params
-            Storage::delete($bird->image); // delete old image
-            $params['image'] = $request->file('image')->store('birds');
+            Storage::delete($shovel->image); // delete old image
+            $params['image'] = $request->file('image')->store('shovels');
         }
         // else image path is old
-        /* --- IMAGE --- */
+        if($request->price == 0) $params['price'] = null;
 
-        // set relationships bird -> sellers
-        $sellers = $request->input('sellers');
-        if ($sellers) {
-//            $bird->sellers()->detach();
-//            $bird->sellers()->attach(explode(',', $sellers));
-
-            // update sellers during pivot table
-            $bird->sellers()->sync(explode(',', $sellers));
-        }
-
-        return $bird->update($params); // U{^DAT#
+        return $shovel->update($params); // U{^DAT#
     }
 
     /**
@@ -104,10 +94,8 @@ class ShovelController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bird $bird)
+    public function destroy(Shovel $shovel)
     {
-        // delete bird->seller relationship
-        $bird->sellers()->detach();
-        return $bird->delete();
+        return $shovel->delete();
     }
 }
