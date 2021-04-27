@@ -51,9 +51,10 @@
         <h2 class="d-flex justify-content-between">
             <span>Склад:</span>
             <!--       count all fines         -->
-            <b-button variant="danger">Погасить штраф {{getEggs.reduce((a, b) => {
-                return a.fine + b.fine;
-            })}}₽</b-button>
+            <b-button variant="danger" v-if="!getEggs.every(elem => elem.fine == 0)">
+                Погасить штраф
+                {{getFines(getEggs)}} ₽
+            </b-button>
         </h2>
 
         <div v-if="getEggs.every(elem => elem.count == 0 && elem.litter == 0)">
@@ -185,9 +186,21 @@ export default {
                     else elem.pivot.isActive = 1;
                 });
             }
+        },
+        // count fines from eggs
+        getFines(eggs){
+            let fines = 0;
+            eggs.forEach(elem => {
+               fines += elem.fine;
+            });
+
+            return fines;
         }
     },
-    computed: {...mapGetters(['getEggs', 'getUserShovels'])},
+    computed: {
+        ...mapGetters(['getEggs', 'getUserShovels']),
+        console: () => console,
+    },
     mounted() {
         this.fetchUserEggs();
     }

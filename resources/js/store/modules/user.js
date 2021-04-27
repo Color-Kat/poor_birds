@@ -372,7 +372,7 @@ export default {
                   state
               }, id) {
             if (!state.access_token) return false;
-            console.log(id)
+
             return axios.post(
                 'api/auth/cares',
                 {id},
