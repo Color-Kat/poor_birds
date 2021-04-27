@@ -161,7 +161,7 @@ export default {
             let litter = await this.clean(egg.id); // get litter count
 
             // no selected shovels
-            if (!litter) {
+            if (litter === false) {
                 this.$bvModal.show('modal-no-selected-shovel');
                 return;
             }
