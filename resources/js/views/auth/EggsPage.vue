@@ -48,13 +48,19 @@
             </div>
         </div>
         <hr>
-        <h2>Склад:</h2>
+        <h2 class="d-flex justify-content-between">
+            <span>Склад:</span>
+            <!--       count all fines         -->
+            <b-button variant="danger">Погасить штраф {{getEggs.reduce((a, b) => {
+                return a.fine + b.fine;
+            })}}₽</b-button>
+        </h2>
 
         <div v-if="getEggs.every(elem => elem.count == 0 && elem.litter == 0)">
             У вас пока нет яиц...
         </div>
 
-        <div class="mt-2">
+        <div class="mt-2" v-else>
             <b-card
                 v-for="egg of getEggs"
                 class="mb-2 w-100"
@@ -63,7 +69,6 @@
                 body-class="p-3"
                 v-if="egg.count > 0 || egg.litter > 0"
             >
-                {{egg.fine}}
                 <b-card-text
                     class="d-flex justify-content-between"
                 >
