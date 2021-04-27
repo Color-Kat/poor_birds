@@ -63,6 +63,7 @@
                 body-class="p-3"
                 v-if="egg.count > 0 || egg.litter > 0"
             >
+                {{egg.fine}}
                 <b-card-text
                     class="d-flex justify-content-between"
                 >
