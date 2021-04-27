@@ -51,9 +51,14 @@
         <h2 class="d-flex justify-content-between">
             <span>Склад:</span>
             <!--       count all fines         -->
-            <b-button variant="danger" v-if="!getEggs.every(elem => elem.fine == 0)">
+            <b-button
+                variant="danger"
+                v-if="!getEggs.every(elem => elem.fine == 0)"
+                @click="payOffFinesHandler"
+                v-b-tooltip="'Если сумма штрафов будет больше 200, то у вас не будет доступа к яйцам!'"
+            >
                 Погасить штраф
-                {{getFines(getEggs)}} ₽
+                {{ getFines }} ₽
             </b-button>
         </h2>
 
@@ -144,8 +149,11 @@ import {mapActions, mapGetters} from "vuex";
 
 export default {
     name    : "EggsPage",
+    data    : () => ({
+        fines: null
+    }),
     methods : {
-        ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel']),
+        ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel', 'payOffFines']),
         async sellingEggs(egg, event) {
             let eggs_count = await this.sellEggs(egg.id);
 
@@ -159,7 +167,7 @@ export default {
         },
         async cleanHandler(egg, event) {
             // disable button for 1 sec
-            let btn = event.target;
+            let btn      = event.target;
             btn.disabled = true;
             setTimeout(() => {
                 btn.disabled = false;
@@ -187,19 +195,27 @@ export default {
                 });
             }
         },
-        // count fines from eggs
-        getFines(eggs){
-            let fines = 0;
-            eggs.forEach(elem => {
-               fines += elem.fine;
-            });
-
-            return fines;
+        async payOffFinesHandler() {
+            let result = await this.payOffFines();
+            console.log(result !== false);
+            if (result !== false) {
+                this.fines = result;
+            }
         }
     },
     computed: {
         ...mapGetters(['getEggs', 'getUserShovels']),
         console: () => console,
+        // count fines from eggs
+        getFines() {
+            let fines = this.fines; // if fines exists we need update fines
+            if (fines === null) {
+                this.getEggs.forEach(elem => {
+                    fines += elem.fine;
+                });
+            }
+            return fines;
+        },
     },
     mounted() {
         this.fetchUserEggs();

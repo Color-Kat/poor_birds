@@ -434,6 +434,29 @@ export default {
                     return false;
                 });
         },
+        payOffFines({
+                        commit,
+                        state
+                    }) {
+            if (!state.access_token) return false;
+
+            return axios.get(
+                'api/auth/payOffFines',
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    console.log(response)
+                    if (response.data) {
+                        commit('changeBalance', response.data.money); // update balance
+                        return response.data.fines;
+                    }
+                    return false;
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+        },
     },
     mutations: {
         setUser(state, user) {

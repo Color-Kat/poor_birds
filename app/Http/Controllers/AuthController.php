@@ -300,6 +300,33 @@ class AuthController extends Controller
         return true;
     }
 
+    // pay off fines
+    public function payOffFines() {
+        $eggs = auth()->user()->my_eggs;
+        $fines = 0;
+        $balance = 0;
+
+        foreach ($eggs as $egg) {
+//            $fines += $egg->fine; // increase fines count
+
+            if (auth()->user()->money >= $egg->fine) { // enough money
+                $balance = auth()->user()->money -= $egg->fine; // decrease user money
+                $egg->fine = 0;
+//                $fines -= $egg->fine;
+
+                // update all
+                $egg->update();
+                auth()->user()->update();
+            }else $fines += $egg->fine;
+        }
+
+//        return $balance;
+        return response()->json([
+            "money" => $balance,
+            "fines" => $fines
+        ]);
+    }
+
     /**
      * Get the token array structure.
      *
