@@ -62,7 +62,12 @@
             </b-button>
         </h2>
 
-        <div v-if="getEggs.every(elem => elem.count == 0 && elem.litter == 0)">
+        <b-alert show variant="danger" v-if="getFines > 200">
+            У вас куча непогашенных штрафов!
+            Доступ к ферме заблокирован. Погасите все долги
+        </b-alert>
+
+        <div v-else-if="getEggs.every(elem => elem.count == 0 && elem.litter == 0)">
             У вас пока нет яиц...
         </div>
 
@@ -176,7 +181,7 @@ export default {
             let litter = await this.clean(egg.id); // get litter count
 
             // no selected shovels
-            if (litter === false) {
+            if (typeof litter !== 'number') {
                 this.$bvModal.show('modal-no-selected-shovel');
                 return;
             }

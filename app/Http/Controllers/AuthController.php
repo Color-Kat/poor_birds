@@ -246,6 +246,7 @@ class AuthController extends Controller
 
         // get shovel effectivity to clean litter
         $shovel = auth()->user()->my_shovels()->where('isActive', '=', 1)->first();
+//        if (!$shovel) return $egg->litter;
         if (!$shovel) return false;
 
         $shovelEfficiency = $shovel->efficiency;
@@ -304,20 +305,21 @@ class AuthController extends Controller
     public function payOffFines() {
         $eggs = auth()->user()->my_eggs;
         $fines = 0;
-        $balance = 0;
+        $balance = auth()->user()->money;
 
         foreach ($eggs as $egg) {
-//            $fines += $egg->fine; // increase fines count
-
             if (auth()->user()->money >= $egg->fine) { // enough money
                 $balance = auth()->user()->money -= $egg->fine; // decrease user money
                 $egg->fine = 0;
-//                $fines -= $egg->fine;
+            }else { // decrease part of fine
+                $egg->fine -= auth()->user()->money;
+                auth()->user()->money = 0;
+                $fines += $egg->fine;
+            }
 
-                // update all
-                $egg->update();
-                auth()->user()->update();
-            }else $fines += $egg->fine;
+            // update all
+            $egg->update();
+            auth()->user()->update();
         }
 
 //        return $balance;
