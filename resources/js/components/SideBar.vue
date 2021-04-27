@@ -9,30 +9,26 @@
 
 
                 <b-nav-item :to="{name: 'eggs'}" active-class="active">
-                    <h5 class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center justify-content-between"  style="font-size: 1.2em">
                         <span>🥚Склад яиц</span>
                         <b-badge variant="light">131241 &#8381;</b-badge>
-                    </h5>
+                    </div>
                 </b-nav-item>
 
-                <h5 class="mb-3 border-bottom">
+                <div class="mb-3 border-bottom" style="font-size: 1.2em">
                     <b-nav-item :to="{name: 'my_birds'}" active-class="active"><b>🦅</b>Мои
                         птицы
                     </b-nav-item>
-                </h5>
+                </div>
 
-                <h6>
+                <div style="font-size: 1.2em">
                     <b-nav-item :to="{name: 'birds'}" active-class="active"><b>🐔</b>Список птиц</b-nav-item>
-                </h6>
-                <h6>
+
                     <b-nav-item :to="{name: 'sellers'}" active-class="active"><b>🛒</b>Продавцы</b-nav-item>
-                </h6>
-                <h5>
+
                     <b-nav-item :to="{name: 'certificates'}" active-class="active"><b>📋</b>Сертификаты</b-nav-item>
-                </h5>
-                <h5>
                     <b-nav-item :to="{name: 'shovels'}" active-class="active"><b>🧹</b>Лопаты</b-nav-item>
-                </h5>
+                </div>
 
             </b-navbar-nav>
         </b-card>
