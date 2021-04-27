@@ -10,6 +10,10 @@
             <p class="my-2">Вы не можете продавать один вид яиц чаще, чем один раз в час :((</p>
         </b-modal>
 
+        <b-modal id="modal-no-selected-shovel" header-bg-variant="warning" hide-footer>
+            <p class="my-2">У вас не выбрана лопата!</p>
+        </b-modal>
+
         <h2 class="text-center">Склад ваших яиц ;)</h2>
         <span>
             Эти яйца несут ваши птицы. И у каждого вида птиц - свои яйца!
@@ -23,8 +27,7 @@
         <hr>
         <div>
             <h3>Выбрать лопату:</h3>
-            <div class="shovels-list">
-
+            <div class="shovels-list" v-if="getUserShovels.length > 0">
                 <div
                     v-for="shovel of getUserShovels"
                     class="shovel-item text-center d-flex justify-content-center"
@@ -37,6 +40,11 @@
                         <b-badge variant="success">{{ shovel.efficiency }}ед.</b-badge>
                     </div>
                 </div>
+            </div>
+
+            <div v-else>
+                <span>Чтобы убирать помёт за птицами, нужно купить лопату:</span>
+                <b-button :to="{name: 'shovels'}" class="mt-2" variant="primary">Купить лопату</b-button>
             </div>
         </div>
         <hr>
@@ -143,16 +151,21 @@ export default {
             }
         },
         async cleanHandler(egg, event) {
+            // disable button for 1 sec
             let btn = event.target;
-
             btn.disabled = true;
-
             setTimeout(() => {
                 btn.disabled = false;
             }, 1000);
 
-            let litter = await this.clean(egg.id);
-            egg.litter = litter;
+            let litter = await this.clean(egg.id); // get litter count
+
+            // no selected shovels
+            if (!litter) {
+                this.$bvModal.show('modal-no-selected-shovel');
+                return;
+            }
+            egg.litter = litter; // decrease litter count
         },
         async selectShovelHandler(shovel, e) {
             if (e.target.classList.contains('active')) return; // already selected

@@ -245,7 +245,10 @@ class AuthController extends Controller
         $egg = Egg::find($request->id); // get egg row
 
         // get shovel effectivity to clean litter
-        $shovelEfficiency = auth()->user()->my_shovels()->where('isActive', '=', 1)->first()->efficiency;
+        $shovel = auth()->user()->my_shovels()->where('isActive', '=', 1)->first();
+        if (!$shovel) return false;
+
+        $shovelEfficiency = $shovel->efficiency;
 
         $egg->litter -= $egg->litter > $shovelEfficiency ? $shovelEfficiency: $egg->litter;
         $egg->update();
