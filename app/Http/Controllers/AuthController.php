@@ -287,6 +287,16 @@ class AuthController extends Controller
         return auth()->user()->money;
     }
 
+    public function selectShovel(Request $request)
+    {
+        $shovels = auth()->user()->my_shovels; // get all shovels
+        foreach ($shovels as $key=>$item) {
+            $item->pivot->update(['isActive' => $item->id == $request->id ? 1 : 0]);
+        }
+
+        return true;
+    }
+
     /**
      * Get the token array structure.
      *

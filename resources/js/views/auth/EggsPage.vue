@@ -29,11 +29,11 @@
                     v-for="shovel of getUserShovels"
                     class="shovel-item text-center d-flex justify-content-center"
                     :class="{ active: !!shovel.pivot.isActive }"
-                    @click="(e)=>selectShovel(shovel, e)"
+                    @click="(e)=>selectShovelHandler(shovel, e)"
                 >
                     <img :src="`/storage/${shovel.image}`" alt="">
                     <div class="d-flex justify-content-between">
-<!--                        <span>{{ shovel.name }}</span>-->
+                        <!--                        <span>{{ shovel.name }}</span>-->
                         <b-badge variant="success">{{ shovel.efficiency }}ед.</b-badge>
                     </div>
                 </div>
@@ -130,7 +130,7 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     name    : "EggsPage",
     methods : {
-        ...mapActions(['fetchUserEggs', 'sellEggs', 'clean']),
+        ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel']),
         async sellingEggs(egg, event) {
             let eggs_count = await this.sellEggs(egg.id);
 
@@ -154,13 +154,18 @@ export default {
             let litter = await this.clean(egg.id);
             egg.litter = litter;
         },
-        selectShovel(shovel, e) {
-            this.getUserShovels.forEach(elem => {
-                // console.log(elem, shovel)
-                if (elem.id != shovel.id) elem.pivot.isActive = 0;
-                else elem.pivot.isActive = 1;
-            })
-            // e.target.classList.add('active');
+        async selectShovelHandler(shovel, e) {
+            if (e.target.classList.contains('active')) return; // already selected
+            let res = await this.selectShovel(shovel.id); // select shovel
+
+            if (res) {
+                // set isActive to show active class
+                this.getUserShovels.forEach(elem => {
+                    // console.log(elem, shovel)
+                    if (elem.id != shovel.id) elem.pivot.isActive = 0;
+                    else elem.pivot.isActive = 1;
+                });
+            }
         }
     },
     computed: {...mapGetters(['getEggs', 'getUserShovels'])},
@@ -188,10 +193,11 @@ export default {
         //align-items: center;
     }
 }
-.shovels-list{
+
+.shovels-list {
     display: flex;
 
-    .shovel-item{
+    .shovel-item {
         position: relative;
         border: 4px solid #adadad;
         border-radius: 10px;
@@ -203,17 +209,24 @@ export default {
         transition: all .2s ease-in-out;
         cursor: pointer;
 
-        &.active{
+        &.active {
             border: 5px solid #007bff;
         }
-        &:hover{
+
+        &:hover {
             border: 5px solid #82b3ff;
         }
 
 
-        * {pointer-events: none;}
-        img {width: 100%;}
-        div{
+        * {
+            pointer-events: none;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        div {
             position: absolute;
             bottom: 0;
             flex-wrap: wrap;

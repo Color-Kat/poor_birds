@@ -412,6 +412,28 @@ export default {
                     return false;
                 });
         },
+        selectShovel({
+                         commit,
+                         state
+                     }, id) {
+            if (!state.access_token) return false;
+
+            return axios.post(
+                'api/auth/selectShovel',
+                {id},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    if (response.data) {
+                        return true;
+                    }
+                    return false;
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+        },
     },
     mutations: {
         setUser(state, user) {

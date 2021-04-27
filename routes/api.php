@@ -55,4 +55,5 @@ Route::group([
 
     /* user - shovels */
     Route::post('buyShovel', 'AuthController@buyShovel');
+    Route::post('selectShovel', 'AuthController@selectShovel');
 });
