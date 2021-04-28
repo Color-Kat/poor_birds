@@ -21,7 +21,9 @@
                 >
                     <b-card-text class="d-flex justify-content-between flex-wrap">
                         <b-badge variant="success" class="mb-1">Эффективность: {{shovel.efficiency}}ед.</b-badge>
-                        <b-badge v-if="shovel.price ? true : false" variant="primary">Цена: {{shovel.price}}₽</b-badge>
+                        <b-badge v-if="shovel.price ? true : false" variant="primary"
+                                 class="d-flex align-items-center justify-content-center">Цена: {{shovel
+                            .price}}₽</b-badge>
                         <b-badge v-else variant="primary">Купить за донат: {{shovel.donate_price}} Руб.</b-badge>
                     </b-card-text>
 

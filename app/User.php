@@ -76,7 +76,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function my_shovels() {
-        return $this->belongsToMany('App\models\Shovel');
+        return $this->belongsToMany('App\models\Shovel')->withPivot('isActive');
     }
 
     /**
