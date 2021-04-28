@@ -44,7 +44,7 @@
 
             <div v-else>
                 <span>Чтобы убирать помёт за птицами, нужно купить лопату:</span>
-                <b-button :to="{name: 'shovels'}" class="mt-2" variant="primary">Купить лопату</b-button>
+                <b-button :to="{name: 'shovels'}" class="mt-2" size="sm" variant="primary">Купить лопату</b-button>
             </div>
         </div>
         <hr>

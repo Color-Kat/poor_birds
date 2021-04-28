@@ -67,17 +67,19 @@ class AuthController extends Controller
     {
         // it is not right! So mush code in one place!!!(((
         $rules = [
-            'name'     => 'required|string|between:2,100',
+            'name'     => 'required|string|between:2,100|alpha_dash',
             'email'    => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|confirmed|min:6',
+            'password' => 'required|string|confirmed|min:6|alpha_dash',
         ];
 
         $validatorMessages = [
-            'required'     => 'Поле :attribute обязательно для заполнения',
-            'min'          => 'Минимальная длина поля :attribute :min',
-            'name.between' => 'Ник должен быть минимум 2 символа',
-            'confirmed'    => 'Пароли не совпадают',
-            'email.unique' => 'Этот email уже зарегестирован'
+            'required'              => 'Поле :attribute обязательно для заполнения',
+            'min'                   => 'Минимальная длина поля :attribute :min',
+            'name.between'          => 'Ник должен быть минимум 2 символа',
+            'confirmed'             => 'Пароли не совпадают',
+            'alpha_dash'            => 'Недопустимые символы',
+            'email.unique'          => 'Этот email уже зарегистрирован',
+            'password'              => 'Некорректный пароль'
         ];
 
         $validator = Validator::make($request->all(), $rules, $validatorMessages);
@@ -95,7 +97,7 @@ class AuthController extends Controller
 //        $user->my_sellers()->attach(1); // attach bazaar to available sellers
 
         return response()->json([
-            'message' => 'Пользователь успешно зарегестрирован',
+            'message' => 'Пользователь успешно зарегистрирован',
             'user'    => $user
         ], 201);
     }
@@ -241,7 +243,8 @@ class AuthController extends Controller
         ]);
     }
 
-    public function clean(Request $request) {
+    public function clean(Request $request)
+    {
         $egg = Egg::find($request->id); // get egg row
 
         // get shovel effectivity to clean litter
@@ -251,29 +254,31 @@ class AuthController extends Controller
 
         $shovelEfficiency = $shovel->efficiency;
 
-        $egg->litter -= $egg->litter > $shovelEfficiency ? $shovelEfficiency: $egg->litter;
+        $egg->litter -= $egg->litter > $shovelEfficiency ? $shovelEfficiency : $egg->litter;
         $egg->update();
 
         return $egg->litter;
     }
 
-    public function openSeller(Request $request) {
-        $user = auth()->user();
+    public function openSeller(Request $request)
+    {
+        $user   = auth()->user();
         $seller = Seller::find($request->id);
 
         if ($user->money >= $seller->price) {
             auth()->user()->money -= $seller->price; // decrease user money
             auth()->user()->update(); // update balance
             $user->my_sellers()->attach($seller->id); // set seller available
-            return auth()->user()->money ;
+            return auth()->user()->money;
         } else return false;
 
 
     }
 
-    public function cares(Request $request) {
+    public function cares(Request $request)
+    {
         $eggRow = auth()->user()->my_eggs()->where('id', '=', auth()->user()->id . $request->id);
-        $eggRow->update(["cared"=> 1]);
+        $eggRow->update(["cared" => 1]);
 
         return true;
     }
@@ -281,8 +286,8 @@ class AuthController extends Controller
     public function buyShovel(Request $request)
     {
         $shovel = Shovel::find($request->id);
-        if ($shovel->price > auth()->user()->money ) return false; // not enough money
-        if(auth()->user()->my_shovels->contains($request->id)) return false; // shovel is already exists
+        if ($shovel->price > auth()->user()->money) return false; // not enough money
+        if (auth()->user()->my_shovels->contains($request->id)) return false; // shovel is already exists
 
         auth()->user()->money -= $shovel->price; // decrease user money
         auth()->user()->update(); // update
@@ -294,7 +299,7 @@ class AuthController extends Controller
     public function selectShovel(Request $request)
     {
         $shovels = auth()->user()->my_shovels; // get all shovels
-        foreach ($shovels as $key=>$item) {
+        foreach ($shovels as $key => $item) {
             $item->pivot->update(['isActive' => $item->id == $request->id ? 1 : 0]);
         }
 
@@ -302,19 +307,20 @@ class AuthController extends Controller
     }
 
     // pay off fines
-    public function payOffFines() {
-        $eggs = auth()->user()->my_eggs;
-        $fines = 0;
+    public function payOffFines()
+    {
+        $eggs    = auth()->user()->my_eggs;
+        $fines   = 0;
         $balance = auth()->user()->money;
 
         foreach ($eggs as $egg) {
             if (auth()->user()->money >= $egg->fine) { // enough money
-                $balance = auth()->user()->money -= $egg->fine; // decrease user money
+                $balance   = auth()->user()->money -= $egg->fine; // decrease user money
                 $egg->fine = 0;
-            }else { // decrease part of fine
-                $egg->fine -= auth()->user()->money;
+            } else { // decrease part of fine
+                $egg->fine            -= auth()->user()->money;
                 auth()->user()->money = 0;
-                $fines += $egg->fine;
+                $fines                += $egg->fine;
             }
 
             // update all

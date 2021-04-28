@@ -60,7 +60,7 @@ class User extends Authenticatable implements JWTSubject
 
         foreach (User::with('my_birds')->get() as $user) {
 //            $birds[] = self::get_my_birds_with_certificate($user->my_birds()->with(['sellers'])->get());
-            $birds[$user->id][] = self::get_my_birds_with_certificate($user->my_birds()->get());
+            $birds[$user->id][] = self::get_my_birds_with_certificate($user->my_birds);
         }
 
         return $birds;
@@ -76,7 +76,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function my_shovels() {
-        return $this->belongsToMany('App\models\Shovel')->withPivot('isActive');
+        return $this->belongsToMany('App\models\Shovel');
     }
 
     /**

@@ -43,7 +43,7 @@ ${selectedBird.price/2}&#8381;? При продаже так же удаляют
             <h2>Ваши птицы: </h2>
 
             <b-card
-                v-for="my_bird of getMyBirds"
+                v-for="(my_bird, index) of get_my_birds"
                 :key="my_bird.id"
                 body-class="p-1 d-flex justify-content-between"
                 class="mb-2"
@@ -65,9 +65,10 @@ ${selectedBird.price/2}&#8381;? При продаже так же удаляют
                                     variant="success"
                                     pill
                                     v-b-tooltip.hover
+                                    :disabled="my_bird.cared"
                                     :title="!my_bird.cared ?
                                     `Нажмите, чтобы погладить птицу (Увеличивает плодоносность на ${my_bird.care}% в течение часа)`: false"
-                                    @click="(e)=>caresHandler(my_bird, e)"
+                                    @click="(e)=>caresHandler(my_bird, index, e)"
                                 >
                                     <b-icon style="pointer-events: none" icon="hand-index"></b-icon>
                                 </b-button>
@@ -103,9 +104,12 @@ ${selectedBird.price/2}&#8381;? При продаже так же удаляют
                         <!--     characteristics      -->
                         <div class="d-flex justify-content-end flex-wrap">
                             <b-badge class="m-1 d-flex align-items-center" variant="warning">Плодоносность:
-                                {{ my_bird.fertility }} {{
-                                    my_bird.count > 1 ? `(${my_bird.fertility *
-                                    my_bird.count})` : ''
+                                <!--                count fertility with count and cares                -->
+                                {{ (my_bird.fertility * (my_bird.cared ? (1 + my_bird.care / 100): 1)).toFixed(1)}}
+
+                                {{
+                                    my_bird.count > 1 ? `(${ (my_bird.fertility *
+                                    my_bird.count * (my_bird.cared ? (1 + my_bird.care / 100): 1)).toFixed(1)})` : ''
                                 }}
                             </b-badge>
                             <b-badge class="m-1 d-flex align-items-center" variant="primary">Цена яйца:
@@ -135,28 +139,37 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     name    : "MyBirdsPage",
     computed: {
-        ...mapGetters(['getMyBirds'])
+        ...mapGetters(['getMyBirds']),
+        get_my_birds: function () {
+            // to hide cares button
+            return this.getMyBirds.map(elem => {
+                return {
+                    ...elem,
+                    cared: this.cared.includes(elem.id)
+                }
+            });
+        },
+        Math: ()=> Math,
     },
     data    : () => ({
-        selectedBird: null
+        selectedBird: null,
+        cared: []
     }),
     methods : {
         ...mapActions(['fetchUserBirds', 'sellBird', 'cares']),
-        caresHandler(my_bird, e) {
+        caresHandler(my_bird, my_bird_index, e) {
             // transfer bird_seller_user_id to cares function to increase bird fertility
             if (this.cares(my_bird.bird_seller_id)) {
                 // TODO добавить сертификат
-                my_bird.fertility = Math.round(my_bird.fertility * (1 + my_bird.care / 100));
-                my_bird.cared = true; // to hide the tooltip on the button
-                e.target.disabled = true;
-
-                // TODO подумать о модальном окне (вы погладили птицу)
-                // alert('Вы погладили птицу ' + my_bird.name);
+                // this.getMyBirds[my_bird_index].fertility = Math.round(my_bird.fertility * (1 + my_bird.care / 100));
+                // this.getMyBirds[my_bird_index].cared = true; // to hide the tooltip on the button
+                this.cared.push(my_bird.id); // hide cares button
             }
         }
     },
-    mounted() {
-        this.fetchUserBirds();
+    async mounted() {
+        await this.fetchUserBirds();
+        console.log(this.getMyBirds);
     }
 }
 </script>

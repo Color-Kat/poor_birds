@@ -13,7 +13,8 @@
 
         <!--    YOU BUY BIRD MODAL    -->
         <b-modal id="modal-bird-buy" title="Поздравляем! Вы купили птицу" hide-header>
-            <p class="my-2">Поздравляем! Вы купили птицу "{{ purchasedBirdName }}"</p>
+            <p class="my-2">Поздравляем! Вы купили птицу "{{ purchasedBirdName }}". <b-link :to="{name: 'my_birds'}">Мои
+                птицы</b-link></p>
 
             <template #modal-footer="{ ok }">
                 <b-button size="sm" variant="success" @click="ok()">
@@ -40,8 +41,9 @@
             <Field :field="getSeller.name"></Field>
             <Field :field="getSeller.description"></Field>
             <Field :field="getSeller.discountText"></Field>
-            <Field :field="getSeller.birds_count"></Field>
+<!--            <Field :field="getSeller.birds_count"></Field>-->
             <Field :field="getSeller.price"></Field>
+
             <b-button
                 v-if="getSeller.certificate_id"
                 class="mt-2"
@@ -52,6 +54,10 @@
                     getSeller.certificate_name
                 }}
             </b-button>
+            <b-alert class="mt-3" v-else show variant="warning">Этот продавец не выдает птицам <b-link
+                :to="{name:'certificates'}">сертификаты
+            </b-link>!
+            </b-alert>
 
             <hr>
             <h2>Птицы продавца: </h2>
@@ -60,14 +66,18 @@
             <!--            v-if="this.getUserSellers ? !this.getUserSellers.find(elem => {-->
             <!--            return elem.id == this.getSeller.id-->
             <!--            }) : true"-->
-            <b-button
-                v-if="!checkSellerAvailable"
+            <span v-if="!checkSellerAvailable">
+                У вас не заключён договор с этим продавцов. Заключите договор, чтобы покупать птиц:
+                <b-button
 
-                variant="primary"
-                @click="() => {openThisSeller(getSeller.id)}"
-            >
-                Открыть продавца за {{ getSeller.price[1] }}
-            </b-button>
+
+                    variant="primary"
+                    @click="() => {openThisSeller(getSeller.id)}"
+                    size="sm"
+                >
+                    Заключить договор за <b>{{ getSeller.price[1] }}</b>
+                </b-button>
+            </span>
 
             <div
                 class="mt-2 grid-cards-columns"

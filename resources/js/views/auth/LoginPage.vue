@@ -1,18 +1,19 @@
 <template>
     <div class="pt-5 form-wrapper d-flex justify-content-center align-items-center flex-wrap">
-        <b-alert class="alert" :show="success" variant="success">Вы успешно зарегестрировались</b-alert>
-        <b-alert class="alert" :show="error" variant="danger">{{ errorMessage }}</b-alert>
+        <div class="col-md-4">
+            <b-alert class="alert" :show="success" variant="success">Вы успешно зарегистрировались</b-alert>
+            <b-alert class="alert" :show="error" variant="danger">{{ errorMessage }}</b-alert>
+            <div class="form">
+                <LoginForm @onMessage="onMessage" v-if="currentForm === 'login'" :form="form" class="w-100"/>
+                <RegistrationForm @onMessage="onMessage" v-else-if="currentForm === 'registration'" :form="form"/>
 
-        <div class="form col-md-4">
-            <LoginForm @onMessage="onMessage" v-if="currentForm === 'login'" :form="form"/>
-            <RegistrationForm @onMessage="onMessage" v-else-if="currentForm === 'registration'" :form="form"/>
-
-            <router-link
-                class="change-form-link"
-                :to="{ name: currentForm === 'login' ? 'registration' : 'login' }"
-            >
-                {{ currentForm === 'login' ? 'Зарегестрироваться' : 'Войти' }}
-            </router-link>
+                <router-link
+                    class="change-form-link"
+                    :to="{ name: currentForm === 'login' ? 'registration' : 'login' }"
+                >
+                    {{ currentForm === 'login' ? 'Зарегистрироваться' : 'Войти' }}
+                </router-link>
+            </div>
         </div>
     </div>
 </template>

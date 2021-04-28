@@ -144,7 +144,7 @@ export default {
                 .then(response => {
                     if (response.status === 201) {
                         // console.log(response.data);
-                        context.commit('setUser', response.data);
+                        // context.commit('setUser', response.data);
 
                         return {
                             success: true,
@@ -286,7 +286,7 @@ export default {
                       }) {
             if (!state.access_token) return false;
 
-            // fetch to api check_auth
+            // fetch to get all user eggs
             return axios.get(
                 'api/auth/get_my_eggs',
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}

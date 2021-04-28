@@ -11,7 +11,7 @@
                 <b-nav-item :to="{name: 'eggs'}" active-class="active">
                     <div class="d-flex align-items-center justify-content-between"  style="font-size: 1.2em">
                         <span>🥚Склад яиц</span>
-                        <b-badge variant="light">131241 &#8381;</b-badge>
+<!--                        <b-badge variant="light">131241 &#8381;</b-badge>-->
                     </div>
                 </b-nav-item>
 
