@@ -75,6 +75,7 @@ class CollectEggs extends Command
             LEFT JOIN certificates AS certs ON ((SELECT certificate_id FROM sellers WHERE id = b_s.seller_id) = certs.id) -- and join certificate table
 
             ON CONFLICT (id) DO UPDATE
+                SET
                 name = birds.name, -- update bird name (just in case)
                 birds_count = b_s_u.count,
                 price = birds.egg_price * (1 + IFNULL(price_bonus, 0) / 100),
