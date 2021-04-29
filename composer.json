@@ -1,10 +1,14 @@
 {
-    "name": "laravel/laravel",
+    "name": "poorBirds",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Make money on your eggs",
     "keywords": [
         "framework",
-        "laravel"
+        "laravel",
+        "vue",
+        "eichBird",
+        "poorBirds",
+        "make money"
     ],
     "license": "MIT",
     "require": {
