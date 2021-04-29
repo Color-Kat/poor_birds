@@ -10,7 +10,7 @@ import './app.scss';
 window.axios = axios;
 // axios.defaults.baseURL = 'http://127.0.0.1:8000';
 window.axios.defaults.baseURL = 'https://poorbird.herokuapp.com';
-window.axios.baseURL = 'https://poorbird.herokuapp.com';
+// window.axios.baseURL = 'https://poorbird.herokuapp.com';
 
 
 Vue.use(BootstrapVue);
