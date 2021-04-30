@@ -7,9 +7,10 @@ import store from './store'; // не пишем index, он сам подтян�
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import './app.scss';
 
-// window.axios = axios;
-window.axios = axios. create({ baseURL: 'https://poorbird.herokuapp.com', timeout: 100000, });
-// axios.defaults.baseURL = 'http://127.0.0.1:8000';
+window.axios = axios;
+// window.axios = axios. create({ baseURL: 'http://poorbirds.rf.gd', timeout: 100000, });
+// window.axios = axios. create({ baseURL: 'http://127.0.0.1:8080', timeout: 100000, });
+axios.defaults.baseURL = 'http://127.0.0.1:8000';
 // window.axios.defaults.baseURL = 'https://poorbird.herokuapp.com';
 // window.axios.baseURL = 'https://poorbird.herokuapp.com';
 

@@ -33,7 +33,6 @@ class BirdController extends Controller
         $params          = $request->all();
         $params['image'] = null;
 
-
         // none image
         if ($request->image != "null") {
             $path            = $request->file('image')->store('birds');

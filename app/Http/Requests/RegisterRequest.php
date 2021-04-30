@@ -39,7 +39,7 @@ class RegisterRequest extends FormRequest
             'min'          => 'Минимальная длина поля :attribute :min',
             'name.between' => 'Ник должен быть минимум 2 символа',
             'confirmed'    => 'Пароли не совпадают',
-            'email.unique' => 'Этот email уже зарегестирован'
+            'email.unique' => 'Этот email уже зарегистрирован'
         ];
     }
 }
