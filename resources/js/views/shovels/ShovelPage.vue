@@ -8,9 +8,9 @@
             <p class="my-4">У вас уже есть эта лопата</p>
         </b-modal>
 
-        <b-card
-            v-if="!loading"
-        >
+        <Loader v-if="loading" />
+
+        <b-card v-else>
 
             <b-alert v-if="!getShovel" variant="warning">
                 <span>Такой лопаты нет в продаже:(</span>
@@ -57,10 +57,12 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import Field from '../../components/fields/Field'
+import Loader from "../../components/Loader";
 
 export default {
     name      : "ShovelPage",
     components: {
+        Loader,
         Field
     },
     data      : () => ({

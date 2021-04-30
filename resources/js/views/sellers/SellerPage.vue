@@ -23,13 +23,9 @@
             </template>
         </b-modal>
 
-        <!--        <router-view></router-view>-->
+        <Loader v-if="loading" />
 
-        <b-card
-            v-if="!loading"
-
-        >
-            <!--            {{ getBird }}-->
+        <b-card v-else >
             <h2 class="text-center">{{ getSeller.name[1] }}</h2>
             <figure class="text-center">
                 <img
@@ -37,7 +33,6 @@
                     :alt="getSeller.name"
                 >
             </figure>
-            <!--            <span class="p-2">{{getBird.description[1]}}</span>-->
             <Field :field="getSeller.name"></Field>
             <Field :field="getSeller.description"></Field>
             <Field :field="getSeller.discountText"></Field>
@@ -63,14 +58,9 @@
             <h2>Птицы продавца: </h2>
 
             <!--      open seller      -->
-            <!--            v-if="this.getUserSellers ? !this.getUserSellers.find(elem => {-->
-            <!--            return elem.id == this.getSeller.id-->
-            <!--            }) : true"-->
             <span v-if="!checkSellerAvailable">
                 У вас не заключён договор с этим продавцов. Заключите договор, чтобы покупать птиц:
                 <b-button
-
-
                     variant="primary"
                     @click="() => {openThisSeller(getSeller.id)}"
                     size="sm"
@@ -131,10 +121,12 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import Field from '../../components/fields/Field'
+import Loader from "../../components/Loader";
 
 export default {
     name      : "SellerPage",
     components: {
+        Loader,
         Field,
     },
     data      : function () {

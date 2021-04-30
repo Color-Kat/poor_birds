@@ -2,6 +2,10 @@
     <div>
         <Header></Header>
 
+        <!--    LOADER    -->
+        <Loader v-show="getIsLoading"/>
+        <!--    LOADER    -->
+
         <main>
             <div
                 id="main-container"
@@ -24,6 +28,7 @@
 <script>
 import Header from './components/header/Header';
 import SideBar from './components/SideBar';
+import Loader from './components/Loader';
 import {mapActions, mapGetters} from "vuex";
 import BlackOut from "./components/BlackOut";
 
@@ -32,10 +37,11 @@ export default {
     components: {
         Header,
         SideBar,
-        BlackOut
+        BlackOut,
+        Loader
     },
     computed  : {
-        ...mapGetters(['getAuth'])
+        ...mapGetters(['getAuth', 'getIsLoading'])
     },
     methods   : {
         ...mapActions(['init']),
@@ -51,6 +57,5 @@ export default {
 #main-container {
     display: flex;
     align-items: flex-start;
-
 }
 </style>

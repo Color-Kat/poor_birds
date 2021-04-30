@@ -1,8 +1,7 @@
 <template>
     <div>
-        <b-card
-            v-if="!loading"
-        >
+        <Loader v-if="loading" />
+        <b-card v-else>
 
             <b-alert v-if="!getCertificate" variant="warning">
                 <span>Такой сертификат нельзя получить:(</span>
@@ -47,10 +46,12 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import Field from '../../components/fields/Field'
+import Loader from "../../components/Loader";
 
 export default {
     name      : "CertificatePage",
     components: {
+        Loader,
         Field
     },
     data      : () => ({

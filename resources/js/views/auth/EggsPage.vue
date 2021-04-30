@@ -14,8 +14,12 @@
             <p class="my-2">У вас не выбрана лопата!</p>
         </b-modal>
 
-        <h2 class="text-center">Склад ваших яиц ;)</h2>
-        <span>
+        <!--    LOADER    -->
+        <Loader v-if="loading" />
+
+        <div>
+            <h2 class="text-center">Склад ваших яиц ;)</h2>
+            <span>
             Эти яйца несут ваши птицы. И у каждого вида птиц - свои яйца!
             Так же характеристики яйца изменяют
             сертификаты птицы. <br>
@@ -24,75 +28,75 @@
             Каждый час вы можете продавать такое кол-во яиц, которое указано в спросе.
             </span>
 
-        <hr>
-        <div>
-            <h3>Выбрать лопату:</h3>
-            <div class="shovels-list" v-if="getUserShovels.length > 0">
-                <div
-                    v-for="shovel of getUserShovels"
-                    class="shovel-item text-center d-flex justify-content-center"
-                    :class="{ active: !!shovel.pivot.isActive }"
-                    @click="(e)=>selectShovelHandler(shovel, e)"
-                >
-                    <img :src="`/storage/${shovel.image}`" alt="">
-                    <div class="d-flex justify-content-between">
-                        <!--                        <span>{{ shovel.name }}</span>-->
-                        <b-badge variant="success">{{ shovel.efficiency }}ед.</b-badge>
+            <hr>
+            <div>
+                <h3>Выбрать лопату:</h3>
+                <div class="shovels-list" v-if="getUserShovels.length > 0">
+                    <div
+                        v-for="shovel of getUserShovels"
+                        class="shovel-item text-center d-flex justify-content-center"
+                        :class="{ active: !!shovel.pivot.isActive }"
+                        @click="(e)=>selectShovelHandler(shovel, e)"
+                    >
+                        <img :src="`/storage/${shovel.image}`" alt="">
+                        <div class="d-flex justify-content-between">
+                            <!--                        <span>{{ shovel.name }}</span>-->
+                            <b-badge variant="success">{{ shovel.efficiency }}ед.</b-badge>
+                        </div>
                     </div>
                 </div>
+
+                <div v-else>
+                    <span>Чтобы убирать помёт за птицами, нужно купить лопату:</span>
+                    <b-button :to="{name: 'shovels'}" class="mt-2" size="sm" variant="primary">Купить лопату</b-button>
+                </div>
             </div>
-
-            <div v-else>
-                <span>Чтобы убирать помёт за птицами, нужно купить лопату:</span>
-                <b-button :to="{name: 'shovels'}" class="mt-2" size="sm" variant="primary">Купить лопату</b-button>
-            </div>
-        </div>
-        <hr>
-        <h2 class="d-flex justify-content-between">
-            <span>Склад:</span>
-            <!--       count all fines         -->
-            <b-button
-                variant="danger"
-                v-if="!getEggs.every(elem => elem.fine == 0)"
-                @click="payOffFinesHandler"
-                v-b-tooltip="'Если сумма штрафов будет больше 200, то у вас не будет доступа к яйцам!'"
-            >
-                Погасить штраф
-                {{ getFines }} ₽
-            </b-button>
-        </h2>
-
-        <b-alert show variant="danger" v-if="getFines > 200">
-            У вас куча непогашенных штрафов!
-            Доступ к ферме заблокирован. Погасите все долги
-        </b-alert>
-
-        <div v-else-if="getEggs.every(elem => elem.count == 0 && elem.litter == 0)">
-            У вас пока нет яиц...
-        </div>
-
-        <div class="mt-2" v-else>
-            <b-card
-                v-for="egg of getEggs"
-                class="mb-2 w-100"
-                tag="article"
-                :key="egg.id"
-                body-class="p-3"
-                v-if="egg.count > 0 || egg.litter > 0"
-            >
-                <b-card-text
-                    class="d-flex justify-content-between"
+            <hr>
+            <h2 class="d-flex justify-content-between">
+                <span>Склад:</span>
+                <!--       count all fines         -->
+                <b-button
+                    variant="danger"
+                    v-if="!getEggs.every(elem => elem.fine == 0)"
+                    @click="payOffFinesHandler"
+                    v-b-tooltip="'Если сумма штрафов будет больше 200, то у вас не будет доступа к яйцам!'"
                 >
-                    <!--          name and clean          -->
-                    <div
-                        style="font-size: 1.1em; width: max-content"
-                        class="d-flex align-items-center flex-wrap mr-3"
+                    Погасить штраф
+                    {{ getFines }} ₽
+                </b-button>
+            </h2>
+
+            <b-alert show variant="danger" v-if="getFines > 200">
+                У вас куча непогашенных штрафов!
+                Доступ к ферме заблокирован. Погасите все долги
+            </b-alert>
+
+            <div v-else-if="getEggs.every(elem => elem.count == 0 && elem.litter == 0)">
+                У вас пока нет яиц...
+            </div>
+
+            <div class="mt-2" v-else>
+                <b-card
+                    v-for="egg of getEggs"
+                    class="mb-2 w-100"
+                    tag="article"
+                    :key="egg.id"
+                    body-class="p-3"
+                    v-if="egg.count > 0 || egg.litter > 0"
+                >
+                    <b-card-text
+                        class="d-flex justify-content-between"
                     >
+                        <!--          name and clean          -->
+                        <div
+                            style="font-size: 1.1em; width: max-content"
+                            class="d-flex align-items-center flex-wrap mr-3"
+                        >
                         <span class="d-flex justify-content-center">
                             <b>{{ egg.name }}</b>
                             <span class="ml-1">x{{ egg.birds_count }}</span>
                         </span>
-                        <span class="">
+                            <span class="">
                             <b-badge variant="dark" class="egg-litter">Помёт: {{ egg.litter }}ед.</b-badge>
                             <br>
                             <b-button class="p-1" variant="light" @click="(e)=>cleanHandler(egg, e)">
@@ -105,28 +109,29 @@
                                 <span style="pointer-events: none">Убраться</span>
                             </b-button>
                         </span>
-                    </div>
-
-
-                    <!--   characteristics and sell eggs button   -->
-                    <div class="d-flex justify-content-end flex-wrap egg-characteristics">
-                        <div class="d-flex justify-content-end flex-wrap">
-                            <b-badge variant="success" class="my-1 ml-1 d-flex align-items-center">{{
-                                    egg.count
-                                }}🥚
-                            </b-badge>
-                            <b-badge variant="danger" class="my-1 ml-1 d-flex align-items-center">Спрос {{ egg.demand }}
-                                яиц/час
-                            </b-badge>
-                            <b-badge class="my-1 ml-1 d-flex align-items-center">{{ egg.price }}&#8381; цена яйца
-                            </b-badge>
-                            <b-badge variant="warning" class="my-1 ml-1 d-flex align-items-center">Всего: {{
-                                    egg.price * egg.count
-                                }}&#8381;
-                            </b-badge>
                         </div>
 
-                        <span>
+
+                        <!--   characteristics and sell eggs button   -->
+                        <div class="d-flex justify-content-end flex-wrap egg-characteristics">
+                            <div class="d-flex justify-content-end flex-wrap">
+                                <b-badge variant="success" class="my-1 ml-1 d-flex align-items-center">{{
+                                        egg.count
+                                    }}🥚
+                                </b-badge>
+                                <b-badge variant="danger" class="my-1 ml-1 d-flex align-items-center">Спрос
+                                    {{ egg.demand }}
+                                    яиц/час
+                                </b-badge>
+                                <b-badge class="my-1 ml-1 d-flex align-items-center">{{ egg.price }}&#8381; цена яйца
+                                </b-badge>
+                                <b-badge variant="warning" class="my-1 ml-1 d-flex align-items-center">Всего: {{
+                                        egg.price * egg.count
+                                    }}&#8381;
+                                </b-badge>
+                            </div>
+
+                            <span>
                             <b-button
                                 variant="primary"
                                 class="mt-2"
@@ -139,23 +144,27 @@
                                 за {{ (egg.demand < egg.count ? egg.demand : egg.count) * egg.price }}&#8381;
                             </b-button>
                         </span>
-                    </div>
-                </b-card-text>
+                        </div>
+                    </b-card-text>
 
-                <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
-            </b-card>
+                    <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
+                </b-card>
 
+            </div>
         </div>
     </b-card>
 </template>
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import Loader from "../../components/Loader";
 
 export default {
     name    : "EggsPage",
+    components: {Loader},
     data    : () => ({
-        fines: null
+        fines: null,
+        loading: true
     }),
     methods : {
         ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel', 'payOffFines']),
@@ -222,8 +231,9 @@ export default {
             return fines;
         },
     },
-    mounted() {
-        this.fetchUserEggs();
+    async mounted() {
+        await this.fetchUserEggs();
+        this.loading = false
     }
 }
 </script>

@@ -1,43 +1,50 @@
 <template>
     <b-card>
-        <h2 class="text-center">Сертификаты</h2>
-        <span>Сертификат - бумага, которая выдается врачом после осмотра, лечения или
+        <Loader v-if="loading" />
+
+        <div v-else>
+            <h2 class="text-center">Сертификаты</h2>
+            <span>Сертификат - бумага, которая выдается врачом после осмотра, лечения или
                     генного усовершенствования птицы. Птица, у которой есть сертификат будет получать различные
                     бонусы, прописанные в сертификате. Например, увеличенная плодоносность, повышенный спрос на
                     яйца и тд. Сертификат можно получить, покупая птиц у некоторых продавцов</span>
 
-        <hr>
-        <h2>Сертификаты:</h2>
+            <hr>
+            <h2>Сертификаты:</h2>
 
-        <div class="mt-2 grid-cards-columns grid-cards-columns-small">
-            <b-card
-                v-for="certificate of getCertificates"
-                class="mb-2 card-item"
-                :title="certificate.name"
-                :img-src="`/storage/certificates/${certificate.grade}.jpg`"
-                :img-alt="certificate.name"
-                tag="article"
+            <div class="mt-2 grid-cards-columns grid-cards-columns-small">
+                <b-card
+                    v-for="certificate of getCertificates"
+                    class="mb-2 card-item"
+                    :title="certificate.name"
+                    :img-src="`/storage/certificates/${certificate.grade}.jpg`"
+                    :img-alt="certificate.name"
+                    tag="article"
 
-                @click="()=>redirect(certificate.id)"
-                :key="certificate.id"
-            >
-                <b-card-text>
-                    <b-badge variant="success">Бонус к плодовитости {{ certificate.fertility_bonus }}%</b-badge>
-                    <b-badge variant="warning">Бонус к цене {{ certificate.fertility_bonus }}%</b-badge>
-                    <b-badge variant="primary">Цена {{ certificate.price }}руб</b-badge>
-                </b-card-text>
+                    @click="()=>redirect(certificate.id)"
+                    :key="certificate.id"
+                >
+                    <b-card-text>
+                        <b-badge variant="success">Бонус к плодовитости {{ certificate.fertility_bonus }}%</b-badge>
+                        <b-badge variant="warning">Бонус к цене {{ certificate.fertility_bonus }}%</b-badge>
+                        <b-badge variant="primary">Цена {{ certificate.price }}руб</b-badge>
+                    </b-card-text>
 
-                <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
-            </b-card>
+                    <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
+                </b-card>
+            </div>
         </div>
     </b-card>
 </template>
 
 <script>
 import {mapActions, mapGetters} from 'vuex';
+import Loader from "../../components/Loader";
 
 export default {
     name    : "Store",
+    components: {Loader},
+    data: ()=>({loading: true}),
     computed: {
         ...mapGetters([
             'getCertificates',
@@ -49,8 +56,9 @@ export default {
         },
         ...mapActions(['fetchCertificates'])
     },
-    mounted() {
-        this.fetchCertificates();
+    async mounted() {
+        await this.fetchCertificates();
+        this.loading = false;
     },
 }
 </script>

@@ -19,16 +19,18 @@ export default new Vuex.Store({
         shovels
     },
     state: {
-        active_sideBar: false
+        active_sideBar: false,
+        isLoading: false
+    },
+    getters: {
+        getIsLoading(state) {
+            return state.isLoading;
+        }
     },
     actions: {
         // add initial state for application
         async init({dispatch}) {
             await dispatch('checkAuth'); // initial auth
-            // await dispatch('fetchUser'); // if (auth) - initial user
-            // await dispatch('fetchBirds'); // fetch birds
-            // await dispatch('fetchSellers'); // fetch birds
-            // await dispatch('fetchCertificates'); // fetch certificates
         },
         toggle_sideBar({commit, state}, payload = null) {
             if( payload !== null ) commit('toggle_active_sideBar', payload);
@@ -38,6 +40,9 @@ export default new Vuex.Store({
     mutations: {
         toggle_active_sideBar(state, payload) {
             state.active_sideBar = payload;
+        },
+        toggleLoader(state, payload) {
+            state.isLoading = payload;
         }
     }
 });

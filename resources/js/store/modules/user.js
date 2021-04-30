@@ -140,12 +140,13 @@ export default {
             }
         },
         registration(context, form) {
+            commit('toggleLoader', true);
             return axios.post('api/auth/register', form)
                 .then(response => {
                     if (response.status === 201) {
                         // console.log(response.data);
                         // context.commit('setUser', response.data);
-
+                        commit('toggleLoader', false);
                         return {
                             success: true,
                             error  : false
@@ -168,6 +169,8 @@ export default {
                   commit,
                   dispatch
               }, form) {
+            commit('toggleLoader', true);
+
             return axios.post('/api/auth/login', form)
                 .then(response => {
                     if (response.status === 201) {
@@ -175,6 +178,7 @@ export default {
                         commit('setAuth', true); // update auth
                         commit('set_Access_token', response.data.access_token); // save jwt bearer token
                         dispatch('fetchUser'); // get user to display
+                        commit('toggleLoader', false);
 
                         // return status
                         return {
@@ -218,7 +222,6 @@ export default {
                            state
                        }) {
             if (!state.access_token) return false;
-
             // fetch to api check_auth
             return axios.get(
                 'api/auth/get_my_birds_with_certificate',

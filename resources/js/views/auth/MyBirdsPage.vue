@@ -24,7 +24,9 @@ ${selectedBird.price/2}&#8381;? При продаже так же удаляют
             </template>
         </b-modal>
 
-        <b-card v-if="getMyBirds.length == 0">
+        <Loader v-if="loading" />
+
+        <b-card v-else-if="getMyBirds.length == 0">
             <span>Ферма пустует, вам нужно купить птиц, чтобы начать зарабатывать ;)</span>
             <b-button :to="{name: 'birds'}" variant="success" class="mt-2">Купить первую птицу</b-button>
         </b-card>
@@ -135,9 +137,11 @@ ${selectedBird.price/2}&#8381;? При продаже так же удаляют
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import Loader from "../../components/Loader";
 
 export default {
     name    : "MyBirdsPage",
+    components: {Loader},
     computed: {
         ...mapGetters(['getMyBirds']),
         get_my_birds: function () {
@@ -153,7 +157,8 @@ export default {
     },
     data    : () => ({
         selectedBird: null,
-        cared: []
+        cared: [],
+        loading: true
     }),
     methods : {
         ...mapActions(['fetchUserBirds', 'sellBird', 'cares']),
@@ -169,7 +174,7 @@ export default {
     },
     async mounted() {
         await this.fetchUserBirds();
-        console.log(this.getMyBirds);
+        this.loading = false
     }
 }
 </script>

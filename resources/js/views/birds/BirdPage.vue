@@ -1,7 +1,8 @@
 <template>
     <div>
+        <Loader v-if="loading" />
         <b-card
-            v-if="!loading"
+            v-else
         >
 
             <b-alert v-if="!getBird" variant="warning">
@@ -55,10 +56,12 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import Field from '../../components/fields/Field'
+import Loader from "../../components/Loader";
 
 export default {
     name      : "BirdPage",
     components: {
+        Loader,
         Field
     },
     data      : () => ({

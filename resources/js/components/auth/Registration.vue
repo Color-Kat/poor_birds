@@ -43,7 +43,7 @@
                 ></b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="primary">Зарегестрироваться</b-button>
+            <b-button type="submit" variant="primary">Зарегистрироваться</b-button>
         </b-form>
     </div>
 </template>

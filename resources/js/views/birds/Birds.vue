@@ -1,46 +1,54 @@
 <template>
-        <b-card>
-            <h2 class="text-center">Список птиц</h2>
-            <span>В этом списке находятся все птицы. У них самые разные характеристики: плодоносность, спрос на яйца,
-                количество помёта в час, бонус за заботу, цена одного яйца. Но это просто список всех птиц в игре,
-                купить птиц можно только у <b-link :to="{name: 'sellers'}">продавцов</b-link>. На странице самой
-                птицы так же есть информация, где её можно купить
-            </span>
+    <b-card>
+        <Loader v-if="loading" />
 
-            <hr>
-            <h2>Птицы:</h2>
+            <div v-else>
+                <h2 class="text-center">Список птиц</h2>
+                <span>В этом списке находятся все птицы. У них самые разные характеристики: плодоносность, спрос на яйца,
+                    количество помёта в час, бонус за заботу, цена одного яйца. Но это просто список всех птиц в игре,
+                    купить птиц можно только у <b-link :to="{name: 'sellers'}">продавцов</b-link>. На странице самой
+                    птицы так же есть информация, где её можно купить
+                </span>
 
-            <div class="mt-2 grid-cards-columns">
-                <b-card
-                    v-for="bird of getBirds"
-                    class="mb-2 card-item"
-                    :title="bird.name"
-                    :img-src="`/storage/${bird.image}`"
-                    :img-alt="bird.name"
-                    img-top
-                    tag="article"
+                <hr>
+                <h2>Птицы:</h2>
 
-                    @click="()=>redirect(bird.id)"
-                    :key="bird.id"
-                >
-                    <b-card-text>
-                        {{ bird.description }}
-                    </b-card-text>
+                <div class="mt-2 grid-cards-columns">
+                    <b-card
+                        v-for="bird of getBirds"
+                        class="mb-2 card-item"
+                        :title="bird.name"
+                        :img-src="`/storage/${bird.image}`"
+                        :img-alt="bird.name"
+                        img-top
+                        tag="article"
 
-                    <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
-                </b-card>
+                        @click="()=>redirect(bird.id)"
+                        :key="bird.id"
+                    >
+                        <b-card-text>
+                            {{ bird.description }}
+                        </b-card-text>
+
+                        <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
+                    </b-card>
+                </div>
             </div>
-        </b-card>
+    </b-card>
 </template>
 
 <script>
 import {mapActions, mapGetters} from 'vuex';
+import Loader from "../../components/Loader";
 
 export default {
-    name: "Store",
-    mounted() {
+    name      : "Store",
+    components: {Loader},
+    data      : () => ({loading: true}),
+    async mounted() {
         // this.$store.dispatch('fetchBirds');
-        this.fetchBirds();
+        await this.fetchBirds();
+        this.loading = false
     },
     computed: {
         ...mapGetters([
