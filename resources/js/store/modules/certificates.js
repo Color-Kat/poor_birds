@@ -50,7 +50,7 @@ export default {
                     grade          : grade,
                     grade_id       : certificate.grade,
                     fertility_bonus: ['Бонус к плодоносности', `${certificate.fertility_bonus} яиц/час`],
-                    care_bonus     : ['Бонус к заботу', `${certificate.care_bonus}%`],
+                    care_bonus     : ['Бонус к заботе', `${certificate.care_bonus}%`],
                     demand_bonus   : ['Бонус на спрос', `${certificate.demand_bonus}%`],
                     litter_bonus   : ['Бонус на кол-во помета', `${certificate.litter_bonus} %`],
                     price_bonus    : ['Бонус к цене яиц', `${certificate.price_bonus}%`],

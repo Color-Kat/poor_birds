@@ -17,7 +17,7 @@ class CreateBirdsTable extends Migration
             $table->id();
             $table->string('name')->default('');
             $table->integer('price')->default(0);
-            $table->integer('fertility')->default(0);
+            $table->float('fertility')->default(0);
             $table->text('description')->nullable();
             $table->text('image')->nullable();
             $table->timestamps();

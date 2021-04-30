@@ -14,7 +14,7 @@ class AlterTableBirdsAddEgsPrice extends Migration
     public function up()
     {
         Schema::table('birds', function (Blueprint $table) {
-            $table->integer('egg_price')->default(1)->after('fertility');
+            $table->float('egg_price')->default(1)->after('fertility');
         });
     }
 

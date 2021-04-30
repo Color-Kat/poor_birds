@@ -32,11 +32,11 @@ class Bird extends Model
             "name"           => $bird->name,
             "description"    => $bird->description,
             "price"          => $bird->price,
-            "fertility"      => round($bird->fertility * $fertility_bonus),
+            "fertility"      => round($bird->fertility * $fertility_bonus, 2),
             "demand"         => round($bird->demand * $demand_bonus),
-            "care"           => round($bird->care * $care_bonus),
+            "care"           => round($bird->care * $care_bonus, 2),
             "litter"         => round($bird->litter * $litter_bonus),
-            "egg_price"      => round($bird->egg_price * $price_bonus),
+            "egg_price"      => round($bird->egg_price * $price_bonus, 2),
             "certificate_id" => $certificate ? $certificate->id : 0,
             "pivot"          => $bird->pivot
         ];

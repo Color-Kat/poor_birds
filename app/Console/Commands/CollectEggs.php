@@ -43,7 +43,7 @@ class CollectEggs extends Command
     {
         // counting eggs and litter for all users
         DB::select("
-              INSERT INTO eggs (id, name, birds_count, price, demand, count, litter, collected, cared, fine, user_id, bird_seller_id)
+            INSERT INTO eggs (id, name, birds_count, price, demand, count, litter, collected, cared, fine, user_id, bird_seller_id)
 
             SELECT
                 CONCAT(u.id, b_s.id), -- create UID from user_id and bird_seller_id

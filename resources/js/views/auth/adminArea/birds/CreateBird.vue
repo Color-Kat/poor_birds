@@ -63,7 +63,7 @@
                 description="Сколько яиц за час несет птица"
             >
                 <b-form-input
-                    id="fertility" v-model="form.fertility" type="number" min="0"
+                    id="fertility" v-model="form.fertility" type="number" step="0.01" min="0"
                     max="100000000"
                 ></b-form-input>
             </b-form-group>
