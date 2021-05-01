@@ -15,7 +15,7 @@ class AlterTableUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->tinyInteger('role')->default(0)->after('password');
-            $table->bigInteger('money')->default(100)->after('name');
+            $table->double('money')->default(100)->after('name');
         });
     }
 
