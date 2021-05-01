@@ -23,7 +23,7 @@
 
                 <div v-else>
 
-                    <b-table striped hover :items="getBirds" :fields="fields">
+                    <b-table responsive striped hover :items="getBirds" :fields="fields">
 
                         <!--      IMAGE      -->
                         <template #cell(image)="data">

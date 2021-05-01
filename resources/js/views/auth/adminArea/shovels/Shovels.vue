@@ -19,7 +19,7 @@
             <!--    No shovels    -->
 
             <div v-else>
-                <b-table striped hover :items="getShovels" :fields="fields">
+                <b-table responsive striped hover :items="getShovels" :fields="fields">
 
                     <!--      IMAGE      -->
                     <template #cell(image)="data">

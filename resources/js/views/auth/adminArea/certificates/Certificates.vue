@@ -21,7 +21,7 @@
 
             <div v-else>
 
-                <b-table striped hover :items="getCertificates" :fields="fields">
+                <b-table responsive striped hover :items="getCertificates" :fields="fields">
                     <!--      IMAGE      -->
                     <template #cell(grade)="data">
                         <img height="80px" :src="`/storage/certificates/${data.item.grade}.jpg`" alt="">

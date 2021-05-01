@@ -13,6 +13,7 @@ export default {
 <style scoped lang="scss">
 .loader{
     top: 0;
+    left: 0;
     position: fixed;
     width: 100%;
     height: 100%;

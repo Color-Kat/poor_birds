@@ -116,7 +116,7 @@
                         <div class="d-flex justify-content-end flex-wrap egg-characteristics">
                             <div class="d-flex justify-content-end flex-wrap">
                                 <b-badge variant="success" class="my-1 ml-1 d-flex align-items-center">{{
-                                        egg.count
+                                        Math.floor(egg.count)
                                     }}🥚
                                 </b-badge>
                                 <b-badge variant="danger" class="my-1 ml-1 d-flex align-items-center">Спрос
@@ -126,7 +126,7 @@
                                 <b-badge class="my-1 ml-1 d-flex align-items-center">{{ egg.price }}&#8381; цена яйца
                                 </b-badge>
                                 <b-badge variant="warning" class="my-1 ml-1 d-flex align-items-center">Всего: {{
-                                        egg.price * egg.count
+                                        (egg.price * egg.count).toFixed(2)
                                     }}&#8381;
                                 </b-badge>
                             </div>
@@ -140,8 +140,9 @@
                                 }"
                                 :disabled="!!egg.collected || egg.count == 0"
                             >
-                                Продать {{ egg.demand < egg.count ? egg.demand : egg.count }}🥚
-                                за {{ (egg.demand < egg.count ? egg.demand : egg.count) * egg.price }}&#8381;
+                                Продать {{ Math.floor(egg.demand < egg.count ? egg.demand : egg.count) }}🥚
+                                за {{ ((egg.demand < egg.count ? egg.demand : egg.count) * egg.price).toFixed(2)
+                                }}&#8381;
                             </b-button>
                         </span>
                         </div>
@@ -219,6 +220,7 @@ export default {
     },
     computed: {
         ...mapGetters(['getEggs', 'getUserShovels']),
+        Math: () => Math,
         console: () => console,
         // count fines from eggs
         getFines() {

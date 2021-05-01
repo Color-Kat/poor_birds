@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
 //         $schedule->command('inspire')->hourly();
 //        dump('running');
-        $schedule->command('collect:egg')->everyMinute();
+        $schedule->command('collect:eggs')->everyMinute();
 //        $schedule->call(function (){
 //            dump(123);
 //        })->everyMinute();

@@ -81,9 +81,8 @@ export default {
         },
         ...mapActions(['fetchSellers', 'openSeller']),
         checkAvailable(sellerId) {
-            console.log(2132)
             return this.getUserSellers.find(elem => {
-                console.log(elem)
+                // console.log(elem)
             });
         },
         async openThisSeller(sellerId) {

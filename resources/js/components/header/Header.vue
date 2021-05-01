@@ -62,10 +62,12 @@
         <BlackOut/>
         <!--    NAVBAR 2    -->
         <b-navbar class="position-relative nav justify-content-center">
-            <b-navbar-brand to="/" class="d-flex d-sm-none align-items-center">
+            <b-navbar-brand to="/" class="d-flex d-sm-none align-items-center position-relative">
+<!--                src="https://placekitten.com/g/30/30"-->
                 <img
                     class="d-inline-block align-top"
-                    src="https://placekitten.com/g/30/30" alt="Kitten"
+                    src="/storage/logo.png"
+                    height="40px"
                 >
                 <span>Бедные птицы</span>
             </b-navbar-brand>
