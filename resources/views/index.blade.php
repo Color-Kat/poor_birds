@@ -21,7 +21,6 @@
 
     <!-- Scripts -->
     <script src="/js/app.js" defer></script>
-
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <style>

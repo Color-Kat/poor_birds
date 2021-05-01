@@ -38,7 +38,8 @@
                         :class="{ active: !!shovel.pivot.isActive }"
                         @click="(e)=>selectShovelHandler(shovel, e)"
                     >
-                        <img :src="`/storage/${shovel.image}`" alt="">
+                        <img :src="`/storage/${shovel.image}`" :alt="shovel.name" style="position:absolute;
+                        max-width: 90%; max-height: 90%">
                         <div class="d-flex justify-content-between">
                             <!--                        <span>{{ shovel.name }}</span>-->
                             <b-badge variant="success">{{ shovel.efficiency }}ед.</b-badge>
@@ -261,6 +262,7 @@ export default {
 
 .shovels-list {
     display: flex;
+    flex-wrap: wrap;
 
     .shovel-item {
         position: relative;
