@@ -28,7 +28,14 @@
                 <Field :field="getCertificate.price"></Field>
 
 <!--                <b-button variant="primary" class="mt-3">Купить</b-button>-->
-                <b-dropdown id="dropdown-select-bird" text="Купить для" class="mt-3" variant="primary">
+                <b-dropdown
+                    id="dropdown-select-bird"
+                    text="Купить для"
+                    class="mt-3"
+                    variant="primary"
+                    v-b-tooltip.hover
+                    title="Сертификат при покупке сертификата старый удаляется"
+                >
                     <b-dropdown-item
                         v-for="myBird of getMyBirds"
                         :key="myBird.id"
