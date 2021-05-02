@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Route;
 //    return view('index');
 //})->where('any', '.*');
 
+// for url cron jobs on ifinityfree
+Route::get('/cron/collect_eggs', function () {
+    Artisan::call('collect:eggs');
+    return 123;
+});
+
 Route::any('/{any}', function () {
     return view('index');
 })->where('any', '.*');

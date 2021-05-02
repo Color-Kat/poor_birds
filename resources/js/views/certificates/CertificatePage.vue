@@ -27,8 +27,14 @@
                 <Field :field="getCertificate.price_bonus"></Field>
                 <Field :field="getCertificate.price"></Field>
 
-<!--                // TODO купить сертификат-->
 <!--                <b-button variant="primary" class="mt-3">Купить</b-button>-->
+                <b-dropdown id="dropdown-select-bird" text="Купить для" class="mt-3" variant="primary">
+                    <b-dropdown-item
+                        v-for="myBird of getMyBirds"
+                        :key="myBird.id"
+                        @click="()=>buyCertificateHandler(myBird, getCertificate)"
+                    >{{ myBird.name }} x {{ myBird.count }}</b-dropdown-item>
+                </b-dropdown>
 
                 <hr>
                 <h2 class="text-center">Что такое сертификат?</h2>
@@ -59,13 +65,20 @@ export default {
         loading: true,
     }),
     computed  : {
-        ...mapGetters(['getCertificate'])
+        ...mapGetters(['getCertificate', 'getMyBirds'])
     },
     methods   : {
-        ...mapActions(['fetchCertificate'])
+        ...mapActions(['fetchCertificate', 'fetchUserBirds', 'buyCertificate']),
+        buyCertificateHandler(my_bird, certificate) {
+            this.buyCertificate({
+                id: my_bird.bird_seller_user_id,
+                certificate_id: certificate.id
+            });
+        }
     },
     async mounted() {
         await this.fetchCertificate(this.$route.params.id);
+        await this.fetchUserBirds();
         this.loading = false;
     }
 }

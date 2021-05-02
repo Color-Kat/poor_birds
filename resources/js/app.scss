@@ -2,6 +2,11 @@
 $body-bg: #dfe7e9;
 $body-color: #4a4a4a;
 
+body {
+    min-height: 100%;
+    height: max-content;
+}
+
 // Then import Bootstrap an BootstrapVue SCSS files (order is important)
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 @import 'node_modules/bootstrap-vue/src/index.scss';

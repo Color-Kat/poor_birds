@@ -69,7 +69,7 @@
                     src="/storage/logo.png"
                     height="40px"
                 >
-                <span>Бедные птицы</span>
+                <span>Бедные птички</span>
             </b-navbar-brand>
         </b-navbar>
         <!--    NAVBAR 2    -->

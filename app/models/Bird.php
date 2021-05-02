@@ -14,7 +14,10 @@ class Bird extends Model
         return $this->belongsToMany('App\models\Seller');
     }
 
-//
+//    public function certificate() {
+//        return $this->hasOne('App\models\Certificate');
+//    }
+
     public static function apply_certificate_to_bird($bird, $certificate)
     {
         $bird_with_certificate = [];

@@ -46,6 +46,7 @@ export default {
 
             if (certificate) {
                 return {
+                    id             : certificate.id,
                     name           : ['Название', certificate.name],
                     grade          : grade,
                     grade_id       : certificate.grade,

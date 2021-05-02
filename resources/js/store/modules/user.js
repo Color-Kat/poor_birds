@@ -460,6 +460,30 @@ export default {
                     return false;
                 });
         },
+        buyCertificate({
+                           commit,
+                           state
+                       }, ids) {
+            if (!state.access_token) return false;
+
+            return axios.post(
+                'api/auth/buyCertificate',
+                {...ids},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    console.log(response)
+                    // if (response.data) {
+                    //     commit('changeBalance', response.data.money); // update balance
+                    //     return response.data.fines;
+                    // }
+                    return false;
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+        },
     },
     mutations: {
         setUser(state, user) {

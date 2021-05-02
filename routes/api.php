@@ -50,6 +50,9 @@ Route::group([
     Route::post('sellBird', 'AuthController@sellBird');
     Route::post('cares', 'AuthController@cares');
 
+    /* user - certificates */
+    Route::post('buyCertificate', 'AuthController@buyCertificate');
+
     /* user - sellers */
     Route::post('openSeller', 'AuthController@openSeller');
 

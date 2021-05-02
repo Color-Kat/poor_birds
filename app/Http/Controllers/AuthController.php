@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\models\Certificate;
 use App\models\Egg;
 use App\models\Seller;
 use App\models\Shovel;
@@ -249,7 +250,6 @@ class AuthController extends Controller
 
         // get shovel effectivity to clean litter
         $shovel = auth()->user()->my_shovels()->where('isActive', '=', 1)->first();
-//        if (!$shovel) return $egg->litter;
         if (!$shovel) return false;
 
         $shovelEfficiency = $shovel->efficiency;
@@ -271,8 +271,6 @@ class AuthController extends Controller
             $user->my_sellers()->attach($seller->id); // set seller available
             return auth()->user()->money;
         } else return false;
-
-
     }
 
     public function cares(Request $request)
@@ -328,11 +326,35 @@ class AuthController extends Controller
             auth()->user()->update();
         }
 
-//        return $balance;
         return response()->json([
             "money" => $balance,
             "fines" => $fines
         ]);
+    }
+
+    public function buyCertificate(Request $request) {
+        $user = auth()->user();
+        $certificate = Certificate::find($request->certificate_id);
+        $my_birds = $user->my_birds;
+
+        foreach ($my_birds as $my_bird) {
+            if ( $my_bird->pivot->id ===  $request->id) {
+                if ($user->money < $certificate->price) return false; // not enough money
+
+                // decrease user money
+                $user->money -= $certificate->price;
+                $user->update();
+
+                // add certificate to bird
+                $my_bird->pivot->certificate_id = $request->certificate_id;
+                $my_bird->pivot->update();
+            }
+        }
+
+//        auth()->user()->my_birds()->withPivot('bird_seller_id')->where(function ($my_bird) {
+//            dump( $my_bird->get() );
+////            return $my_bird->pivot
+//        });
     }
 
     /**
