@@ -43,11 +43,7 @@ class User extends Authenticatable implements JWTSubject
 
         foreach ($my_birds as $key => $my_bird ) {
             $cert_id = $my_bird->pivot->certificate_id;
-//            dump($cert_id ? Certificate::where('id', '=', $cert_id)->first() :
-//                $my_bird->seller->certificate);
             $bird        = $my_bird->bird;
-//            $certificate = $my_bird->seller->certificate;
-
             // get certificate
             $certificate = $cert_id
                 ? Certificate::where('id', '=', $cert_id)->first() // if exist bought certificate

@@ -29,8 +29,10 @@ export default new Vuex.Store({
     },
     actions: {
         // add initial state for application
-        async init({dispatch}) {
+        async init({dispatch, commit}) {
+            commit('toggleLoader', true);
             await dispatch('checkAuth'); // initial auth
+            commit('toggleLoader', false);
         },
         toggle_sideBar({commit, state}, payload = null) {
             if( payload !== null ) commit('toggle_active_sideBar', payload);
