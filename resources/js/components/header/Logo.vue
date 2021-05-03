@@ -6,6 +6,7 @@
             class="d-none d-md-inline-block align-top mr-2"
             src="/storage/logo.png"
             height="40px"
+            alt="logo poorbirds"
         >
         <span class="d-none d-sm-block">Бедные птички</span>
     </b-navbar-brand>

@@ -11,11 +11,14 @@ import './app.scss';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
+/* ----- configure axios for server ----- */
 window.axios = axios;
-axios.defaults.baseURL = 'http://127.0.0.1:8000';
-// window.axios = axios.create({ baseURL: 'http://poorbirds.rf.gd', timeout: 100000, });
+// axios.defaults.baseURL = 'http://127.0.0.1:8000';
+// window.axios = axios.create({ baseURL: 'https://poorbirds.rf.gd', timeout: 100000, });
+/* ----- end configure ----- */
 
-
+/* ------- NPROGRESS -------- */
+NProgress.configure({ easing: 'ease', speed: 500 });
 // before a request is made start the nprogress
 window.axios.interceptors.request.use(config => {
     NProgress.start();
@@ -27,6 +30,7 @@ window.axios.interceptors.response.use(response => {
     return response;
 });
 NProgress.configure({ showSpinner: false }); // disable spinner
+/* ------- END NPROGRESS -------- */
 
 
 Vue.use(BootstrapVue);

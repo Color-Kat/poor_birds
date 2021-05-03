@@ -29,7 +29,9 @@
             !important"
             >
 
-                <Balance class="mr-2"/>
+                <b-nav-item>
+                    <Balance class="mr-2"/>
+                </b-nav-item>
 
                 <b-nav-item
                     class="mr-2" v-if="auth && getUserRole === 1" :to="{name: 'admin-birds'}" active-class="active"
@@ -68,6 +70,7 @@
                     class="d-inline-block align-top"
                     src="/storage/logo.png"
                     height="40px"
+                    alt="logo poorbirds"
                 >
                 <span>Бедные птички</span>
             </b-navbar-brand>

@@ -7,7 +7,7 @@
 
         <div class="user-avatar" v-else>
 <!--            <b-avatar variant="primary" class="mr-3" src="https://placekitten.com/300/300"></b-avatar>-->
-            <img height="50px" class="mr-3 rounded-pill" src="https://placekitten.com/300/300"></img>
+            <img height="50px" class="mr-3 rounded-pill" src="https://placekitten.com/300/300" :alt="getUserName"></img>
             <span class="mr-auto">{{getUserName}}</span>
         </div>
     </div>
