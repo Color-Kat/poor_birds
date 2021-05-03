@@ -2,19 +2,18 @@ const staticCacheName = 'static-cache-v0';
 const dynamicCacheName = 'dynamic-cache-v0';
 
 const staticAssets = [
-    './',
-    './index.html',
-    // './assets/icons/16x16.png',
-    // './assets/icons/favicon.ico',
-    // './assets/icons/72x72.png',
-    // './assets/icons/96x96.png',
-    // './assets/icons/144x144.png',
-    // './assets/icons/128x128.png',
-    // './assets/icons/152x152.png',
-    // './assets/icons/192x192.png',
-    // './assets/icons/512x512.png',
-    './manifest.json',
-    './app.js',
+    '/',
+    '/assets/icons/16x16.png',
+    '/assets/icons/favicon.ico',
+    '/assets/icons/72x72.png',
+    '/assets/icons/96x96.png',
+    '/assets/icons/144x144.png',
+    '/assets/icons/128x128.png',
+    '/assets/icons/152x152.png',
+    '/assets/icons/192x192.png',
+    '/assets/icons/512x512.png',
+    '/manifest.json',
+    '/js/app.js',
 ];
 
 self.addEventListener('install', async event => {

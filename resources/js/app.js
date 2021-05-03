@@ -12,9 +12,9 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
 /* ----- configure axios for server ----- */
-window.axios = axios;
+// window.axios = axios;
 // axios.defaults.baseURL = 'http://127.0.0.1:8000';
-// window.axios = axios.create({ baseURL: 'https://poorbirds.rf.gd', timeout: 100000, });
+window.axios = axios.create({ baseURL: 'https://poorbirds.rf.gd', timeout: 100000, });
 /* ----- end configure ----- */
 
 /* ------- NPROGRESS -------- */
@@ -32,6 +32,20 @@ window.axios.interceptors.response.use(response => {
 NProgress.configure({ showSpinner: false }); // disable spinner
 /* ------- END NPROGRESS -------- */
 
+/* ------- REGISTER SERVICE-WORKER ------- */
+window.addEventListener("load", () => {
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(registration => {
+            	console.log("Service worker successfully registered", registration);
+            })
+            .catch(error => {
+                console.log("Service worker registration failed", error);
+            });
+    }
+});
+/* ------- END SERVICE-WORKER ------- */
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
