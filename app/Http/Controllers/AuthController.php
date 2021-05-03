@@ -351,10 +351,7 @@ class AuthController extends Controller
             }
         }
 
-//        auth()->user()->my_birds()->withPivot('bird_seller_id')->where(function ($my_bird) {
-//            dump( $my_bird->get() );
-////            return $my_bird->pivot
-//        });
+        return auth()->user()->money;
     }
 
     /**

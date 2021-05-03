@@ -475,11 +475,10 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    console.log(response)
-                    // if (response.data) {
-                    //     commit('changeBalance', response.data.money); // update balance
-                    //     return response.data.fines;
-                    // }
+                    if (response.data) {
+                        commit('changeBalance', response.data); // update balance
+                        return true;
+                    }
                     return false;
                 })
                 .catch((error) => {

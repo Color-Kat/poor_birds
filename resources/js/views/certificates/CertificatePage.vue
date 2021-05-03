@@ -1,5 +1,15 @@
 <template>
     <div>
+        <!-- successfully purchase -->
+        <b-modal id="modal-success-purchase" header-bg-variant="success" hide-footer>
+            <p class="my-2">Вы успешно купили сертификат!</p>
+        </b-modal>
+
+        <!-- not enough money -->
+        <b-modal id="modal-money-purchase" header-bg-variant="danger" hide-footer>
+            <p class="my-2">У вас недостаточно денег!</p>
+        </b-modal>
+
         <Loader v-if="loading" />
         <b-card v-else>
 
@@ -76,11 +86,14 @@ export default {
     },
     methods   : {
         ...mapActions(['fetchCertificate', 'fetchUserBirds', 'buyCertificate']),
-        buyCertificateHandler(my_bird, certificate) {
-            this.buyCertificate({
+        async buyCertificateHandler(my_bird, certificate) {
+            let result = await this.buyCertificate({
                 id: my_bird.bird_seller_user_id,
                 certificate_id: certificate.id
             });
+
+            if (result) this.$bvModal.show('modal-success-purchase');
+            else this.$bvModal.show('modal-money-purchase');
         }
     },
     async mounted() {
