@@ -3,6 +3,7 @@
 namespace App;
 
 use App\models\Bird;
+use App\models\Certificate;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,12 +30,10 @@ class User extends Authenticatable implements JWTSubject
             'bird_seller_user',
             'user_id',
             'bird_seller_id')
-            ->withPivot(['count', 'id'])
+            ->withPivot(['count', 'id', 'certificate_id'])
             ->with('bird')
             ->with(['seller' => function ($query) {
                 $query->select('id', 'certificate_id'); // return only certificate that seller give
-//                dump($seller);
-                // TODO получать сертификат
             }]);
     }
 
@@ -43,8 +42,16 @@ class User extends Authenticatable implements JWTSubject
         $my_bird_with_certificate = [];
 
         foreach ($my_birds as $key => $my_bird ) {
+            $cert_id = $my_bird->pivot->certificate_id;
+//            dump($cert_id ? Certificate::where('id', '=', $cert_id)->first() :
+//                $my_bird->seller->certificate);
             $bird        = $my_bird->bird;
-            $certificate = $my_bird->seller->certificate;
+//            $certificate = $my_bird->seller->certificate;
+
+            // get certificate
+            $certificate = $cert_id
+                ? Certificate::where('id', '=', $cert_id)->first() // if exist bought certificate
+                : $my_bird->seller->certificate; // else get seller certificate
             $my_bird_with_certificate[$key] = Bird::apply_certificate_to_bird($bird, $certificate);
             $my_bird_with_certificate[$key]["id"] = $my_bird->id;
             $my_bird_with_certificate[$key]["bird_seller_user_id"] = $my_bird->pivot->id;

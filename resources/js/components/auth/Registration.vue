@@ -54,7 +54,6 @@ export default {
     props  : ['form'],
     methods: {
         async register() {
-
             // return promise<{success, error}>
             let result = await this.$store.dispatch('registration', this.form);
             // return result for display it in the parent component

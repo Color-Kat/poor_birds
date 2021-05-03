@@ -140,13 +140,15 @@ export default {
             }
         },
         registration(context, form) {
-            commit('toggleLoader', true);
+            context.commit('toggleLoader', true);
+
             return axios.post('api/auth/register', form)
                 .then(response => {
+                    context.commit('toggleLoader', false);
                     if (response.status === 201) {
                         // console.log(response.data);
                         // context.commit('setUser', response.data);
-                        commit('toggleLoader', false);
+
                         return {
                             success: true,
                             error  : false
@@ -157,6 +159,7 @@ export default {
                     };
                 })
                 .catch((error) => {
+                    context.commit('toggleLoader', false);
                     if (error.response) {
                         return {
                             success: false,
