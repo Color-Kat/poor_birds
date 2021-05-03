@@ -1,30 +1,38 @@
 import Vue from 'vue';
 import axios from 'axios';
 import router from './router';
-import store from './store'; // не пишем index, он сам подтянется
+import store from './store';
 
-// ---bootstrap-vue--- //
+/* bootstrap-vue */
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import './app.scss';
 
+/* nprogress - progress bar  */
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+
 window.axios = axios;
 axios.defaults.baseURL = 'http://127.0.0.1:8000';
-// window.axios = axios. create({ baseURL: 'http://poorbirds.rf.gd', timeout: 100000, });
+// window.axios = axios.create({ baseURL: 'http://poorbirds.rf.gd', timeout: 100000, });
 
-// window.axios = axios. create({ baseURL: 'http://127.0.0.1:8080', timeout: 100000, });
-// window.axios.defaults.baseURL = 'https://poorbird.herokuapp.com';
-// window.axios.baseURL = 'https://poorbird.herokuapp.com';
+
+// before a request is made start the nprogress
+window.axios.interceptors.request.use(config => {
+    NProgress.start();
+    return config;
+});
+// before a response is returned stop nprogress
+window.axios.interceptors.response.use(response => {
+    NProgress.done();
+    return response;
+});
+NProgress.configure({ showSpinner: false }); // disable spinner
 
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
-// ---bootstrap-vue--- //
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('app', require('./App.vue').default);
-// Vue.component('app', ()=>import('./App'));
 
 const app = new Vue({
     el: '#app',

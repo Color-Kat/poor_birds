@@ -21,6 +21,11 @@
 
     <!-- Scripts -->
     <script src="/js/app.js" defer></script>
+
+    <!--  NProgress  -->
+{{--    <script src='nprogress.js'></script>--}}
+{{--    <link rel='stylesheet' href='nprogress.css'/>--}}
+
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <style>
