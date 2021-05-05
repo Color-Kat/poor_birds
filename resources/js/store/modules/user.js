@@ -24,7 +24,7 @@ export default {
         },
         getBalance(state) {
             if (state.user) {
-                return state.user.money;
+                return +state.user.money;
             } else return false;
         },
         // return all user data
