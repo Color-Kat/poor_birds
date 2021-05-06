@@ -109,7 +109,7 @@
                             }"
 
                         >
-                            купить за {{ Math.round(bird.price * (1 + getSeller.discount / 100)) }}&#8381;
+                            купить за <b>{{ Math.round(bird.price * (1 + getSeller.discount / 100)) }}&#8381;</b>
                         </b-button>
                     </b-card-text>
                 </b-card>
