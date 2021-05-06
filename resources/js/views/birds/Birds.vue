@@ -28,6 +28,21 @@
                     >
                         <b-card-text>
                             {{ bird.description }}
+                            <hr>
+                            <b-badge variant="warning">
+                                Плодоносность: {{bird.fertility}} яиц/час
+                            </b-badge>
+                            <b-badge variant="dark">
+                                Помёт: {{bird.litter}} ед/час
+                            </b-badge>
+                            <b-badge variant="danger">
+                                Спрос: {{bird.demand}} яиц/час
+                            </b-badge>
+                            <h4>
+                                <b-badge variant="primary">
+                                    Цена: {{bird.price}}₽
+                                </b-badge>
+                            </h4>
                         </b-card-text>
 
                         <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->

@@ -55,6 +55,7 @@ export default {
     // close sidebar on resize
     created() {
         window.addEventListener('resize', () => this.toggle_sideBar(false));
+        // window.addEventListener('resize', () => this.toggle_sideBar(false));
     },
     beforeDestroy() {
         window.removeEventListener('resize');

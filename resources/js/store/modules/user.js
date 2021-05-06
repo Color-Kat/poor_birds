@@ -14,7 +14,7 @@ export default {
         },
         getUserRole(state) {
             if (state.user) {
-                return state.user.role;
+                return +state.user.role;
             } else return 0;
         },
         getAuth(state) {
@@ -24,7 +24,7 @@ export default {
         },
         getBalance(state) {
             if (state.user) {
-                return +state.user.money;
+                return (+state.user.money).toFixed(2);
             } else return false;
         },
         // return all user data
@@ -44,7 +44,7 @@ export default {
                     },
                     {
                         name : 'Деньги',
-                        value: user.money
+                        value: +user.money
                     },
                     {
                         name : 'Почта',

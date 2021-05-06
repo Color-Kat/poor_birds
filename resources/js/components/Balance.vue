@@ -1,5 +1,5 @@
 <template>
-    <b-badge v-if="getBalance !== false" variant="primary">{{getBalance.toFixed(2)}} &#8381;</b-badge>
+    <b-badge v-if="getBalance !== false" variant="primary">{{getBalance}} &#8381;</b-badge>
     <b-spinner v-else small variant="light"></b-spinner>
 </template>
 

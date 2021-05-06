@@ -2,8 +2,8 @@
     <header class="header mb-2">
         <!--    NAVBAR 1    -->
         <b-navbar
-            style="z-index: 1010" fixed="top" type="light" variant="light"
-            class=" position-relative d-flex justify-content-between"
+            style="z-index: 1010" type="light" variant="light"
+            class="position-relative d-flex justify-content-between"
         >
             <div class="d-flex align-items-center">
                 <b-button v-if="getAuth" class="d-block d-md-none mr-2 p-1" variant="primary" @click="() => toggle_sideBar()">
@@ -106,5 +106,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
 </style>

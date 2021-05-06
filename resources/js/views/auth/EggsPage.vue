@@ -35,7 +35,7 @@
                     <div
                         v-for="shovel of getUserShovels"
                         class="shovel-item text-center d-flex justify-content-center"
-                        :class="{ active: !!shovel.pivot.isActive }"
+                        :class="{ active: !!+shovel.pivot.isActive }"
                         @click="(e)=>selectShovelHandler(shovel, e)"
                     >
                         <img :src="`/storage/${shovel.image}`" :alt="shovel.name" style="position:absolute;
@@ -58,21 +58,21 @@
                 <!--       count all fines         -->
                 <b-button
                     variant="danger"
-                    v-if="!getEggs.every(elem => elem.fine == 0)"
+                    v-if="!getEggs.every(elem => +elem.fine == 0)"
                     @click="payOffFinesHandler"
                     v-b-tooltip="'Если сумма штрафов будет больше 200, то у вас не будет доступа к яйцам!'"
                 >
                     Погасить штраф
-                    {{ getFines }} ₽
+                    {{ +getFines }} ₽
                 </b-button>
             </h2>
 
-            <b-alert show variant="danger" v-if="getFines > 200">
+            <b-alert show variant="danger" v-if="+getFines > 200">
                 У вас куча непогашенных штрафов!
                 Доступ к ферме заблокирован. Погасите все долги
             </b-alert>
 
-            <div v-else-if="getEggs.every(elem => elem.count == 0 && elem.litter == 0)">
+            <div v-else-if="getEggs.every(elem => +elem.count == 0 && +elem.litter == 0)">
                 У вас пока нет яиц...
             </div>
 
@@ -83,7 +83,7 @@
                     tag="article"
                     :key="egg.id"
                     body-class="p-3"
-                    v-if="egg.count > 0 || egg.litter > 0"
+                    v-if="+egg.count > 0 || +egg.litter > 0"
                 >
                     <b-card-text
                         class="d-flex justify-content-between"
@@ -98,9 +98,14 @@
                             <span class="ml-1">x{{ egg.birds_count }}</span>
                         </span>
                             <span class="">
-                            <b-badge variant="dark" class="egg-litter">Помёт: {{ egg.litter }}ед.</b-badge>
+                            <b-badge variant="dark" class="egg-litter">Помёт: {{ +egg.litter }}ед.</b-badge>
                             <br>
-                            <b-button class="p-1" variant="light" @click="(e)=>cleanHandler(egg, e)">
+                            <b-button
+                                class="p-1"
+                                variant="light"
+                                @click="(e)=>cleanHandler(egg, e)"
+                                :disabled="+egg.litter == 0"
+                            >
                                 <img
                                     style="pointer-events: none"
                                     height="30px"
@@ -117,17 +122,17 @@
                         <div class="d-flex justify-content-end flex-wrap egg-characteristics">
                             <div class="d-flex justify-content-end flex-wrap">
                                 <b-badge variant="success" class="my-1 ml-1 d-flex align-items-center">{{
-                                        Math.floor(egg.count)
+                                        Math.floor(+egg.count)
                                     }}🥚
                                 </b-badge>
                                 <b-badge variant="danger" class="my-1 ml-1 d-flex align-items-center">Спрос
-                                    {{ egg.demand }}
+                                    {{ +egg.demand }}
                                     яиц/час
                                 </b-badge>
-                                <b-badge class="my-1 ml-1 d-flex align-items-center">{{ egg.price }}&#8381; цена яйца
+                                <b-badge class="my-1 ml-1 d-flex align-items-center">{{ +egg.price }}&#8381; цена яйца
                                 </b-badge>
                                 <b-badge variant="warning" class="my-1 ml-1 d-flex align-items-center">Всего: {{
-                                        (egg.price * egg.count).toFixed(2)
+                                        (+egg.price * +egg.count).toFixed(2)
                                     }}&#8381;
                                 </b-badge>
                             </div>
@@ -139,10 +144,10 @@
                                 @click="e=>{
                                     sellingEggs(egg, e);
                                 }"
-                                :disabled="!!egg.collected || egg.count == 0"
+                                :disabled="!!+egg.collected || +egg.count == 0"
                             >
-                                Продать {{ Math.floor(egg.demand < egg.count ? egg.demand : egg.count) }}🥚
-                                за {{ ((egg.demand < egg.count ? egg.demand : egg.count) * egg.price).toFixed(2)
+                                Продать {{ Math.floor(+egg.demand < +egg.count ? +egg.demand : +egg.count) }}🥚
+                                за {{ ((+egg.demand < +egg.count ? +egg.demand : +egg.count) * +egg.price).toFixed(2)
                                 }}&#8381;
                             </b-button>
                         </span>
@@ -171,7 +176,7 @@ export default {
     methods : {
         ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel', 'payOffFines']),
         async sellingEggs(egg, event) {
-            let eggs_count = await this.sellEggs(egg.id);
+            let eggs_count = await this.sellEggs(+egg.id);
 
             if (eggs_count !== false) {
                 egg.count             = eggs_count; // update number of eggs
@@ -213,9 +218,9 @@ export default {
         },
         async payOffFinesHandler() {
             let result = await this.payOffFines();
-            console.log(result !== false);
+
             if (result !== false) {
-                this.fines = result;
+                this.fines = Math.round(+result);
             }
         }
     },
@@ -228,7 +233,7 @@ export default {
             let fines = this.fines; // if fines exists we need update fines
             if (fines === null) {
                 this.getEggs.forEach(elem => {
-                    fines += elem.fine;
+                    fines += +elem.fine;
                 });
             }
             return fines;

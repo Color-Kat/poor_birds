@@ -233,7 +233,14 @@ const routes = [
     },
 ];
 
-export default new VueRouter({
+const router =  new VueRouter({
     mode: 'history',
     routes
 });
+
+// close sidebar on navigate
+router.afterEach((to, from) => {
+    store.commit('toggle_active_sideBar', false);
+})
+
+export default router;
