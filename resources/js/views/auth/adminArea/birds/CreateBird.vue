@@ -106,13 +106,13 @@
                 </b-form-checkbox>
             </b-form-group>
 
-            <!--    price    -->
+            <!--    egg price    -->
             <b-form-group
                 id="input-egg-price"
                 :label="`Цена яйца: `"
                 label-for="egg-price"
             >
-                <b-form-input id="egg-price" v-model="form.egg_price" type="number" min="0"></b-form-input>
+                <b-form-input id="egg-price" v-model="form.egg_price" type="number" step="0.01" min="0"></b-form-input>
             </b-form-group>
 
             <!--    price    -->

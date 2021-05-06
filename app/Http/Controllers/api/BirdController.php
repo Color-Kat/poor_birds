@@ -19,7 +19,7 @@ class BirdController extends Controller
      */
     public function index()
     {
-        return Bird::with('sellers')->get();
+        return Bird::with('sellers')->orderBy('price')->get();
     }
 
     /**

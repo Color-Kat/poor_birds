@@ -16,6 +16,16 @@
                 <!--                <b-list-group-item class="d-flex align-items-center">-->
                 <!--                </b-list-group-item>-->
 
+                <b-alert show variant="info" class="d-flex justify-content-between">
+                    <span>Включите уведомления, чтобы получать сообщения о том, что птицы снесли яйца</span>
+                    <b-button
+                        size="sm"
+                        variant="light"
+                        @click="enableNotifications"
+                    >Включить
+                    </b-button>
+                </b-alert>
+
                 <AccountField v-for="field in getUserData" :field="field" :key="field.name"/>
 
             </b-list-group>
@@ -34,10 +44,32 @@ export default {
     components: {
         AccountField,
         Balance,
+        // Field,
         UserAvatar
     },
     computed  : {
         ...mapGetters(['user', 'getUserData'])
+    },
+    methods   : {
+        enableNotifications() {
+            Notification.requestPermission().then((result) => {
+                if (result === 'granted') {
+                    console.log(234);
+                    this.sendNotification();
+                }
+            });
+        },
+        sendNotification() {
+            const notifTitle = 'Бедные птички покакали';
+            const notifBody  = `By ColorKat`;
+            const notifImg   = `https://itproger.com/img/notify.png`;
+            const options    = {
+                body: notifBody,
+                icon: notifImg,
+            };
+            new Notification(notifTitle, options);
+            // setTimeout(randomNotification, 30000);
+        }
     },
     mounted() {
         // console.log(this.user)
