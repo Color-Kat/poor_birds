@@ -15,7 +15,7 @@ class CertificateController extends Controller
      */
     public function index()
     {
-        return Certificate::get();
+        return Certificate::orderBy('price')->get();
     }
 
     /**

@@ -16,7 +16,7 @@ class ShovelController extends Controller
      */
     public function index()
     {
-        return Shovel::all();
+        return Shovel::orderBy('price')->get();
     }
 
     /**
