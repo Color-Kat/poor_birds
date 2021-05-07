@@ -8,9 +8,11 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use NotificationChannels\WebPush\HasPushSubscriptions; //import the trait
 
 class User extends Authenticatable implements JWTSubject
 {
+    use HasPushSubscriptions; // add the trait to your class
     use Notifiable;
 
     /**

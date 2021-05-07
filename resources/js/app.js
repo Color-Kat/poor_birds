@@ -11,12 +11,13 @@ import './app.scss';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
+
 /* ----- configure axios for server ----- */
-// window.axios = axios;
-// axios.defaults.baseURL = 'http://127.0.0.1:8000';
+window.axios = axios;
+axios.defaults.baseURL = 'http://127.0.0.1:8000';
 // window.axios = axios.create({ baseURL: 'https://poorbirds.rf.gd', timeout: 100000, });
 // window.axios = axios.create({ baseURL: 'https://s367343.smrtp.ru', timeout: 100000, });
-window.axios = axios.create({ baseURL: 'https://poorbirds.tk', timeout: 100000, });
+// window.axios = axios.create({ baseURL: 'https://poorbirds.tk', timeout: 100000, });
 /* ----- end configure ----- */
 
 /* ------- NPROGRESS -------- */
@@ -34,20 +35,46 @@ window.axios.interceptors.response.use(response => {
 NProgress.configure({ showSpinner: false }); // disable spinner
 /* ------- END NPROGRESS -------- */
 
-/* ------- REGISTER SERVICE-WORKER ------- */
+        /* --------------------------------------- */
+        /* ------- REGISTER SERVICE-WORKER ------- */
+        /* --------------------------------------- */
+import {initSW} from "./enable-push";
 window.addEventListener("load", () => {
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-            .register("/service-worker.js")
-            .then(registration => {
-            	console.log("Service worker successfully registered", registration);
-            })
-            .catch(error => {
-                console.log("Service worker registration failed", error);
-            });
-    }
+    initSW()
+    // if ("serviceWorker" in navigator) {
+    //     navigator.serviceWorker
+    //         .register("/service-worker.js")
+    //         .then((registration) => {
+    //             return registration.pushManager.getSubscription()
+    //                 .then(async (subscription) => {
+    //                     console.log("Service worker successfully registered with notifications", registration);
+    //                     if(subscription) {
+    //                         return subscription;
+    //                     }
+    //                 });
+    //         })
+    //         .then(async (subscription) => {
+    //             const response = await fetch('./vapidPublicKey');
+    //             const vapidPublicKey = await response.text();
+    //             const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+    //         })
+    //         .catch(error => {
+    //             console.log("Service worker registration failed", error);
+    //         });
+    //
+    //         // .then(registration => {
+    //         // 	console.log("Service worker successfully registered", registration);
+    //         // })
+    //         // .catch(error => {
+    //         //     console.log("Service worker registration failed", error);
+    //         // });
+    // }
 });
-/* ------- END SERVICE-WORKER ------- */
+
+        /* --------------------------------------- */
+        /* ---------- END SERVICE-WORKER --------- */
+        /* --------------------------------------- */
+
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);

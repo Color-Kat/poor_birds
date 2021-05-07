@@ -1,5 +1,11 @@
 <template>
     <div id="account">
+        <!--    NOTIFICATION ERROR    -->
+        <b-modal id="modal-notif-error" title="Произошла ошибка" hide-footer header-bg-variant="danger"
+                 header-text-variant="light">
+            <p class="my-2">Не удалось включить уведомления</p>
+        </b-modal>
+        <!--    NOTIFICATION ERROR    -->
 
         <!--    NOT LOGGED IN    -->
         <b-card v-if="!user" class="not-logged-in mt-5">
@@ -38,9 +44,11 @@ import {mapState, mapGetters} from "vuex";
 import AccountField from '../../components/auth/account/AccountField';
 import Balance from '../../components/Balance';
 import UserAvatar from "../../components/auth/account/UserAvatar";
+import {initPush} from "../../enable-push";
 
 export default {
     name      : "Account",
+    data      : () => ({}),
     components: {
         AccountField,
         Balance,
@@ -51,25 +59,27 @@ export default {
         ...mapGetters(['user', 'getUserData'])
     },
     methods   : {
-        enableNotifications() {
-            Notification.requestPermission().then((result) => {
-                if (result === 'granted') {
-                    console.log(234);
-                    this.sendNotification();
-                }
-            });
+        async enableNotifications() {
+           const res = await initPush();
+
+            // Notification.requestPermission().then((result) => {
+            //     if (result === 'granted') {
+            //         console.log(234);
+            //         this.sendNotification();
+            //     }
+            // });
         },
-        sendNotification() {
-            const notifTitle = 'Бедные птички покакали';
-            const notifBody  = `By ColorKat`;
-            const notifImg   = `https://itproger.com/img/notify.png`;
-            const options    = {
-                body: notifBody,
-                icon: notifImg,
-            };
-            new Notification(notifTitle, options);
-            // setTimeout(randomNotification, 30000);
-        }
+        // sendNotification() {
+        //     const notifTitle = 'Бедные птички покакали';
+        //     const notifBody  = `By ColorKat`;
+        //     const notifImg   = `https://itproger.com/img/notify.png`;
+        //     const options    = {
+        //         body: notifBody,
+        //         icon: notifImg,
+        //     };
+        //     new Notification(notifTitle, options);
+        //     // setTimeout(randomNotification, 30000);
+        // }
     },
     mounted() {
         // console.log(this.user)

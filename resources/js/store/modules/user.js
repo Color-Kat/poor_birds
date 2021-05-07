@@ -22,6 +22,11 @@ export default {
                 return state.auth;
             } else return false;
         },
+        getToken(state) {
+            if (state.auth) {
+                return state.access_token;
+            } else return false;
+        },
         getBalance(state) {
             if (state.user) {
                 return (+state.user.money).toFixed(2);
