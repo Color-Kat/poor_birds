@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 //store a push subscriber.
 Route::post('/push','PushController@store');
 
+//make a push notification.
+Route::get('/push','PushController@push');
+
 Route::any('/{any}', function () {
     return view('index');
 })->where('any', '.*');

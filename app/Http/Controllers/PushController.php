@@ -2,8 +2,9 @@
 
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use App\Notifications\PushDemo;
+use App\Notifications\Push;
 use App\User;
 use Auth;
 use Notification;
@@ -11,7 +12,8 @@ use Notification;
 class PushController extends Controller
 {
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -21,20 +23,32 @@ class PushController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request){
-        $this->validate($request,[
+    public function store(Request $request)
+    {
+        $this->validate($request, [
             'endpoint'    => 'required',
             'keys.auth'   => 'required',
             'keys.p256dh' => 'required'
         ]);
         $endpoint = $request->endpoint;
-        $token = $request->keys['auth'];
-        $key = $request->keys['p256dh'];
+        $token    = $request->keys['auth'];
+        $key      = $request->keys['p256dh'];
 //        $user = Auth::user();
         $user = auth()->user();
         $user->updatePushSubscription($endpoint, $key, $token);
 
-        return response()->json(['success' => true],200);
+        return response()->json(['success' => true], 200);
     }
 
+    /**
+     * Send Push Notifications to all users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function push()
+    {
+        dump(123);
+        Notification::send(User::all(), new Push);
+//        return redirect()->back();
+    }
 }
