@@ -9,11 +9,9 @@ use NotificationChannels\WebPush\WebPushChannel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class PushEggs extends Notification
+class PushFines extends Notification
 {
-
     use Queueable;
-
 
     public function via($notifiable)
     {
@@ -25,8 +23,8 @@ class PushEggs extends Notification
         return (new WebPushMessage)
             ->title('Poor birds')
             ->icon('/logo.png')
-            ->body('Ваши птички снесли яички')
-            ->action('Собрать', 'open');
+            ->body('У вас скопилось много штрафов, нужно их погасить')
+            ->action('Открыть', 'open');
     }
 
 }

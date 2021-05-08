@@ -2,7 +2,6 @@ const staticCacheName = 'static-cache-v0';
 const dynamicCacheName = 'dynamic-cache-v0';
 
 const staticAssets = [
-    '/',
     '/favicons/favicon-16x16.png',
     '/favicons/favicon.ico',
     '/assets/icons/icon-72x72.png',
@@ -83,3 +82,16 @@ self.addEventListener('push', function (e) {
         }));
     }
 });
+
+self.addEventListener('notificationclick', function(event) {
+    let messageId = event.notification.data;
+
+    event.notification.close();
+
+    if (event.action == 'open') {
+        clients.openWindow("/account/eggs");
+    }
+    else {
+        clients.openWindow("/account/eggs");
+    }
+}, false);

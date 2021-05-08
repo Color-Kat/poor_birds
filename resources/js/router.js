@@ -114,7 +114,6 @@ const routes = [
         component: AdminArea,
         async beforeEnter(to, from, next) {
             let auth = await store.dispatch('checkAuth');
-            console.log(store.getters.getUserRole)
             if (!auth) next({name: 'index'});
             else if (store.getters.getUserRole === 1) next();
             else next({name: 'index'});

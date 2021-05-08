@@ -77,7 +77,6 @@
         </b-navbar>
         <!--    NAVBAR 2    -->
 
-
     </header>
 </template>
 

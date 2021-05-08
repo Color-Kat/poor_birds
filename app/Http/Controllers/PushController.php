@@ -46,8 +46,9 @@ class PushController extends Controller
      */
     public function push()
     {
-//        dump(123);
-        Notification::send(User::all(), new PushEggs);
+//        dump(User::all());
+
+//        Notification::send(12, new PushEggs);
 //        return redirect()->back();
     }
 }

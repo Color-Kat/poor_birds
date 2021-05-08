@@ -4,6 +4,9 @@ namespace App\Console\Commands;
 
 use App\models\Egg;
 use App\Notifications\PushEggs;
+use App\Notifications\PushFines;
+use App\Notifications\PushFinesBlock;
+use App\Notifications\PushLitter;
 use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -95,7 +98,33 @@ class CollectEggs extends Command
                 END
         ");
 
-        Notification::send(User::all(), new PushEggs);
+        // iterate all users to send a notification to whoever needs it
+        foreach (User::all() as $user) {
+            $fines = 0; // all fines
+            $maxLitter = 0; // max litter of one bird
+            $eggs = $user->my_eggs;
+
+            // count fines and max litter
+            foreach ($eggs as $eggRow) {
+                // count fines
+                $fines += $eggRow->fine;
+                // get the maximum litter to find out how much fertility decreased
+                if ($eggRow->litter > $maxLitter) $maxLitter = $eggRow->litter;
+            }
+
+            // fines notifications
+            if($fines >= 200) {
+                Notification::send($user, new PushFinesBlock);
+            } elseif ($fines >= 150) {
+                Notification::send($user, new PushFines);
+            }
+
+            // litter notifications
+            if ($maxLitter >= 900) {
+                Notification::send($user, new PushLitter);
+            }
+        }
+
 
         Log::info('litter');
 
