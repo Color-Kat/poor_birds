@@ -90,7 +90,7 @@ class CollectEggs extends Command
                 litter = eggs.litter + b_s_u.count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100),
                 collected = 0,
                 cared = 0, -- remove care bonus
-                fine = eggs.fine + CASE
+                fine = eggs.fine + b_s_u.count * CASE
                     WHEN certs.grade IS NULL THEN 5 -- no certificate. Fine is 5
                     WHEN certs.grade = 0 THEN 3 -- grade 0 - fake certificate. Fine is 3
                     WHEN certs.grade = 1 THEN 1 -- grade 1 - certificate with a typo. Fine is 1
