@@ -68,9 +68,9 @@
 <!--                src="https://placekitten.com/g/30/30"-->
                 <img
                     class="d-inline-block align-top"
-                    src="/storage/logo.png"
+                    src="/logo.png"
                     height="40px"
-                    alt="logo poorbirds"
+                    alt="Бедные птички"
                 >
                 <span>Бедные птички</span>
             </b-navbar-brand>

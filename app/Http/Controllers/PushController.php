@@ -4,7 +4,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Notifications\Push;
+use App\Notifications\PushEggs;
 use App\User;
 use Auth;
 use Notification;
@@ -33,7 +33,6 @@ class PushController extends Controller
         $endpoint = $request->endpoint;
         $token    = $request->keys['auth'];
         $key      = $request->keys['p256dh'];
-//        $user = Auth::user();
         $user = auth()->user();
         $user->updatePushSubscription($endpoint, $key, $token);
 
@@ -47,8 +46,8 @@ class PushController extends Controller
      */
     public function push()
     {
-        dump(123);
-        Notification::send(User::all(), new Push);
+//        dump(123);
+        Notification::send(User::all(), new PushEggs);
 //        return redirect()->back();
     }
 }

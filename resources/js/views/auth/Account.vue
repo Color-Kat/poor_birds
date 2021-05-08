@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import AccountField from '../../components/auth/account/AccountField';
 import Balance from '../../components/Balance';
 import UserAvatar from "../../components/auth/account/UserAvatar";
@@ -56,11 +56,13 @@ export default {
         UserAvatar
     },
     computed  : {
-        ...mapGetters(['user', 'getUserData'])
+        ...mapGetters(['user', 'getUserData', 'getToken'])
     },
     methods   : {
         async enableNotifications() {
-           const res = await initPush();
+           // const res = await initPush();
+
+            axios.get('/push',{headers: {"Authorization": `Bearer ${this.getToken}`}});
 
             // Notification.requestPermission().then((result) => {
             //     if (result === 'granted') {

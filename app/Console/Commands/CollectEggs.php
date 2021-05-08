@@ -3,10 +3,12 @@
 namespace App\Console\Commands;
 
 use App\models\Egg;
+use App\Notifications\PushEggs;
 use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Notification;
 
 class CollectEggs extends Command
 {
@@ -92,6 +94,8 @@ class CollectEggs extends Command
                     ELSE 0
                 END
         ");
+
+        Notification::send(User::all(), new PushEggs);
 
         Log::info('litter');
 
