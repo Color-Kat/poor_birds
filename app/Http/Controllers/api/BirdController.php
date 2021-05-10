@@ -6,9 +6,12 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BirdRequest;
 use App\models\Bird;
+use App\Notifications\PushNewBird;
+use App\Notifications\PushUpdateBird;
+use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Notification;
 
 class BirdController extends Controller
 {
@@ -39,7 +42,6 @@ class BirdController extends Controller
             $params['image'] = $path;
         }
 
-
         $bird = Bird::create($params);
 
         // set relationships bird -> sellers
@@ -47,6 +49,9 @@ class BirdController extends Controller
         if ($sellers) {
             $bird->sellers()->attach(explode(',', $sellers));
         }
+
+        // send notification: new bird added
+        Notification::send(User::all(), new PushNewBird);
 
         return $bird;
     }
@@ -98,12 +103,12 @@ class BirdController extends Controller
         // set relationships bird -> sellers
         $sellers = $request->input('sellers');
         if ($sellers) {
-//            $bird->sellers()->detach();
-//            $bird->sellers()->attach(explode(',', $sellers));
-
             // update sellers during pivot table
             $bird->sellers()->sync(explode(',', $sellers));
         }
+
+        // send notification: some bird updated
+        Notification::send(User::all(), new PushUpdateBird());
 
         return $bird->update($params); // U{^DAT#
     }

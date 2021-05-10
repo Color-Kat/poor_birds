@@ -4,7 +4,10 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\models\Certificate;
+use App\Notifications\PushNewCertificate;
+use App\User;
 use Illuminate\Http\Request;
+use Notification;
 
 class CertificateController extends Controller
 {
@@ -26,7 +29,8 @@ class CertificateController extends Controller
      */
     public function store(Request $request)
     {
-
+        // send notification: new bird added
+        Notification::send(User::all(), new PushNewCertificate);
         return Certificate::create($request->all());
     }
 
@@ -42,13 +46,13 @@ class CertificateController extends Controller
 
         if ($certificate == null) {
             return response()->json([
-                "status" => false,
+                "status"   => false,
                 "messages" => "Certificate not found"
             ])->setStatusCode(404);
         }
 
         return response()->json([
-            "status" => true,
+            "status"   => true,
             "messages" => $certificate
         ]);
     }

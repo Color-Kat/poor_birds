@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BirdRequest;
 use App\models\Bird;
 use App\models\Seller;
+use App\Notifications\PushNewSeller;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Notification;
 
 class SellerController extends Controller
 {
@@ -37,6 +39,9 @@ class SellerController extends Controller
             $path = $request->file('image')->store('sellers');
             $params['image'] = $path;
         }
+
+        // send notification: new bird added
+        Notification::send(User::all(), new PushNewSeller);
 
         return Seller::create($params);
     }

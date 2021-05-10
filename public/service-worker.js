@@ -59,7 +59,7 @@ self.addEventListener('fetch', event => {
         } catch (err) {
             // If this was a navigation, show the offline page:
             if (request.mode === 'navigate') {
-                return caches.match('/offline.html');
+                return caches.match('/ offline.html');
             }
 
             // Otherwise throw
@@ -119,8 +119,14 @@ self.addEventListener('notificationclick', function(event) {
 
     if (event.action == 'open') {
         clients.openWindow("/account/eggs");
+    } else if (event.action == 'birds') {
+        clients.openWindow("/birds");
+    } else if (event.action == 'sellers') {
+        clients.openWindow("/sellers");
+    } else if (event.action == 'certificates') {
+        clients.openWindow("/certificates");
     }
     else {
-        clients.openWindow("/account/eggs");
+        clients.openWindow("/");
     }
 }, false);
