@@ -28,8 +28,8 @@
             <b-form-group id="input-group-3" label="Придумайте пароль:" label-for="input-2">
                 <b-form-input
                     id="input-3"
+                    type="password"
                     v-model="form.password"
-                    placeholder="Например - CoCo1773"
                     required
                 ></b-form-input>
             </b-form-group>
@@ -37,8 +37,8 @@
             <b-form-group id="input-group-4" label="Повторите пароль:" label-for="input-2">
                 <b-form-input
                     id="input-4"
+                    type="password"
                     v-model="form.password_confirmation"
-                    placeholder=""
                     required
                 ></b-form-input>
             </b-form-group>

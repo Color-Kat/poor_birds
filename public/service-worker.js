@@ -13,6 +13,7 @@ const staticAssets = [
     '/assets/icons/icon-512x512.png',
     '/manifest.json',
     '/js/app.js',
+    '/offline.html'
 ];
 
 self.addEventListener('install', async event => {
@@ -35,8 +36,36 @@ self.addEventListener('activate', async event => {
 self.addEventListener('fetch', event => {
     // console.log(`Trying to fetch ${event.request.url}`);
     // Не кэшируем файлы для авто обновления страницы
-    if (event.request.url.indexOf('/api') !== -1) return;
-    event.respondWith(checkCache(event.request));
+    // if (event.request.url.indexOf('/api') !== -1) return;
+    //
+    // event.respondWith(checkCache(event.request));
+
+    const { request } = event;
+
+    // Always bypass for range requests, due to browser bugs
+    if (request.headers.has('range')) return;
+
+    event.respondWith(async function() {
+        // Try to get from the cache:
+        const cachedResponse = await checkCache(request);
+        if (cachedResponse) return cachedResponse;
+
+        try {
+            const response = await event.preloadResponse;
+            if (response) return response;
+
+            // Otherwise, get from the network
+            return await fetch(request);
+        } catch (err) {
+            // If this was a navigation, show the offline page:
+            if (request.mode === 'navigate') {
+                return caches.match('/offline.html');
+            }
+
+            // Otherwise throw
+            throw err;
+        }
+    }());
 });
 
 async function checkCache(req) {
@@ -58,7 +87,7 @@ async function checkOnline(req) {
         if (cachedRes) {
             return cachedRes;
         } else if (req.url.indexOf('.html') !== -1) {
-            return caches.match('./asset/offline.html');
+            return caches.match('/offline.html');
         } else {
             return caches.match('./images/no-image.jpg');
         }

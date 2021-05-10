@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Route;
 //})->where('any', '.*');
 
 // for url cron jobs
-//Route::get('/cron/collect_eggs', function () {
-//    Artisan::call('collect:eggs');
-//    return 'Вы собрали яйца';
-//});
+Route::get('/cron/collect_eggs', function () {
+    Artisan::call('collect:eggs');
+    return 'Вы собрали яйца';
+});
 
 //store a push subscriber.
 Route::post('/push','PushController@store');
