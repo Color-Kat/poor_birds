@@ -22,6 +22,8 @@
                 <!--    CONTENT    -->
             </div>
         </main>
+
+        <Footer/>
     </div>
 </template>
 
@@ -31,10 +33,12 @@ import SideBar from './components/SideBar';
 import Loader from './components/Loader';
 import {mapActions, mapGetters} from "vuex";
 import BlackOut from "./components/BlackOut";
+import Footer from "./components/Footer";
 
 export default {
     name      : "App",
     components: {
+        Footer,
         Header,
         SideBar,
         BlackOut,
@@ -54,6 +58,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+main{
+    min-height: 550px; // min height for footer
+}
 #main-container {
     display: flex;
     align-items: flex-start;
