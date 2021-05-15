@@ -60,7 +60,6 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
             <hr>
 
             <h2>Ваши птицы: </h2>
-
             <b-card
                 v-for="(my_bird, index) of get_my_birds"
                 :key="my_bird.id"
@@ -72,7 +71,10 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
                         <img :src="`/storage/${my_bird.image}`" alt="" style="max-width: 90px; max-height: 90px;">
                         <div class="w-100">
                             <span><b>{{ my_bird.name }} x{{ my_bird.count }}</b></span><br>
-                            <span class="text-center pl-2 d-flex">{{ my_bird.description }}</span>
+                            <span class="text-center pl-2 d-flex">
+                                {{ my_bird.description.slice(0, 100) }}
+                                {{ my_bird.description.length > 100 ? '...' : '' }}
+                            </span>
                         </div>
                     </div>
                     <hr>

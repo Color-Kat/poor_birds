@@ -27,7 +27,8 @@
                         :key="bird.id"
                     >
                         <b-card-text>
-                            {{ bird.description }}
+                            {{ bird.description.slice(0, 100) }}
+                            {{ bird.description.length > 100 ? '...' : '' }}
                             <hr>
                             <b-badge variant="warning">
                                 Плодоносность: {{bird.fertility}} яиц/час

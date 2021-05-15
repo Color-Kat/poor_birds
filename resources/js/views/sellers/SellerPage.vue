@@ -92,7 +92,10 @@
                     :key="bird.id"
                 >
                     <b-card-text>
-                        <span class="description">{{ bird.description }}</span>
+                        <span class="description">
+                            {{ bird.description.slice(0, 100) }}
+                            {{ bird.description.length > 100 ? '...' : '' }}
+                        </span>
                         <hr>
 
                         <h6 class="d-inline" style="width: 10px !important; margin: 0 !important;">
