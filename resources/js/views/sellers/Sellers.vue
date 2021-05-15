@@ -1,5 +1,10 @@
 <template>
     <b-card>
+        <!--      NO MONEY      -->
+        <b-modal id="modal-no-money-seller" header-bg-variant="danger" hide-footer>
+            <p class="my-2">К сожалению у вас нет денег на открытие продавца</p>
+        </b-modal>
+
         <Loader v-if="loading" />
 
         <div v-else>
@@ -88,6 +93,7 @@ export default {
         async openThisSeller(sellerId) {
             if (await this.openSeller(sellerId))
                 this.getUserSellers.push({id: sellerId})
+            else this.$bvModal.show('modal-no-money-seller');
         }
     }
 }

@@ -1,27 +1,36 @@
 <template>
     <div>
-        <!--    NO MONEY MODAL    -->
-        <b-modal id="modal-no-money" header-bg-variant="danger">
-            <p class="my-2">К сожалению у вас нет денег на птицу "{{ purchasedBirdName }}"</p>
+        <!-- --- BIRDS MODALS ---    -->
+            <!--    NO MONEY MODAL    -->
+            <b-modal id="modal-no-money" header-bg-variant="danger">
+                <p class="my-2">К сожалению у вас нет денег на птицу "{{ purchasedBirdName }}"</p>
 
-            <template #modal-footer="{ ok }">
-                <b-button size="sm" @click="ok()">
-                    Oк(
-                </b-button>
-            </template>
-        </b-modal>
+                <template #modal-footer="{ ok }">
+                    <b-button size="sm" @click="ok()">
+                        Oк(
+                    </b-button>
+                </template>
+            </b-modal>
 
-        <!--    YOU BUY BIRD MODAL    -->
-        <b-modal id="modal-bird-buy" title="Поздравляем! Вы купили птицу" hide-header>
-            <p class="my-2">Поздравляем! Вы купили птицу "{{ purchasedBirdName }}". <b-link :to="{name: 'my_birds'}">Мои
-                птицы</b-link></p>
+            <!--    YOU BUY BIRD MODAL    -->
+            <b-modal id="modal-bird-buy" title="Поздравляем! Вы купили птицу" hide-header>
+                <p class="my-2">Поздравляем! Вы купили птицу "{{ purchasedBirdName }}". <b-link :to="{name: 'my_birds'}">Мои
+                    птицы</b-link></p>
 
-            <template #modal-footer="{ ok }">
-                <b-button size="sm" variant="success" @click="ok()">
-                    Oк
-                </b-button>
-            </template>
-        </b-modal>
+                <template #modal-footer="{ ok }">
+                    <b-button size="sm" variant="success" @click="ok()">
+                        Oк
+                    </b-button>
+                </template>
+            </b-modal>
+        <!-- --- BIRDS MODALS ---    -->
+
+        <!-- --- SELLERS MODALS ---    -->
+            <!--      NO MONEY      -->
+            <b-modal id="modal-no-money-seller" header-bg-variant="danger" hide-footer>
+                <p class="my-2">К сожалению у вас нет денег на открытие продавца</p>
+            </b-modal>
+        <!-- --- SELLERS MODALS ---    -->
 
         <Loader v-if="loading" />
 
@@ -160,6 +169,7 @@ export default {
         },
         async openThisSeller(sellerId) {
             if (await this.openSeller(sellerId)) this.sellerAvailable = true;
+            else this.$bvModal.show('modal-no-money-seller');
         }
     },
     async mounted() {

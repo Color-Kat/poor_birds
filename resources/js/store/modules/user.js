@@ -367,10 +367,10 @@ export default {
             )
                 .then(response => {
                     console.log(response)
-                    if (response.status == 200) {
+                    if (response.status == 200 && response.data) {
                         commit('changeBalance', response.data);
                         return true;
-                    }
+                    } else return false;
                 })
                 .catch((error) => {
                     console.log(error, error.response);
