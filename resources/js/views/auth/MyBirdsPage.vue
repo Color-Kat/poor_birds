@@ -118,7 +118,11 @@ ${selectedBird.price/2}&#8381;? При продаже удалятся все я
                                 {{ my_bird.egg_price }}&#8381;
                             </b-badge>
                             <b-badge class="m-1 d-flex align-items-center" variant="dark">Помет: {{ my_bird.litter }}
-                                ({{ my_bird.litter * my_bird.count }}) ед/час
+                                ({{ my_bird.litter * my_bird.count }})
+                                ({{
+                                    my_bird.count > 1 ? `(${my_bird.litter * my_bird.count})` : ''
+                                }})
+                                ед/час
                             </b-badge>
                             <b-badge class="m-1 d-flex align-items-center" variant="danger">Спрос: {{ my_bird.demand }}
                                 яиц/час
