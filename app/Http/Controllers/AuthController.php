@@ -327,7 +327,7 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            "money" => $balance,
+            "money" => auth()->user()->money,
             "fines" => $fines
         ]);
     }

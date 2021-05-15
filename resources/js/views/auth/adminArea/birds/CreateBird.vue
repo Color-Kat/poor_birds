@@ -45,6 +45,25 @@
                 <p class="mt-2">Selected file: <b>{{ form.image ? form.image.name : '' }}</b></p>
             </b-form-group>
 
+            <!--    egg price    -->
+            <b-form-group
+                id="input-egg-price"
+                :label="`Цена яйца: `"
+                label-for="egg-price"
+            >
+                <b-form-input id="egg-price" v-model="form.egg_price" type="number" step="0.01" min="0"></b-form-input>
+            </b-form-group>
+
+            <!--    litter (помёт)    -->
+            <b-form-group
+                id="input-litter"
+                :label="`Помет:`"
+                label-for="litter"
+                description="Сколько единиц помета в час производит птица"
+            >
+                <b-form-input id="litter" v-model="form.litter" type="number" min="0" max="10000000"></b-form-input>
+            </b-form-group>
+
             <!--    DEMAND (спрос)    -->
             <b-form-group
                 id="input-demand"
@@ -78,16 +97,6 @@
                 <b-form-input id="care" v-model="form.care" type="number" min="-100" max="100"></b-form-input>
             </b-form-group>
 
-            <!--    litter (помёт)    -->
-            <b-form-group
-                id="input-litter"
-                :label="`Помет:`"
-                label-for="litter"
-                description="Сколько единиц помета в час производит птица"
-            >
-                <b-form-input id="litter" v-model="form.litter" type="number" min="0" max="10000000"></b-form-input>
-            </b-form-group>
-
             <b-form-group
                 id="input-sellers"
                 :label="`У каких продавцов продается птица:`"
@@ -104,15 +113,6 @@
                 >
                     {{ seller.name }}
                 </b-form-checkbox>
-            </b-form-group>
-
-            <!--    egg price    -->
-            <b-form-group
-                id="input-egg-price"
-                :label="`Цена яйца: `"
-                label-for="egg-price"
-            >
-                <b-form-input id="egg-price" v-model="form.egg_price" type="number" step="0.01" min="0"></b-form-input>
             </b-form-group>
 
             <!--    price    -->

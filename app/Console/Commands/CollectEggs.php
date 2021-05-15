@@ -120,7 +120,7 @@ class CollectEggs extends Command
             }
 
             // litter notifications
-            if ($maxLitter >= 900) {
+            if ($maxLitter >= 999) {
                 Notification::send($user, new PushLitter);
             }
         }

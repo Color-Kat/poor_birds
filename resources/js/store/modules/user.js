@@ -458,7 +458,8 @@ export default {
                 .then(response => {
                     console.log(response)
                     if (response.data) {
-                        commit('changeBalance', response.data.money); // update balance
+                        console.log(response.data.money)
+                        commit('changeBalance', +response.data.money); // update balance
                         return response.data.fines;
                     }
                     return false;
@@ -507,7 +508,7 @@ export default {
             state.user_birds = birds;
         },
         changeBalance(state, sum) {
-            state.user.money = sum
+            state.user.money = sum;
         },
         reduceBird(state, id) {
             let birdIndex = state.user_birds.findIndex(item => {
