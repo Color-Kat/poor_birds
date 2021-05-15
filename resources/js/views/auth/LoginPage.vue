@@ -45,7 +45,7 @@ export default {
             this.currentForm = this.currentForm === 'login' ? 'registration' : 'login';
         },
         onMessage(message) {
-            if (message.success) {
+            if (message?.success) {
                 this.success = true;
                 this.error   = false;
 

@@ -36,7 +36,7 @@ self.addEventListener('activate', async event => {
 self.addEventListener('fetch', event => {
     // console.log(`Trying to fetch ${event.request.url}`);
     // Не кэшируем файлы для авто обновления страницы
-    // if (event.request.url.indexOf('/api') !== -1) return;
+    if (event.request.url.indexOf('/api') !== -1) return;
     //
     // event.respondWith(checkCache(event.request));
 
