@@ -51,7 +51,6 @@ export default {
                 {headers: {'Content-Type': 'multipart/form-data'}}
             )
                 .then(response => {
-                    console.log(response)
                     if (response.status === 201) {
                         commit('addBird', response.data);
 

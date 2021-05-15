@@ -45,16 +45,6 @@
                 <p class="mt-2">Selected file: <b>{{ form.image ? form.image.name : '' }}</b></p>
             </b-form-group>
 
-            <!--            &lt;!&ndash;    DEMAND (спрос)    &ndash;&gt;-->
-            <!--            <b-form-group-->
-            <!--                id="input-demand"-->
-            <!--                :label="`Спрос на яйца этой птицы:`"-->
-            <!--                label-for="demand"-->
-            <!--                description="Сколько яиц в среднем можно продать за час"-->
-            <!--            >-->
-            <!--                <b-form-input id="demand" v-model="form.demand" type="number" min="0" max="100000"></b-form-input>-->
-            <!--            </b-form-group>-->
-
             <!--    discount (помёт)    -->
             <b-form-group
                 id="input-discount"
@@ -89,14 +79,14 @@
             </b-form-group>
 
             <!--    bird_count    -->
-            <b-form-group
-                id="input-birds_count"
-                :label="`Кол-во птиц в контракте:`"
-                label-for="birds_count"
-                description="Сколько нужно иметь птиц, чтобы получить доступ к продавцу"
-            >
-                <b-form-input id="birds_count" v-model="form.birds_count" type="number" min="0"></b-form-input>
-            </b-form-group>
+<!--            <b-form-group-->
+<!--                id="input-birds_count"-->
+<!--                :label="`Кол-во птиц в контракте:`"-->
+<!--                label-for="birds_count"-->
+<!--                description="Сколько нужно иметь птиц, чтобы получить доступ к продавцу"-->
+<!--            >-->
+<!--                <b-form-input id="birds_count" v-model="form.birds_count" type="number" min="0"></b-form-input>-->
+<!--            </b-form-group>-->
 
             <b-button type="submit" variant="primary">Огранизовать компанию</b-button>
             <!--            <b-button type="reset" variant="danger">Сбросить</b-button>-->

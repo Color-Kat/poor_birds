@@ -10,38 +10,40 @@ export default {
         getCertificate(state) {
             const certificate = state.currentCertificate;
             let grade         = '';
-            if (certificate.grade === 0) {
+            if (certificate.grade == 0) {
                 grade = 'поддельный'
             }
-            if (certificate.grade === 1) {
+            if (certificate.grade == 1) {
                 grade = 'с опечаткой'
             }
-            if (certificate.grade === 2) {
+            if (certificate.grade == 2) {
                 grade = 'палёный'
             }
-            if (certificate.grade === 3) {
+            if (certificate.grade == 3) {
                 grade = 'плохой'
             }
-            if (certificate.grade === 4) {
+            if (certificate.grade == 4) {
                 grade = 'обычный'
             }
-            if (certificate.grade === 5) {
+            if (certificate.grade == 5) {
                 grade = 'путный'
             }
-            if (certificate.grade === 6) {
+            if (certificate.grade == 6) {
                 grade = 'хороший'
             }
-            if (certificate.grade === 7) {
+            if (certificate.grade == 7) {
                 grade = 'бронзовый'
             }
-            if (certificate.grade === 8) {
+            if (certificate.grade == 8) {
                 grade = 'серебряный'
             }
-            if (certificate.grade === 9) {
+            if (certificate.grade == 9) {
                 grade = 'золотой'
             }
-            if (certificate.grade === 10) {
+            if (certificate.grade == 10) {
                 grade = 'легендарный'
+            } else {
+                grade = 'неизвестный';
             }
 
             if (certificate) {
@@ -50,11 +52,15 @@ export default {
                     name           : ['Название', certificate.name],
                     grade          : grade,
                     grade_id       : certificate.grade,
-                    fertility_bonus: ['Бонус к плодоносности', `${certificate.fertility_bonus}%`],
-                    care_bonus     : ['Бонус к заботе', `${certificate.care_bonus}%`],
-                    demand_bonus   : ['Бонус на спрос', `${certificate.demand_bonus}%`],
-                    litter_bonus   : ['Бонус на кол-во помета', `${certificate.litter_bonus}%`],
-                    price_bonus    : ['Бонус к цене яиц', `${certificate.price_bonus}%`],
+                    fertility_bonus: ['Бонус к плодоносности', `${certificate.fertility_bonus}%`, 'Насколько % увеличится характеристика "плодоносность" у птицы'],
+                    care_bonus     : ['Бонус к заботе', `${certificate.care_bonus}%`, 'Насколько % увеличится' +
+                    ' характеристика "Бонус за заботу" у птицы'],
+                    demand_bonus   : ['Бонус на спрос', `${certificate.demand_bonus}%`, 'Насколько % увеличится' +
+                    ' характеристика "спрос" у птицы'],
+                    litter_bonus   : ['Бонус на кол-во помета', `${certificate.litter_bonus}%`, 'Насколько % увеличится' +
+                    ' характеристика "количество помёта" у птицы'],
+                    price_bonus    : ['Бонус к цене яиц', `${certificate.price_bonus}%`, 'Насколько % увеличится' +
+                    ' характеристика "цена яйца" у птицы'],
                     price          : ['Цена', `${certificate.price}руб.`],
                 };
             } else return false
@@ -98,10 +104,13 @@ export default {
             // formData.append('_method', 'PATCH'); // set PATCH method
             return axios.post(
                 `api/certificates/${form.id}`,
-                {...form, _method: 'PATCH'}
+                {
+                    ...form,
+                    _method: 'PATCH'
+                }
             )
                 .then(response => {
-                    console.log(response)
+                    // console.log(response)
                     dispatch('fetchCertificates');
                     return response;
                 })
