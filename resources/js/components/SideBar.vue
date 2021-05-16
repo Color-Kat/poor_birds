@@ -29,7 +29,8 @@
                 </div>
 
                 <div style="font-size: 1.2em">
-<!--                    <b-nav-item :to="{name: 'birds'}" active-class="active"><b>🐔</b>Шахта с помётом</b-nav-item>-->
+                    <b-nav-item  active-class="active"><b>📜</b>Контракты (в разработке)</b-nav-item>
+                    <b-nav-item  active-class="active"><b>⛏</b>Шахта (в разработке)</b-nav-item>
                 </div>
 
             </b-navbar-nav>

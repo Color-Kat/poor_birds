@@ -12,7 +12,8 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .version(); // add hash to file uri
 
 if(process.env.NODE_ENV.trim() !== 'production'){
     mix.sourceMaps(true, 'source-map');

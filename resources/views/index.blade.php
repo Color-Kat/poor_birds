@@ -30,7 +30,9 @@
 
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+{{--    <link href="/css/app.css" rel="stylesheet">--}}
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
+
     <style>
         html, body {
             background-color: #fff;
@@ -48,6 +50,7 @@
     <app></app>
 </div>
 
-<script src="/js/app.js"></script>
+{{--<script src="/js/app.js"></script>--}}
+<script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
