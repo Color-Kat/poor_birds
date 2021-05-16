@@ -126,28 +126,41 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
 
                         <!--     characteristics      -->
                         <div class="d-flex justify-content-end flex-wrap">
-                            <b-badge class="m-1 d-flex align-items-center" variant="warning">Плодоносность:
-                                <!--                count fertility with count and cares                -->
+                            <!--             FERTILITY               -->
+                            <b-badge class="m-1 d-flex align-items-center" variant="warning">
+                                Плодоносность:
+
+                                <!--   count fertility with count and cares   -->
                                 {{ (my_bird.fertility * (my_bird.cared ? (1 + my_bird.care / 100) : 1)).toFixed(1) }}
 
+                                <!-- count fertility of several birds-->
                                 {{
                                     my_bird.count > 1 ? `(${(my_bird.fertility *
                                         my_bird.count * (my_bird.cared ? (1 + my_bird.care / 100) : 1)).toFixed(1)})` : ''
                                 }}
                             </b-badge>
-                            <b-badge class="m-1 d-flex align-items-center" variant="primary">Цена яйца:
+
+                            <!--             EGG PRICE               -->
+                            <b-badge class="m-1 d-flex align-items-center" variant="primary">
+                                Цена яйца:
                                 {{ my_bird.egg_price }}&#8381;
                             </b-badge>
-                            <b-badge class="m-1 d-flex align-items-center" variant="dark">Помет: {{ my_bird.litter }}
-                                ({{ my_bird.litter * my_bird.count }})
-                                ({{
+
+                            <!--             LITTER               -->
+                            <b-badge class="m-1 d-flex align-items-center" variant="dark">
+                                Помет: {{ my_bird.litter }}
+                                {{
                                     my_bird.count > 1 ? `(${my_bird.litter * my_bird.count})` : ''
-                                }})
+                                }}
                                 ед/час
                             </b-badge>
+
+                            <!--             DEMAND               -->
                             <b-badge class="m-1 d-flex align-items-center" variant="danger">Спрос: {{ my_bird.demand }}
                                 яиц/час
                             </b-badge>
+
+                            <!--             CARE               -->
                             <b-badge class="m-1 d-flex align-items-center" variant="success">Бонус за заботу:
                                 {{ my_bird.care }}%
                             </b-badge>

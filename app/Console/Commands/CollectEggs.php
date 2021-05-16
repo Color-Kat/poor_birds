@@ -108,6 +108,7 @@ class CollectEggs extends Command
             foreach ($eggs as $eggRow) {
                 // count fines
                 $fines += $eggRow->fine;
+
                 // get the maximum litter to find out how much fertility decreased
                 if ($eggRow->litter > $maxLitter) $maxLitter = $eggRow->litter;
             }
@@ -115,7 +116,7 @@ class CollectEggs extends Command
             // fines notifications
             if($fines >= 200) {
                 Notification::send($user, new PushFinesBlock);
-            } elseif ($fines >= 150) {
+            } else if ($fines >= 150) {
                 Notification::send($user, new PushFines);
             }
 

@@ -9,41 +9,40 @@ export default {
         },
         getCertificate(state) {
             const certificate = state.currentCertificate;
+            console.log(certificate.grade == 3)
             let grade         = '';
-            if (certificate.grade == 0) {
+            if (+certificate.grade === 0) {
                 grade = 'поддельный'
             }
-            if (certificate.grade == 1) {
+            if (+certificate.grade == 1) {
                 grade = 'с опечаткой'
             }
-            if (certificate.grade == 2) {
+            if (+certificate.grade == 2) {
                 grade = 'палёный'
             }
-            if (certificate.grade == 3) {
+            if (+certificate.grade == 3) {
                 grade = 'плохой'
             }
-            if (certificate.grade == 4) {
+            if (+certificate.grade == 4) {
                 grade = 'обычный'
             }
-            if (certificate.grade == 5) {
+            if (+certificate.grade == 5) {
                 grade = 'путный'
             }
-            if (certificate.grade == 6) {
+            if (+certificate.grade == 6) {
                 grade = 'хороший'
             }
-            if (certificate.grade == 7) {
+            if (+certificate.grade == 7) {
                 grade = 'бронзовый'
             }
-            if (certificate.grade == 8) {
+            if (+certificate.grade == 8) {
                 grade = 'серебряный'
             }
-            if (certificate.grade == 9) {
+            if (+certificate.grade == 9) {
                 grade = 'золотой'
             }
-            if (certificate.grade == 10) {
+            if (+certificate.grade == 10) {
                 grade = 'легендарный'
-            } else {
-                grade = 'неизвестный';
             }
 
             if (certificate) {

@@ -13,11 +13,11 @@ import 'nprogress/nprogress.css';
 
 
 /* ----- configure axios for server ----- */
-window.axios = axios;
-axios.defaults.baseURL = 'http://127.0.0.1:8000';
+// window.axios = axios;
+// axios.defaults.baseURL = 'http://127.0.0.1:8000';
 // window.axios = axios.create({ baseURL: 'https://poorbirds.rf.gd', timeout: 100000, });
 // window.axios = axios.create({ baseURL: 'https://s367343.smrtp.ru', timeout: 100000, });
-// window.axios = axios.create({ baseURL: 'https://poorbirds.tk', timeout: 100000, });
+window.axios = axios.create({ baseURL: 'https://poorbirds.tk', timeout: 100000, });
 /* ----- end configure ----- */
 
 /* ------- NPROGRESS -------- */
