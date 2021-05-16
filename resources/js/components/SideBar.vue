@@ -21,13 +21,15 @@
                     </b-nav-item>
                 </div>
 
-                <div style="font-size: 1.2em">
+                <div style="font-size: 1.2em" class="mb-3 border-bottom">
                     <b-nav-item :to="{name: 'birds'}" active-class="active"><b>🐔</b>Список птиц</b-nav-item>
-
                     <b-nav-item :to="{name: 'sellers'}" active-class="active"><b>🛒</b>Продавцы</b-nav-item>
-
                     <b-nav-item :to="{name: 'certificates'}" active-class="active"><b>📋</b>Сертификаты</b-nav-item>
                     <b-nav-item :to="{name: 'shovels'}" active-class="active"><b>🧹</b>Лопаты</b-nav-item>
+                </div>
+
+                <div style="font-size: 1.2em">
+<!--                    <b-nav-item :to="{name: 'birds'}" active-class="active"><b>🐔</b>Шахта с помётом</b-nav-item>-->
                 </div>
 
             </b-navbar-nav>

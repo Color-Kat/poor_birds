@@ -234,7 +234,11 @@ const routes = [
 
 const router =  new VueRouter({
     mode: 'history',
-    routes
+    routes,
+    // scroll to top on navigate
+    scrollBehavior(to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 });
 
 // close sidebar on navigate
