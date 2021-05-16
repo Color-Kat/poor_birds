@@ -17,17 +17,39 @@
         <!--    LOADER    -->
         <Loader v-if="loading" />
 
-        <div>
+        <div class="position-relative">
+            <!--      tooltip toggle       -->
+            <div class="m-1 position-absolute w-100 text-right">
+                <b-badge
+                    v-b-toggle.collapse-shovel
+                    pill size="sm"
+                    variant="dark"
+                    @click="()=>{
+                            // toggle tooltip
+                            localStorage.setItem(
+                                'tooltip-eggs',
+                                !( (localStorage.getItem('tooltip-eggs') || 'false') == 'true' )
+                            )
+                        }"
+                >?</b-badge>
+            </div>
+
             <h2 class="text-center">Склад ваших яиц ;)</h2>
-            <p>
-            Это склад яиц, которые несут ваши птицы.У каждой птицы - свой вид яиц.
-            А у каждого яйца - свои характеристики: <b>цена яйца</b> и <b>спрос</b>
-            Ваши птицы <b>каждый час</b> несут яйца, которые сразу отправляются сюда, на склад.
-            Тут их можно продать по цене, которая указана в характеристиках яйца.
-            Но нельзя продать любое количество яиц сразу. Их просто никто не купит,
-            поэтому каждый час можно продавать только такое количество яиц, которое указано в спросе
-            </p>
+
+            <!--         collapse tooltip (from localStorage)       -->
+            <b-collapse :visible="localStorage.getItem('tooltip-eggs') == 'true'" id="collapse-shovel">
+                <p>
+                    Это склад яиц, которые несут ваши птицы.У каждой птицы - свой вид яиц.
+                    А у каждого яйца - свои характеристики: <b>цена яйца</b> и <b>спрос</b>
+                    Ваши птицы <b>каждый час</b> несут яйца, которые сразу отправляются сюда, на склад.
+                    Тут их можно продать по цене, которая указана в характеристиках яйца.
+                    Но нельзя продать любое количество яиц сразу. Их просто никто не купит,
+                    поэтому каждый час можно продавать только такое количество яиц, которое указано в спросе
+                </p>
+            </b-collapse>
+
             <hr>
+
             <p>
                 <b-button size="sm" variant="success" :to="{name: 'birds'}">Купить птиц</b-button>
                 <b-button size="sm" variant="warning" :to="{name: 'certificates'}">Купить сертификат</b-button>
@@ -243,6 +265,7 @@ export default {
             }
             return fines;
         },
+        localStorage: ()=>localStorage // for toggle tooltip
     },
     async mounted() {
         await this.fetchUserEggs();

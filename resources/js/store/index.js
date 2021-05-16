@@ -33,6 +33,13 @@ export default new Vuex.Store({
             commit('toggleLoader', true);
             await dispatch('checkAuth'); // initial auth
             commit('toggleLoader', false);
+
+            // show all tooltips if it is empty
+            if (!localStorage.getItem('tooltip-eggs')) {
+                localStorage.setItem('tooltip-my-birds', 'true');
+                localStorage.setItem('tooltip-eggs', 'true');
+                localStorage.setItem('tooltip-shovel', 'true');
+            }
         },
         toggle_sideBar({commit, state}, payload = null) {
             if( payload !== null ) commit('toggle_active_sideBar', payload);

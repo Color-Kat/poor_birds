@@ -2,9 +2,28 @@
         <b-card>
             <Loader v-if="loading" />
 
-            <div v-else>
+            <div v-else class="position-relative">
+                <div class="m-1 position-absolute w-100 text-right">
+                    <b-badge
+                        v-b-toggle.collapse-shovel
+                        pill size="sm"
+                        variant="dark"
+                        @click="()=>{
+                            // toggle tooltip
+                            localStorage.setItem(
+                                'tooltip-shovel',
+                                !( (localStorage.getItem('tooltip-shovel') || 'false') == 'true' )
+                            )
+                        }"
+                    >?</b-badge>
+                </div>
+
                 <h2 class="text-center">Лопаты</h2>
-                <span>Здесь можно купить лопаты, чтобы убираться за вашими птицами</span>
+
+                <!--         collapse tooltip (from localStorage)       -->
+                <b-collapse :visible="localStorage.getItem('tooltip-shovel') == 'true'" id="collapse-shovel">
+                    <span>Здесь можно купить лопаты, чтобы убираться за вашими птицами. Или копать навоз в шахте</span>
+                </b-collapse>
 
                 <hr>
                 <h2>Товары:</h2>
@@ -18,6 +37,7 @@
                         :img-alt="shovel.name"
                         img-top
                         tag="article"
+                        :bg-variant="shovel.price ? 'light' : 'warning'"
 
                         @click="()=>redirect(shovel.id)"
                         :key="shovel.id"
@@ -27,7 +47,9 @@
                             <b-badge v-if="shovel.price ? true : false" variant="primary"
                                      class="d-flex align-items-center justify-content-center">Цена: {{shovel
                                 .price}}₽</b-badge>
-                            <b-badge v-else variant="primary">Купить за донат: {{shovel.donate_price}} Руб.</b-badge>
+                            <b-badge v-else variant="primary" class="d-flex align-items-center">Купить за донат:
+                                {{shovel.donate_price}} Руб
+                                .</b-badge>
                         </b-card-text>
 
                         <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
@@ -52,7 +74,8 @@ export default {
     computed: {
         ...mapGetters([
             'getShovels',
-        ])
+        ]),
+        localStorage: ()=>localStorage
     },
     methods : {
         redirect(id) {

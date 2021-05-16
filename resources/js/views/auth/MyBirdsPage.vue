@@ -32,28 +32,47 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
         </b-card>
 
         <b-card v-else>
-            <div>
+            <div class="position-relative">
+                <!--        Toggle tooltip button        -->
+                <div class="m-1 position-absolute w-100 text-right">
+                    <b-badge
+                        v-b-toggle.collapse-shovel
+                        pill size="sm"
+                        variant="dark"
+                        @click="()=>{
+                                    // toggle tooltip
+                                    localStorage.setItem(
+                                        'tooltip-my-birds',
+                                        !( (localStorage.getItem('tooltip-my-birds') || 'false') == 'true' )
+                                    )
+                                }"
+                    >?</b-badge>
+                </div>
+
                 <h5>Действия: </h5>
                 <span>
                     <b-button size="sm" variant="success" :to="{name: 'birds'}">Купить птиц</b-button>
                     <b-button size="sm" variant="primary" :to="{name: 'certificates'}">Купить сертификат</b-button>
 
-                    <p class="mt-2">
-                        Здесь живут ваши птицы. Вы можете:
-                        <ul>
-                            <li>
-                                погладить птицу, чтобы увеличить её плодоносность
-                                (На сколько процентов увеличится/уменьшится плодоносность
-                                показано в "Бонус за заботу n%")
-                            </li>
-                            <li>
-                                продать птицу за половину её стоимости
-                            </li>
-                            <li>
-                                посмотреть сертификат птицы, если он есть
-                            </li>
-                        </ul>
-                    </p>
+                    <!--         collapse tooltip (from localStorage)       -->
+                    <b-collapse :visible="localStorage.getItem('tooltip-my-birds') == 'true'" id="collapse-shovel">
+                        <p class="mt-2">
+                            Здесь живут ваши птицы. Вы можете:
+                            <ul>
+                                <li>
+                                    погладить птицу, чтобы увеличить её плодоносность
+                                    (На сколько процентов увеличится/уменьшится плодоносность
+                                    показано в "Бонус за заботу n%")
+                                </li>
+                                <li>
+                                    продать птицу за половину её стоимости
+                                </li>
+                                <li>
+                                    посмотреть сертификат птицы, если он есть
+                                </li>
+                            </ul>
+                        </p>
+                    </b-collapse>
                 </span>
             </div>
 
@@ -192,6 +211,7 @@ export default {
             });
         },
         Math        : () => Math,
+        localStorage: ()=>localStorage
     },
     data      : () => ({
         selectedBird: null,
