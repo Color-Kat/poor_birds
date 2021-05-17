@@ -9,7 +9,7 @@ export default {
         },
         getCertificate(state) {
             const certificate = state.currentCertificate;
-            console.log(certificate.grade == 3)
+
             let grade         = '';
             if (+certificate.grade === 0) {
                 grade = 'поддельный'
