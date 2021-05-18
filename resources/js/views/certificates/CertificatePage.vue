@@ -11,11 +11,13 @@
         </b-modal>
 
         <Loader v-if="loading" />
-        <b-card v-else>
 
-            <b-alert v-if="!getCertificate" variant="warning">
+        <b-card v-else>
+            <b-alert show v-if="!getCertificate" variant="warning">
                 <span>Такой сертификат нельзя получить:(</span>
-                <b-button :to="{name: 'birds'}">Посмотреть другие сертификаты</b-button>
+                <b-button :to="{name: 'certificates'}" size="sm" class="mt-2" variant="danger">
+                    Посмотреть другие сертификаты
+                </b-button>
             </b-alert>
 
 

@@ -35,39 +35,48 @@
         <Loader v-if="loading" />
 
         <b-card v-else >
-            <h2 class="text-center">{{ getSeller.name[1] }}</h2>
-            <figure class="text-center">
-                <img
-                    width="60%" :src="`/storage/${getSeller.image}`"
-                    :alt="getSeller.name"
-                >
-            </figure>
-            <Field :field="getSeller.name"></Field>
-            <Field :field="getSeller.description"></Field>
-            <Field :field="getSeller.discountText"></Field>
-<!--            <Field :field="getSeller.birds_count"></Field>-->
-            <Field :field="getSeller.price"></Field>
-
-            <b-button
-                v-if="getSeller.certificate_id"
-                class="mt-2"
-                variant="warning"
-                :to="`/certificates/${getSeller.certificate_id}`"
-            >
-                {{
-                    getSeller.certificate_name
-                }}
-            </b-button>
-            <b-alert class="mt-3" v-else show variant="warning">Этот продавец не выдает птицам <b-link
-                :to="{name:'certificates'}">сертификаты
-            </b-link>!
+            <!--      seller not found      -->
+            <b-alert show v-if="!getSeller" variant="warning">
+                <span>Такого продавца не существует :(</span>
+                <b-button :to="{name: 'sellers'}" size="sm" class="mt-2" variant="danger">
+                    Посмотреть существующих продавцов
+                </b-button>
             </b-alert>
 
-            <hr>
-            <h2>Птицы продавца: </h2>
+           <div v-else>
+               <h2 class="text-center">{{ getSeller.name[1] }}</h2>
+               <figure class="text-center">
+                   <img
+                       width="60%" :src="`/storage/${getSeller.image}`"
+                       :alt="getSeller.name"
+                   >
+               </figure>
+               <Field :field="getSeller.name"></Field>
+               <Field :field="getSeller.description"></Field>
+               <Field :field="getSeller.discountText"></Field>
+               <!--            <Field :field="getSeller.birds_count"></Field>-->
+               <Field :field="getSeller.price"></Field>
 
-            <!--      open seller      -->
-            <span v-if="!checkSellerAvailable">
+               <b-button
+                   v-if="getSeller.certificate_id"
+                   class="mt-2"
+                   variant="warning"
+                   :to="`/certificates/${getSeller.certificate_id}`"
+               >
+                   {{
+                       getSeller.certificate_name
+                   }}
+               </b-button>
+               <b-alert class="mt-3" v-else show variant="warning">Этот продавец не выдает птицам <b-link
+                   :to="{name:'certificates'}">сертификаты
+               </b-link>!
+               </b-alert>
+
+               <hr>
+               <h2>Птицы продавца: </h2>
+
+               <!--      open seller      -->
+               <span v-if="!checkSellerAvailable">
                 У вас не заключён договор с этим продавцов. Заключите договор, чтобы покупать птиц:
                 <b-button
                     variant="primary"
@@ -78,54 +87,55 @@
                 </b-button>
             </span>
 
-            <div
-                class="mt-2 grid-cards-columns"
-                v-else
-            >
-                <b-card
-                    v-for="bird of getSeller.birds"
-                    class="mb-2 card-item"
-                    :title="bird.name"
-                    :img-src="`/storage/${bird.image}`"
-                    :img-alt="bird.name"
-                    tag="article"
-                    :key="bird.id"
-                >
-                    <b-card-text>
+               <div
+                   class="mt-2 grid-cards-columns"
+                   v-else
+               >
+                   <b-card
+                       v-for="bird of getSeller.birds"
+                       class="mb-2 card-item"
+                       :title="bird.name"
+                       :img-src="`/storage/${bird.image}`"
+                       :img-alt="bird.name"
+                       tag="article"
+                       :key="bird.id"
+                   >
+                       <b-card-text>
                         <span class="description">
                             {{ bird.description.slice(0, 100) }}
                             {{ bird.description.length > 100 ? '...' : '' }}
                         </span>
-                        <hr>
+                           <hr>
 
-                        <h6 class="d-inline" style="width: 10px !important; margin: 0 !important;">
-                            <b-badge variant="warning">Плодоносность: {{ bird.fertility }} яиц/час
-                            </b-badge>
-                            <b-badge variant="danger">Спрос: {{ bird.demand }} яиц/час
-                            </b-badge>
-                            <b-badge variant="success">Бонус за заботу: {{ bird.care }}%
-                            </b-badge>
-                            <b-badge variant="dark">Помет: {{ bird.litter }} ед/час
-                            </b-badge>
-                            <b-badge variant="primary">Цена яйца: {{ bird.egg_price }}&#8381;
-                            </b-badge>
-                        </h6>
+                           <h6 class="d-inline" style="width: 10px !important; margin: 0 !important;">
+                               <b-badge variant="warning">Плодоносность: {{ bird.fertility }} яиц/час
+                               </b-badge>
+                               <b-badge variant="danger">Спрос: {{ bird.demand }} яиц/час
+                               </b-badge>
+                               <b-badge variant="success">Бонус за заботу: {{ bird.care }}%
+                               </b-badge>
+                               <b-badge variant="dark">Помет: {{ bird.litter }} ед/час
+                               </b-badge>
+                               <b-badge variant="primary">Цена яйца: {{ bird.egg_price }}&#8381;
+                               </b-badge>
+                           </h6>
 
-                        <hr>
+                           <hr>
 
-                        <b-button
-                            variant="primary"
-                            @click="()=>{
+                           <b-button
+                               variant="primary"
+                               @click="()=>{
                                 birdBuy({bird_id: bird.id, sold_bird_id: bird.pivot.id});
                                 purchasedBirdName = bird.name
                             }"
 
-                        >
-                            купить за <b>{{ Math.round(bird.price * (1 + getSeller.discount / 100)) }}&#8381;</b>
-                        </b-button>
-                    </b-card-text>
-                </b-card>
-            </div>
+                           >
+                               купить за <b>{{ Math.round(bird.price * (1 + getSeller.discount / 100)) }}&#8381;</b>
+                           </b-button>
+                       </b-card-text>
+                   </b-card>
+               </div>
+           </div>
         </b-card>
     </div>
 </template>

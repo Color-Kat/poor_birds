@@ -6,6 +6,7 @@ import user from './modules/user.js';
 import sellers from './modules/sellers.js';
 import certificates from './modules/certificates.js';
 import shovels from './modules/shovels.js';
+import contracts from './modules/contracts.js';
 
 // import Axios from "axios";
 
@@ -16,7 +17,8 @@ export default new Vuex.Store({
         user,
         sellers,
         certificates,
-        shovels
+        shovels,
+        contracts
     },
     state: {
         active_sideBar: false,

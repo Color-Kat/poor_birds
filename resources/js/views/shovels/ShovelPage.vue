@@ -11,12 +11,12 @@
         <Loader v-if="loading" />
 
         <b-card v-else>
-
-            <b-alert v-if="!getShovel" variant="warning">
-                <span>Такой лопаты нет в продаже:(</span>
-                <b-button :to="{name: 'shovels'}">Посмотреть другие</b-button>
+            <b-alert show v-if="!getShovel" variant="warning">
+                <span>Такой лопаты нет в продаже :(</span>
+                <b-button :to="{name: 'shovels'}" size="sm" class="mt-2" variant="danger">
+                    Посмотреть существующие лопаты
+                </b-button>
             </b-alert>
-
 
             <div v-else>
                 <!--            {{ getShovel }}-->

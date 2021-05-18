@@ -9,7 +9,7 @@ export default {
         },
         getBird(state) {
             const bird = state.currentBird;
-
+            console.log(bird)
             if (bird) {
                 return {
                     image      : bird.image,
@@ -88,10 +88,11 @@ export default {
                     .then(response => {
                         if (response.data.status) {
                             commit('setCurrentBird', response.data.messages);
-                        }
+                        } else commit('setCurrentBird', false);
                     })
                     .catch((error) => {
                         console.log(error);
+                        commit('setCurrentBird', false);
                     });
             }
             // need to fin bird of specific seller

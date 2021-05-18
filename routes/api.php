@@ -22,6 +22,7 @@ Route::apiResource('birds', 'api\BirdController');
 Route::apiResource('sellers', 'api\SellerController');
 Route::apiResource('certificates', 'api\CertificateController');
 Route::apiResource('shovels', 'api\ShovelController');
+Route::apiResource('contracts', 'api\ContractController');
 
 Route::group([
 

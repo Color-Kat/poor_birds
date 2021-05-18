@@ -37,6 +37,8 @@ import CertificatePage from "./views/certificates/CertificatePage";
 import Certificates from "./views/certificates/Certificates";
 import MyBirdsPage from "./views/auth/MyBirdsPage";
 import EggsPage from "./views/auth/EggsPage";
+import Contracts from "./views/contracts/Contracts";
+import ContractPage from "./views/contracts/ContractPage";
 
 
 Vue.use(VueRouter);
@@ -225,6 +227,21 @@ const routes = [
     {
         path     : '/shovels/:id',
         component: ShovelPage,
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'login'});
+        },
+    },
+
+    /* ---------- CONTRACTS -----------*/
+    {
+        path     : '/contracts',
+        name     : 'contracts',
+        component: Contracts,
+    },
+    {
+        path     : '/contracts/:id',
+        component: ContractPage,
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'login'});

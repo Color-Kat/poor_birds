@@ -120,10 +120,11 @@ export default {
                 .then(response => {
                     if (response.data.status) {
                         commit('setCurrentSeller', response.data.messages);
-                    }
+                    } else commit('setCurrentSeller', false);
                 })
                 .catch((error) => {
                     console.log(error);
+                    commit('setCurrentSeller', false);
                 });
         },
     },
