@@ -61,6 +61,9 @@ Route::group([
     Route::post('buyShovel', 'AuthController@buyShovel');
     Route::post('selectShovel', 'AuthController@selectShovel');
 
+    /* user - contracts */
+    Route::post('buyContract', 'AuthController@buyContract');
+
     /* user - fines */
     Route::get('payOffFines', 'AuthController@payOffFines');
 });

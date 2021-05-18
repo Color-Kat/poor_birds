@@ -88,6 +88,16 @@ export default {
             if (state.user) {
                 return state.user.my_shovels;
             } else return false;
+        },
+        getUserContracts(state) {
+            if (state.user) {
+                return state.user.my_contracts;
+            } else return false;
+        },
+        getUserContractsIds(state) {
+            if (state.user) {
+                return state.user.my_contracts.map(elem => elem.id);
+            } else return false;
         }
     },
     actions  : {
@@ -478,6 +488,29 @@ export default {
             return axios.post(
                 'api/auth/buyCertificate',
                 {...ids},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    if (response.data) {
+                        commit('changeBalance', response.data); // update balance
+                        return true;
+                    }
+                    return false;
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+        },
+        buyContract({
+                           commit,
+                           state
+                       }, id) {
+            if (!state.access_token) return false;
+
+            return axios.post(
+                'api/auth/buyContract',
+                {id},
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {

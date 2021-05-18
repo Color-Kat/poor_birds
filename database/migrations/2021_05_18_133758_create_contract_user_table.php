@@ -15,6 +15,8 @@ class CreateContractUserTable extends Migration
     {
         Schema::create('contract_user', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
+            $table->foreignId('contract_id');
             $table->timestamps();
         });
     }

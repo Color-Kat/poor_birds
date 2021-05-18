@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
 use App\models\Certificate;
+use App\models\Contract;
 use App\models\Egg;
 use App\models\Seller;
 use App\models\Shovel;
@@ -84,7 +85,6 @@ class AuthController extends Controller
         ];
 
         $validator = Validator::make($request->all(), $rules, $validatorMessages);
-//        $validator = $this->validate($request, $rules, $validatorMessages);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 401);
@@ -94,8 +94,6 @@ class AuthController extends Controller
             $validator->validated(),
             ['password' => bcrypt($request->password)]
         ));
-
-//        $user->my_sellers()->attach(1); // attach bazaar to available sellers
 
         return response()->json([
             'message' => 'Пользователь успешно зарегистрирован',
@@ -112,7 +110,6 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-
         return response()->json(['message' => 'Пользователь успешно вышел из учетной записи']);
     }
 
@@ -133,7 +130,7 @@ class AuthController extends Controller
      */
     public function user()
     {
-        return response()->json(auth()->user()->load(['my_sellers:id', 'my_shovels']));
+        return response()->json(auth()->user()->load(['my_sellers:id', 'my_shovels', 'my_contracts:id']));
     }
 
     public function get_user_birds()
@@ -254,8 +251,25 @@ class AuthController extends Controller
 
         $shovelEfficiency = $shovel->efficiency;
 
+        // decrease litter count by efficiency or litter count
+        $litter_1 = $egg->litter;
         $egg->litter -= $egg->litter > $shovelEfficiency ? $shovelEfficiency : $egg->litter;
         $egg->update();
+
+        // apply user's contract for litter sale
+        $maxEarnings = auth()->user()->my_contracts()->where('script_name', '=', 'litter_sale')
+            ->max('payload');
+        if ($maxEarnings) {
+//            dump(($litter_1 - $egg->litter) / 100 * round($maxEarnings, 3));
+            dump($maxEarnings);
+            dump((float) number_format(
+                (float) $maxEarnings, // the number to format
+                3, // how many decimal points
+                ".", // decimal separator
+                "" // thousands separator, set it to blank
+            ));
+//            auth()->user()->money += ($litter_1 - $egg->litter) / 100 * $maxEarnings;
+        }
 
         return $egg->litter;
     }
@@ -349,6 +363,23 @@ class AuthController extends Controller
                 $my_bird->pivot->certificate_id = $request->certificate_id;
                 $my_bird->pivot->update();
             }
+        }
+
+        return auth()->user()->money;
+    }
+
+    public function buyContract(Request $request) {
+        $user = auth()->user();
+        $contract = Contract::find($request->id);
+
+        if (
+            $contract->price > $user->money || // no money
+            $user->my_contracts->contains($request->id) // already exists
+        ) return false;
+        else {
+            $user->money -= $contract->price; // increase user money
+            $user->my_contracts()->attach($contract->id); // attach contract
+            $user->update(); // update balance
         }
 
         return auth()->user()->money;

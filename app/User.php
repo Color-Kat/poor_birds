@@ -84,6 +84,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany('App\models\Shovel')->withPivot('isActive');
     }
 
+    public function my_contracts()
+    {
+        return $this->belongsToMany('App\models\Contract');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

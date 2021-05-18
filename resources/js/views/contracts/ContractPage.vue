@@ -8,7 +8,7 @@
             <p class="my-4">У вас уже есть этот контракт</p>
         </b-modal>
 
-        <Loader v-if="loading" />
+        <Loader v-if="loading"/>
 
         <b-card v-else>
             <!--     contract not found       -->
@@ -22,24 +22,28 @@
             <div v-else>
                 <h2 class="text-center">{{ getContract.name }}</h2>
                 <img width="100%" :src="`/storage/contracts/${getContract.image}`" :alt="getContract.name">
-                <span class="p-2">{{getContract.description}}</span>
+                <span class="p-2">{{ getContract.description }}</span>
                 <hr>
-                <Field :field="getContract.efficiency"></Field>
                 <Field :field="getContract.price"></Field>
 
-<!--                <div v-if="getUserContractsIds.indexOf(getContract.id) == -1">-->
-<!--                    <b-button-->
-<!--                        v-if="!getContract.isDonate"-->
-<!--                        class="mt-3"-->
-<!--                        variant="primary"-->
-<!--                        @click="(e)=>{buy(getContract, e);}"-->
-<!--                    >-->
-<!--                        Купить-->
-<!--                    </b-button>-->
-<!--                    <b-button v-else class="mt-3" variant="primary">Купить за донат</b-button>-->
-<!--                </div>-->
+                <!--         check is buying contract       -->
+                <div v-if="getUserContractsIds.indexOf(getContract.id) == -1">
+                    <!--        BUY BUTTON        -->
+                    <b-button
+                        v-if="!getContract.isDonate"
+                        class="mt-3"
+                        variant="primary"
+                        @click="(e)=>{buy(getContract, e);}"
+                    >
+                        Купить
+                    </b-button>
 
-<!--                <b-alert show variant="warning" class="mt-3" v-else>Эта лопата уже куплена!</b-alert>-->
+                    <!--        DONAT BUTTON        -->
+                    <b-button v-else class="mt-3" variant="primary">Купить за донат</b-button>
+                </div>
+
+                <!--        already purchased        -->
+                <b-alert show variant="warning" class="mt-3" v-else>Вы уже заключили контракт!</b-alert>
 
                 <hr>
 
@@ -69,8 +73,8 @@ export default {
         Field
     },
     data      : () => ({
-        contract : null,
-        loading: true,
+        contract: null,
+        loading : true,
     }),
     computed  : {
         ...mapGetters(['getContract', 'getUserContractsIds'])
@@ -82,7 +86,7 @@ export default {
 
             // contract is buying
             if (result) {
-                e.target.disabled=true; // disable button
+                e.target.disabled = true; // disable button
                 this.$bvModal.show('modal-contract-buy');
             } else {
                 this.$bvModal.show('modal-contract-error');
