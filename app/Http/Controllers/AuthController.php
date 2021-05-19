@@ -260,15 +260,9 @@ class AuthController extends Controller
         $maxEarnings = auth()->user()->my_contracts()->where('script_name', '=', 'litter_sale')
             ->max('payload');
         if ($maxEarnings) {
-//            dump(($litter_1 - $egg->litter) / 100 * round($maxEarnings, 3));
-            dump($maxEarnings);
-            dump((float) number_format(
-                (float) $maxEarnings, // the number to format
-                3, // how many decimal points
-                ".", // decimal separator
-                "" // thousands separator, set it to blank
-            ));
-//            auth()->user()->money += ($litter_1 - $egg->litter) / 100 * $maxEarnings;
+            // get litter difference and increase user money
+            auth()->user()->money += ($litter_1 - $egg->litter) / 100 * (float)$maxEarnings;
+            auth()->user()->update();
         }
 
         return $egg->litter;

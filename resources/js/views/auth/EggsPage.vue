@@ -7,7 +7,7 @@
             header-bg-variant="danger"
             header-text-variant="light"
         >
-            <p class="my-2">Вы не можете продавать один вид яиц чаще, чем один раз в час :((</p>
+            <p class="my-2">Вы не можете продавать один вид яиц чаще, чем один раз в час :(</p>
         </b-modal>
 
         <b-modal id="modal-no-selected-shovel" header-bg-variant="warning" hide-footer>
@@ -34,7 +34,7 @@
                 >?</b-badge>
             </div>
 
-            <h2 class="text-center">Склад ваших яиц ;)</h2>
+            <h2 class="text-center">Склад ваших яиц</h2>
 
             <!--         collapse tooltip (from localStorage)       -->
             <b-collapse :visible="localStorage.getItem('tooltip-eggs') == 'true'" id="collapse-shovel">
