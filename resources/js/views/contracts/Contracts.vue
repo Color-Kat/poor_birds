@@ -45,6 +45,10 @@
                     :img-alt="contract.name"
                     tag="article"
 
+                    :bg-variant="contract.isDonate ? 'warning' : ''"
+                    :body-border-variant="contract.isDonate ? 'danger' : ''"
+                    :border-variant="contract.isDonate ? 'danger' : ''"
+
                     @click="()=>redirect(contract.id)"
                     :key="contract.id"
                 >

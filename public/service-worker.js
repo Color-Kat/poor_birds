@@ -12,7 +12,7 @@ const staticAssets = [
     '/assets/icons/icon-192x192.png',
     '/assets/icons/icon-512x512.png',
     '/manifest.json',
-    '/js/app.js',
+    // '/js/app.js',
     '/offline.html'
 ];
 

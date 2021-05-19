@@ -58,14 +58,14 @@ class CollectEggs extends Command
                 count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100), -- get count of eggs from birds_count * fertility with certificate bonus
                 count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100),
                 0, -- change collected
-                0, -- remove care bonus
+                IF(contracts.script_name = 'cares', 1, 0), -- remove care bonus or add it if isset needed contract
                 CASE
                     WHEN grade IS NULL THEN 5 -- no certificate. Fine is 5
                     WHEN grade = 0 THEN 3 -- grade 0 - fake certificate. Fine is 3
                     WHEN grade = 1 THEN 1 -- grade 1 - certificate with a typo. Fine is 1
                     ELSE 0
                 END,
-                user_id,
+                b_s_u.user_id,
                 bird_seller_id
 
             FROM users AS u -- get all users
@@ -75,6 +75,10 @@ class CollectEggs extends Command
             JOIN bird_seller AS b_s ON (b_s.id = b_s_u.bird_seller_id) -- join bird_seller table (this id sol_bird)
 
             JOIN birds ON (b_s.bird_id = birds.id) -- join birds table
+
+            JOIN contract_user as c_u ON (c_u.user_id = u.id) -- join contract_user table to get user's contracts
+           -- JOIN contracts ON (c_u.contract_id = u.id AND contracts.script_name = 'cares') -- join contracts table
+            JOIN contracts ON (c_u.contract_id = u.id) -- join contracts table
 
             LEFT JOIN certificates AS certs ON (IFNULL( b_s_u.certificate_id, (SELECT certificate_id FROM sellers WHERE id = b_s.seller_id)) = certs.id) -- and join certificate table
 
@@ -89,7 +93,7 @@ class CollectEggs extends Command
                 IF (eggs.cared = 1, ( 1 + (birds.care / 100 * ( 1 + IFNULL(care_bonus, 0) / 100 ))), 1), -- care bonus
                 litter = eggs.litter + b_s_u.count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100),
                 collected = 0,
-                cared = 0, -- remove care bonus
+                cared = IF(contracts.script_name = 'cares', 1, 0), -- remove care bonus or add it if isset needed contract
                 fine = eggs.fine + b_s_u.count * CASE
                     WHEN certs.grade IS NULL THEN 5 -- no certificate. Fine is 5
                     WHEN certs.grade = 0 THEN 3 -- grade 0 - fake certificate. Fine is 3
