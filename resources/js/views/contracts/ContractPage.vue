@@ -39,7 +39,7 @@
                     </b-button>
 
                     <!--        DONAT BUTTON        -->
-                    <b-button v-else class="mt-3" variant="primary">Купить за донат</b-button>
+                    <b-button v-else class="mt-3" variant="warning">Купить за донат</b-button>
                 </div>
 
                 <!--        already purchased        -->

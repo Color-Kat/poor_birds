@@ -17,8 +17,8 @@ export default {
                     image      : contract.image,
                     name       : contract.name,
                     description: contract.description,
-                    isDonat    : contract.isDonat,
-                    price      : ['Цена контракта', `${contract.isDonat ? contract.price + '₽' : contract.price + ' руб'} `],
+                    isDonate   : contract.isDonate,
+                    price      : ['Цена контракта', `${contract.isDonate ? contract.price + '₽' : contract.price + ' руб'} `],
                 };
             } else return false
         }
