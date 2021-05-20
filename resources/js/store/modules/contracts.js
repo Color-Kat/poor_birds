@@ -9,7 +9,6 @@ export default {
         },
         getContract(state) {
             const contract = state.currentContract;
-            console.log(contract)
             if (contract) {
                 return {
                     // description: ['Описание', contract.description],
@@ -17,8 +16,8 @@ export default {
                     image      : contract.image,
                     name       : contract.name,
                     description: contract.description,
-                    isDonate   : contract.isDonate,
-                    price      : ['Цена контракта', `${contract.isDonate ? contract.price + '₽' : contract.price + ' руб'} `],
+                    isDonate   : +contract.isDonate,
+                    price      : ['Цена контракта', `${contract.isDonate ? +contract.price + '₽' : +contract.price + ' руб'} `],
                 };
             } else return false
         }

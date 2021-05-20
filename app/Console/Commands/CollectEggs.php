@@ -48,7 +48,7 @@ class CollectEggs extends Command
     {
         // counting eggs and litter for all users
         DB::select("
-            INSERT INTO eggs (id, name, birds_count, price, demand, count, litter, collected, cared, fine, user_id, bird_seller_id)
+          INSERT INTO eggs (id, name, birds_count, price, demand, count, litter, collected, cared, fine, user_id, bird_seller_id)
             SELECT
                 CONCAT(u.id, b_s.id), -- create UID from user_id and bird_seller_id
                 birds.name, -- bird name
@@ -56,9 +56,9 @@ class CollectEggs extends Command
                 birds.egg_price * (1 + IFNULL(price_bonus, 0) / 100), -- egg price with certificate
                 birds.demand * (1 + IFNULL(demand_bonus, 0) / 100), -- demand with certificate bonus
                 count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100), -- get count of eggs from birds_count * fertility with certificate bonus
-                count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100),
-                0, -- change collected
-                IF(contracts.script_name = 'cares', 1, 0), -- remove care bonus or add it if isset needed contract
+                count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100), -- get litter with certificate bonus
+                0, -- eggs are not collected
+                IF(contracts.script_name = 'cares', 1, 0), -- remove care bonus or add it if user have contract
                 CASE
                     WHEN grade IS NULL THEN 5 -- no certificate. Fine is 5
                     WHEN grade = 0 THEN 3 -- grade 0 - fake certificate. Fine is 3
@@ -76,24 +76,24 @@ class CollectEggs extends Command
 
             JOIN birds ON (b_s.bird_id = birds.id) -- join birds table
 
-            JOIN contract_user as c_u ON (c_u.user_id = u.id) -- join contract_user table to get user's contracts
+            LEFT JOIN contract_user as c_u ON (c_u.user_id = u.id) -- join contract_user table to get user's contracts
            -- JOIN contracts ON (c_u.contract_id = u.id AND contracts.script_name = 'cares') -- join contracts table
-            JOIN contracts ON (c_u.contract_id = u.id) -- join contracts table
+            LEFT JOIN contracts ON (contracts.id = c_u.contract_id) -- join contracts table
 
             LEFT JOIN certificates AS certs ON (IFNULL( b_s_u.certificate_id, (SELECT certificate_id FROM sellers WHERE id = b_s.seller_id)) = certs.id) -- and join certificate table
 
             ON DUPLICATE KEY UPDATE
                 name = birds.name, -- update bird name (just in case)
-                birds_count = b_s_u.count,
-                price = birds.egg_price * (1 + IFNULL(price_bonus, 0) / 100),
-                demand = birds.demand,
+                birds_count = b_s_u.count, -- get birds count
+                price = birds.egg_price * (1 + IFNULL(price_bonus, 0) / 100), -- get egg price
+                demand = birds.demand * (1 + IFNULL(demand_bonus, 0) / 100), -- get bird demand
                 count = eggs.count +
-                b_s_u.count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100) * -- count eggs with certificate bonus
-                IF ( (1 - (eggs.litter/20) / 100 ) < 0, 0, ( 1 - (eggs.litter/20) / 100 )) * -- litter deduction
-                IF (eggs.cared = 1, ( 1 + (birds.care / 100 * ( 1 + IFNULL(care_bonus, 0) / 100 ))), 1), -- care bonus
-                litter = eggs.litter + b_s_u.count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100),
-                collected = 0,
-                cared = IF(contracts.script_name = 'cares', 1, 0), -- remove care bonus or add it if isset needed contract
+                    b_s_u.count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100) * -- count eggs with certificate bonus
+                    IF ( (1 - (eggs.litter/20) / 100 ) < 0, 0, ( 1 - (eggs.litter/20) / 100 )) * -- litter deduction
+                    IF (eggs.cared = 1, ( 1 + (birds.care / 100 * ( 1 + IFNULL(care_bonus, 0) / 100 ))), 1), -- care bonus
+                litter = eggs.litter + b_s_u.count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100), -- get litter count + certificate litter_bonus
+                collected = 0, -- eggs are not collected
+                cared = IF(contracts.script_name = 'cares', 1, 0), -- remove care bonus or add it if user have contract
                 fine = eggs.fine + b_s_u.count * CASE
                     WHEN certs.grade IS NULL THEN 5 -- no certificate. Fine is 5
                     WHEN certs.grade = 0 THEN 3 -- grade 0 - fake certificate. Fine is 3

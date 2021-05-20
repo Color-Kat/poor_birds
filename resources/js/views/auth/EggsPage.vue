@@ -51,9 +51,10 @@
             <hr>
 
             <p>
-                <b-button size="sm" variant="success" :to="{name: 'birds'}">Купить птиц</b-button>
-                <b-button size="sm" variant="warning" :to="{name: 'certificates'}">Купить сертификат</b-button>
-                <b-button size="sm" variant="primary" :to="{name: 'sellers'}">Продавцы</b-button>
+                <b-button size="sm" variant="success" class="mb-1" :to="{name: 'birds'}">Купить птиц</b-button>
+                <b-button size="sm" variant="warning" class="mb-1" :to="{name: 'certificates'}">Купить
+                    сертификат</b-button>
+                <b-button size="sm" variant="primary" class="mb-1" :to="{name: 'sellers'}">Продавцы</b-button>
             </p>
             <hr>
             <div>

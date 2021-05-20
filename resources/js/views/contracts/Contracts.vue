@@ -45,10 +45,10 @@
                     :img-alt="contract.name"
                     tag="article"
 
-                    :body-border-variant="contract.isDonate ? 'danger' : ''"
-                    :body-bg-variant="contract.isDonate ? 'danger' : ''"
-                    :border-variant="contract.isDonate ? 'danger' : ''"
-                    text-variant="light"
+                    :body-border-variant="+contract.isDonate ? 'danger' : ''"
+                    :body-bg-variant="+contract.isDonate ? 'danger' : ''"
+                    :border-variant="+contract.isDonate ? 'danger' : ''"
+                    :text-variant="+contract.isDonate ? 'light' : ''"
 
                     @click="()=>redirect(contract.id)"
                     :key="contract.id"
@@ -57,7 +57,7 @@
 <!--                        <b-badge variant="success">Бонус к плодовитости {{ certificate.fertility_bonus }}%</b-badge>-->
 <!--                        <b-badge variant="warning">Бонус к цене {{ certificate.fertility_bonus }}%</b-badge>-->
                         <h4 class="text-right">
-                            <b-badge v-if="!contract.isDonate" variant="primary">Цена {{ contract.price }}₽</b-badge>
+                            <b-badge v-if="!(+contract.isDonate)" variant="primary">Цена {{ contract.price }}₽</b-badge>
                             <b-badge v-else variant="warning">купить за донат {{ contract.price }} руб</b-badge>
                         </h4>
                     </b-card-text>
