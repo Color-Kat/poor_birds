@@ -5,6 +5,16 @@
             <p class="my-2">К сожалению у вас нет денег на открытие продавца</p>
         </b-modal>
 
+        <!--      OPEN SELLER AND QUEST      -->
+        <b-modal id="modal-open-seller" header-bg-variant="success" hide-footer>
+            <p class="my-2">
+                <span class="mb-1">Вы открыли продавца!</span> <br>
+                <b-card>
+                    {{questMessage}}
+                </b-card>
+            </p>
+        </b-modal>
+
         <Loader v-if="loading" />
 
         <div v-else>
@@ -56,7 +66,7 @@
                                 Посмотреть продавца
                             </b-button>
 
-                            <b-button variant="primary" @click="()=>openThisSeller(seller.id)">
+                            <b-button variant="primary" @click="()=>openThisSeller(seller)">
                                 Открыть продавца за {{ seller.price }}₽
                             </b-button>
                         </div>
@@ -74,7 +84,10 @@ import Loader from "../../components/Loader";
 export default {
     name: "Store",
     components: {Loader},
-    data: ()=>({loading: true}),
+    data: ()=>({
+        loading: true,
+        questMessage: ''
+    }),
     async mounted() {
         await this.fetchSellers();
         this.loading = false;
@@ -94,9 +107,12 @@ export default {
                 // console.log(elem)
             });
         },
-        async openThisSeller(sellerId) {
-            if (await this.openSeller(sellerId))
-                this.getUserSellers.push({id: sellerId})
+        async openThisSeller(seller) {
+            if (await this.openSeller(seller.id)) {
+                this.getUserSellers.push({id: seller.id});
+                this.questMessage = seller.quest;
+                this.$bvModal.show('modal-open-seller');
+            }
             else this.$bvModal.show('modal-no-money-seller');
         }
     }
