@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seller extends Model
 {
-    protected $fillable = ['name', 'image', 'description', 'certificate_id', 'demand', 'discount', 'price'];
+    protected $fillable = ['name', 'image', 'description', 'quest', 'certificate_id', 'demand', 'discount', 'price'];
 
     public function birds()
     {

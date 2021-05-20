@@ -33,6 +33,15 @@
                 ></b-form-input>
             </b-form-group>
 
+            <!--      DESCRIPTION      -->
+            <b-form-group id="input-quest" label="Сюжет:" label-for="quest">
+                <b-form-input
+                    id="quest"
+                    v-model="form.quest"
+                    description="Сообщение, которое отобразится, когда пользователь откроет продавца"
+                ></b-form-input>
+            </b-form-group>
+
             <!--      IMAGE      -->
             <b-form-group id="input-image" label="Логотип компании:" label-for="image">
                 <b-form-file
@@ -106,6 +115,7 @@ export default {
                 id            : this.$route.query.id || null,
                 name          : this.$route.query.name || 'OOO "Райские петухи"',
                 description   : this.$route.query.description || 'OOO "Райские петухи" - райское наслаждение от петухов',
+                quest         : this.$route.query.quest || '',
                 image         : null,
                 imagePath     : this.$route.query.image || '',
                 discount      : this.$route.query.discount || -20,
