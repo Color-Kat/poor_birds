@@ -35,7 +35,6 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-
         $rules = [
             'email'    => 'required|string|email|max:100',
             'password' => 'required|string|min:6',
@@ -130,6 +129,9 @@ class AuthController extends Controller
      */
     public function user()
     {
+        // set notified = 0
+        auth()->user()->update(['notified' => 0]);
+
         return response()->json(auth()->user()->load(['my_sellers:id', 'my_shovels', 'my_contracts:id']));
     }
 

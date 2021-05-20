@@ -104,6 +104,8 @@ class CollectEggs extends Command
 
         // iterate all users to send a notification to whoever needs it
         foreach (User::all() as $user) {
+            if ($user->notified) continue; // skip notified users
+
             $fines = 0; // all fines
             $maxLitter = 0; // max litter of one bird
             $eggs = $user->my_eggs;
@@ -128,6 +130,9 @@ class CollectEggs extends Command
             if ($maxLitter >= 999) {
                 Notification::send($user, new PushLitter);
             }
+
+            // user is notified
+            $user->update(['notified' => 1]);
         }
 
 
