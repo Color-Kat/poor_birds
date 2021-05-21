@@ -105,6 +105,7 @@
             </div>
 
             <div class="mt-2" v-else>
+                <!--        EGG        -->
                 <b-card
                     v-for="egg of getEggs"
                     class="mb-2 w-100"
@@ -181,10 +182,36 @@
                         </span>
                         </div>
                     </b-card-text>
-
-                    <!--                    <b-button class="card-btn" href="#" variant="primary">Посмотреть предложения</b-button>-->
                 </b-card>
+                <!--        EGG        -->
 
+                <hr>
+
+                <!--       SEll IN ONE CLICK        -->
+                <div class="text-center">
+                    <h2>Продать яйца в один клик</h2>
+
+                    <div class="d-flex justify-content-between">
+                        <img
+                            src="/assets/brigade.png"
+                            height="300px"
+                            alt="бригада"
+                        >
+                        <span class="p-3">
+                            <p class="text-left">
+                                Вы можете нанять бригаду, которая уберётся за птицами и
+                                увезёт их яйца в Москву на продажу. Но это платная услуга,
+                                и покупается она только за донат.
+                                <br>
+                            </p>
+                            <b-button
+                                variant="primary"
+                            >Нанять за 10 рублей</b-button>
+                        </span>
+                    </div>
+
+
+                </div>
             </div>
         </div>
     </b-card>
