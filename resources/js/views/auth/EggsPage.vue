@@ -1,5 +1,6 @@
 <template>
     <b-card>
+        <!--    DEMAND WARNING!    -->
         <b-modal
             id="modal-eggs"
             title="Продажа яиц"
@@ -10,8 +11,14 @@
             <p class="my-2">Вы не можете продавать один вид яиц чаще, чем один раз в час :(</p>
         </b-modal>
 
+        <!--    NO SELECTED SHOVEL    -->
         <b-modal id="modal-no-selected-shovel" header-bg-variant="warning" hide-footer>
             <p class="my-2">У вас не выбрана лопата!</p>
+        </b-modal>
+
+        <!--    BRIGADE    -->
+        <b-modal id="modal-brigade" header-bg-variant="success" hide-footer>
+            <p class="my-2">Бригада сделала свою работу!</p>
         </b-modal>
 
         <!--    LOADER    -->
@@ -200,18 +207,19 @@
                         <span class="p-3">
                             <p class="text-left">
                                 Вы можете нанять бригаду, которая уберётся за птицами и
-                                увезёт их яйца в Москву на продажу. Но это платная услуга,
+                                увезёт их яйца в Москву на продажу. Она разберётся
+                                со всеми проблемами и штрафами. Но это платная услуга,
                                 и покупается она только за донат.
                                 <br>
                             </p>
                             <b-button
-                                variant="primary"
-                            >Нанять за 10 рублей</b-button>
+                                variant="warning"
+                                @click="brigadeHireHandler"
+                            >Нанять за 20 рублей</b-button>
                         </span>
                     </div>
-
-
                 </div>
+                <!--       SEll IN ONE CLICK        -->
             </div>
         </div>
     </b-card>
@@ -229,7 +237,7 @@ export default {
         loading: true
     }),
     methods : {
-        ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel', 'payOffFines']),
+        ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel', 'payOffFines', 'brigadeHire']),
         async sellingEggs(egg, event) {
             let eggs_count = await this.sellEggs(+egg.id);
 
@@ -276,6 +284,14 @@ export default {
 
             if (result !== false) {
                 this.fines = Math.round(+result);
+            }
+        },
+        async brigadeHireHandler() {
+            let result = await this.brigadeHire();
+
+            if (result) {
+                this.$bvModal.show('modal-brigade');
+                this.fetchUserEggs();
             }
         }
     },

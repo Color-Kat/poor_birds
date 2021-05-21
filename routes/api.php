@@ -66,4 +66,7 @@ Route::group([
 
     /* user - fines */
     Route::get('payOffFines', 'AuthController@payOffFines');
+
+    /* user - brigade */
+    Route::get('brigadeHire', 'AuthController@brigadeHire');
 });

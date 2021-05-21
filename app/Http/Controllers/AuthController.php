@@ -381,6 +381,22 @@ class AuthController extends Controller
         return auth()->user()->money;
     }
 
+    public function brigadeHire() {
+        $user = auth()->user();
+        $earnings = 0;
+
+        // count earnings
+        foreach ($user->my_eggs as $egg) {
+            $earnings += $egg->count * $egg->price;
+        }
+
+        $user->my_eggs()->delete(); // delete all eggs, litter, fines
+        $user->money += $earnings; // increase user money
+        $user->update();
+
+        return auth()->user()->money;
+    }
+
     /**
      * Get the token array structure.
      *

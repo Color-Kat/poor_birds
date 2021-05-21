@@ -525,6 +525,27 @@ export default {
                     return false;
                 });
         },
+        brigadeHire({
+                        commit,
+                        state
+                    }) {
+            if (!state.access_token) return false;
+
+            return axios.get(
+                'api/auth/brigadeHire',
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    if (response.data) {
+                        commit('changeBalance', +response.data.money); // update balance
+                        return true;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+        },
     },
     mutations: {
         setUser(state, user) {
