@@ -537,7 +537,7 @@ export default {
             )
                 .then(response => {
                     if (response.data) {
-                        commit('changeBalance', +response.data.money); // update balance
+                        commit('changeBalance', +response.data); // update balance
                         return true;
                     }
                 })

@@ -12,7 +12,6 @@ const staticAssets = [
     '/assets/icons/icon-192x192.png',
     '/assets/icons/icon-512x512.png',
     '/manifest.json',
-    // '/js/app.js',
     '/offline.html'
 ];
 
@@ -37,6 +36,9 @@ self.addEventListener('fetch', event => {
     // console.log(`Trying to fetch ${event.request.url}`);
     // Не кэшируем файлы для авто обновления страницы
     if (event.request.url.indexOf('/api') !== -1) return;
+    // exclude index.php to auto update app
+    if (event.request.url.indexOf('127.0.0.1:8000/') !== -1) return;
+    if (event.request.url.indexOf('poorbirds.tk/') !== -1) return;
     //
     // event.respondWith(checkCache(event.request));
 
