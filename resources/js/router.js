@@ -39,6 +39,7 @@ import MyBirdsPage from "./views/auth/MyBirdsPage";
 import EggsPage from "./views/auth/EggsPage";
 import Contracts from "./views/contracts/Contracts";
 import ContractPage from "./views/contracts/ContractPage";
+import Mine from "./views/auth/Mine";
 
 
 Vue.use(VueRouter);
@@ -109,7 +110,7 @@ const routes = [
         },
     },
 
-    /* ADMIN AREA */
+    /* ---------- ADMIN AREA ------------- */
     {
         path     : '/admin_area/',
         name     : 'admin_area',
@@ -173,22 +174,19 @@ const routes = [
         // just bird page
         path     : '/birds/:bird_id',
         component: BirdPage,
+        // only authorized users
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'login'});
         },
     },
-    // {
-    //     // page with seller's bird
-    //     path     : '/sellers/:seller_id/birds/:bird_id',
-    //     component: BirdPage
-    // },
 
     /* ---------- SELLERS -----------*/
     {
         path     : '/sellers',
         name     : 'sellers',
         component: Sellers,
+        // only authorized users
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'account'});
@@ -197,6 +195,7 @@ const routes = [
     {
         path     : '/sellers/:id',
         component: SellerPage,
+        // only authorized users
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'account'});
@@ -212,6 +211,7 @@ const routes = [
     {
         path     : '/certificates/:id',
         component: CertificatePage,
+        // only authorized users
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'account'});
@@ -227,6 +227,7 @@ const routes = [
     {
         path     : '/shovels/:id',
         component: ShovelPage,
+        // only authorized users
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'login'});
@@ -242,6 +243,19 @@ const routes = [
     {
         path     : '/contracts/:id',
         component: ContractPage,
+        // only authorized users
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'login'});
+        },
+    },
+
+    /* ---------- MINE -----------*/
+    {
+        path     : '/mine',
+        name     : 'mine',
+        component: Mine,
+        // only authorized users
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'login'});
