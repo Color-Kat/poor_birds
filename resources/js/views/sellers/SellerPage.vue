@@ -30,6 +30,17 @@
             <b-modal id="modal-no-money-seller" header-bg-variant="danger" hide-footer>
                 <p class="my-2">К сожалению у вас нет денег на открытие продавца</p>
             </b-modal>
+
+            <!--    OPEN SELLER QUEST    -->
+            <!--      OPEN SELLER AND QUEST      -->
+            <b-modal id="modal-open-seller" header-bg-variant="success" hide-footer>
+                <p class="my-2">
+                    <span>Вы открыли продавца!</span> <br>
+                    <b-card class="mt-2">
+                        {{questMessage}}
+                    </b-card>
+                </p>
+            </b-modal>
         <!-- --- SELLERS MODALS ---    -->
 
         <Loader v-if="loading" />
@@ -80,7 +91,7 @@
                 У вас не заключён договор с этим продавцов. Заключите договор, чтобы покупать птиц:
                 <b-button
                     variant="primary"
-                    @click="() => {openThisSeller(getSeller.id)}"
+                    @click="() => {openThisSeller(getSeller)}"
                     size="sm"
                 >
                     Заключить договор за <b>{{ getSeller.price[1] }}</b>
@@ -155,7 +166,8 @@ export default {
         return {
             loading          : true,
             purchasedBirdName: null,
-            sellerAvailable  : false
+            sellerAvailable  : false,
+            questMessage     : ''
         }
     },
     computed  : {
@@ -172,16 +184,17 @@ export default {
     },
     methods   : {
         ...mapActions(['fetchSeller', 'buyBird', 'openSeller']),
-        // redirect(seller_id, bird_id) {
-        //     this.$router.push(`/sellers/${seller_id}/birds/${bird_id}`)
-        // },
         async birdBuy(ids) {
             let result = await this.buyBird(ids);
             if (result) this.$bvModal.show('modal-bird-buy');
             else this.$bvModal.show('modal-no-money');
         },
-        async openThisSeller(sellerId) {
-            if (await this.openSeller(sellerId)) this.sellerAvailable = true;
+        async openThisSeller(seller) {
+            if (await this.openSeller(seller.id)) {
+                this.sellerAvailable = true;
+                this.questMessage = seller.quest;
+                this.$bvModal.show('modal-open-seller');
+            }
             else this.$bvModal.show('modal-no-money-seller');
         }
     },

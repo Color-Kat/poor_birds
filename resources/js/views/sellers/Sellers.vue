@@ -8,8 +8,8 @@
         <!--      OPEN SELLER AND QUEST      -->
         <b-modal id="modal-open-seller" header-bg-variant="success" hide-footer>
             <p class="my-2">
-                <span class="mb-1">Вы открыли продавца!</span> <br>
-                <b-card>
+                <span>Вы открыли продавца!</span> <br>
+                <b-card class="mt-2">
                     {{questMessage}}
                 </b-card>
             </p>

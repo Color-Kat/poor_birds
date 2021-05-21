@@ -18,6 +18,7 @@ export default {
                     image       : seller.image,
                     name        : ['Название', seller.name],
                     description : ['Описание', seller.description],
+                    quest       : seller.quest,
                     demand      : ['Бонус на спрос', `${seller.demand}%`],
                     discountText: ['Бонус к цене', `${seller.discount}%`],
                     discount    : seller.discount,
