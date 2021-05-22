@@ -1,7 +1,7 @@
 <template>
     <div class="position-relative">
         <b-card>
-            <div class="position-relative" style="z-index: 12">
+            <div class="position-relative mb-5 pb-5" style="z-index: 12">
                 <!--      toggle tooltip      -->
                 <div class="m-1 position-absolute w-100 text-right">
                     <b-badge
@@ -48,6 +48,15 @@
                     </button>
                 </div>
                 <!--         mine button       -->
+
+                <hr>
+
+                <!--    litter    -->
+                <div>
+                    <p>Вы собрали: {{clicks}}ед.мусора на сумму {{earnings}}₽</p>
+                    <b-button variant="primary" @click="mineSell">Продать</b-button>
+                </div>
+                <!--    litter    -->
             </div>
         </b-card>
 
@@ -57,6 +66,7 @@
             <!--            <img src="/assets/shit_left.png" alt="дерьмо" class="w-100 position-absolute" style="top: 50%">-->
             <img src="/assets/shit_bottom.png" alt="дерьмо" class="w-100 position-absolute" style="bottom: 0">
         </div>
+        <!--      SHIT      -->
     </div>
 </template>
 
@@ -64,14 +74,43 @@
 export default {
     name    : "Mine",
     data    : () => ({
-        isBig: false
+        isBig: false,
+        clicks: 0,
+        sounds: function () {
+            // return array of songs;
+            let song_1 = new Audio();
+            let song_2 = new Audio();
+            song_1.src = '/assets/boole.mp3';
+            song_2.src = '/assets/slime_click.mp3';
+
+            return [
+                song_1, song_2
+            ];
+        }
     }),
     computed: {
-        localStorage: () => localStorage // for toggle tooltip
+        localStorage: () => localStorage, // for toggle tooltip,
+        earnings: function() {
+            return this.clicks / 100; // count earning from clicks
+        },
+        // sounds: function () {
+        //     return [
+        //         this._sounds[0].src = '/assets/boole.mp3',
+        //         this._sounds[0].src = '/assets/slime_click.mp3',
+        //     ];
+        // }
     },
     methods : {
         mineHandler() {
-            this.isBig = !this.isBig
+            this.isBig = !this.isBig; // some animation
+            this.clicks++; // increase click count
+
+            // play random song (from 2 songs)
+            this.sounds()[Math.round(Math.random())].play();
+        },
+        mineSell(){
+            this.mine(this.earnings);
+            this.clicks = 0;
         }
     }
 }
