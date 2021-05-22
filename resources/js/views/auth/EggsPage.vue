@@ -198,7 +198,7 @@
                 <div class="text-center">
                     <h2>Продать яйца в один клик</h2>
 
-                    <div class="d-flex justify-content-between">
+                    <div class="d-lg-flex justify-content-between d-block">
                         <img
                             src="/assets/brigade.png"
                             height="300px"
@@ -244,8 +244,13 @@ export default {
             if (eggs_count !== false) {
                 egg.count             = eggs_count; // update number of eggs
                 event.target.disabled = true; // disable button to ban selling eggs
+
+                let money_song = new Audio();
+                money_song.volume=0.3;
+                money_song.src = '/assets/sounds/money.mp3';
+                money_song.play()
             } else {
-                // show modal ( на всякий случай)) )
+                // show modal
                 this.$bvModal.show('modal-eggs');
             }
         },
@@ -287,12 +292,19 @@ export default {
             }
         },
         async brigadeHireHandler() {
-            let result = await this.brigadeHire();
-
-            if (result) {
-                this.$bvModal.show('modal-brigade');
-                this.fetchUserEggs();
-            }
+            return;
+            // let result = await this.brigadeHire();
+            //
+            // if (result) {
+            //     // cleaning song
+            //     let cleaning_song = new Audio();
+            //     cleaning_song.volume=0.3;
+            //     cleaning_song.src = '/assets/sounds/cleaning.mp3';
+            //     cleaning_song.play()
+            //
+            //     this.$bvModal.show('modal-brigade'); // show message
+            //     this.fetchUserEggs(); // update eggs list
+            // }
         }
     },
     computed: {

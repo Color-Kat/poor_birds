@@ -82,8 +82,12 @@ export default {
             // return array of songs;
             let song_1 = new Audio();
             let song_2 = new Audio();
-            song_1.src = '/assets/boole.mp3';
-            song_2.src = '/assets/slime_click.mp3';
+            song_1.src = '/assets/sounds/boole.mp3';
+            song_2.src = '/assets/sounds/slime_click.mp3';
+            // change volume
+            song_1.volume = 0.4
+            song_2.volume = 0.4
+
 
             return [
                 song_1, song_2

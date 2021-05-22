@@ -186,7 +186,14 @@ export default {
         ...mapActions(['fetchSeller', 'buyBird', 'openSeller']),
         async birdBuy(ids) {
             let result = await this.buyBird(ids);
-            if (result) this.$bvModal.show('modal-bird-buy');
+            if (result) {
+                this.$bvModal.show('modal-bird-buy');
+
+                let buy_song = new Audio();
+                buy_song.volume=0.3;
+                buy_song.src = '/assets/sounds/buy.mp3';
+                buy_song.play()
+            }
             else this.$bvModal.show('modal-no-money');
         },
         async openThisSeller(seller) {

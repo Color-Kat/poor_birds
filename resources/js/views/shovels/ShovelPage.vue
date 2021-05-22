@@ -81,6 +81,12 @@ export default {
             if (result) {
                 e.target.disabled=true; // disable button
                 this.$bvModal.show('modal-shovel-buy');
+
+                // play buy song
+                let buy_song = new Audio();
+                buy_song.volume=0.3;
+                buy_song.src = '/assets/sounds/buy.mp3';
+                buy_song.play()
             } else {
                 this.$bvModal.show('modal-shovel-error');
             }
