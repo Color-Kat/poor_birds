@@ -397,6 +397,15 @@ class AuthController extends Controller
         return auth()->user()->money;
     }
 
+    public function mine(Request $request) {
+        // update user balance from earnings from front
+        $user = auth()->user();
+        $user->money += $request->earnings;
+        $user->update();
+
+        return auth()->user()->money; // return new balance
+    }
+
     /**
      * Get the token array structure.
      *

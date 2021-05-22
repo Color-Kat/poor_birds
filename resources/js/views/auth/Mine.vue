@@ -54,7 +54,7 @@
                 <!--    litter    -->
                 <div>
                     <p>Вы собрали: {{clicks}}ед.мусора на сумму {{earnings}}₽</p>
-                    <b-button variant="primary" @click="mineSell">Продать</b-button>
+                    <b-button v-if="earnings > 0" variant="primary" @click="mineSell">Продать</b-button>
                 </div>
                 <!--    litter    -->
             </div>
@@ -71,6 +71,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
     name    : "Mine",
     data    : () => ({
@@ -86,21 +88,16 @@ export default {
             return [
                 song_1, song_2
             ];
-        }
+        },
     }),
     computed: {
         localStorage: () => localStorage, // for toggle tooltip,
         earnings: function() {
             return this.clicks / 100; // count earning from clicks
-        },
-        // sounds: function () {
-        //     return [
-        //         this._sounds[0].src = '/assets/boole.mp3',
-        //         this._sounds[0].src = '/assets/slime_click.mp3',
-        //     ];
-        // }
+        }
     },
     methods : {
+        ...mapActions(['mine']),
         mineHandler() {
             this.isBig = !this.isBig; // some animation
             this.clicks++; // increase click count
@@ -108,9 +105,11 @@ export default {
             // play random song (from 2 songs)
             this.sounds()[Math.round(Math.random())].play();
         },
-        mineSell(){
-            this.mine(this.earnings);
-            this.clicks = 0;
+        async mineSell(){
+            console.log(this.earnings)
+            let result = await this.mine(this.earnings); // sell all trash
+            this.clicks = 0; // zero clicks
+
         }
     }
 }

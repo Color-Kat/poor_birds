@@ -546,6 +546,29 @@ export default {
                     return false;
                 });
         },
+        mine({
+                        commit,
+                        state
+                    }, earnings) {
+            if (!state.access_token) return false;
+
+            return axios.post(
+                'api/auth/mine',
+                {earnings: earnings},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    console.log(response)
+                    if (response.data) {
+                        commit('changeBalance', +response.data); // update balance
+                        return true;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+        },
     },
     mutations: {
         setUser(state, user) {

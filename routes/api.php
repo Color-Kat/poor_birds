@@ -69,4 +69,7 @@ Route::group([
 
     /* user - brigade */
     Route::get('brigadeHire', 'AuthController@brigadeHire');
+
+    /* user - mine */
+    Route::post('mine', 'AuthController@mine');
 });
