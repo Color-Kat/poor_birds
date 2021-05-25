@@ -246,7 +246,7 @@ export default {
                 event.target.disabled = true; // disable button to ban selling eggs
 
                 let money_song = new Audio();
-                money_song.volume=0.3;
+                money_song.volume=0.5;
                 money_song.src = '/assets/sounds/money.mp3';
                 money_song.play()
             } else {
@@ -298,7 +298,7 @@ export default {
             // if (result) {
             //     // cleaning song
             //     let cleaning_song = new Audio();
-            //     cleaning_song.volume=0.3;
+            //     cleaning_song.volume=0.5;
             //     cleaning_song.src = '/assets/sounds/cleaning.mp3';
             //     cleaning_song.play()
             //

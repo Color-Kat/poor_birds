@@ -40,6 +40,9 @@ import EggsPage from "./views/auth/EggsPage";
 import Contracts from "./views/contracts/Contracts";
 import ContractPage from "./views/contracts/ContractPage";
 import Mine from "./views/auth/Mine";
+import PayForm from "./views/payment/PayForm";
+import Success from "./views/payment/Success";
+import Failed from "./views/payment/Failed";
 
 
 Vue.use(VueRouter);
@@ -260,6 +263,23 @@ const routes = [
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'login'});
         },
+    },
+
+    /* ---------- PAYMENT -----------*/
+    {
+        path     : '/payment',
+        name     : 'payment',
+        component: PayForm,
+    },
+    {
+        path     : '/payment/success',
+        name     : 'payment_success',
+        component: Success,
+    },
+    {
+        path     : '/payment/failed',
+        name     : 'payment_failed',
+        component: Failed,
     },
 ];
 

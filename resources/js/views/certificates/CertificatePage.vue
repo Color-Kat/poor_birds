@@ -110,7 +110,7 @@ export default {
 
                 // stamp sound
                 let money_song = new Audio();
-                money_song.volume=0.3;
+                money_song.volume=0.5;
                 money_song.src = '/assets/sounds/stamp.mp3';
                 money_song.play();
             }

@@ -190,7 +190,7 @@ export default {
                 this.$bvModal.show('modal-bird-buy');
 
                 let buy_song = new Audio();
-                buy_song.volume=0.3;
+                buy_song.volume=0.5;
                 buy_song.src = '/assets/sounds/buy.mp3';
                 buy_song.play()
             }
