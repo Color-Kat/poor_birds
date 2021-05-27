@@ -7,17 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class Bird extends Model
 {
     protected $fillable = ['name', 'price', 'fertility', 'litter', 'demand', 'care', 'egg_price', 'description',
-        'image'];
+        'quest', 'image'];
 
+    /**
+     * Set relationships for sellers table
+     */
     public function sellers()
     {
         return $this->belongsToMany('App\models\Seller');
     }
 
-//    public function certificate() {
-//        return $this->hasOne('App\models\Certificate');
-//    }
-
+    /**
+     * Apply certificate to birds and return bird with certificate bonuses
+     * @param $bird - receive bird,
+     * @param $certificate - receive the certificate to be applied to the bird
+     * @return mixed - bird with certificate bonuses
+     */
     public static function apply_certificate_to_bird($bird, $certificate)
     {
         $bird_with_certificate = [];
@@ -34,6 +39,7 @@ class Bird extends Model
             "image"          => $bird->image,
             "name"           => $bird->name,
             "description"    => $bird->description,
+            "quest"          => $bird->quest,
             "price"          => $bird->price,
             "fertility"      => round($bird->fertility * $fertility_bonus, 2),
             "demand"         => round($bird->demand * $demand_bonus),

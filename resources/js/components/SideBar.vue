@@ -33,6 +33,10 @@
                     <b-nav-item  active-class="active"><b>⛏</b>Шахта (в разработке)</b-nav-item>
                 </div>
 
+                <div style="font-size: 1.1em">
+                    <b-nav-item active-class="active"><b>🏦</b>Банк (в разработке)</b-nav-item>
+                </div>
+
             </b-navbar-nav>
         </b-card>
     </aside>

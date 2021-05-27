@@ -33,6 +33,15 @@
                 ></b-form-input>
             </b-form-group>
 
+            <!--      QUEST      -->
+            <b-form-group id="input-quest" label="Квест:" label-for="quest">
+                <b-form-input
+                    id="quest"
+                    v-model="form.quest"
+                    description="Текст, который будет отображаться при покупке птицы"
+                ></b-form-input>
+            </b-form-group>
+
             <!--      IMAGE      -->
             <b-form-group id="input-image" label="Изображение птицы:" label-for="image">
                 <b-form-file
@@ -144,6 +153,7 @@ export default {
                 id         : this.$route.query.id || null,
                 name       : this.$route.query.name || 'Tester',
                 description: this.$route.query.description || 'Тестирует приложение',
+                quest      : this.$route.query.quest || '',
                 image      : null,
                 imagePath  : this.$route.query.image || '',
                 demand     : this.$route.query.demand || 50,

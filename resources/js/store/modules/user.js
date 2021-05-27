@@ -269,9 +269,11 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    if (!response.data) return false
+                    if (!response.data) return false;
                     else {
-                        commit('changeBalance', response.data);
+
+
+                        commit('changeBalance', response.data); // update balance from returned data
                         return true;
                     }
                 })

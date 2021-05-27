@@ -12,10 +12,25 @@
                 </template>
             </b-modal>
 
-            <!--    YOU BUY BIRD MODAL    -->
-            <b-modal id="modal-bird-buy" title="Поздравляем! Вы купили птицу" hide-header>
-                <p class="my-2">Поздравляем! Вы купили птицу "{{ purchasedBirdName }}". <b-link :to="{name: 'my_birds'}">Мои
-                    птицы</b-link></p>
+            <!--    YOU BUY BIRD QUEST    -->
+            <b-modal id="modal-bird-buy" title="Поздравляем! Вы купили птицу" header-bg-variant="success">
+                <p class="my-2">
+                    Поздравляем! Вы купили птицу "{{ purchasedBird ? purchasedBird.name : '' }}".
+                    <b-link :to="{name: 'my_birds'}">Мои птицы</b-link>
+
+                    <b-card
+                        v-if="
+                        !((JSON.parse(localStorage.getItem('birds_purchased_list')) || [])
+                        .includes(purchasedBird ? purchasedBird.id : ''))"
+                            class="mt-2">
+                        {{purchasedBird ? purchasedBird.quest : ''}}
+                    </b-card>
+<!--                    <b-card-->
+<!--                        v-if="!(JSON.parse(localStorage.getItem('birds_purchased_list')).includes(purchasedBird?.id))"-->
+<!--                        class="mt-2">-->
+<!--                        {{purchasedBird ? purchasedBird.quest : ''}}-->
+<!--                    </b-card>-->
+                </p>
 
                 <template #modal-footer="{ ok }">
                     <b-button size="sm" variant="success" @click="ok()">
@@ -135,10 +150,7 @@
 
                            <b-button
                                variant="primary"
-                               @click="()=>{
-                                birdBuy({bird_id: bird.id, sold_bird_id: bird.pivot.id});
-                                purchasedBirdName = bird.name
-                            }"
+                               @click="()=>birdBuy(bird)"
 
                            >
                                купить за <b>{{ Math.round(bird.price * (1 + getSeller.discount / 100)) }}&#8381;</b>
@@ -167,7 +179,9 @@ export default {
             loading          : true,
             purchasedBirdName: null,
             sellerAvailable  : false,
-            questMessage     : ''
+            questMessage     : '',
+            birdQuestMessage : '',
+            purchasedBird    : null
         }
     },
     computed  : {
@@ -180,21 +194,50 @@ export default {
                     })
                     : false
             );
-        }
+        },
+        localStorage: ()=>localStorage
     },
     methods   : {
         ...mapActions(['fetchSeller', 'buyBird', 'openSeller']),
-        async birdBuy(ids) {
-            let result = await this.buyBird(ids);
-            if (result) {
-                this.$bvModal.show('modal-bird-buy');
+        async birdBuy(bird) {
+            // buy bird from seller_id, bird_id
+            let result = await this.buyBird({
+                bird_id: bird.id,
+                sold_bird_id: bird.pivot.id
+            });
 
+            // successful purchased
+            if (result) {
+                // this.birdQuestMessage = bird.quest; // set quest text
+                // this.purchasedBirdName = bird.name; // set purchased bird name
+                this.purchasedBird = bird;
+                this.$bvModal.show('modal-bird-buy'); // show success modal with quest and bird name
+
+                /* Add the bird to the purchased list
+                 * to remember it for displaying bird quest message in SellerPage.vue the next time
+                 * you buy this bird
+                */
+                setTimeout(()=>{
+                    // get previous list or empty array
+                    let purchased_list = (
+                        JSON.parse(localStorage.getItem("birds_purchased_list"))
+                        || []
+                    );
+
+                    // check if element already exists in list and update list
+                    if (!purchased_list.includes(bird.id)) localStorage.setItem(
+                        "birds_purchased_list",
+                        JSON.stringify(purchased_list.concat(bird.id))// add new item to list
+                    );
+                }, 1000);
+
+                // play purchased sound
                 let buy_song = new Audio();
                 buy_song.volume=0.5;
                 buy_song.src = '/assets/sounds/buy.mp3';
                 buy_song.play()
             }
-            else this.$bvModal.show('modal-no-money');
+            else this.$bvModal.show('modal-no-money'); // no money message
         },
         async openThisSeller(seller) {
             if (await this.openSeller(seller.id)) {

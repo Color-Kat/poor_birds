@@ -80,11 +80,8 @@ function subscribeUser() {
 
 async function storePushSubscription(pushSubscription) {
     const token = document.querySelector('meta[name=csrf-token]')?.getAttribute('content');
-    // const token = document.querySelector('input[name=csrf-token]')?.getAttribute('value');
-    // if(!token) return false;
-    await setTimeout(async ()=> {
-        // console.log(store.getters.getToken)
 
+    await setTimeout(async ()=> {
         return await fetch('/push', {
             method : 'POST',
             body   : JSON.stringify(pushSubscription),
@@ -99,7 +96,7 @@ async function storePushSubscription(pushSubscription) {
                 return res.json();
             })
             .then((res) => {
-                console.log(res)
+                // console.log(res);
                 if(res.success) return true;
 
             })

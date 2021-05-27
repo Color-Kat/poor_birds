@@ -96,8 +96,16 @@ class CollectEggs extends Command
                 cared = IF(contracts.script_name = 'cares', 1, 0), -- remove care bonus or add it if user have contract
                 fine = eggs.fine + b_s_u.count * CASE
                     WHEN certs.grade IS NULL THEN 5 -- no certificate. Fine is 5
-                    WHEN certs.grade = 0 THEN 3 -- grade 0 - fake certificate. Fine is 3
-                    WHEN certs.grade = 1 THEN 1 -- grade 1 - certificate with a typo. Fine is 1
+                    WHEN certs.grade = 0 THEN 4 -- grade 0 - fake certificate. Fine is 4
+                    WHEN certs.grade = 1 THEN 3 -- grade 1 - certificate with a typo. Fine is 1
+                    WHEN certs.grade = 2 THEN 2 -- grade 1 - certificate with a typo. Fine is 1
+                    WHEN certs.grade = 3 THEN 2 -- grade 1 - certificate with a typo. Fine is 1
+                    WHEN certs.grade = 4 THEN 1.7 -- grade 1 - certificate with a typo. Fine is 1
+                    WHEN certs.grade = 5 THEN 1.5 -- grade 1 - certificate with a typo. Fine is 1
+                    WHEN certs.grade = 6 THEN 1.2 -- grade 1 - certificate with a typo. Fine is 1
+                    WHEN certs.grade = 7 THEN 1 -- grade 1 - certificate with a typo. Fine is 1
+                    WHEN certs.grade = 8 THEN 0.9 -- grade 1 - certificate with a typo. Fine is 1
+                    WHEN certs.grade = 9 THEN 0.5 -- grade 1 - certificate with a typo. Fine is 1
                     ELSE 0
                 END
         ");

@@ -3,10 +3,6 @@
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/{any}', function () {
-//    return view('index');
-//})->where('any', '.*');
-
 // for url cron jobs
 Route::get('/cron/collect_eggs', function () {
     Artisan::call('collect:eggs');
@@ -19,10 +15,12 @@ Route::post('/push','PushController@store');
 //make a push notification.
 Route::get('/push','PushController@push');
 
+
+Route::post('/payment/result', function (Request $request){
+    \Illuminate\Support\Facades\Log::info('wooork!');
+    \Illuminate\Support\Facades\Log::info($request->all());
+})->middleware(\App\Http\Middleware\FreeKassaVerifyCsrfToken::class);
+
 Route::any('/{any}', function () {
     return view('index');
 })->where('any', '.*');
-
-//Route::any( '/{any}/{any?}', function(){
-//    return view('index');
-//})->where('any', '.*');
