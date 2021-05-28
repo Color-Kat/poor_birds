@@ -13,11 +13,12 @@
             </b-modal>
 
             <!--    YOU BUY BIRD QUEST    -->
-            <b-modal id="modal-bird-buy" title="Поздравляем! Вы купили птицу" header-bg-variant="success">
+            <b-modal id="modal-bird-buy" title="Поздравляем! Вы купили птицу" header-bg-variant="success"
+                     header-text-variant="light">
                 <p class="my-2">
                     Поздравляем! Вы купили птицу "{{ purchasedBird ? purchasedBird.name : '' }}".
                     <b-link :to="{name: 'my_birds'}">Мои птицы</b-link>
-
+                    {{ localStorage.getItem('birds_purchased_list') }}
                     <b-card
                         v-if="
                         !((JSON.parse(localStorage.getItem('birds_purchased_list')) || [])

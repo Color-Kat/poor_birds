@@ -40,7 +40,7 @@
                 <!--         mine button       -->
                 <div class="d-flex justify-content-center w-100 align-items-center mb-5">
                     <button
-                        class="mine-button w-50"
+                        class="mine-button w-75"
                         @click="mineHandler"
                         :class="isBig ? 'big-mine' : ''"
                     >
