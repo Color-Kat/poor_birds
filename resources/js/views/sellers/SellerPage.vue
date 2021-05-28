@@ -1,67 +1,74 @@
 <template>
     <div>
         <!-- --- BIRDS MODALS ---    -->
-            <!--    NO MONEY MODAL    -->
-            <b-modal id="modal-no-money" header-bg-variant="danger">
-                <p class="my-2">К сожалению у вас нет денег на птицу "{{ purchasedBirdName }}"</p>
+        <!--    NO MONEY MODAL    -->
+        <b-modal id="modal-no-money" header-bg-variant="danger">
+            <p class="my-2">К сожалению у вас нет денег на птицу "{{ purchasedBirdName }}"</p>
 
-                <template #modal-footer="{ ok }">
-                    <b-button size="sm" @click="ok()">
-                        Oк(
-                    </b-button>
-                </template>
-            </b-modal>
+            <template #modal-footer="{ ok }">
+                <b-button size="sm" @click="ok()">
+                    Oк(
+                </b-button>
+            </template>
+        </b-modal>
 
-            <!--    YOU BUY BIRD QUEST    -->
-            <b-modal id="modal-bird-buy" title="Поздравляем! Вы купили птицу" header-bg-variant="success"
-                     header-text-variant="light">
-                <p class="my-2">
-                    Поздравляем! Вы купили птицу "{{ purchasedBird ? purchasedBird.name : '' }}".
-                    <b-link :to="{name: 'my_birds'}">Мои птицы</b-link>
-                    {{ localStorage.getItem('birds_purchased_list') }}
-                    <b-card
-                        v-if="
-                        !((JSON.parse(localStorage.getItem('birds_purchased_list')) || [])
-                        .includes(purchasedBird ? purchasedBird.id : ''))"
-                            class="mt-2">
-                        {{purchasedBird ? purchasedBird.quest : ''}}
-                    </b-card>
-<!--                    <b-card-->
-<!--                        v-if="!(JSON.parse(localStorage.getItem('birds_purchased_list')).includes(purchasedBird?.id))"-->
-<!--                        class="mt-2">-->
-<!--                        {{purchasedBird ? purchasedBird.quest : ''}}-->
-<!--                    </b-card>-->
-                </p>
+        <!--    YOU BUY BIRD QUEST    -->
+        <b-modal
+            id="modal-bird-buy" title="Поздравляем! Вы купили птицу" header-bg-variant="success"
+            header-text-variant="light"
+        >
+            <p class="my-2">
+                Поздравляем! Вы купили птицу "{{ purchasedBird ? purchasedBird.name : '' }}".
+                <b-link :to="{name: 'my_birds'}">Мои птицы</b-link>
+            </p>
 
-                <template #modal-footer="{ ok }">
-                    <b-button size="sm" variant="success" @click="ok()">
-                        Oк
-                    </b-button>
-                </template>
-            </b-modal>
+            <div
+                v-if="!((JSON.parse(localStorage.getItem('birds_purchased_list')) || [])
+                                .includes(purchasedBird ? purchasedBird.id : ''))"
+                class="mt-2 box"
+            >
+                <div class="box-inner">
+                    <p>
+                        {{ purchasedBird ? purchasedBird.quest : '' }}
+                    </p>
+                </div>
+            </div>
+                <!--                    <b-card-->
+                <!--                        v-if="!(JSON.parse(localStorage.getItem('birds_purchased_list')).includes(purchasedBird?.id))"-->
+                <!--                        class="mt-2">-->
+                <!--                        {{purchasedBird ? purchasedBird.quest : ''}}-->
+                <!--                    </b-card>-->
+
+
+            <template #modal-footer="{ ok }">
+                <b-button size="sm" variant="success" @click="ok()">
+                    Oк
+                </b-button>
+            </template>
+        </b-modal>
         <!-- --- BIRDS MODALS ---    -->
 
         <!-- --- SELLERS MODALS ---    -->
-            <!--      NO MONEY      -->
-            <b-modal id="modal-no-money-seller" header-bg-variant="danger" hide-footer>
-                <p class="my-2">К сожалению у вас нет денег на открытие продавца</p>
-            </b-modal>
+        <!--      NO MONEY      -->
+        <b-modal id="modal-no-money-seller" header-bg-variant="danger" hide-footer>
+            <p class="my-2">К сожалению у вас нет денег на открытие продавца</p>
+        </b-modal>
 
-            <!--    OPEN SELLER QUEST    -->
-            <!--      OPEN SELLER AND QUEST      -->
-            <b-modal id="modal-open-seller" header-bg-variant="success" hide-footer>
-                <p class="my-2">
-                    <span>Вы открыли продавца!</span> <br>
-                    <b-card class="mt-2">
-                        {{questMessage}}
-                    </b-card>
-                </p>
-            </b-modal>
+        <!--    OPEN SELLER QUEST    -->
+        <!--      OPEN SELLER AND QUEST      -->
+        <b-modal id="modal-open-seller" header-bg-variant="success" hide-footer>
+            <p class="my-2">
+                <span>Вы открыли продавца!</span> <br>
+                <b-card class="mt-2">
+                    {{ questMessage }}
+                </b-card>
+            </p>
+        </b-modal>
         <!-- --- SELLERS MODALS ---    -->
 
-        <Loader v-if="loading" />
+        <Loader v-if="loading"/>
 
-        <b-card v-else >
+        <b-card v-else>
             <!--      seller not found      -->
             <b-alert show v-if="!getSeller" variant="warning">
                 <span>Такого продавца не существует :(</span>
@@ -70,40 +77,43 @@
                 </b-button>
             </b-alert>
 
-           <div v-else>
-               <h2 class="text-center">{{ getSeller.name[1] }}</h2>
-               <figure class="text-center">
-                   <img
-                       width="60%" :src="`/storage/${getSeller.image}`"
-                       :alt="getSeller.name"
-                   >
-               </figure>
-               <Field :field="getSeller.name"></Field>
-               <Field :field="getSeller.description"></Field>
-               <Field :field="getSeller.discountText"></Field>
-               <!--            <Field :field="getSeller.birds_count"></Field>-->
-               <Field :field="getSeller.price"></Field>
+            <div v-else>
+                <h2 class="text-center">{{ getSeller.name[1] }}</h2>
+                <figure class="text-center">
+                    <img
+                        width="60%" :src="`/storage/${getSeller.image}`"
+                        :alt="getSeller.name"
+                    >
+                </figure>
+                <Field :field="getSeller.name"></Field>
+                <Field :field="getSeller.description"></Field>
+                <Field :field="getSeller.discountText"></Field>
+                <!--            <Field :field="getSeller.birds_count"></Field>-->
+                <Field :field="getSeller.price"></Field>
 
-               <b-button
-                   v-if="getSeller.certificate_id"
-                   class="mt-2"
-                   variant="warning"
-                   :to="`/certificates/${getSeller.certificate_id}`"
-               >
-                   {{
-                       getSeller.certificate_name
-                   }}
-               </b-button>
-               <b-alert class="mt-3" v-else show variant="warning">Этот продавец не выдает птицам <b-link
-                   :to="{name:'certificates'}">сертификаты
-               </b-link>!
-               </b-alert>
+                <b-button
+                    v-if="getSeller.certificate_id"
+                    class="mt-2"
+                    variant="warning"
+                    :to="`/certificates/${getSeller.certificate_id}`"
+                >
+                    {{
+                        getSeller.certificate_name
+                    }}
+                </b-button>
+                <b-alert class="mt-3" v-else show variant="warning">Этот продавец не выдает птицам
+                    <b-link
+                        :to="{name:'certificates'}"
+                    >сертификаты
+                    </b-link>
+                    !
+                </b-alert>
 
-               <hr>
-               <h2>Птицы продавца: </h2>
+                <hr>
+                <h2>Птицы продавца: </h2>
 
-               <!--      open seller      -->
-               <span v-if="!checkSellerAvailable">
+                <!--      open seller      -->
+                <span v-if="!checkSellerAvailable">
                 У вас не заключён договор с этим продавцов. Заключите договор, чтобы покупать птиц:
                 <b-button
                     variant="primary"
@@ -114,52 +124,52 @@
                 </b-button>
             </span>
 
-               <div
-                   class="mt-2 grid-cards-columns"
-                   v-else
-               >
-                   <b-card
-                       v-for="bird of getSeller.birds"
-                       class="mb-2 card-item"
-                       :title="bird.name"
-                       :img-src="`/storage/${bird.image}`"
-                       :img-alt="bird.name"
-                       tag="article"
-                       :key="bird.id"
-                   >
-                       <b-card-text>
+                <div
+                    class="mt-2 grid-cards-columns"
+                    v-else
+                >
+                    <b-card
+                        v-for="bird of getSeller.birds"
+                        class="mb-2 card-item"
+                        :title="bird.name"
+                        :img-src="`/storage/${bird.image}`"
+                        :img-alt="bird.name"
+                        tag="article"
+                        :key="bird.id"
+                    >
+                        <b-card-text>
                         <span class="description">
                             {{ bird.description.slice(0, 100) }}
                             {{ bird.description.length > 100 ? '...' : '' }}
                         </span>
-                           <hr>
+                            <hr>
 
-                           <h6 class="d-inline" style="width: 10px !important; margin: 0 !important;">
-                               <b-badge variant="warning">Плодоносность: {{ bird.fertility }} яиц/час
-                               </b-badge>
-                               <b-badge variant="danger">Спрос: {{ bird.demand }} яиц/час
-                               </b-badge>
-                               <b-badge variant="success">Бонус за заботу: {{ bird.care }}%
-                               </b-badge>
-                               <b-badge variant="dark">Помет: {{ bird.litter }} ед/час
-                               </b-badge>
-                               <b-badge variant="primary">Цена яйца: {{ bird.egg_price }}&#8381;
-                               </b-badge>
-                           </h6>
+                            <h6 class="d-inline" style="width: 10px !important; margin: 0 !important;">
+                                <b-badge variant="warning">Плодоносность: {{ bird.fertility }} яиц/час
+                                </b-badge>
+                                <b-badge variant="danger">Спрос: {{ bird.demand }} яиц/час
+                                </b-badge>
+                                <b-badge variant="success">Бонус за заботу: {{ bird.care }}%
+                                </b-badge>
+                                <b-badge variant="dark">Помет: {{ bird.litter }} ед/час
+                                </b-badge>
+                                <b-badge variant="primary">Цена яйца: {{ bird.egg_price }}&#8381;
+                                </b-badge>
+                            </h6>
 
-                           <hr>
+                            <hr>
 
-                           <b-button
-                               variant="primary"
-                               @click="()=>birdBuy(bird)"
+                            <b-button
+                                variant="primary"
+                                @click="()=>birdBuy(bird)"
 
-                           >
-                               купить за <b>{{ Math.round(bird.price * (1 + getSeller.discount / 100)) }}&#8381;</b>
-                           </b-button>
-                       </b-card-text>
-                   </b-card>
-               </div>
-           </div>
+                            >
+                                купить за <b>{{ Math.round(bird.price * (1 + getSeller.discount / 100)) }}&#8381;</b>
+                            </b-button>
+                        </b-card-text>
+                    </b-card>
+                </div>
+            </div>
         </b-card>
     </div>
 </template>
@@ -196,14 +206,14 @@ export default {
                     : false
             );
         },
-        localStorage: ()=>localStorage
+        localStorage        : () => localStorage
     },
     methods   : {
         ...mapActions(['fetchSeller', 'buyBird', 'openSeller']),
         async birdBuy(bird) {
             // buy bird from seller_id, bird_id
             let result = await this.buyBird({
-                bird_id: bird.id,
+                bird_id     : bird.id,
                 sold_bird_id: bird.pivot.id
             });
 
@@ -218,7 +228,7 @@ export default {
                  * to remember it for displaying bird quest message in SellerPage.vue the next time
                  * you buy this bird
                 */
-                setTimeout(()=>{
+                setTimeout(() => {
                     // get previous list or empty array
                     let purchased_list = (
                         JSON.parse(localStorage.getItem("birds_purchased_list"))
@@ -233,20 +243,18 @@ export default {
                 }, 1000);
 
                 // play purchased sound
-                let buy_song = new Audio();
-                buy_song.volume=0.5;
-                buy_song.src = '/assets/sounds/buy.mp3';
+                let buy_song    = new Audio();
+                buy_song.volume = 0.5;
+                buy_song.src    = '/assets/sounds/buy.mp3';
                 buy_song.play()
-            }
-            else this.$bvModal.show('modal-no-money'); // no money message
+            } else this.$bvModal.show('modal-no-money'); // no money message
         },
         async openThisSeller(seller) {
             if (await this.openSeller(seller.id)) {
                 this.sellerAvailable = true;
-                this.questMessage = seller.quest;
+                this.questMessage    = seller.quest;
                 this.$bvModal.show('modal-open-seller');
-            }
-            else this.$bvModal.show('modal-no-money-seller');
+            } else this.$bvModal.show('modal-no-money-seller');
         }
     },
     async mounted() {
@@ -257,6 +265,63 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+$color-alpha: #b78846;
+.box {
+    position: relative;
+    background-color: rgba(#000, 0.7);
+    width: 100%;
+    max-width: 600px;
+    padding: 5px;
+    border: 2px solid $color-alpha;
+    color: white;
 
+    //&:before, &:after {
+    //    content: "•";
+    //    //position: absolute;
+    //    width: 14px;
+    //    height: 14px;
+    //    font-size: 14px;
+    //    color: $color-alpha;
+    //    border: 2px solid $color-alpha;
+    //    line-height: 12px;
+    //    top: 5px;
+    //    text-align: center;
+    //}
+    //
+    //&:before {
+    //    left: 5px;
+    //}
+    //
+    //&:after {
+    //    right: 5px;
+    //}
+
+    .box-inner {
+        position: relative;
+        border: 2px solid $color-alpha;
+        padding: 40px;
+
+        &:before, &:after {
+            content: "•";
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            font-size: 14px;
+            color: $color-alpha;
+            border: 2px solid $color-alpha;
+            line-height: 12px;
+            bottom: -2px;
+            text-align: center;
+        }
+
+        &:before {
+            left: -2px;
+        }
+
+        &:after {
+            right: -2px;
+        }
+    }
+}
 </style>

@@ -70,6 +70,10 @@ export default {
         getMyBirds(state) {
             return state.user_birds;
         },
+
+        /**
+         * @return [{id: number, litter: number, name: string, price: number, demand: number, fine: number, bird_seller_id: number, birds_count: number, cared: boolean, collected: boolean, user_id: numver}]
+         * */
         getEggs(state) {
             return state.eggs;
         },
@@ -131,6 +135,7 @@ export default {
         },
         fetchUser({
                       commit,
+                      dispatch,
                       state
                   }) {
 
@@ -143,6 +148,8 @@ export default {
                 ).then(response => {
                     if (response.status === 200) {
                         commit('setUser', response.data); // user is logged in
+                        dispatch('fetchUserBirds'); // user is logged in
+                        dispatch('fetchUserEggs'); // user is logged in
                     } else commit('setUser', null); // user is not logged in
                 })
                     // some error, user is not logged in
