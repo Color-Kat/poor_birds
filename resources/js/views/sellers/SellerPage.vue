@@ -18,19 +18,19 @@
             header-text-variant="light" hide-header body-bg-variant="dark" hide-footer
         >
             <div
-                v-if="!((JSON.parse(localStorage.getItem('birds_purchased_list')) || [])
-                                .includes(purchasedBird ? purchasedBird.id : ''))"
                 class="quest-box"
             >
                 <div class="quest-box-inner">
                     <h4>
                         Поздравляем, Вы купили птицу "{{ purchasedBird ? purchasedBird.name : '' }}"!
                     </h4>
-                    <p>
+                    <p v-if="!((JSON.parse(localStorage.getItem('birds_purchased_list')) || [])
+                                .includes(purchasedBird ? purchasedBird.id : ''))"
+                    >
                         {{ purchasedBird ? purchasedBird.quest : '' }}
                         <br>
-                        <b-link :to="{name: 'my_birds'}">Мои птицы</b-link>
                     </p>
+                    <b-link :to="{name: 'my_birds'}">Мои птицы</b-link>
                 </div>
             </div>
             <!--                    <b-card-->

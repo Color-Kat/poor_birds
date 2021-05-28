@@ -6,7 +6,7 @@
         <Loader v-show="getIsLoading"/>
         <!--    LOADER    -->
 
-        <main>
+        <main style="z-index: 10;">
             <div
                 id="main-container"
                 class="container-lg"
@@ -18,13 +18,15 @@
                 <!--    SIDEBAR    -->
 
                 <!--    CONTENT    -->
-                <router-view id="main-content" style="width: 100% !important;"></router-view>
+                <router-view id="main-content" style="width: 100% !important; z-index: 10;"></router-view>
                 <!--    CONTENT    -->
             </div>
         </main>
 
         <Footer/>
+        <Background/>
     </div>
+
 </template>
 
 <script>
@@ -34,6 +36,7 @@ import Loader from './components/Loader';
 import {mapActions, mapGetters} from "vuex";
 import BlackOut from "./components/BlackOut";
 import Footer from "./components/Footer";
+import Background from "./components/visual/Background";
 
 export default {
     name      : "App",
@@ -42,7 +45,8 @@ export default {
         Header,
         SideBar,
         BlackOut,
-        Loader
+        Loader,
+        Background
     },
     computed  : {
         ...mapGetters(['getAuth', 'getIsLoading'])
@@ -58,9 +62,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-main{
+main {
     min-height: 550px; // min height for footer
 }
+
 #main-container {
     display: flex;
     align-items: flex-start;

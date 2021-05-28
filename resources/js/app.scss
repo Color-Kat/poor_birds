@@ -175,45 +175,4 @@ body {
     }
 }
 
-// quest messages
-$color-alpha: #b78846;
-.quest-box {
-    position: relative;
-    background-color: rgba(#000, 0.7);
-    width: 100%;
-    max-width: 600px;
-    padding: 5px;
-    border: 2px solid $color-alpha;
-    color: white;
 
-    a{
-        color: $color-alpha;
-    }
-
-    .quest-box-inner {
-        position: relative;
-        border: 2px solid $color-alpha;
-        padding: 40px;
-
-        &:before, &:after {
-            content: "•";
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            font-size: 14px;
-            color: $color-alpha;
-            border: 2px solid $color-alpha;
-            line-height: 12px;
-            bottom: -2px;
-            text-align: center;
-        }
-
-        &:before {
-            left: -2px;
-        }
-
-        &:after {
-            right: -2px;
-        }
-    }
-}
