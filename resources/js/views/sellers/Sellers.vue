@@ -6,13 +6,26 @@
         </b-modal>
 
         <!--      OPEN SELLER AND QUEST      -->
-        <b-modal id="modal-open-seller" header-bg-variant="success" hide-footer>
-            <p class="my-2">
-                <span>Вы открыли продавца!</span> <br>
-                <b-card class="mt-2">
-                    {{questMessage}}
-                </b-card>
-            </p>
+<!--        <b-modal id="modal-open-seller" header-bg-variant="success" hide-footer>-->
+<!--            <p class="my-2">-->
+<!--                <span>Вы открыли продавца!</span> <br>-->
+<!--                <b-card class="mt-2">-->
+<!--                    {{questMessage}}-->
+<!--                </b-card>-->
+<!--            </p>-->
+<!--        </b-modal>-->
+
+        <b-modal id="modal-open-seller" header-bg-variant="success" hide-footer hide-header
+                 body-bg-variant="dark">
+            <div class="quest-box">
+                <div class="quest-box-inner">
+                    <h1>Вы открыли продавца!</h1>
+                    <p>
+                        {{ questMessage }}
+                    </p>
+                </div>
+            </div>
+
         </b-modal>
 
         <Loader v-if="loading" />

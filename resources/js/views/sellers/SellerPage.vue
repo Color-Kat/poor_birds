@@ -15,30 +15,29 @@
         <!--    YOU BUY BIRD QUEST    -->
         <b-modal
             id="modal-bird-buy" title="Поздравляем! Вы купили птицу" header-bg-variant="success"
-            header-text-variant="light"
+            header-text-variant="light" hide-header body-bg-variant="dark" hide-footer
         >
-            <p class="my-2">
-                Поздравляем! Вы купили птицу "{{ purchasedBird ? purchasedBird.name : '' }}".
-                <b-link :to="{name: 'my_birds'}">Мои птицы</b-link>
-            </p>
-
             <div
                 v-if="!((JSON.parse(localStorage.getItem('birds_purchased_list')) || [])
                                 .includes(purchasedBird ? purchasedBird.id : ''))"
-                class="mt-2 box"
+                class="quest-box"
             >
-                <div class="box-inner">
+                <div class="quest-box-inner">
+                    <h4>
+                        Поздравляем, Вы купили птицу "{{ purchasedBird ? purchasedBird.name : '' }}"!
+                    </h4>
                     <p>
                         {{ purchasedBird ? purchasedBird.quest : '' }}
+                        <br>
+                        <b-link :to="{name: 'my_birds'}">Мои птицы</b-link>
                     </p>
                 </div>
             </div>
-                <!--                    <b-card-->
-                <!--                        v-if="!(JSON.parse(localStorage.getItem('birds_purchased_list')).includes(purchasedBird?.id))"-->
-                <!--                        class="mt-2">-->
-                <!--                        {{purchasedBird ? purchasedBird.quest : ''}}-->
-                <!--                    </b-card>-->
-
+            <!--                    <b-card-->
+            <!--                        v-if="!(JSON.parse(localStorage.getItem('birds_purchased_list')).includes(purchasedBird?.id))"-->
+            <!--                        class="mt-2">-->
+            <!--                        {{purchasedBird ? purchasedBird.quest : ''}}-->
+            <!--                    </b-card>-->
 
             <template #modal-footer="{ ok }">
                 <b-button size="sm" variant="success" @click="ok()">
@@ -56,13 +55,17 @@
 
         <!--    OPEN SELLER QUEST    -->
         <!--      OPEN SELLER AND QUEST      -->
-        <b-modal id="modal-open-seller" header-bg-variant="success" hide-footer>
-            <p class="my-2">
-                <span>Вы открыли продавца!</span> <br>
-                <b-card class="mt-2">
-                    {{ questMessage }}
-                </b-card>
-            </p>
+        <b-modal id="modal-open-seller" hide-footer hide-header
+                 body-bg-variant="dark">
+            <div class="quest-box">
+                <div class="quest-box-inner">
+                    <h4>Вы открыли продавца!</h4>
+                    <p>
+                        {{ questMessage }}
+                    </p>
+                </div>
+            </div>
+
         </b-modal>
         <!-- --- SELLERS MODALS ---    -->
 
@@ -266,62 +269,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$color-alpha: #b78846;
-.box {
-    position: relative;
-    background-color: rgba(#000, 0.7);
-    width: 100%;
-    max-width: 600px;
-    padding: 5px;
-    border: 2px solid $color-alpha;
-    color: white;
 
-    //&:before, &:after {
-    //    content: "•";
-    //    //position: absolute;
-    //    width: 14px;
-    //    height: 14px;
-    //    font-size: 14px;
-    //    color: $color-alpha;
-    //    border: 2px solid $color-alpha;
-    //    line-height: 12px;
-    //    top: 5px;
-    //    text-align: center;
-    //}
-    //
-    //&:before {
-    //    left: 5px;
-    //}
-    //
-    //&:after {
-    //    right: 5px;
-    //}
-
-    .box-inner {
-        position: relative;
-        border: 2px solid $color-alpha;
-        padding: 40px;
-
-        &:before, &:after {
-            content: "•";
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            font-size: 14px;
-            color: $color-alpha;
-            border: 2px solid $color-alpha;
-            line-height: 12px;
-            bottom: -2px;
-            text-align: center;
-        }
-
-        &:before {
-            left: -2px;
-        }
-
-        &:after {
-            right: -2px;
-        }
-    }
-}
 </style>

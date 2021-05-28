@@ -148,20 +148,6 @@ body {
             transform: scale(1.01);
         }
 
-        //img {
-        //    //position: absolute;
-        //    //left: 50%;
-        //    //transform: translateX(-50%);
-        //    max-width: 100%;
-        //}
-        //
-        //.card-img-top{
-        //    width: auto !important;
-        //}
-        //.card-img{
-        //    width: auto !important;
-        //}
-
         .card-body {
             border: 2px solid #e5e5e5;
             border-top: 0;
@@ -187,18 +173,47 @@ body {
     @media screen and (max-width: 500px) {
         & {grid-template-columns: 1fr !important;}
     }
+}
 
-    //.card-item {
-    //    position: relative;
-    //    padding-bottom: 40px;
-    //
-    //    .card-btn {
-    //        position: absolute;
-    //        bottom: 0;
-    //        margin-bottom: 8px;
-    //        left: 50%;
-    //        transform: translateX(-50%);
-    //        width: 90%;
-    //    }
-    //}
+// quest messages
+$color-alpha: #b78846;
+.quest-box {
+    position: relative;
+    background-color: rgba(#000, 0.7);
+    width: 100%;
+    max-width: 600px;
+    padding: 5px;
+    border: 2px solid $color-alpha;
+    color: white;
+
+    a{
+        color: $color-alpha;
+    }
+
+    .quest-box-inner {
+        position: relative;
+        border: 2px solid $color-alpha;
+        padding: 40px;
+
+        &:before, &:after {
+            content: "•";
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            font-size: 14px;
+            color: $color-alpha;
+            border: 2px solid $color-alpha;
+            line-height: 12px;
+            bottom: -2px;
+            text-align: center;
+        }
+
+        &:before {
+            left: -2px;
+        }
+
+        &:after {
+            right: -2px;
+        }
+    }
 }
