@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-card>
+        <b-card class="pay-form">
             Купить монеты густинианы:
 
             <iframe
@@ -20,5 +20,7 @@ export default {
 </script>
 
 <style scoped>
-
+.pay-form{
+    overflow-x: auto;
+}
 </style>

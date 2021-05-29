@@ -21,7 +21,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'notified',
+        'name', 'email', 'password', 'notified', 'money', 'donate'
     ];
 
     public function my_birds()

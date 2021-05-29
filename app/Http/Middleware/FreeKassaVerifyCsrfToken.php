@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
 use Illuminate\Support\Facades\Log;
 
-class FreeKassaVerifyCsrfToken extends Middleware
+class FreeKassaVerifyCsrfToken
 {
 
     private $whiteList = [
@@ -17,8 +17,7 @@ class FreeKassaVerifyCsrfToken extends Middleware
         '136.243.38.151',
         '136.243.38.189',
         '136.243.38.108',
-        '136.243.38.*',
-//        '127.0.0.1'
+//        '136.243.38.*',
     ];
 
     /**
@@ -30,7 +29,6 @@ class FreeKassaVerifyCsrfToken extends Middleware
      */
     public function handle(Request $request, Closure $next)
     {
-        Log::info('123');
         if (!in_array($request->ip(), $this->whiteList)) {
             abort(403);
         }
