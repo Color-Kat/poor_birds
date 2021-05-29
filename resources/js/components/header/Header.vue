@@ -1,5 +1,5 @@
 <template>
-    <header class="header mb-2">
+    <header class="header mb-2" style="z-index: 100">
         <!--    NAVBAR 1    -->
         <b-navbar
             style="z-index: 1010" type="light" variant="light"
@@ -63,7 +63,7 @@
         <!--    NAVBAR 1    -->
         <BlackOut/>
         <!--    NAVBAR 2    -->
-        <b-navbar class="position-relative nav justify-content-center">
+        <b-navbar class="position-relative nav justify-content-center" style="z-index: 100">
             <b-navbar-brand to="/" class="d-flex d-sm-none align-items-center position-relative">
 <!--                src="https://placekitten.com/g/30/30"-->
                 <img

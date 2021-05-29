@@ -23,7 +23,7 @@ export default {
             } else return false;
         },
         getUserId(state) {
-            if (state.auth) {
+            if (state.user) {
                 return state.user.id;
             } else return false;
         },
@@ -227,12 +227,14 @@ export default {
                 })
                 .catch((error) => {
                     commit('setAuth', false); // not logged in
+                    commit('toggleLoader', false);
 
                     // return error message
                     if (error.response) return {
                         success: false,
                         error  : Object.values(error.response.data)[0][0]
                     }
+                    return false;
                 });
         },
         logout({
