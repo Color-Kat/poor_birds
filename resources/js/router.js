@@ -2,6 +2,9 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Index from './views/Index';
 
+import store from './store/index';
+
+/* login */
 import LoginPage from "./views/auth/LoginPage";
 import Account from "./views/auth/Account";
 import AdminArea from "./views/auth/adminArea/AdminArea";
@@ -22,8 +25,6 @@ import CreateSeller from "./views/auth/adminArea/sellers/CreateSeller";
 import Certificates_admin from "./views/auth/adminArea/certificates/Certificates";
 
 /* shovels */
-// import Shovel from "./views/sellers/Sellers";
-// import ShovelPage from "./views/sellers/SellerPage";
 import Shovels_admin from "./views/auth/adminArea/shovels/Shovels";
 import CreateShovel from "./views/auth/adminArea/shovels/CreateShovel";
 import Shovels from "./views/shovels/Shovels";
@@ -31,15 +32,24 @@ import ShovelPage from "./views/shovels/ShovelPage";
 
 import Auth from "./views/auth/Auth";
 
-import store from './store/index';
+/* certificates */
 import CreateCertificate from "./views/auth/adminArea/certificates/CreateCertificate";
 import CertificatePage from "./views/certificates/CertificatePage";
 import Certificates from "./views/certificates/Certificates";
+
+/* my birds */
 import MyBirdsPage from "./views/auth/MyBirdsPage";
+/* my eggs */
 import EggsPage from "./views/auth/EggsPage";
+
+/* contracts */
 import Contracts from "./views/contracts/Contracts";
 import ContractPage from "./views/contracts/ContractPage";
+
+/* mine */
 import Mine from "./views/auth/Mine";
+
+/* PAYMENT */
 import PayForm from "./views/payment/PayForm";
 import Success from "./views/payment/Success";
 import Failed from "./views/payment/Failed";

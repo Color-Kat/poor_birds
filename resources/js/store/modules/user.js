@@ -32,6 +32,11 @@ export default {
                 return (+state.user.money).toFixed(2);
             } else return false;
         },
+        getDonateBalance(state) {
+            if (state.user) {
+                return (+state.user.donate).toFixed(1);
+            } else return false;
+        },
         // return all user data
         user(state) {
             if (state.user) {
