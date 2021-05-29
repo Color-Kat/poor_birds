@@ -65,20 +65,13 @@ export default {
 <style scoped>
 .site-footer
 {
-    /*position: absolute;*/
-    /*bottom: 0;*/
-    /*width: 100%;*/
     position: relative;
-    /*top: 100%;*/
-    /*transform: translateY(-100%);*/
-
     background-color:#26272b;
-    /*background-color: #9094a5;*/
-    /*background-color: #b4bbbd;*/
     padding:45px 0 20px;
     font-size:15px;
     line-height:24px;
     color:#737373;
+    z-index: 10;
 }
 .site-footer hr
 {

@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 // for url cron jobs
 Route::get('/cron/collect_eggs', function () {
@@ -16,13 +17,8 @@ Route::post('/push','PushController@store');
 //make a push notification.
 Route::get('/push','PushController@push');
 
-
-Route::post('/payment/result', function (Request $request){
-    \Illuminate\Support\Facades\Log::info('wooork!');
-    \Illuminate\Support\Facades\Log::info($request->all());
-    return 123;
-})->middleware(\App\Http\Middleware\FreeKassaVerifyCsrfToken::class);
-
+Route::post('/payment/result', 'PaymentController@handler')
+    ->middleware(\App\Http\Middleware\FreeKassaVerifyCsrfToken::class);
 
 Route::any('/{any}', function () {
     return view('index');
