@@ -51,8 +51,8 @@ class PaymentController extends Controller
             die('wrong sign');
         }
 
-        $user_email = $request->P_EMAIL; // get email for pay
-        $user = User::where('email', '=', $user_email)->first(); // find user by email
+        $user_id = $request->us_user_id; // get email for pay
+        $user = User::where('id', '=', $user_id)->first(); // find user by email
         $user->update(['donate' => $user->donate + $request->AMOUNT]); // update donate
     }
 }

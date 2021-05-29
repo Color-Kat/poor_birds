@@ -22,6 +22,11 @@ export default {
                 return state.auth;
             } else return false;
         },
+        getUserId(state) {
+            if (state.auth) {
+                return state.user.id;
+            } else return false;
+        },
         getToken(state) {
             if (state.auth) {
                 return state.access_token;

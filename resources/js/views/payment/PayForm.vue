@@ -204,6 +204,7 @@
                     <input type="hidden" name="go_2pay" value="1">
                     <input type="hidden" name="wt" value="v3">
                     <input type="hidden" name="form_id" value="1696476">
+                    <input type="hidden" name="us_user_id" :value="getUserId">
                     <button class="pbtn" type="submit">
                         Купить
                     </button>
@@ -227,7 +228,7 @@ export default {
         sel_cur: ''
     }),
     computed: {
-        ...mapGetters(['getDonateBalance'])
+        ...mapGetters(['getDonateBalance', 'getUserId'])
     },
     methods: {
         iterateAllWasPayment: function (callback) {
