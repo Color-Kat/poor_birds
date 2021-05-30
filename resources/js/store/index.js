@@ -7,6 +7,7 @@ import sellers from './modules/sellers.js';
 import certificates from './modules/certificates.js';
 import shovels from './modules/shovels.js';
 import contracts from './modules/contracts.js';
+import currencies from './modules/currencies.js';
 
 // import Axios from "axios";
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
         sellers,
         certificates,
         shovels,
-        contracts
+        contracts,
+        currencies
     },
     state: {
         active_sideBar: false,

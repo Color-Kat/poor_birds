@@ -64,7 +64,7 @@
 
 <script>
 import Loader from "../../components/Loader";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 export default {
     name: "Bank",
     components: {Loader},
@@ -72,7 +72,15 @@ export default {
         loading: true
     }),
     computed:{
-        ...mapGetters(['getDonateBalance'])
+        ...mapGetters(['getDonateBalance', 'getCurrencies'])
+    },
+    methods: {
+        ...mapActions(['fetchCurrencies'])
+    },
+    async created() {
+        let res = await this.fetchCurrencies();
+        if(res) this.loading = false;
+        console.log(this.getCurrencies);
     }
 }
 </script>

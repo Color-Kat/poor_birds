@@ -24,6 +24,8 @@ Route::apiResource('certificates', 'api\CertificateController');
 Route::apiResource('shovels', 'api\ShovelController');
 Route::apiResource('contracts', 'api\ContractController');
 
+Route::get('currencies', 'api\CurrencyController@getCurrencies');
+
 Route::group([
 
     'middleware' => 'api',
