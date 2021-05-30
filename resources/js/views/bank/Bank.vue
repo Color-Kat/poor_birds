@@ -13,7 +13,7 @@
             <!--      BALANCE      -->
             <h5 class="position-absolute" style="right: 0; top: 0">
                 <b-badge variant="light">
-                    На счету {{getDonateBalance}} 💶GTN
+                    <b>💶</b>На счету: {{getDonateBalance}} GTN
                 </b-badge>
             </h5>
             <!--      BALANCE      -->
