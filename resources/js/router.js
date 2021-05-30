@@ -50,9 +50,10 @@ import ContractPage from "./views/contracts/ContractPage";
 import Mine from "./views/auth/Mine";
 
 /* PAYMENT */
-import PayForm from "./views/payment/PayForm";
-import Success from "./views/payment/Success";
-import Failed from "./views/payment/Failed";
+import PayForm from "./views/bank/PayForm";
+import Success from "./views/bank/Success";
+import Failed from "./views/bank/Failed";
+import Bank from "./views/bank/Bank";
 
 
 Vue.use(VueRouter);
@@ -275,6 +276,12 @@ const routes = [
         },
     },
 
+    /* ---------- BANK -----------*/
+    {
+        path     : '/bank',
+        name     : 'bank',
+        component: Bank,
+    },
     /* ---------- PAYMENT -----------*/
     {
         path     : '/payment',

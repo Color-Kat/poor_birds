@@ -15,7 +15,7 @@
                     <b>Густинианы</b> - это валюта элиты, за которую можно покупать
                     обычные игровые рубли, особых птиц, топовые лопаты, необычные контракты
                     и нанять бригаду, чтобы продать всее яйца за 1 клик.
-                    Густинианы придумал 👑Святой Густав👑 - мэр Густограда, в котором вы основали свою ферму
+                    Густинианы придумал <b>👑Святой Густав👑</b> - мэр Густограда, в котором вы основали свою ферму
                 </p>
 
                 <b-alert show variant="info" class="my-2">
@@ -47,23 +47,23 @@
                         <div class="widget-body__row">
                             <label>Способ оплаты</label>
                             <div class="widget-payments" ref="widget_payments">
-                                <div class="widget-payments__pay wp " id="94">
+                                <div class="widget-payments__pay wp " id="160">
                                     <img
                                         src="//www.free-kassa.ru/merchant/widgets/v3/currencies/visa_master.svg"
                                         alt="visa/mastercard"
                                     >
                                     <div class="tooltip">Visa / MasterCard</div>
                                 </div>
-                                <div class="widget-payments__pay wp" id="155">
+                                <div class="widget-payments__pay wp" id="63">
                                     <img src="//www.free-kassa.ru/merchant/widgets/v3/currencies/qiwi.svg" alt="qiwi">
                                     <div class="tooltip">qiwi</div>
                                 </div>
-                                <div class="widget-payments__pay wp" id="45">
-                                    <img
-                                        src="//www.free-kassa.ru/merchant/widgets/v3/currencies/yandex.svg" alt="yandex"
-                                    >
-                                    <div class="tooltip">yandex</div>
-                                </div>
+<!--                                <div class="widget-payments__pay wp" id="45">-->
+<!--                                    <img-->
+<!--                                        src="//www.free-kassa.ru/merchant/widgets/v3/currencies/yandex.svg" alt="yandex"-->
+<!--                                    >-->
+<!--                                    <div class="tooltip">yandex</div>-->
+<!--                                </div>-->
                                 <div class="widget-payments__pay wp" id="133">
                                     <img
                                         src="//www.free-kassa.ru/merchant/widgets/v3/currencies/fkwallet.svg"
@@ -78,10 +78,10 @@
                                     >
                                     <div class="tooltip">beeline</div>
                                 </div>
-                                <div class="widget-payments__pay wp" id="84">
-                                    <img src="//www.free-kassa.ru/merchant/widgets/v3/currencies/mts.svg" alt="mts">
-                                    <div class="tooltip">mts</div>
-                                </div>
+<!--                                <div class="widget-payments__pay wp" id="84">-->
+<!--                                    <img src="//www.free-kassa.ru/merchant/widgets/v3/currencies/mts.svg" alt="mts">-->
+<!--                                    <div class="tooltip">mts</div>-->
+<!--                                </div>-->
                                 <div class="widget-payments__pay wp" id="82">
                                     <img
                                         src="//www.free-kassa.ru/merchant/widgets/v3/currencies/megafon.svg"
@@ -93,18 +93,18 @@
                                     <img src="//www.free-kassa.ru/merchant/widgets/v3/currencies/tele2.svg" alt="tele2">
                                     <div class="tooltip">tele2</div>
                                 </div>
-                                <div class="widget-payments__pay wp" id="79">
-                                    <img src="//www.free-kassa.ru/merchant/widgets/v3/currencies/alfa.svg" alt="alfa">
-                                    <div class="tooltip">alfa</div>
-                                </div>
+<!--                                <div class="widget-payments__pay wp" id="79">-->
+<!--                                    <img src="//www.free-kassa.ru/merchant/widgets/v3/currencies/alfa.svg" alt="alfa">-->
+<!--                                    <div class="tooltip">alfa</div>-->
+<!--                                </div>-->
                                 <div class="widget-payments__pay wp" id="80">
                                     <img src="//www.free-kassa.ru/merchant/widgets/v3/currencies/sber.svg" alt="sber">
                                     <div class="tooltip">sber</div>
                                 </div>
-                                <div class="widget-payments__pay wp" id="81">
-                                    <img src="//www.free-kassa.ru/merchant/widgets/v3/currencies/vtb.svg" alt="vtb">
-                                    <div class="tooltip">vtb</div>
-                                </div>
+<!--                                <div class="widget-payments__pay wp" id="81">-->
+<!--                                    <img src="//www.free-kassa.ru/merchant/widgets/v3/currencies/vtb.svg" alt="vtb">-->
+<!--                                    <div class="tooltip">vtb</div>-->
+<!--                                </div>-->
                                 <div class="widget-payments__pay widget-payments__pay-more">
                                     <img src="//www.free-kassa.ru/merchant/widgets/v3/more.svg" alt="more">
                                     <div class="more-currencies-wrapper">
@@ -137,27 +137,27 @@
                                                 >
                                                 <div class="tooltip--more">Ethereum</div>
                                             </div>
-                                            <div class="widget-payments__pay wp widget-payments__pay--more" id="167">
-                                                <img
-                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/BC-alt.svg"
-                                                    alt="BC"
-                                                >
-                                                <div class="tooltip--more">BitCoin Cash</div>
-                                            </div>
-                                            <div class="widget-payments__pay wp widget-payments__pay--more" id="164">
-                                                <img
-                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/DASH-alt.svg"
-                                                    alt="DASH"
-                                                >
-                                                <div class="tooltip--more">Dash</div>
-                                            </div>
-                                            <div class="widget-payments__pay wp widget-payments__pay--more" id="169">
-                                                <img
-                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/EMC.svg"
-                                                    alt="EMC"
-                                                >
-                                                <div class="tooltip--more">Emercoin</div>
-                                            </div>
+<!--                                            <div class="widget-payments__pay wp widget-payments__pay&#45;&#45;more" id="167">-->
+<!--                                                <img-->
+<!--                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/BC-alt.svg"-->
+<!--                                                    alt="BC"-->
+<!--                                                >-->
+<!--                                                <div class="tooltip&#45;&#45;more">BitCoin Cash</div>-->
+<!--                                            </div>-->
+<!--                                            <div class="widget-payments__pay wp widget-payments__pay&#45;&#45;more" id="164">-->
+<!--                                                <img-->
+<!--                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/DASH-alt.svg"-->
+<!--                                                    alt="DASH"-->
+<!--                                                >-->
+<!--                                                <div class="tooltip&#45;&#45;more">Dash</div>-->
+<!--                                            </div>-->
+<!--                                            <div class="widget-payments__pay wp widget-payments__pay&#45;&#45;more" id="169">-->
+<!--                                                <img-->
+<!--                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/EMC.svg"-->
+<!--                                                    alt="EMC"-->
+<!--                                                >-->
+<!--                                                <div class="tooltip&#45;&#45;more">Emercoin</div>-->
+<!--                                            </div>-->
                                             <div class="widget-payments__pay wp widget-payments__pay--more" id="172">
                                                 <img
                                                     src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/XMR.svg"
@@ -165,34 +165,34 @@
                                                 >
                                                 <div class="tooltip--more">Monero</div>
                                             </div>
-                                            <div class="widget-payments__pay wp widget-payments__pay--more" id="170">
-                                                <img
-                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/XPM-alt.svg"
-                                                    alt="XPM"
-                                                >
-                                                <div class="tooltip--more">Primecoin</div>
-                                            </div>
-                                            <div class="widget-payments__pay wp widget-payments__pay--more" id="171">
-                                                <img
-                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/RDD.svg"
-                                                    alt="RDD"
-                                                >
-                                                <div class="tooltip--more">Reddcoin</div>
-                                            </div>
-                                            <div class="widget-payments__pay wp widget-payments__pay--more" id="173">
-                                                <img
-                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/XRP-alt.svg"
-                                                    alt="XRP"
-                                                >
-                                                <div class="tooltip--more">Ripple</div>
-                                            </div>
-                                            <div class="widget-payments__pay wp widget-payments__pay--more" id="165">
-                                                <img
-                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/zcash.svg"
-                                                    alt="zcash"
-                                                >
-                                                <div class="tooltip--more">ZCash</div>
-                                            </div>
+<!--                                            <div class="widget-payments__pay wp widget-payments__pay&#45;&#45;more" id="170">-->
+<!--                                                <img-->
+<!--                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/XPM-alt.svg"-->
+<!--                                                    alt="XPM"-->
+<!--                                                >-->
+<!--                                                <div class="tooltip&#45;&#45;more">Primecoin</div>-->
+<!--                                            </div>-->
+<!--                                            <div class="widget-payments__pay wp widget-payments__pay&#45;&#45;more" id="171">-->
+<!--                                                <img-->
+<!--                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/RDD.svg"-->
+<!--                                                    alt="RDD"-->
+<!--                                                >-->
+<!--                                                <div class="tooltip&#45;&#45;more">Reddcoin</div>-->
+<!--                                            </div>-->
+<!--                                            <div class="widget-payments__pay wp widget-payments__pay&#45;&#45;more" id="173">-->
+<!--                                                <img-->
+<!--                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/XRP-alt.svg"-->
+<!--                                                    alt="XRP"-->
+<!--                                                >-->
+<!--                                                <div class="tooltip&#45;&#45;more">Ripple</div>-->
+<!--                                            </div>-->
+<!--                                            <div class="widget-payments__pay wp widget-payments__pay&#45;&#45;more" id="165">-->
+<!--                                                <img-->
+<!--                                                    src="//www.free-kassa.ru/merchant/widgets/v3/currencies/cripto/zcash.svg"-->
+<!--                                                    alt="zcash"-->
+<!--                                                >-->
+<!--                                                <div class="tooltip&#45;&#45;more">ZCash</div>-->
+<!--                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -238,14 +238,14 @@ export default {
         }
     },
     mounted() {
-        // on mounted iterate all .wp (ways payment) and add click handler
+        // on mounted iterate all .wp (ways bank) and add click handler
         this.iterateAllWasPayment((payment) => {
             payment.addEventListener('click', (e) => {
                 // remove active class for all
                 this.iterateAllWasPayment(elem => elem.classList.remove('active'));
 
                 e.target.classList.add('active'); // add active class
-                this.sel_cur = e.target.id; // set way payment in form
+                this.sel_cur = e.target.id; // set way bank in form
             });
         });
     }
@@ -299,7 +299,7 @@ export default {
 }
 
 .widget {
-    width: 510px;
+    width: 410px;
     padding: 15px;
     background: #F7F7F7;
     border-radius: 5px;
@@ -336,10 +336,12 @@ input, textarea {
 
 input[data-value="cost"] {
     padding-right: 58px;
+    height: 32px;
 }
 
 textarea {
     height: 56px;
+    font-size: 0.85em;
 }
 
 button {

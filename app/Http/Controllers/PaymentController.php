@@ -22,7 +22,7 @@ class PaymentController extends Controller
     }
 
     public function handler(Request $request) {
-        Log::info('New payment');
+        Log::info('New bank');
 
         // check free kassa APIs
         if (!in_array($this->getIP(), array(
@@ -45,7 +45,7 @@ class PaymentController extends Controller
             $this->merchant_id.':'.$request->AMOUNT.':'.$this->merchant_secret.':'.$request->MERCHANT_ORDER_ID
         );
 
-        // wrong sign (payment error)
+        // wrong sign (bank error)
         if ($sign != $request->SIGN){
             Log::warning("wrong sign");
             die('wrong sign');

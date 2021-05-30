@@ -34,7 +34,7 @@
                 </div>
 
                 <div style="font-size: 1.1em">
-                    <b-nav-item active-class="active"><b>🏦</b>Банк (в разработке)</b-nav-item>
+                    <b-nav-item active-class="active" :to="{name: 'bank'}"><b>🏦</b>Банк</b-nav-item>
                 </div>
 
             </b-navbar-nav>

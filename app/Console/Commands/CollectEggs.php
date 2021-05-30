@@ -128,9 +128,9 @@ class CollectEggs extends Command
             }
 
             // fines notifications
-            if($fines >= 200) {
+            if($fines >= 300) {
                 Notification::send($user, new PushFinesBlock);
-            } else if ($fines >= 150) {
+            } else if ($fines >= 190) {
                 Notification::send($user, new PushFines);
             }
 
