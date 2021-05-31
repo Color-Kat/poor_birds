@@ -238,14 +238,14 @@ export default {
         }
     },
     mounted() {
-        // on mounted iterate all .wp (ways bank) and add click handler
+        // on mounted iterate all .wp (ways currency) and add click handler
         this.iterateAllWasPayment((payment) => {
             payment.addEventListener('click', (e) => {
                 // remove active class for all
                 this.iterateAllWasPayment(elem => elem.classList.remove('active'));
 
                 e.target.classList.add('active'); // add active class
-                this.sel_cur = e.target.id; // set way bank in form
+                this.sel_cur = e.target.id; // set way currency in form
             });
         });
     }

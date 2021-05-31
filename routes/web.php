@@ -17,7 +17,7 @@ Route::post('/push','PushController@store');
 //make a push notification.
 Route::get('/push','PushController@push');
 
-Route::post('/bank/result', 'PaymentController@handler')
+Route::post('/currency/result', 'PaymentController@handler')
     ->middleware(\App\Http\Middleware\FreeKassaVerifyCsrfToken::class);
 
 Route::any('/{any}', function () {
