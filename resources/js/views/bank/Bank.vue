@@ -34,20 +34,46 @@
             <!--      EXCHANGE GTN      -->
             <b-alert show variant="primary">
                 <div id="exchange">
-                    <h5>💱Обменять <b>густинаны</b> на ₽</h5>
+                    <h5>💱Обменять валют</h5>
 
-                    <label for="exchange_gtn"><b>GTN</b> Кол-во густинианов:</label>
-                    <b-form-input type="number" id="exchange_gtn" name="exchange_gtn"></b-form-input>
+                    <!--          TRANSACTION TYPE          -->
+                    <b-form-group label="Выберите тип сделки:" v-slot="{ ariaDescribedby }">
+                        <b-form-radio-group
+                            id="btn-radios-1"
+                            class="w-100"
+                            button-variant="primary"
+                            v-model="transactionType"
+                            :options="transactionOptions"
+                            :aria-describedby="ariaDescribedby"
+                            name="radios-btn-default"
+                            buttons
+                        ></b-form-radio-group>
+                    </b-form-group>
+                    <!--          TRANSACTION TYPE          -->
 
-                    <label for="exchange_rub"><b>RUB</b> Кол-во рублей:</label>
-                    <b-form-input type="number" id="exchange_rub" name="exchange_rub"></b-form-input>
+                    <!--          SELECT CURRENCY          -->
+                    <div>
+                        <b-tabs
+                            active-nav-item-class="text-light bg-primary border-primary"
+                            nav-class="border-primary"
+                            active-tab-class="border-primary"
+                            content-class="mt-2"
+                        >
+                            <b-tab title="RUB" active>
+                                <p>Обменять <b>густинаны</b> на <b>₽</b></p>
 
-                    <hr>
-                    <h5>Курс:</h5>
-                    <b>1 GTN густиниан</b> = <b>1.28 RUB рублей</b>
-
-                    <Chart
-                        :chart-data="{
+                                <b-badge variant="primary" v-if="getCurrencies.RUB">
+                                    1 {{getCurrencies.RUB[0].currency + '=' +
+                                getCurrencies.RUB[0].rate + ' ' +getCurrencies.RUB[0].exchange}}
+                                </b-badge>
+                            </b-tab>
+                            <b-tab title="USD">
+                                <p>Обменять доллары на рубли</p>
+                            </b-tab>
+                            <b-tab title="BTC">
+                                <p>Обменять биткойны на рубли</p>
+                                <Chart
+                                    :chart-data="{
                                 labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                                 datasets: [{
                                     label: '# of Votes',
@@ -71,14 +97,40 @@
                                     borderWidth: 1
                                 }]
                             }"
-                        :chart-options="{
+                                    :chart-options="{
                                 scales: {
                                     y: {
                                         beginAtZero: true
                                     }
                                 }
                             }"
-                    />
+                                />
+                            </b-tab>
+                        </b-tabs>
+                    </div>
+<!--                    <b-card no-body>-->
+<!--                        <b-tabs card>-->
+<!--                            <b-tab title="Tab 1" active>-->
+<!--                                <b-card-text>Tab contents 1</b-card-text>-->
+<!--                            </b-tab>-->
+<!--                            <b-tab title="Tab 2">-->
+<!--                                <b-card-text>Tab contents 2</b-card-text>-->
+<!--                            </b-tab>-->
+<!--                        </b-tabs>-->
+<!--                    </b-card>-->
+
+
+<!--                    <label for="exchange_gtn"><b>GTN</b> Кол-во густинианов:</label>-->
+<!--                    <b-form-input type="number" id="exchange_gtn" name="exchange_gtn"></b-form-input>-->
+
+<!--                    <label for="exchange_rub"><b>RUB</b> Кол-во рублей:</label>-->
+<!--                    <b-form-input type="number" id="exchange_rub" name="exchange_rub"></b-form-input>-->
+
+<!--                    <hr>-->
+<!--                    <h5>Курс:</h5>-->
+<!--                    <b>1 GTN густиниан</b> = <b>1.28 RUB рублей</b>-->
+
+
                 </div>
             </b-alert>
 
@@ -98,7 +150,7 @@
 
 <script>
 import Loader from "../../components/Loader";
-import Chart from "../../components/chart/Chart";
+import Chart from "../../components/bank/Chart";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
@@ -108,32 +160,15 @@ export default {
     },
     data      : () => ({
         loading  : true,
-        chartData: {
-            labels  : [
-                'January',
-                'February',
-                'March',
-                'April',
-                'May',
-                'June',
-                'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December'
-            ],
-            datasets: [
-                {
-                    label: 'Data One',
-                    data : [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
-                }
-            ]
-        },
-        options  : {
-            responsive         : true,
-            maintainAspectRatio: false
-        }
+        // transaction buttons
+        transactionType: 'buy',
+        transactionOptions: [
+            { text: 'Купить', value: 'buy' },
+            { text: 'Продать', value: 'sell' },
+        ],
+
+        chartData: {},
+        options  : {}
     }),
     computed  : {
         ...mapGetters(['getDonateBalance', 'getCurrencies'])
