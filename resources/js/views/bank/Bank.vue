@@ -1,6 +1,6 @@
 <template>
     <div id="bank">
-<!--        <Loader v-if="loading"/>-->
+        <!--        <Loader v-if="loading"/>-->
 
         <b-card>
             <h2>🏦Банк</h2>
@@ -13,7 +13,7 @@
             <!--      BALANCE      -->
             <h5 class="position-absolute" style="right: 0; top: 0">
                 <b-badge variant="light">
-                    <b>💶</b>На счету: {{getDonateBalance}} GTN
+                    <b>💶</b>На счету: {{ getDonateBalance }} GTN
                 </b-badge>
             </h5>
             <!--      BALANCE      -->
@@ -45,6 +45,40 @@
                     <hr>
                     <h5>Курс:</h5>
                     <b>1 GTN густиниан</b> = <b>1.28 RUB рублей</b>
+
+                    <Chart
+                        :chart-data="{
+                                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                datasets: [{
+                                    label: '# of Votes',
+                                    data: [12, 19, 3, 5, 2, 3],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            }"
+                        :chart-options="{
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }"
+                    />
                 </div>
             </b-alert>
 
@@ -64,23 +98,55 @@
 
 <script>
 import Loader from "../../components/Loader";
+import Chart from "../../components/chart/Chart";
 import {mapActions, mapGetters} from "vuex";
+
 export default {
-    name: "Bank",
-    components: {Loader},
-    data: ()=>({
-        loading: true
+    name      : "Bank",
+    components: {
+        Chart
+    },
+    data      : () => ({
+        loading  : true,
+        chartData: {
+            labels  : [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            ],
+            datasets: [
+                {
+                    label: 'Data One',
+                    data : [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
+                }
+            ]
+        },
+        options  : {
+            responsive         : true,
+            maintainAspectRatio: false
+        }
     }),
-    computed:{
+    computed  : {
         ...mapGetters(['getDonateBalance', 'getCurrencies'])
     },
-    methods: {
+    methods   : {
         ...mapActions(['fetchCurrencies'])
     },
     async created() {
         let res = await this.fetchCurrencies();
-        if(res) this.loading = false;
+        if (res) this.loading = false;
         console.log(this.getCurrencies);
+    },
+    mounted() {
     }
 }
 </script>
