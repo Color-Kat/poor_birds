@@ -14,15 +14,22 @@ export default {
         chartData: Object,
         chartOptions: Object
     },
+    data: ()=>({
+       chart: null
+    }),
     mounted() {
         let canvas = this.$refs.canvas;
         let ctx = canvas.getContext('2d');
 
-        let myChart = new Chart(ctx, {
+        this.chart = new Chart(ctx, {
             type: 'line',
             data: this.chartData,
             options: this.chartOptions
         });
+    },
+    updated() {
+        console.log(123)
+        // this.chart.update();
     }
 }
 </script>

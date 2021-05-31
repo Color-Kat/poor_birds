@@ -278,7 +278,7 @@ const routes = [
 
     /* ---------- BANK -----------*/
     {
-        path     : '/currency',
+        path     : '/bank',
         name     : 'bank',
         component: Bank,
     },

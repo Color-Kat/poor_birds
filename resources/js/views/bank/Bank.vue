@@ -52,12 +52,13 @@
                     <!--          TRANSACTION TYPE          -->
 
                     <!--          SELECT CURRENCY          -->
-                    <div class="mt-2">
+                    <div class="mt-2" v-if="getCurrencies.RUB">
                         <b-tabs
                             active-nav-item-class="text-light bg-primary border-primary"
                             nav-class="border-primary"
                             active-tab-class="border-primary"
                             content-class="mt-2"
+                            lazy
                         >
                             <!--   GTN can't buy (RUB can't sell to GTN)   -->
                             <CurrencyTab
@@ -69,43 +70,6 @@
                             <CurrencyTab :currencies="getCurrencies.USD" :type="transactionType"/>
 
                             <CurrencyTab :currencies="getCurrencies.BTC" :type="transactionType"/>
-
-                            <!--                            <b-tab title="BTC">-->
-                            <!--                                <p>Обменять биткойны на рубли</p>-->
-                            <!--                                <Chart-->
-                            <!--                                    :chart-data="{-->
-                            <!--                                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],-->
-                            <!--                                datasets: [{-->
-                            <!--                                    label: '# of Votes',-->
-                            <!--                                    data: [12, 19, 3, 5, 2, 3],-->
-                            <!--                                    backgroundColor: [-->
-                            <!--                                        'rgba(255, 99, 132, 0.2)',-->
-                            <!--                                        'rgba(54, 162, 235, 0.2)',-->
-                            <!--                                        'rgba(255, 206, 86, 0.2)',-->
-                            <!--                                        'rgba(75, 192, 192, 0.2)',-->
-                            <!--                                        'rgba(153, 102, 255, 0.2)',-->
-                            <!--                                        'rgba(255, 159, 64, 0.2)'-->
-                            <!--                                    ],-->
-                            <!--                                    borderColor: [-->
-                            <!--                                        'rgba(255, 99, 132, 1)',-->
-                            <!--                                        'rgba(54, 162, 235, 1)',-->
-                            <!--                                        'rgba(255, 206, 86, 1)',-->
-                            <!--                                        'rgba(75, 192, 192, 1)',-->
-                            <!--                                        'rgba(153, 102, 255, 1)',-->
-                            <!--                                        'rgba(255, 159, 64, 1)'-->
-                            <!--                                    ],-->
-                            <!--                                    borderWidth: 1-->
-                            <!--                                }]-->
-                            <!--                            }"-->
-                            <!--                                    :chart-options="{-->
-                            <!--                                scales: {-->
-                            <!--                                    y: {-->
-                            <!--                                        beginAtZero: true-->
-                            <!--                                    }-->
-                            <!--                                }-->
-                            <!--                            }"-->
-                            <!--                                />-->
-                            <!--                            </b-tab>-->
                         </b-tabs>
                     </div>
                 </div>
@@ -127,7 +91,7 @@
 
 <script>
 import Loader from "../../components/Loader";
-import Chart from "../../components/currency/Chart";
+import Chart from "../../components/chart/Chart";
 import CurrencyTab from "../../components/currency/CurrencyTab";
 import {mapActions, mapGetters} from "vuex";
 
