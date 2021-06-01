@@ -8,6 +8,7 @@
             :exchange="getLatest.exchange"
             :rate="getLatest.rate"
             :type="type"
+            :isIncrease="getLatest.rate >= getPrevious.rate"
         />
 
         <CurrencyTabExchange
@@ -68,10 +69,13 @@ export default {
         }
     },
     computed  : {
-        /** return latest currency data*/
+        /** return latest currency data */
         getLatest() {
-            // if (!this.currencies) return false
             return this.currencies[0];
+        },
+        /** return previous currency data */
+        getPrevious() {
+            return this.currencies[1];
         },
         getChartData() {
             if (!this.currencies) return {};

@@ -83,16 +83,16 @@
             </b-form-group>
 
             <!--    minimum_birds_price    -->
-<!--            <b-form-group-->
-<!--                id="input-minimum_birds_price"-->
-<!--                :label="`Цена птиц:`"-->
-<!--                label-for="minimum_birds_price"-->
-<!--                description="Минимальная цена птиц, на которых будет действовать сертификат"-->
-<!--            >-->
-<!--                <b-form-input-->
-<!--                    id="minimum_birds_price" v-model="form.minimum_birds_price" type="number" min="0"-->
-<!--                ></b-form-input>-->
-<!--            </b-form-group>-->
+            <b-form-group
+                id="input-minimum_birds_price"
+                :label="`Цена птиц:`"
+                label-for="minimum_birds_price"
+                description="Минимальная цена птиц, на которых будет действовать сертификат"
+            >
+                <b-form-input
+                    id="minimum_birds_price" v-model="form.minimum_birds_price" type="number" min="0"
+                ></b-form-input>
+            </b-form-group>
 
             <b-form-group
                 id="input-grade"
@@ -131,7 +131,7 @@ export default {
                 fertility_bonus    : this.$route.query.fertility_bonus || 0,
                 care_bonus         : this.$route.query.care_bonus || 0,
                 litter_bonus       : this.$route.query.litter_bonus || 0,
-                minimum_birds_price: 0,
+                minimum_birds_price: this.$route.query.minimum_birds_price || 0,
                 price_bonus        : this.$route.query.price_bonus || 0,
                 grade              : this.$route.query.grade || 0,
                 price              : this.$route.query.price || 100,
