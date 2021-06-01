@@ -51,7 +51,7 @@ class UpdateCurrencies extends Command
         }
 
         // delete old records
-        $date  = Carbon::now()->subHours( 24 );
+        $date  = Carbon::now()->subMinutes(24);
         Bank::where( 'created_at', '<=', $date )->delete();
     }
 }

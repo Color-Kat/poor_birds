@@ -6,37 +6,34 @@
 
 <script>
 import {Chart, LineController, LineElement, PointElement, LinearScale, CategoryScale} from 'chart.js';
+
 Chart.register(LineController, CategoryScale, LinearScale, PointElement, LineElement);
-Chart.defaults.color = '#004085';
-Chart.defaults.borderColor = '#004085';
+Chart.defaults.color           = '#004085';
+Chart.defaults.borderColor     = '#004085';
 Chart.defaults.backgroundColor = 'white';
 
 export default {
-    name: "Chart",
+    name : "Chart",
     props: {
-        chartData: Object,
+        chartData   : Object,
         chartOptions: Object
     },
-    data: ()=>({
-       chart: null
+    data : () => ({
+        chart: null
     }),
     mounted() {
         let canvas = this.$refs.canvas;
-        let ctx = canvas.getContext('2d');
+        let ctx    = canvas.getContext('2d');
 
-        this.chart = new Chart(ctx, {
+        if(window.chart != undefined) window.chart.destroy(); // destroy all charts. Only one chart is exists
+
+        window.chart = new Chart(ctx, {
+        // this.chart = new Chart(ctx, {
             type: 'line',
             data: this.chartData,
             options: this.chartOptions
         });
-        //
-        // window.addEventListener('resize',()=>{this.chart.resize();});
     },
-    updated() {
-        console.log(123)
-        // this.chart.update();
-    },
-    // beforeDestroy() {window.removeEventListener('resize',()=>{this.chart.resize();});}
 }
 </script>
 

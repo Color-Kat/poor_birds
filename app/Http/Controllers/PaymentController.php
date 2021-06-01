@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\models\Bank;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -53,6 +54,13 @@ class PaymentController extends Controller
 
         $user_id = $request->us_user_id; // get email for pay
         $user = User::where('id', '=', $user_id)->first(); // find user by email
-        $user->update(['donate' => $user->donate + $request->AMOUNT]); // update donate
+
+        // get latest rate og GTN - real_RUB
+        $rate = Bank::
+            where('currency', '=', 'GTN')
+            ->orderBy('created_at', 'desc')
+            ->first()->rate;
+
+        $user->update(['GTN' => $user->GTN + ( $request->AMOUNT * $rate )]); // update GTN balance
     }
 }

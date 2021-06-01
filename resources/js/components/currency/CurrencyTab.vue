@@ -19,23 +19,23 @@
         />
 
         <hr>
-        <h4>{{`Курс ${getLatest.currency} к ${getLatest.exchange}`}}</h4>
+        <h4>{{ `Курс ${getLatest.currency} к ${getLatest.exchange}` }}</h4>
 
         <Chart
             :chart-data="getChartData"
             :chart-options="{
-                    scales: {
-                        y: {
-                            ticks: {
-                                // Include a currency sign in the ticks
-                                callback: (value) => {
-                                    return value +' '+ this.getLatest.exchange;
-                                }
+                scales: {
+                    y: {
+                        ticks: {
+                            // Include a currency sign in the ticks
+                            callback: (value) => {
+                                return value +' '+ this.getLatest.exchange;
                             }
                         }
                     },
-                    responsive:true
-                }"
+                },
+                // showTooltips: true,
+            }"
         />
     </b-tab>
 </template>

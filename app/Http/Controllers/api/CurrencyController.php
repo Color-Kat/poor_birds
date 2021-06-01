@@ -19,7 +19,8 @@ class CurrencyController extends Controller
 //        dump($btc);
 
         // get data on currencies throughout the day
-        $weekData = Bank::where('created_at', '>=', now()->subDays(1)->startOfDay())->get();
+        $weekData = Bank::where('created_at', '>=', now()->subDays(1)->startOfDay())->orderBy('created_at', 'desc')
+            ->get();
         return $weekData;
     }
 }
