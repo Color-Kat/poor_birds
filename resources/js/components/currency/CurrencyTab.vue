@@ -17,14 +17,23 @@
             :type="type"
         />
 
+        <hr>
+        <h4>{{`Курс ${getLatest.currency} к ${getLatest.exchange}`}}</h4>
+
         <Chart
             :chart-data="getChartData"
             :chart-options="{
                     scales: {
                         y: {
-                            beginAtZero: true
+                            ticks: {
+                                // Include a currency sign in the ticks
+                                callback: (value) => {
+                                    return value +' '+ this.getLatest.exchange;
+                                }
+                            }
                         }
-                    }
+                    },
+                    responsive:true
                 }"
         />
     </b-tab>
@@ -44,18 +53,18 @@ export default {
         CurrencyTabHead,
         CurrencyTabExchange
     },
-    methods:{
+    methods   : {
         /**
          * @param mysqlDate - mysql date timestamp
          * @return date - milliseconds date
          * */
         convert_mysql_date_timestamp(mysqlDate) {
             // Split timestamp into [ Y, M, D, h, m, s ]
-            let t = mysqlDate.split(/[- : T]/);
+            let t = mysqlDate.split(/[- :]/);
 
-            console.log(mysqlDate,t)
+            // console.log(mysqlDate,t)
             // Apply each element to the Date function
-            return new Date(Date.UTC(t[0], t[1]-1, t[2], t[3]));
+            return new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3]));
         }
     },
     computed  : {
@@ -68,23 +77,21 @@ export default {
             if (!this.currencies) return {};
 
             let labels = [];
-            let data = [];
+            let data   = [];
 
             this.currencies.forEach(day => {
                 // console.log(day)
                 data.push(day.rate);
 
                 let date = this.convert_mysql_date_timestamp(day.created_at);
-                console.log(date)
                 labels.push(date.getHours());
             })
-            console.log(labels, data)
 
             return {
-                labels: labels,
+                labels  : labels,
                 datasets: [{
-                    label: 'Курс',
-                    data: data,
+                    label      : 'Курс',
+                    data       : data,
                     borderWidth: 1
                 }]
             }
