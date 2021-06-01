@@ -60,7 +60,7 @@ export default {
          * */
         convert_mysql_date_timestamp(mysqlDate) {
             // Split timestamp into [ Y, M, D, h, m, s ]
-            let t = mysqlDate.split(/[- :]/);
+            let t = mysqlDate.split(/[- : T]/);
 
             // console.log(mysqlDate,t)
             // Apply each element to the Date function
@@ -81,7 +81,7 @@ export default {
 
             this.currencies.forEach(day => {
                 // console.log(day)
-                data.push(day.rate);
+                data.push(day.rate.toFixed(3));
 
                 let date = this.convert_mysql_date_timestamp(day.created_at);
                 labels.push(date.getHours());

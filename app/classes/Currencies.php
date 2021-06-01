@@ -6,7 +6,11 @@ namespace App\classes;
 
 class Currencies
 {
-    static function getCurrencies() {
+    /**
+     * @return array - USD, BTC, RUB, GTN rate
+     */
+    static function getCurrencies(): array
+    {
         // rate for 1 USD = x RUB
         $usd = json_decode(file_get_contents('https://www.cbr-xml-daily.ru/daily_json.js'))->Valute->USD->Value;
         // rate for 1 BTC = x RUB
@@ -17,10 +21,26 @@ class Currencies
         $gtn = random_int(85, 110) / 100;
 
         return [
-            'USD' => round($usd, 2),
-            'BTC' => round($btc),
-            'RUB' => round($rub, 3),
-            'GTN' => round($gtn, 2),
+            'USD' => [
+                'currency' => 'USD',
+                'rate' => round($usd, 2),
+                'exchange' => 'RUB'
+            ],
+            'BTC' => [
+                'currency' => 'BTC',
+                'rate' => round($btc),
+                'exchange' => 'RUB'
+            ],
+            'RUB' => [
+                'currency' => 'RUB',
+                'rate' => round($rub, 3),
+                'exchange' => 'GTN'
+            ],
+            'GTN' => [
+                'currency' => 'GTN',
+                'rate' => round($gtn, 2),
+                'exchange' => 'real_RUB'
+            ],
         ];
     }
 }
