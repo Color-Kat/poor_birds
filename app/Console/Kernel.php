@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\CollectEggs::class
+        Commands\CollectEggs::class,
+        Commands\UpdateCurrencies::class
     ];
 
     /**
@@ -25,12 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//         $schedule->command('inspire')->hourly();
-//        dump('running');
         $schedule->command('collect:eggs')->everyMinute();
-//        $schedule->call(function (){
-//            dump(123);
-//        })->everyMinute();
+        $schedule->command('update:currency')->everyMinute();
     }
 
     /**
