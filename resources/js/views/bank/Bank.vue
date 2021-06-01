@@ -26,7 +26,7 @@
                         <Wallet
                             currency="GTN"
                             :count="getUserWallets.GTN"
-                            :rate="getCurrencies.GTN[0].rate"
+                            :rate="getCurrencies.RUB[0].rate"
                             exchange="RUB"
                         />
 
@@ -66,7 +66,7 @@
             <!--      EXCHANGE GTN      -->
             <b-alert show variant="primary">
                 <div id="exchange_currency">
-                    <h5>💱Обменять валют</h5>
+                    <h5>💱Обмен валют</h5>
 
                     <!--          TRANSACTION TYPE          -->
                     <b-form-group label="Выберите тип сделки:" v-slot="{ ariaDescribedby }">
@@ -110,7 +110,7 @@
             <!--      BUY GTN      -->
             <b-alert show variant="success">
                 <div id="buy-gtn">
-                    <h5>💲Купить <b>густинаны:</b></h5>
+                    <h5>💲Купить <b>густинаны (GTN):</b></h5>
                     <span>
                         Для покупки перейдите
                         <b-link :to="{name: 'payment'}">сюда</b-link>

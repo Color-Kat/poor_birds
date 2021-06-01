@@ -6,7 +6,7 @@
     >
         <b-card-text>
             На счету {{ count }} {{currency}} <br>
-            на сумму {{ count * rate }} {{exchange}}
+            на сумму {{ count / rate }} {{exchange}}
         </b-card-text>
     </b-card>
 </template>
