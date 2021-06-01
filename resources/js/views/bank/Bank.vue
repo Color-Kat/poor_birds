@@ -16,52 +16,46 @@
 
             <hr>
 
-            <!--     CREDIT     -->
+            <!--     WALLETS     -->
             <b-alert show variant="secondary">
                 <div id="wallets">
                     <h5>👛Ваши счета</h5>
 
-                    <div class="container">
-                        <b-card
-                            title="USD"
-                            tag="article"
-                            class="wallet"
-                        >
-                            <b-card-text>
-                                На счету 20 USD <br>
-                                на сумму 15000 RUB
-                            </b-card-text>
-                        </b-card>
-                        <b-card
-                            title="USD"
-                            tag="article"
-                            class="wallet"
-                        >
-                            <b-card-text>
-                                На счету 20 USD <br>
-                                на сумму 15000 RUB
-                            </b-card-text>
-                        </b-card>
-                        <b-card
-                            title="USD"
-                            tag="article"
-                            class="wallet"
-                        >
-                            <b-card-text>
-                                На счету 20 USD <br>
-                                на сумму 15000 RUB
-                            </b-card-text>
-                        </b-card>
+                    <div class="container" v-if="Object.values(getCurrencies).length">
+                        <!--             GTN           -->
+                        <Wallet
+                            currency="GTN"
+                            :count="getUserWallets.GTN"
+                            :rate="getCurrencies.GTN[0].rate"
+                            exchange="RUB"
+                        />
+
+                        <!--             BTC           -->
+                        <Wallet
+                            currency="BTC"
+                            :count="getUserWallets.BTC"
+                            :rate="getCurrencies.BTC[0].rate"
+                            exchange="RUB"
+                        />
+
+                        <!--             BTC           -->
+                        <Wallet
+                            currency="USD"
+                            :count="getUserWallets.USD"
+                            :rate="getCurrencies.USD[0].rate"
+                            exchange="RUB"
+                        />
                     </div>
                 </div>
             </b-alert>
+            <!--      WALLETS      -->
 
             <hr>
 
             <!--     CREDIT     -->
             <b-alert show variant="danger">
                 <div id="credit">
-                    <h5>💸Взять кредит</h5>
+                    <h5>💸Взять кредит (в разработке)</h5>
                     <label for="credit_sum">Сумма кредита в <b>рублях RUB</b>:</label>
                     <b-form-input type="number" id="credit_sum" name="credit_sum"></b-form-input>
 
@@ -133,10 +127,12 @@ import Chart from "../../components/chart/Chart";
 import BalanceWidget from "../../components/wallets/BalanceWidget";
 import CurrencyTab from "../../components/currency/CurrencyTab";
 import {mapActions, mapGetters} from "vuex";
+import Wallet from "../../components/wallets/Wallet";
 
 export default {
     name      : "Bank",
     components: {
+        Wallet,
         Chart,
         CurrencyTab,
         BalanceWidget

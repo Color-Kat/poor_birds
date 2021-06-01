@@ -1,11 +1,16 @@
 <template>
     <div>
+        <b-modal id="modal-no-money-exchange" header-bg-variant="danger" hide-footer>
+            <p class="my-2">Недостаточно денег</p>
+        </b-modal>
+
         <form v-if="type=='buy'">
             <label class="m-0 mt-1">Обменять:</label>
             <b-input-group size="lg" :append="exchange">
                 <b-form-input
                     type="number"
                     min="0"
+                    :max="getUserWallets[exchange]"
                     v-model="currency_buy"
                 ></b-form-input>
             </b-input-group>
@@ -18,6 +23,12 @@
                     :value="currency_buy_result"
                 ></b-form-input>
             </b-input-group>
+
+            <b-button
+                variant="primary"
+                class="mt-2 w-100"
+                @click="buy"
+            >Купить</b-button>
         </form>
 
         <form v-else>
@@ -26,6 +37,7 @@
                 <b-form-input
                     type="number"
                     min="0"
+                    :max="getUserWallets[currency]"
                     v-model="currency_sell"
                 ></b-form-input>
             </b-input-group>
@@ -38,11 +50,19 @@
                     :value="currency_sell_result"
                 ></b-form-input>
             </b-input-group>
+
+            <b-button
+                variant="primary"
+                class="mt-2 w-100"
+                @click="sell"
+            >Продать</b-button>
         </form>
     </div>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
     name : "CurrencyTabExchange",
     props: ['type', 'currency', 'exchange', 'rate'],
@@ -58,6 +78,27 @@ export default {
         /** return count of exchange currency when selling */
         currency_sell_result(){
             return parseFloat((this.currency_sell * this.rate).toFixed(10))
+        },
+        ...mapGetters(['getUserWallets'])
+    },
+    methods: {
+        /** check money and send a request to buy currency */
+        buy() {
+            //check if there is enough money
+            if(this.currency_buy > this.getUserWallets[this.exchange])
+                this.$bvModal.show('modal-no-money-exchange');
+            else{
+                console.log('buy');
+            }
+        },
+        /** check money and send a request to sell currency */
+        sell() {
+            //check if there is enough money
+            if(this.currency_sell > this.getUserWallets[this.currency])
+                this.$bvModal.show('modal-no-money-exchange');
+            else{
+                console.log('sell');
+            }
         }
     }
 }
