@@ -37,9 +37,14 @@ export default {
                 return (+state.user.money).toFixed(2);
             } else return false;
         },
-        getDonateBalance(state) {
+        getUserWallets(state) {
             if (state.user) {
-                return (+state.user.donate).toFixed(1);
+                return {
+                    RUB: state.user.money,
+                    GTN: state.user.GTN,
+                    USD: state.user.USD,
+                    BTC: state.user.BTC,
+                }
             } else return false;
         },
         // return all user data

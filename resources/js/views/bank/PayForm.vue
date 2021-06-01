@@ -3,11 +3,7 @@
         <b-card class="pay-form">
             <h3> Купить густинианы 💶</h3>
 
-            <h5 class="position-absolute" style="right: 0; top: 0">
-                <b-badge variant="light">
-                    На счету {{getDonateBalance}} 💶
-                </b-badge>
-            </h5>
+            <BalanceWidget currency="GTN" :count="getUserWallets.GTN"/>
 
             <!--      RULES      -->
             <div>
@@ -221,14 +217,16 @@
 
 <script>
 import {mapGetters} from "vuex";
+import BalanceWidget from "../../components/wallets/BalanceWidget";
 
 export default {
     name: "PayForm",
+    components: {BalanceWidget},
     data: () => ({
         sel_cur: ''
     }),
     computed: {
-        ...mapGetters(['getDonateBalance', 'getUserId'])
+        ...mapGetters(['getUserWallets', 'getUserId'])
     },
     methods: {
         iterateAllWasPayment: function (callback) {

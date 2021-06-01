@@ -11,12 +11,50 @@
             </p>
 
             <!--      BALANCE      -->
-            <h5 class="position-absolute" style="right: 0; top: 0">
-                <b-badge variant="light">
-                    <b>💶</b>На счету: {{ getDonateBalance }} GTN
-                </b-badge>
-            </h5>
+            <BalanceWidget currency="GTN" :count="getUserWallets.GTN"/>
             <!--      BALANCE      -->
+
+            <hr>
+
+            <!--     CREDIT     -->
+            <b-alert show variant="secondary">
+                <div id="wallets">
+                    <h5>👛Ваши счета</h5>
+
+                    <div class="container">
+                        <b-card
+                            title="USD"
+                            tag="article"
+                            class="wallet"
+                        >
+                            <b-card-text>
+                                На счету 20 USD <br>
+                                на сумму 15000 RUB
+                            </b-card-text>
+                        </b-card>
+                        <b-card
+                            title="USD"
+                            tag="article"
+                            class="wallet"
+                        >
+                            <b-card-text>
+                                На счету 20 USD <br>
+                                на сумму 15000 RUB
+                            </b-card-text>
+                        </b-card>
+                        <b-card
+                            title="USD"
+                            tag="article"
+                            class="wallet"
+                        >
+                            <b-card-text>
+                                На счету 20 USD <br>
+                                на сумму 15000 RUB
+                            </b-card-text>
+                        </b-card>
+                    </div>
+                </div>
+            </b-alert>
 
             <hr>
 
@@ -92,6 +130,7 @@
 <script>
 import Loader from "../../components/Loader";
 import Chart from "../../components/chart/Chart";
+import BalanceWidget from "../../components/wallets/BalanceWidget";
 import CurrencyTab from "../../components/currency/CurrencyTab";
 import {mapActions, mapGetters} from "vuex";
 
@@ -99,7 +138,8 @@ export default {
     name      : "Bank",
     components: {
         Chart,
-        CurrencyTab
+        CurrencyTab,
+        BalanceWidget
     },
     data      : () => ({
         loading: true,
@@ -119,7 +159,7 @@ export default {
         options  : {}
     }),
     computed  : {
-        ...mapGetters(['getDonateBalance', 'getCurrencies']),
+        ...mapGetters(['getUserWallets', 'getCurrencies']),
     },
     methods   : {
         ...mapActions(['fetchCurrencies'])
@@ -134,6 +174,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+#wallets{
+    .container {
+        display: grid;
+        padding: 0;
+        margin: 0 !important;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 7px;
 
+        @media (max-width: 630px) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
 </style>
