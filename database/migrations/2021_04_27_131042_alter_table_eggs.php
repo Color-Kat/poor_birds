@@ -14,7 +14,7 @@ class AlterTableEggs extends Migration
     public function up()
     {
         Schema::table('eggs', function (Blueprint $table) {
-            $table->unsignedInteger('fine')->default(0)->after('cared');
+            $table->unsignedFloat('fine')->default(0)->after('cared');
         });
     }
 

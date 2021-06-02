@@ -320,7 +320,7 @@ export default {
                     fines += +elem.fine;
                 });
             }
-            return fines;
+            return fines.toFixed(2);
         },
         localStorage: ()=>localStorage // for toggle tooltip
     },

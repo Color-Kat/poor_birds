@@ -15,9 +15,9 @@ class AlterTableUsersAddCurrencies extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // Кол-во густинианов на счету пользователя (Покупаются за донат)
-            $table->unsignedInteger('USD')->default(0)->after('money');
-            $table->unsignedInteger('BTC')->default(0)->after('money');
-            $table->unsignedInteger('GTN')->default(0)->after('money');
+            $table->unsignedDouble('USD')->default(0)->after('money');
+            $table->unsignedDouble('BTC')->default(0)->after('money');
+            $table->unsignedDouble('GTN')->default(0)->after('money');
         });
     }
 
