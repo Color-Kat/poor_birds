@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name : "CurrencyTabExchange",
@@ -82,13 +82,18 @@ export default {
         ...mapGetters(['getUserWallets'])
     },
     methods: {
+        ...mapActions(['buyCurrency']),
         /** check money and send a request to buy currency */
         buy() {
             //check if there is enough money
             if(this.currency_buy > this.getUserWallets[this.exchange])
                 this.$bvModal.show('modal-no-money-exchange');
             else{
-                console.log('buy');
+                this.buyCurrency({
+                    amount: this.currency_buy, // count of user money for transaction
+                    buyCurrency: this.currency, // currency to buy (1 USD)
+                    exchange: this.exchange, // currency to sell (73.5 RUB)
+                });
             }
         },
         /** check money and send a request to sell currency */

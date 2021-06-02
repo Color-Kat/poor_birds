@@ -84,7 +84,8 @@ export default {
             let data   = [];
 
             this.currencies.forEach(day => {
-                // console.log(day)
+                // if (day.currency != 'RUB') data.push(day.rate.toFixed(3));
+                // else data.push(1 / day.rate.toFixed(3));
                 data.push(day.rate.toFixed(3));
 
                 let date = this.convert_mysql_date_timestamp(day.created_at);

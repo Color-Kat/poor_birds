@@ -43,4 +43,17 @@ class Currencies
             ],
         ];
     }
+
+    /**
+     * @return float - returns the amount of currency that can be bought for $ amount
+     */
+    static function transaction($amount, $buyCurrency, $exchange): float
+    {
+        $rate = self::getCurrencies()[$buyCurrency]['rate']; // get rate of currency
+
+        if($exchange == 'GTN') return round($amount / $rate, 2); // to buy GTN for RUB
+        else if($buyCurrency == 'USD') return round($amount * 1/$rate, 2); // to buy USD for RUB
+        else if($buyCurrency == 'BTC') return number_format($amount * 1/$rate, 8); // to buy BTC for RUB
+        else return false;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\classes\Currencies;
 use App\Http\Requests\RegisterRequest;
 use App\models\Certificate;
 use App\models\Contract;
@@ -404,6 +405,35 @@ class AuthController extends Controller
         $user->update();
 
         return auth()->user()->money; // return new balance
+    }
+
+    public function buyCurrency(Request $request) {
+        $amount = $request->amount; // count of user money for transaction
+        $buyCurrency = $request->buyCurrency; // currency to buy (1 USD)
+        $exchange = $request->exchange != 'RUB' ? $request->exchange : 'money'; // currency to sell (73.5 RUB)
+
+        $user = auth()->user();
+
+        // check if the user has enough currency
+        if($user[$exchange] >= $amount) {
+            /* ---- enough ----*/
+
+            // get count of currency for user amount
+            $currencyCount = Currencies::transaction( ...array_values($request->all()));
+            $user[$exchange] = $user->money - $amount;
+            $user->update();
+            return 123;
+        }else {
+            return false; // not enough
+        }
+
+
+
+    }
+
+    public function sellCurrency(Request $request) {
+        dump('sell');
+        dump($request->all());
     }
 
     /**

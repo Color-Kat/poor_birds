@@ -595,6 +595,32 @@ export default {
                     return false;
                 });
         },
+
+        /* CURRENCIES */
+        buyCurrency({
+                        commit,
+                        state
+                    }, transaction) {
+            if (!state.access_token) return false;
+
+            return axios.post(
+                'api/auth/buyCurrency',
+                {...transaction},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    console.log(response);
+                    // if (response.data) {
+                    //     commit('changeBalance', response.data); // update balance
+                    //     return true;
+                    // }
+                    return false;
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+        },
     },
     mutations: {
         setUser(state, user) {
