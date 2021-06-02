@@ -440,9 +440,6 @@ class AuthController extends Controller
         }else {
             return false; // not enough
         }
-
-
-
     }
 
     public function sellCurrency(Request $request) {

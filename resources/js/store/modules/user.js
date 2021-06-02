@@ -610,10 +610,10 @@ export default {
             )
                 .then(response => {
                     console.log(response);
-                    // if (response.data) {
-                    //     commit('changeBalance', response.data); // update balance
-                    //     return true;
-                    // }
+                    if (response.data !== false) {
+                        commit('changeBalance', response.data); // update balance
+                        return true;
+                    }
                     return false;
                 })
                 .catch((error) => {

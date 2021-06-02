@@ -49,8 +49,6 @@ class Currencies
      */
     static function transaction($amount, $buyCurrency, $exchange, $rate): float
     {
-//        $rate = self::getCurrencies()[$buyCurrency]['rate']; // get rate of currency
-//dump($amount, $rate);
         if($exchange == 'GTN') return round($amount / $rate, 2); // to buy GTN for RUB
         else if($buyCurrency == 'USD') return round($amount /$rate, 2); // to buy USD for RUB
         else if($buyCurrency == 'BTC') return number_format($amount / $rate, 9); // to buy BTC for RUB

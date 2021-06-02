@@ -4,17 +4,6 @@ export default {
     },
     getters  : {
         getCurrencies(state) {
-            let currencies = {};
-
-            // sort array to {currency_name: {}[]}
-            // state.currencies.forEach(elem => {
-            //     if(!currencies[elem.currency]) currencies[elem.currency] = [];
-            //
-            //     currencies[elem.currency].unshift({
-            //         ...elem,
-            //
-            //     }); // array[0] = latest data
-            // });
             return state.currencies;
         },
     },

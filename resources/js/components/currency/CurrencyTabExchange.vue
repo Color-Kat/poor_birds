@@ -4,6 +4,14 @@
             <p class="my-2">Недостаточно денег</p>
         </b-modal>
 
+        <b-modal id="modal-success-transaction" header-bg-variant="success" hide-footer>
+            <p class="my-2">Транзакция произошла успешно</p>
+        </b-modal>
+
+<!--        <b-modal id="modal-error-transaction" header-bg-variant="danger" hide-footer>-->
+<!--            <p class="my-2">Произошла какая-то ошибка</p>-->
+<!--        </b-modal>-->
+
         <form v-if="type=='buy'">
             <label class="m-0 mt-1">Обменять:</label>
             <b-input-group size="lg" :append="exchange">
@@ -82,18 +90,24 @@ export default {
         ...mapGetters(['getUserWallets'])
     },
     methods: {
-        ...mapActions(['buyCurrency']),
+        ...mapActions(['buyCurrency', 'fetchUser']),
         /** check money and send a request to buy currency */
-        buy() {
+        async buy() {
             //check if there is enough money
             if(this.currency_buy > this.getUserWallets[this.exchange])
                 this.$bvModal.show('modal-no-money-exchange');
             else{
-                this.buyCurrency({
+                let result = await this.buyCurrency({
                     amount: this.currency_buy, // count of user money for transaction
                     buyCurrency: this.currency, // currency to buy (1 USD)
                     exchange: this.exchange, // currency to sell (73.5 RUB)
                 });
+
+                if(result) {
+                    this.$bvModal.show('modal-success-transaction');
+                    this.fetchUser(); // update wallets data
+                }
+                else this.$bvModal.show('modal-no-money-exchange');
             }
         },
         /** check money and send a request to sell currency */
