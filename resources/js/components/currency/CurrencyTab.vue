@@ -62,8 +62,6 @@ export default {
         convert_mysql_date_timestamp(mysqlDate) {
             // Split timestamp into [ Y, M, D, h, m, s ]
             let t = mysqlDate.split(/[- : T]/);
-
-            // console.log(mysqlDate,t)
             // Apply each element to the Date function
             return new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3]));
         }
@@ -96,7 +94,7 @@ export default {
                 labels  : labels,
                 datasets: [{
                     label      : 'Курс',
-                    data       : data,
+                    data       : data.reverse(),
                     borderWidth: 1
                 }]
             }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\classes\Currencies;
 use App\Http\Requests\RegisterRequest;
+use App\models\Bank;
 use App\models\Certificate;
 use App\models\Contract;
 use App\models\Egg;
@@ -408,9 +409,14 @@ class AuthController extends Controller
     }
 
     public function buyCurrency(Request $request) {
-        $amount = $request->amount; // count of user money for transaction
-        $buyCurrency = $request->buyCurrency; // currency to buy (1 USD)
-        $exchange = $request->exchange != 'RUB' ? $request->exchange : 'money'; // currency to sell (73.5 RUB)
+        // count of user money for transaction
+        $amount = $request->amount;
+        // currency to buy (1 USD)
+        $buyCurrency = $request->buyCurrency != 'RUB' ? $request->buyCurrency : 'money';
+        // currency to sell (73.5 RUB)
+        $exchange = $request->exchange != 'RUB' ? $request->exchange : 'money';
+        // get last rate of buy currency
+        $rate = Bank::where('currency', '=', $request->buyCurrency)->latest('created_at')->first()->rate;
 
         $user = auth()->user();
 
@@ -419,10 +425,18 @@ class AuthController extends Controller
             /* ---- enough ----*/
 
             // get count of currency for user amount
-            $currencyCount = Currencies::transaction( ...array_values($request->all()));
-            $user[$exchange] = $user->money - $amount;
+            $currencyCount = Currencies::transaction(
+                $request->amount,
+                $request->buyCurrency,
+                $request->exchange,
+                $rate
+            );
+
+            $user[$exchange] = $user[$exchange] - $amount;
+            $user[$buyCurrency] = $user[$buyCurrency] + $currencyCount;
             $user->update();
-            return 123;
+
+            return $user[$buyCurrency];
         }else {
             return false; // not enough
         }

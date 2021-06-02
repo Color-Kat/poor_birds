@@ -58,7 +58,7 @@ class PaymentController extends Controller
         // get latest rate og GTN - real_RUB
         $rate = Bank::
             where('currency', '=', 'GTN')
-            ->orderBy('created_at', 'desc')
+            ->latest('created_at')
             ->first()->rate;
 
         $user->update(['GTN' => $user->GTN + ( $request->AMOUNT * $rate )]); // update GTN balance

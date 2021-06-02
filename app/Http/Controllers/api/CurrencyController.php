@@ -8,19 +8,35 @@ use Illuminate\Http\Request;
 
 class CurrencyController extends Controller
 {
-//    private $usdApiKey = '46e79fcd6a6d04370cbff5bca62e0a6f';
-//    private $btcApiKey = '';
-
+    /** @return array - array of currency with history*/
     public function getCurrencies() {
-//        $usd = json_decode(file_get_contents('https://www.cbr-xml-daily.ru/daily_json.js'))->Valute->USD->Value;
-//        $btc = json_decode(file_get_contents('https://blockchain.info/ru/ticker'))->RUB->last;
-
-//        dump($usd);
-//        dump($btc);
-
         // get data on currencies throughout the day
-        $weekData = Bank::where('created_at', '>=', now()->subDays(1)->startOfDay())->orderBy('created_at', 'desc')
+        $weekData = Bank::where('created_at', '>=', now()->subDays(1)->startOfDay())
             ->get();
-        return $weekData;
+
+        $currencies = [];
+
+        // change the view of the array
+        foreach ($weekData as $cur) {
+            // for first iteration
+            if(!$currencies) $currencies = [];
+            if(!isset($currencies[$cur->currency])) $currencies[$cur->currency] = [];
+
+            // add to array start data type of
+            // {CURRENCY => {}[]}[]
+            array_unshift(
+                $currencies[$cur->currency],
+                [
+                    'currency' => $cur->currency,
+                    'rate' => $cur->rate,
+                    'id' => $cur->id,
+                    'exchange' => $cur->exchange,
+                    'created_at' => $cur->created_at,
+                ]
+            );
+
+        }
+
+        return $currencies;
     }
 }
