@@ -14,7 +14,7 @@ class Currencies
         // rate for 1 USD = x RUB
         $usd = json_decode(file_get_contents('https://www.cbr-xml-daily.ru/daily_json.js'))->Valute->USD->Value;
         // rate for 1 BTC = x RUB
-        $btc = json_decode(file_get_contents('https://blockchain.info/ru/ticker'))->RUB->last;
+        $btc = json_decode(file_get_contents('https://quotes.instaforex.com/api/quotesTick?q=usdrub'))[0]->ask;
         // rate for 1 RUB = x GTN
         $rub = 1 / random_int(85, 130);
         // rate for 1 GTN = x real_RUB
@@ -23,7 +23,7 @@ class Currencies
         return [
             'USD' => [
                 'currency' => 'USD',
-                'rate' => round($usd, 2),
+                'rate' => round($usd, 3),
                 'exchange' => 'RUB'
             ],
             'BTC' => [
