@@ -402,7 +402,6 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    console.log(response)
                     if (response.status == 200 && response.data) {
                         commit('changeBalance', response.data);
                         return true;
@@ -582,7 +581,6 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    console.log(response)
                     if (response.data) {
                         commit('changeBalance', +response.data); // update balance
                         return true;

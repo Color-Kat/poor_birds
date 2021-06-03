@@ -49,13 +49,14 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
                     >?</b-badge>
                 </div>
 
-                <h5>Действия: </h5>
+                <h2 class="text-center">Склад ваших яиц</h2>
                 <span>
-                    <b-button size="sm" variant="success" :to="{name: 'birds'}">Купить птиц</b-button>
-                    <b-button size="sm" variant="primary" :to="{name: 'certificates'}">Купить сертификат</b-button>
+                    <NavWidget />
+
 
                     <!--         collapse tooltip (from localStorage)       -->
                     <b-collapse :visible="localStorage.getItem('tooltip-my-birds') == 'true'" id="collapse-shovel">
+                        <hr>
                         <p class="mt-2">
                             Здесь живут ваши птицы. Вы можете:
                             <ul>
@@ -78,7 +79,6 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
 
             <hr>
 
-            <h2>Ваши птицы: </h2>
             <b-card
                 v-for="(my_bird, index) of get_my_birds"
                 :key="my_bird.id"
@@ -195,10 +195,13 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
 <script>
 import {mapActions, mapGetters} from "vuex";
 import Loader from "../../components/Loader";
+import NavWidget from "../../components/navigation/NavWidget";
 
 export default {
     name      : "MyBirdsPage",
-    components: {Loader},
+    components: {
+        NavWidget,
+        Loader},
     computed  : {
         ...mapGetters(['getMyBirds']),
         get_my_birds: function () {

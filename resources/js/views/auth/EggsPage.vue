@@ -59,10 +59,7 @@
             <hr>
 
             <p>
-                <b-button size="sm" variant="success" class="mb-1" :to="{name: 'birds'}">Купить птиц</b-button>
-                <b-button size="sm" variant="warning" class="mb-1" :to="{name: 'certificates'}">Купить
-                    сертификат</b-button>
-                <b-button size="sm" variant="primary" class="mb-1" :to="{name: 'sellers'}">Продавцы</b-button>
+                <NavWidget />
             </p>
             <hr>
             <div>
@@ -229,10 +226,13 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import Loader from "../../components/Loader";
+import NavWidget from "../../components/navigation/NavWidget";
 
 export default {
     name    : "EggsPage",
-    components: {Loader},
+    components: {
+        NavWidget,
+        Loader},
     data    : () => ({
         fines: null,
         loading: true

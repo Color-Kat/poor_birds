@@ -37,11 +37,8 @@
         >
 
             <b-card-text class="text-left">
-                <div class="d-flex justify-content-around actions">
-                    <b-button class="text-center" :to="{name: 'eggs'}" variant="success">🥚</b-button>
-                    <b-button class="text-center" :to="{name: 'my_birds'}" variant="warning">🦅</b-button>
-                    <b-button class="text-center" :to="{name: 'sellers'}" variant="primary">🛒</b-button>
-                </div>
+                <NavWidget />
+
                 <hr>
                 <h4>Статистика:</h4>
                 <h5>
@@ -110,9 +107,11 @@
 
 <script>
 import {mapGetters} from "vuex";
+import NavWidget from "../components/navigation/NavWidget";
 
 export default {
     name    : "Index",
+    components: {NavWidget},
     computed: {
         ...mapGetters(['getAuth', 'getUserData', 'getMyBirds', 'getEggs']),
         /**
@@ -234,14 +233,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.actions {
-    * {
-        width: 70px;
-        height: 70px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2rem;
-    }
-}
 </style>
