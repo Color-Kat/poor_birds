@@ -3,7 +3,7 @@
         <b-card class="pay-form">
             <h3> Купить густинианы 💶</h3>
 
-            <BalanceWidget currency="GTN" :count="getUserWallets.GTN"/>
+            <BalanceWidget currency="GTN" :count="+getUserWallets.GTN"/>
 
             <!--      RULES      -->
             <div>
@@ -14,8 +14,8 @@
                     Густинианы придумал <b>👑Святой Густав👑</b> - мэр Густограда, в котором вы основали свою ферму
                 </p>
 
-                <b-alert show variant="info" class="my-2">
-                    <span>🤑1 рубль = 1 густиниан🤑</span><br>
+                <b-alert show variant="info" class="my-2" v-if="getCurrencies.GTN">
+                    <span>🤑1 густиниан = {{getCurrencies.GTN[0].rate}} ₽🤑</span><br>
                 </b-alert>
             </div>
             <!--      RULES      -->
@@ -216,7 +216,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import BalanceWidget from "../../components/wallets/BalanceWidget";
 
 export default {
@@ -226,9 +226,10 @@ export default {
         sel_cur: ''
     }),
     computed: {
-        ...mapGetters(['getUserWallets', 'getUserId'])
+        ...mapGetters(['getUserWallets', 'getUserId', 'getCurrencies'])
     },
     methods: {
+        ...mapActions(['fetchCurrencies']),
         iterateAllWasPayment: function (callback) {
             this.$refs.widget_payments.querySelectorAll('.wp').forEach(payment => {
                 callback(payment);
@@ -246,6 +247,9 @@ export default {
                 this.sel_cur = e.target.id; // set way currency in form
             });
         });
+    },
+    created() {
+        this.fetchCurrencies();
     }
 }
 </script>

@@ -99,11 +99,11 @@
                     v-b-tooltip="'Если сумма налогов и штрафов будет больше 300, то у вас не будет доступа к яйцам!'"
                 >
                     Погасить налоги
-                    {{ +getFines }} ₽
+                    {{ getFines }} ₽
                 </b-button>
             </h2>
 
-            <b-alert show variant="danger" v-if="+getFines > 300">
+            <b-alert show variant="danger" v-if="getFines > 300">
                 У вас куча непогашенных штрафов!
                 Доступ к ферме заблокирован. Погасите все долги
             </b-alert>
@@ -239,6 +239,7 @@ export default {
     }),
     methods : {
         ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel', 'payOffFines', 'brigadeHire']),
+        /** sell eggs request, then update data*/
         async sellingEggs(egg, event) {
             let eggs_count = await this.sellEggs(+egg.id);
 
@@ -255,6 +256,7 @@ export default {
                 this.$bvModal.show('modal-eggs');
             }
         },
+        /** clean request and update litter count  */
         async cleanHandler(egg, event) {
             // disable button for 1 sec
             let btn      = event.target;
@@ -272,6 +274,7 @@ export default {
             }
             egg.litter = litter; // decrease litter count
         },
+        /** select shovel request */
         async selectShovelHandler(shovel, e) {
             if (e.target.classList.contains('active')) return; // already selected
             let res = await this.selectShovel(shovel.id); // select shovel
@@ -286,11 +289,9 @@ export default {
             }
         },
         async payOffFinesHandler() {
-            let result = await this.payOffFines();
+            let result = await this.payOffFines(); // send request and get new count of fines
 
-            if (result !== false) {
-                this.fines = Math.round(+result);
-            }
+            if (result !== false) this.fines = +result; // update count of fines
         },
         async brigadeHireHandler() {
             return;
@@ -314,7 +315,10 @@ export default {
         console: () => console,
         // count fines from eggs
         getFines() {
-            let fines = this.fines; // if fines exists we need update fines
+            if (!this.getEggs.length) return 0; // no data to counting
+
+            // if fines don't exist we need update it
+            let fines = this.fines;
             if (fines === null) {
                 this.getEggs.forEach(elem => {
                     fines += +elem.fine;

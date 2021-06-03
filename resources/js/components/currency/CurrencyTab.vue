@@ -19,7 +19,7 @@
         />
 
         <hr>
-        <h4>{{ `Курс ${getLatest.currency} к ${getLatest.exchange}` }}</h4>
+        <h4>{{ `Курс ${getLatest.currency} к ${getLatest.exchange}` }} по часам</h4>
 
         <Chart
             :chart-data="getChartData"

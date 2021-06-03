@@ -492,9 +492,7 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    console.log(response)
                     if (response.data) {
-                        console.log(response.data.money)
                         commit('changeBalance', +response.data.money); // update balance
                         return response.data.fines;
                     }
@@ -609,7 +607,6 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    console.log(response);
                     if (response.data !== false) {
                         commit('changeBalance', response.data); // update balance
                         return true;
