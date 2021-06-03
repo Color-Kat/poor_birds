@@ -56,7 +56,8 @@ class Currencies
             else return false;
         }
         else if ($type == 'sell') {
-            if($exchange == 'GTN') return round($amount / $rate, 2);
+            if($currency == 'USD') return round($amount * $rate, 2);
+            else if($currency == 'BTC') return round($amount * $rate, 2);
             else return false;
         }
     }

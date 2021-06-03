@@ -83,11 +83,11 @@ export default {
     computed: {
         /** return count of exchange currency when buying */
         currency_buy_result() {
-            return parseFloat((this.currency_buy / this.rate).toFixed(10))
+            return parseFloat((this.currency_buy / +this.rate).toFixed(10))
         },
         /** return count of exchange currency when selling */
         currency_sell_result() {
-            return parseFloat((this.currency_sell * this.rate).toFixed(10))
+            return parseFloat((this.currency_sell * +this.rate).toFixed(10))
         },
         ...mapGetters(['getUserWallets'])
     },
@@ -98,9 +98,9 @@ export default {
             let result;
             //check if there is enough money
             if (this.type == 'buy') {
-                // if (this.currency_buy > this.getUserWallets[this.exchange])
-                //     this.$bvModal.show('modal-no-money-exchange');
-                // else {
+                if (this.currency_buy > this.getUserWallets[this.exchange])
+                    this.$bvModal.show('modal-no-money-exchange');
+                else {
                     // transaction request with
                     result = await this.transaction({
                         type    : this.type, // buy or sell
@@ -108,11 +108,11 @@ export default {
                         currency: this.currency, // currency to buy (1 USD)
                         exchange: this.exchange, // currency to sell (73.5 RUB)
                     });
-                // }
+                }
             } else {
-                // if (this.currency_sell > this.getUserWallets[this.currency])
-                //     this.$bvModal.show('modal-no-money-exchange');
-                // else {
+                if (this.currency_sell > this.getUserWallets[this.currency])
+                    this.$bvModal.show('modal-no-money-exchange');
+                else {
                     // transaction request with
                     result = await this.transaction({
                         type    : this.type, // buy or sell
@@ -120,7 +120,7 @@ export default {
                         currency: this.currency, // currency to sell (1 USD)
                         exchange: this.exchange, // currency to get (73.5 RUB)
                     });
-                // }
+                }
             }
 
             if (result) {

@@ -443,32 +443,45 @@ class AuthController extends Controller
             // check if the user has enough currency
             if ($user[$exchange] >= $amount) {
                 /* ---- enough ----*/
-                dump('buy enough');
+
                 // get count of currency for user amount
-//            $currencyCount = Currencies::transaction(
-//                $type,
-//                $request->amount,
-//                $request->currency,
-//                $request->exchange,
-//                $rate
-//            );
-//
-//            $user[$exchange] = $user[$exchange] - $amount;
-//            $user[$buyCurrency] = $user[$buyCurrency] + $currencyCount;
-//            $user->update();
-//
-//            return $user[$buyCurrency];
+                $currencyCount = Currencies::transaction(
+                    $type,
+                    $request->amount,
+                    $request->currency,
+                    $request->exchange,
+                    $rate
+                );
+
+                $user[$exchange] = $user[$exchange] - $amount;
+                $user[$currency] = $user[$currency] + $currencyCount;
+                $user->update();
+
+            return $user[$currency];
             } else {
-                dump('buy not enough');
                 return false; // not enough
             }
         } else if($type == 'sell') {
             // check if the user has enough currency
             if ($user[$currency] >= $amount) {
                 /* ---- enough ----*/
-                dump('sell enough');
+
+                // get count of currency for user amount
+                $currencyCount = Currencies::transaction(
+                    $type,
+                    $request->amount,
+                    $request->currency,
+                    $request->exchange,
+                    $rate
+                );
+
+                // $currency - валюта, которую мы хотим продать
+                // $exchange - валюта, которую хотим получить
+
+                $user[$currency] = $user[$currency] - $amount;
+                $user[$exchange] = $user[$exchange] + $currencyCount;
+                $user->update();
             } else {
-                dump('sell not enough');
                 return false; // not enough
             }
         }
