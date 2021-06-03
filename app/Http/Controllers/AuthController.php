@@ -76,13 +76,13 @@ class AuthController extends Controller
         ];
 
         $validatorMessages = [
-            'required'              => 'Поле :attribute обязательно для заполнения',
-            'min'                   => 'Минимальная длина поля :attribute :min',
-            'name.between'          => 'Ник должен быть минимум 2 символа',
-            'confirmed'             => 'Пароли не совпадают',
-            'alpha_dash'            => 'Недопустимые символы',
-            'email.unique'          => 'Этот email уже зарегистрирован',
-            'password'              => 'Некорректный пароль'
+            'required'     => 'Поле :attribute обязательно для заполнения',
+            'min'          => 'Минимальная длина поля :attribute :min',
+            'name.between' => 'Ник должен быть минимум 2 символа',
+            'confirmed'    => 'Пароли не совпадают',
+            'alpha_dash'   => 'Недопустимые символы',
+            'email.unique' => 'Этот email уже зарегистрирован',
+            'password'     => 'Некорректный пароль'
         ];
 
         $validator = Validator::make($request->all(), $rules, $validatorMessages);
@@ -256,7 +256,7 @@ class AuthController extends Controller
         $shovelEfficiency = $shovel->efficiency;
 
         // decrease litter count by efficiency or litter count
-        $litter_1 = $egg->litter;
+        $litter_1    = $egg->litter;
         $egg->litter -= $egg->litter > $shovelEfficiency ? $shovelEfficiency : $egg->litter;
         $egg->update();
 
@@ -344,13 +344,14 @@ class AuthController extends Controller
         ]);
     }
 
-    public function buyCertificate(Request $request) {
-        $user = auth()->user();
+    public function buyCertificate(Request $request)
+    {
+        $user        = auth()->user();
         $certificate = Certificate::find($request->certificate_id);
-        $my_birds = $user->my_birds;
+        $my_birds    = $user->my_birds;
 
         foreach ($my_birds as $my_bird) {
-            if ( $my_bird->pivot->id ===  $request->id) {
+            if ($my_bird->pivot->id === $request->id) {
                 if ($user->money < $certificate->price) return false; // not enough money
 
                 // decrease user money
@@ -366,8 +367,9 @@ class AuthController extends Controller
         return auth()->user()->money;
     }
 
-    public function buyContract(Request $request) {
-        $user = auth()->user();
+    public function buyContract(Request $request)
+    {
+        $user     = auth()->user();
         $contract = Contract::find($request->id);
 
         if (
@@ -383,8 +385,9 @@ class AuthController extends Controller
         return auth()->user()->money;
     }
 
-    public function brigadeHire() {
-        $user = auth()->user();
+    public function brigadeHire()
+    {
+        $user     = auth()->user();
         $earnings = 0;
 
         // count earnings
@@ -399,50 +402,80 @@ class AuthController extends Controller
         return auth()->user()->money;
     }
 
-    public function mine(Request $request) {
+    public function mine(Request $request)
+    {
         // update user balance from earnings from front
-        $user = auth()->user();
+        $user        = auth()->user();
         $user->money += $request->earnings;
         $user->update();
 
         return auth()->user()->money; // return new balance
     }
 
-    public function buyCurrency(Request $request) {
+    public function transaction(Request $request)
+    {
+        // get transaction type
+        $type = $request->type;
         // count of user money for transaction
         $amount = $request->amount;
-        // currency to buy (1 USD)
-        $buyCurrency = $request->buyCurrency != 'RUB' ? $request->buyCurrency : 'money';
-        // currency to sell (73.5 RUB)
+        // type == buy ? currency to buy (1 USD) : currency to sell (1 USD)
+        $currency = $request->currency != 'RUB' ? $request->currency : 'money';
+        // type == buy ? currency to sell (73.5 RUB) : currency to get (73.5 RUB)
         $exchange = $request->exchange != 'RUB' ? $request->exchange : 'money';
         // get last rate of buy currency
-        $rate = Bank::where('currency', '=', $request->buyCurrency)->latest('created_at')->first()->rate;
+        dump($currency);
+        $rate = Bank::where('currency', '=', $request->currency)->latest('created_at')->first()->rate;
+
+        // При покупке валюты
+        //      $exchange - валюта, которую мы продаем взамен на $currency
+        //            |
+        //      $currency - валюта, которую м хотим купить
+
+        // При продаже валюты наоборот:
+        //      $currency - валюта, которую м хотим продать
+        //            ^
+        //      $exchange - валюта, которую мы получим при продаже
 
         $user = auth()->user();
 
-        // check if the user has enough currency
-        if($user[$exchange] >= $amount) {
-            /* ---- enough ----*/
-
-            // get count of currency for user amount
-            $currencyCount = Currencies::transaction(
-                $request->amount,
-                $request->buyCurrency,
-                $request->exchange,
-                $rate
-            );
-
-            $user[$exchange] = $user[$exchange] - $amount;
-            $user[$buyCurrency] = $user[$buyCurrency] + $currencyCount;
-            $user->update();
-
-            return $user[$buyCurrency];
-        }else {
-            return false; // not enough
+        // check type of transaction
+        if ($type == 'buy') {
+            // check if the user has enough currency
+            if ($user[$exchange] >= $amount) {
+                /* ---- enough ----*/
+                dump('buy enough');
+                // get count of currency for user amount
+//            $currencyCount = Currencies::transaction(
+//                $type,
+//                $request->amount,
+//                $request->currency,
+//                $request->exchange,
+//                $rate
+//            );
+//
+//            $user[$exchange] = $user[$exchange] - $amount;
+//            $user[$buyCurrency] = $user[$buyCurrency] + $currencyCount;
+//            $user->update();
+//
+//            return $user[$buyCurrency];
+            } else {
+                dump('buy not enough');
+                return false; // not enough
+            }
+        } else if($type == 'sell') {
+            // check if the user has enough currency
+            if ($user[$currency] >= $amount) {
+                /* ---- enough ----*/
+                dump('sell enough');
+            } else {
+                dump('sell not enough');
+                return false; // not enough
+            }
         }
     }
 
-    public function sellCurrency(Request $request) {
+    public function sellCurrency(Request $request)
+    {
         dump('sell');
         dump($request->all());
     }

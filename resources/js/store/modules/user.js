@@ -597,14 +597,14 @@ export default {
         },
 
         /* CURRENCIES */
-        buyCurrency({
+        transaction({
                         commit,
                         state
                     }, transaction) {
             if (!state.access_token) return false;
 
             return axios.post(
-                'api/auth/buyCurrency',
+                'api/auth/transaction',
                 {...transaction},
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )

@@ -1,16 +1,16 @@
 <template>
     <div>
         <b-modal id="modal-no-money-exchange" header-bg-variant="danger" hide-footer>
-            <p class="my-2">Недостаточно денег</p>
+            <p class="my-2">Недостаточно средств на счету</p>
         </b-modal>
 
         <b-modal id="modal-success-transaction" header-bg-variant="success" hide-footer>
             <p class="my-2">Транзакция произошла успешно</p>
         </b-modal>
 
-<!--        <b-modal id="modal-error-transaction" header-bg-variant="danger" hide-footer>-->
-<!--            <p class="my-2">Произошла какая-то ошибка</p>-->
-<!--        </b-modal>-->
+        <!--        <b-modal id="modal-error-transaction" header-bg-variant="danger" hide-footer>-->
+        <!--            <p class="my-2">Произошла какая-то ошибка</p>-->
+        <!--        </b-modal>-->
 
         <form v-if="type=='buy'">
             <label class="m-0 mt-1">Обменять:</label>
@@ -35,12 +35,13 @@
             <b-button
                 variant="primary"
                 class="mt-2 w-100"
-                @click="buy"
-            >Купить</b-button>
+                @click="transactionHandler"
+            >Купить
+            </b-button>
         </form>
 
         <form v-else>
-            <label  class="m-0 mt-1">Продать:</label>
+            <label class="m-0 mt-1">Продать:</label>
             <b-input-group size="lg" :append="currency">
                 <b-form-input
                     type="number"
@@ -62,8 +63,9 @@
             <b-button
                 variant="primary"
                 class="mt-2 w-100"
-                @click="sell"
-            >Продать</b-button>
+                @click="transactionHandler"
+            >Продать
+            </b-button>
         </form>
     </div>
 </template>
@@ -72,50 +74,66 @@
 import {mapActions, mapGetters} from "vuex";
 
 export default {
-    name : "CurrencyTabExchange",
-    props: ['type', 'currency', 'exchange', 'rate'],
-    data:()=>({
-        currency_buy: 0,
+    name    : "CurrencyTabExchange",
+    props   : ['type', 'currency', 'exchange', 'rate'],
+    data    : () => ({
+        currency_buy : 0,
         currency_sell: 0
     }),
-    computed:{
+    computed: {
         /** return count of exchange currency when buying */
-        currency_buy_result(){
+        currency_buy_result() {
             return parseFloat((this.currency_buy / this.rate).toFixed(10))
         },
         /** return count of exchange currency when selling */
-        currency_sell_result(){
+        currency_sell_result() {
             return parseFloat((this.currency_sell * this.rate).toFixed(10))
         },
         ...mapGetters(['getUserWallets'])
     },
-    methods: {
-        ...mapActions(['buyCurrency', 'fetchUser']),
-        /** check money and send a request to buy currency */
-        async buy() {
+    methods : {
+        ...mapActions(['transaction', 'fetchUser']),
+        /** check money and send a request to buy/sell currency */
+        async transactionHandler() {
+            let result;
             //check if there is enough money
-            if(this.currency_buy > this.getUserWallets[this.exchange])
-                this.$bvModal.show('modal-no-money-exchange');
-            else{
-                let result = await this.buyCurrency({
-                    amount: this.currency_buy, // count of user money for transaction
-                    buyCurrency: this.currency, // currency to buy (1 USD)
-                    exchange: this.exchange, // currency to sell (73.5 RUB)
-                });
-
-                if(result) {
-                    this.$bvModal.show('modal-success-transaction');
-                    this.fetchUser(); // update wallets data
-                }
-                else this.$bvModal.show('modal-no-money-exchange');
+            if (this.type == 'buy') {
+                // if (this.currency_buy > this.getUserWallets[this.exchange])
+                //     this.$bvModal.show('modal-no-money-exchange');
+                // else {
+                    // transaction request with
+                    result = await this.transaction({
+                        type    : this.type, // buy or sell
+                        amount  : this.currency_buy, // count of user money for transaction
+                        currency: this.currency, // currency to buy (1 USD)
+                        exchange: this.exchange, // currency to sell (73.5 RUB)
+                    });
+                // }
+            } else {
+                // if (this.currency_sell > this.getUserWallets[this.currency])
+                //     this.$bvModal.show('modal-no-money-exchange');
+                // else {
+                    // transaction request with
+                    result = await this.transaction({
+                        type    : this.type, // buy or sell
+                        amount  : this.currency_sell, // count of user money for transaction
+                        currency: this.currency, // currency to sell (1 USD)
+                        exchange: this.exchange, // currency to get (73.5 RUB)
+                    });
+                // }
             }
+
+            if (result) {
+                this.$bvModal.show('modal-success-transaction'); // success modal
+                this.fetchUser(); // update wallets data
+            } else this.$bvModal.show('modal-no-money-exchange'); // no money modal
         },
         /** check money and send a request to sell currency */
         sell() {
             //check if there is enough money
-            if(this.currency_sell > this.getUserWallets[this.currency])
+            if (this.currency_sell > this.getUserWallets[this.currency])
                 this.$bvModal.show('modal-no-money-exchange');
-            else{
+            else {
                 console.log('sell');
             }
         }

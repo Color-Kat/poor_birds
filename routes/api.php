@@ -76,6 +76,5 @@ Route::group([
     Route::post('mine', 'AuthController@mine');
 
     /* user - currencies */
-    Route::post('buyCurrency', 'AuthController@buyCurrency');
-    Route::post('sellCurrency', 'AuthController@sellCurrency');
+    Route::post('transaction', 'AuthController@transaction');
 });
