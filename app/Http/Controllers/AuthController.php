@@ -299,11 +299,6 @@ class AuthController extends Controller
         $shovel = Shovel::find($request->id); // get shovel data by id
         if (auth()->user()->my_shovels->contains($request->id)) return false; // shovel is already exists
 
-//        if ($shovel->price > auth()->user()->money) return false; // not enough money
-//
-//        auth()->user()->money -= $shovel->price; // decrease user money
-//        auth()->user()->update(); // update
-
         $payment = null; // create new payment
 
         // buy for GTN (donate currency)
@@ -359,12 +354,14 @@ class AuthController extends Controller
 
     public function buyCertificate(Request $request)
     {
-        $user        = auth()->user();
-        $certificate = Certificate::find($request->certificate_id);
-        $my_birds    = $user->my_birds;
+        $user        = auth()->user(); // get user
+        $certificate = Certificate::find($request->certificate_id); // get certificate by id
+        $my_birds    = $user->my_birds; // get list of user's birds
 
+        // search needed bird
         foreach ($my_birds as $my_bird) {
             if ($my_bird->pivot->id === $request->id) {
+                // no money
                 if ($user->money < $certificate->price) return false; // not enough money
 
                 // decrease user money
@@ -380,20 +377,29 @@ class AuthController extends Controller
         return auth()->user()->money;
     }
 
+    /**
+     * add new contract to user for some money
+     */
     public function buyContract(Request $request)
     {
-        $user     = auth()->user();
-        $contract = Contract::find($request->id);
+        $user     = auth()->user(); // get user
+        $contract = Contract::find($request->id); // get contract by id
 
-        if (
-            $contract->price > $user->money || // no money
-            $user->my_contracts->contains($request->id) // already exists
-        ) return false;
-        else {
+        // check is contract already exists
+        if ($user->my_contracts->contains($request->id)) return false;
+
+        $payment = null; // create new payment
+
+        // pay and get is-success
+        if ($contract->isDonate) $payment = $user->payment('GTN', $contract->price);
+        else $payment = $user->payment('money', $contract->price);
+
+        // if successfully payment
+        if ($payment) {
             $user->money -= $contract->price; // increase user money
             $user->my_contracts()->attach($contract->id); // attach contract
             $user->update(); // update balance
-        }
+        } else return false;
 
         return auth()->user()->money;
     }
@@ -406,6 +412,7 @@ class AuthController extends Controller
         $user     = auth()->user();
         $earnings = 0;
 
+        //
         $payment = $user->payment('GTN', 20);
 
         // success payment

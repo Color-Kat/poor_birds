@@ -4,8 +4,12 @@
             <p class="my-4">Поздравляем! Вы заключили новый контракт.</p>
         </b-modal>
 
-        <b-modal id="modal-contract-error" header-bg-variant="danger" hide-footer>
-            <p class="my-4">У вас уже есть этот контракт</p>
+        <b-modal id="modal-contract-no-money" header-bg-variant="danger" hide-footer>
+            <p class="my-4">У вас недостаточно средств</p>
+        </b-modal>
+
+        <b-modal id="modal-contract-no-gtn" header-bg-variant="danger" hide-footer>
+            <p class="my-4">У вас недостаточно средств! На счету: {{getUserWallets.GTN}} GTN</p>
         </b-modal>
 
         <Loader v-if="loading"/>
@@ -39,7 +43,14 @@
                     </b-button>
 
                     <!--        DONAT BUTTON        -->
-                    <b-button v-else class="mt-3" variant="warning">Купить за донат (в разработке)</b-button>
+                    <b-button
+                        v-else
+                        class="mt-3"
+                        variant="warning"
+                        @click="(e)=>{buy(getContract, e);}"
+                    >
+                        Купить за густинианы
+                    </b-button>
                 </div>
 
                 <!--        already purchased        -->
@@ -77,19 +88,23 @@ export default {
         loading : true,
     }),
     computed  : {
-        ...mapGetters(['getContract', 'getUserContractsIds']),
+        ...mapGetters(['getContract', 'getUserContractsIds', 'getUserWallets']),
     },
     methods   : {
-        ...mapActions(['fetchContract', 'buyContract']),
+        ...mapActions(['fetchContract', 'buyContract', 'fetchUser']),
         async buy(contract, e) {
+            // send request and get result
             let result = await this.buyContract(contract.id);
 
             // contract is buying
             if (result) {
                 e.target.disabled = true; // disable button
-                this.$bvModal.show('modal-contract-buy');
+                this.fetchUser(); // update user currencies data
+                this.$bvModal.show('modal-contract-buy'); // show success modal
             } else {
-                this.$bvModal.show('modal-contract-error');
+                // show error modal
+                if (contract.isDonate) this.$bvModal.show('modal-contract-no-gtn'); // for gtn donate
+                else this.$bvModal.show('modal-contract-no-money'); // for RUB money
             }
         }
     },

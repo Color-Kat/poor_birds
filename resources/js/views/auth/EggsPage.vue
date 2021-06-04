@@ -242,7 +242,7 @@ export default {
         loading: true
     }),
     methods : {
-        ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel', 'payOffFines', 'brigadeHire']),
+        ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel', 'payOffFines', 'brigadeHire', 'fetchUser']),
         /** sell eggs request, then update data*/
         async sellingEggs(egg, event) {
             let eggs_count = await this.sellEggs(+egg.id);
@@ -313,7 +313,9 @@ export default {
                 let cleaning_song = new Audio();
                 cleaning_song.volume=0.5;
                 cleaning_song.src = '/assets/sounds/cleaning.mp3';
-                cleaning_song.play()
+                cleaning_song.play();
+
+                this.fetchUser(); // update user currencies
 
                 this.$bvModal.show('modal-brigade'); // show message
                 this.fetchUserEggs(); // update eggs list
