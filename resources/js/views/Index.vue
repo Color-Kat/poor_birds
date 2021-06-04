@@ -8,22 +8,25 @@
         >
 
             <b-card-text class="text-left">
-                Бедные птички - это проект, в котором вы с соткой в руках решаете открыть птицеферму! Чтобы купить птиц
-                вы выбираете между разными поставщиками (базар, магазин, частник дядя Коля и др.) и приобретаете у них
-                птиц; они несут вам яйца, продавая которые, вы будете получать прибыль; покупать новых птиц; и получать
-                прибыль еще больше!
-                Но птицы тоже не пальцем деланные 🤪 Чтобы они хорошо плодоносили, придется за ними ухаживать:
-                убирать помет😅 и просто гладить, чтобы они лучше неслись
+                <p>
+                    <b>Бедные птички</b> - игра с <i>сюжетом</i>, в которой вы открываете птицеферму
+                    в городе <b>Густоград</b>. Вы покупаете самых разнообразных <b> птиц🦅</b>. Они каждый час
+                    несут <b>яйца🥚</b> и <b>гадят💩</b>. <br>
+                </p>
+                <p>
+                    Заходи в игру как можно чаще🕐, собирай прибыль💲, чисть курятники🧹 и
+                    зарабатывай на новых птиц💹!
+                </p>
+                <!--                Бедные птички - это проект, в котором вы с соткой в руках решаете открыть птицеферму! Чтобы купить птиц-->
+                <!--                вы выбираете между разными поставщиками (базар, магазин, частник дядя Коля и др.) и приобретаете у них-->
+                <!--                птиц; они несут вам яйца, продавая которые, вы будете получать прибыль; покупать новых птиц; и получать-->
+                <!--                прибыль еще больше!-->
+                <!--                Но птицы тоже не пальцем деланные 🤪 Чтобы они хорошо плодоносили, придется за ними ухаживать:-->
+                <!--                убирать помет😅 и просто гладить, чтобы они лучше неслись-->
 
                 <hr>
                 Данная игра еще находится в разработке, так что возможны баги, обнуление результатов.
                 В игру все еще добавляется новый контент.
-                Планируется добавить:
-                <ul>
-                    <li>Продажа яиц разным покупателям (Дополнительный бонус к спросу)</li>
-                    <li>Мини-блог новостей</li>
-                    <li>Донат а игре</li>
-                </ul>
             </b-card-text>
             <hr>
             <b-button class="text-center" :to="{name: 'birds'}" variant="primary">Купить пташку!</b-button>
@@ -37,35 +40,35 @@
         >
 
             <b-card-text class="text-left">
-                <NavWidget />
+                <NavWidget/>
 
                 <hr>
                 <h4>Статистика:</h4>
                 <h5>
-                    <b-badge variant="danger">Налоги: {{ getFines }}₽</b-badge>
+                    <b-badge variant="danger">Налоги: {{ getFines.toFixed(2) }}₽</b-badge>
                     <b-badge variant="success">Всего яиц: {{ getEggsCount }} шт</b-badge>
                     <b-badge variant="primary">Я яиц на сумму: {{ getEggsTotalPrice }}₽</b-badge>
                     <hr>
-<!--                    <b-badge variant="danger">Налоги: {{ getFines }}₽</b-badge>-->
-<!--                    <b-badge variant="success">Всего яиц: {{ getEggsCount }} шт</b-badge>-->
+                    <!--                    <b-badge variant="danger">Налоги: {{ getFines }}₽</b-badge>-->
+                    <!--                    <b-badge variant="success">Всего яиц: {{ getEggsCount }} шт</b-badge>-->
                     <b-badge variant="primary">
                         Самая дорогая птица: {{ getMostExpensiveBird.name }} -
-                        {{getMostExpensiveBird.price}}₽
+                        {{ getMostExpensiveBird.price }}₽
                     </b-badge>
                     <br>
                     <b-badge variant="success">
                         Самая плодоносная птица: {{ getMostFertileBird.name }} -
-                        {{getMostFertileBird.fertility}} яиц/час
+                        {{ getMostFertileBird.fertility }} яиц/час
                     </b-badge>
                     <br>
                     <b-badge variant="danger">
                         Самая дешевая птица: {{ getCheapestBird.name }} -
-                        {{getCheapestBird.price}}₽
+                        {{ getCheapestBird.price }}₽
                     </b-badge>
                     <br>
                     <b-badge variant="dark">
                         Самая какающая птица: {{ getPoopingBird.name }} -
-                        {{getPoopingBird.litter}} ед.помёта/час
+                        {{ getPoopingBird.litter }} ед.помёта/час
                     </b-badge>
                 </h5>
             </b-card-text>
@@ -110,9 +113,9 @@ import {mapGetters} from "vuex";
 import NavWidget from "../components/navigation/NavWidget";
 
 export default {
-    name    : "Index",
+    name      : "Index",
     components: {NavWidget},
-    computed: {
+    computed  : {
         ...mapGetters(['getAuth', 'getUserData', 'getMyBirds', 'getEggs']),
         /**
          * @returns - count fines for all eggs
@@ -157,7 +160,7 @@ export default {
             let birdName = '';
 
             this.getMyBirds.forEach(elem => {
-                if(+elem.price > maxPrice) {
+                if (+elem.price > maxPrice) {
                     maxPrice = +elem.price;
                     birdName = elem.name
                 }
@@ -165,7 +168,7 @@ export default {
 
             return {
                 price: Math.round(maxPrice),
-                name: birdName
+                name : birdName
             };
         },
         /**
@@ -177,7 +180,7 @@ export default {
             let birdName = '';
 
             this.getMyBirds.forEach(elem => {
-                if(+elem.price < minPrice) {
+                if (+elem.price < minPrice) {
                     minPrice = +elem.price;
                     birdName = elem.name
                 }
@@ -185,7 +188,7 @@ export default {
 
             return {
                 price: Math.round(minPrice),
-                name: birdName
+                name : birdName
             };
         },
         /**
@@ -194,18 +197,18 @@ export default {
          */
         getMostFertileBird() {
             let maxFertility = 0;
-            let birdName = '';
+            let birdName     = '';
 
             this.getMyBirds.forEach(elem => {
-                if(+elem.fertility > maxFertility) {
+                if (+elem.fertility > maxFertility) {
                     maxFertility = +elem.fertility;
-                    birdName = elem.name
+                    birdName     = elem.name
                 }
             });
 
             return {
                 fertility: Math.round(maxFertility),
-                name: birdName
+                name     : birdName
             };
         },
         /**
@@ -214,18 +217,18 @@ export default {
          */
         getPoopingBird() {
             let maxLitter = 0;
-            let birdName = '';
+            let birdName  = '';
 
             this.getMyBirds.forEach(elem => {
-                if(+elem.litter > maxLitter) {
+                if (+elem.litter > maxLitter) {
                     maxLitter = +elem.litter;
-                    birdName = elem.name
+                    birdName  = elem.name
                 }
             });
 
             return {
                 litter: Math.round(maxLitter),
-                name: birdName
+                name  : birdName
             };
         },
     }

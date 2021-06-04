@@ -28,7 +28,6 @@ export default {
         if(window.chart != undefined) window.chart.destroy(); // destroy all charts. Only one chart is exists
 
         window.chart = new Chart(ctx, {
-        // this.chart = new Chart(ctx, {
             type: 'line',
             data: this.chartData,
             options: this.chartOptions

@@ -549,7 +549,6 @@ export default {
                 });
         },
         brigadeHire({
-                        commit,
                         state
                     }) {
             if (!state.access_token) return false;
@@ -559,10 +558,7 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    if (response.data) {
-                        commit('changeBalance', +response.data); // update balance
-                        return true;
-                    }
+                    return response.data;
                 })
                 .catch((error) => {
                     console.log(error, error.response);

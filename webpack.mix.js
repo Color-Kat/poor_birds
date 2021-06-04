@@ -16,5 +16,12 @@ mix.js('resources/js/app.js', 'public/js')
     .version(); // add hash to file uri
 
 if(process.env.NODE_ENV.trim() !== 'production'){
-    mix.sourceMaps(true, 'source-map');
+    mix
+        .sourceMaps(true, 'source-map')
+        .options({
+            hmrOptions: {
+                host: '127.0.0.1',
+                port: 8080
+            }
+        });
 }

@@ -24,6 +24,22 @@ class User extends Authenticatable implements JWTSubject
         'name', 'email', 'password', 'notified', 'money', 'GTN', 'USD', 'BTC'
     ];
 
+    /**
+     * payment purchases
+     * @param $currency - currency for payment
+     * @param $amount - payment amount
+     * @return boolean - is success
+     */
+    public function payment($currency, $amount) {
+        // no money
+        if($this[$currency] < $amount) return false;
+        else {
+            $this[$currency] -= $amount;
+            $this->update();
+            return true;
+        }
+    }
+
     public function my_birds()
     {
         // sold_bird is alias. Real table is bird_seller

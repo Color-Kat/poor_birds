@@ -20,6 +20,10 @@
         <b-modal id="modal-brigade" header-bg-variant="success" hide-footer>
             <p class="my-2">Бригада сделала свою работу!</p>
         </b-modal>
+        <b-modal id="modal-brigade-no-money" header-bg-variant="danger" hide-footer>
+            <p class="my-2">Недостаточно средств на счету. Ваш баланс {{ getUserWallets.GTN }} GTN</p>
+        </b-modal>
+        <!--    BRIGADE    -->
 
         <!--    LOADER    -->
         <Loader v-if="loading" />
@@ -189,36 +193,36 @@
                     </b-card-text>
                 </b-card>
                 <!--        EGG        -->
+            </div>
 
-                <hr>
+            <hr>
 
-                <!--       SEll IN ONE CLICK        -->
-                <div class="text-center">
-                    <h2>Продать яйца в один клик</h2>
+            <!--       SEll IN ONE CLICK        -->
+            <div class="text-center">
+                <h2>Продать яйца в один клик</h2>
 
-                    <div class="d-lg-flex justify-content-between d-block">
-                        <img
-                            src="/assets/brigade.png"
-                            height="300px"
-                            alt="бригада"
-                        >
-                        <span class="p-3">
+                <div class="d-lg-flex justify-content-between d-block">
+                    <img
+                        src="/assets/brigade.png"
+                        height="300px"
+                        alt="бригада"
+                    >
+                    <span class="p-3">
                             <p class="text-left">
                                 Вы можете нанять бригаду, которая уберётся за птицами и
                                 увезёт их яйца в Москву на продажу. Она разберётся
-                                со всеми проблемами и штрафами. Но это платная услуга,
-                                и покупается она только за донат.
+                                со всеми проблемами и налогами. Но это платная услуга,
+                                и покупается она только за <b-link :to="{name: 'payment'}">густинианы</b-link>.
                                 <br>
                             </p>
                             <b-button
                                 variant="warning"
                                 @click="brigadeHireHandler"
-                            >Нанять за 20 рублей</b-button>
+                            >Нанять за 20 густинианов</b-button>
                         </span>
-                    </div>
                 </div>
-                <!--       SEll IN ONE CLICK        -->
             </div>
+            <!--       SEll IN ONE CLICK        -->
         </div>
     </b-card>
 </template>
@@ -294,23 +298,34 @@ export default {
             if (result !== false) this.fines = +result; // update count of fines
         },
         async brigadeHireHandler() {
-            return;
-            // let result = await this.brigadeHire();
-            //
-            // if (result) {
-            //     // cleaning song
-            //     let cleaning_song = new Audio();
-            //     cleaning_song.volume=0.5;
-            //     cleaning_song.src = '/assets/sounds/cleaning.mp3';
-            //     cleaning_song.play()
-            //
-            //     this.$bvModal.show('modal-brigade'); // show message
-            //     this.fetchUserEggs(); // update eggs list
-            // }
+            let userBalance = this.getUserWallets.GTN; // get GTN balance
+
+            // the brigade costs 20 gtn
+            if(userBalance < 20) {
+                this.$bvModal.show('modal-brigade-no-money');
+                return;
+            }
+
+            let result = await this.brigadeHire();
+
+            if (result) {
+                // cleaning song
+                let cleaning_song = new Audio();
+                cleaning_song.volume=0.5;
+                cleaning_song.src = '/assets/sounds/cleaning.mp3';
+                cleaning_song.play()
+
+                this.$bvModal.show('modal-brigade'); // show message
+                this.fetchUserEggs(); // update eggs list
+            } else {
+                // no money or server error
+                // show modal
+                this.$bvModal.show('modal-brigade-no-money');
+            }
         }
     },
     computed: {
-        ...mapGetters(['getEggs', 'getUserShovels']),
+        ...mapGetters(['getEggs', 'getUserShovels', 'getUserWallets']),
         Math: () => Math,
         console: () => console,
         // count fines from eggs

@@ -34,7 +34,17 @@
                 </div>
 
                 <div style="font-size: 1.1em">
-                    <b-nav-item active-class="active" :to="{name: 'bank'}"><b>🏦</b>Банк</b-nav-item>
+                    <b-nav-item active-class="active" :to="{name: 'bank'}">
+                        <div class="w-100 d-flex justify-content-between">
+                            <span><b>🏦</b>Банк</span>
+                            <b-badge
+                                class="d-flex align-items-center justify-content-center"
+                                variant="warning"
+                            >
+                                {{getUserWallets.GTN}} GTN
+                            </b-badge>
+                        </div>
+                    </b-nav-item>
                 </div>
 
             </b-navbar-nav>
@@ -50,7 +60,7 @@ import UserAvatar from "./auth/account/UserAvatar";
 export default {
     name      : "Aside",
     computed  : {
-        ...mapGetters(['getAuth']),
+        ...mapGetters(['getAuth', 'getUserWallets']),
         ...mapState(['active_sideBar'])
     },
     components: {

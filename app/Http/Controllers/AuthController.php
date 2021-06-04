@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use phpDocumentor\Reflection\Types\Boolean;
 use Validator;
 
 
@@ -385,21 +386,29 @@ class AuthController extends Controller
         return auth()->user()->money;
     }
 
-    public function brigadeHire()
+    /** collect all eggs, delete fines for GTN
+     * @return bool - is success
+     */
+    public function brigadeHire(): bool
     {
         $user     = auth()->user();
         $earnings = 0;
 
-        // count earnings
-        foreach ($user->my_eggs as $egg) {
-            $earnings += $egg->count * $egg->price;
-        }
+        $payment = $user->payment('GTN', 20);
 
-        $user->my_eggs()->delete(); // delete all eggs, litter, fines
-        $user->money += $earnings; // increase user money
-        $user->update();
+        // success payment
+        if($payment) {
+            // count earnings from selling eggs
+            foreach ($user->my_eggs as $egg) {
+                $earnings += $egg->count * $egg->price;
+            }
 
-        return auth()->user()->money;
+            $user->my_eggs()->delete(); // delete all eggs, litter, fines
+            $user->money += $earnings; // increase user money
+            $user->update();
+
+            return true;
+        } else return false;
     }
 
     public function mine(Request $request)
