@@ -4,8 +4,12 @@
             <p class="my-4">Поздравляем! Вы купили новую лопату</p>
         </b-modal>
 
-        <b-modal id="modal-shovel-error" header-bg-variant="danger" hide-footer>
-            <p class="my-4">У вас уже есть эта лопата</p>
+        <b-modal id="modal-shovel-no-money" header-bg-variant="danger" hide-footer>
+            <p class="my-4">У вас недостаточно средств</p>
+        </b-modal>
+
+        <b-modal id="modal-shovel-no-gtn" header-bg-variant="danger" hide-footer>
+            <p class="my-2">Недостаточно средств на счету. Ваш баланс {{ getUserWallets.GTN }} GTN</p>
         </b-modal>
 
         <Loader v-if="loading" />
@@ -36,7 +40,11 @@
                     >
                         Купить
                     </b-button>
-                    <b-button v-else class="mt-3" variant="primary">Купить за донат</b-button>
+                    <b-button
+                        v-else class="mt-3"
+                        variant="warning"
+                        @click="(e)=>{buy(getShovel, e);}"
+                    >Купить за густинианы</b-button>
                 </div>
 
                 <b-alert show variant="warning" class="mt-3" v-else>Эта лопата уже куплена!</b-alert>
@@ -70,10 +78,10 @@ export default {
         loading: true,
     }),
     computed  : {
-        ...mapGetters(['getShovel', 'getUserShovelsIds'])
+        ...mapGetters(['getShovel', 'getUserShovelsIds', 'getUserWallets'])
     },
     methods   : {
-        ...mapActions(['fetchShovel', 'buyShovel']),
+        ...mapActions(['fetchShovel', 'buyShovel', 'fetchUser']),
         async buy(shovel, e) {
             let result = await this.buyShovel(shovel.id);
 
@@ -82,13 +90,17 @@ export default {
                 e.target.disabled=true; // disable button
                 this.$bvModal.show('modal-shovel-buy');
 
+                if (this.getShovel.isDonate) this.fetchUser(); // update currencies data if donate
+
                 // play buy song
                 let buy_song = new Audio();
                 buy_song.volume=0.3;
                 buy_song.src = '/assets/sounds/buy.mp3';
-                buy_song.play()
+                buy_song.play();
             } else {
-                this.$bvModal.show('modal-shovel-error');
+                // modals
+                if (this.getShovel.isDonate) this.$bvModal.show('modal-shovel-no-gtn'); // for gtn
+                else this.$bvModal.show('modal-shovel-no-money'); // for rub
             }
         }
     },

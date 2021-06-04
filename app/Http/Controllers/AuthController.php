@@ -296,15 +296,27 @@ class AuthController extends Controller
 
     public function buyShovel(Request $request)
     {
-        $shovel = Shovel::find($request->id);
-        if ($shovel->price > auth()->user()->money) return false; // not enough money
+        $shovel = Shovel::find($request->id); // get shovel data by id
         if (auth()->user()->my_shovels->contains($request->id)) return false; // shovel is already exists
 
-        auth()->user()->money -= $shovel->price; // decrease user money
-        auth()->user()->update(); // update
-        auth()->user()->my_shovels()->attach($shovel->id); // attach shovel
+//        if ($shovel->price > auth()->user()->money) return false; // not enough money
+//
+//        auth()->user()->money -= $shovel->price; // decrease user money
+//        auth()->user()->update(); // update
 
-        return auth()->user()->money;
+        $payment = null; // create new payment
+
+        // buy for GTN (donate currency)
+        if ($shovel->donate_price)
+            $payment = auth()->user()->payment('GTN', $shovel->donate_price);
+        // buy for RUB (money)
+        else
+            $payment = auth()->user()->payment('money', $shovel->price);
+
+        if ($payment) {
+            auth()->user()->my_shovels()->attach($shovel->id); // attach shovel
+            return auth()->user()->money; // return new money value
+        } else return false;
     }
 
     public function selectShovel(Request $request)
@@ -397,7 +409,7 @@ class AuthController extends Controller
         $payment = $user->payment('GTN', 20);
 
         // success payment
-        if($payment) {
+        if ($payment) {
             // count earnings from selling eggs
             foreach ($user->my_eggs as $egg) {
                 $earnings += $egg->count * $egg->price;
@@ -466,11 +478,11 @@ class AuthController extends Controller
                 $user[$currency] = $user[$currency] + $currencyCount;
                 $user->update();
 
-            return $user[$currency];
+                return $user[$currency];
             } else {
                 return false; // not enough
             }
-        } else if($type == 'sell') {
+        } else if ($type == 'sell') {
             // check if the user has enough currency
             if ($user[$currency] >= $amount) {
                 /* ---- enough ----*/
