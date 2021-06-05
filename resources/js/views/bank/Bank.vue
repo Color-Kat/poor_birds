@@ -104,15 +104,27 @@
             <hr>
 
             <!--     CREDIT     -->
-            <b-alert show variant="danger">
-                <div id="credit">
-                    <h5>💸Взять кредит (в разработке)</h5>
-                    <label for="credit_sum">Сумма кредита в <b>рублях RUB</b>:</label>
-                    <b-form-input type="number" id="credit_sum" name="credit_sum"></b-form-input>
+<!--            <b-alert show variant="danger">-->
+<!--                <div id="credit">-->
+<!--                    <h5>💸Взять кредит (в разработке)</h5>-->
+<!--                    <label for="credit_sum">Сумма кредита в <b>рублях RUB</b>:</label>-->
+<!--                    <b-form-input type="number" id="credit_sum" name="credit_sum"></b-form-input>-->
 
-                    <span>Нужно выплатить с учетом процентов: <b>200 рублей RUB</b></span>
+<!--                    <span>Нужно выплатить с учетом процентов: <b>200 рублей RUB</b></span>-->
+<!--                </div>-->
+<!--            </b-alert>-->
+
+            <!--      BUY GTN      -->
+            <b-alert show variant="success">
+                <div id="buy-gtn">
+                    <h5>💲Купить <b>густинаны (GTN):</b></h5>
+                    <span>
+                        Для покупки перейдите
+                        <b-link :to="{name: 'payment'}">сюда</b-link>
+                    </span>
                 </div>
             </b-alert>
+            <!--      BUY GTN      -->
 
             <!--      EXCHANGE GTN      -->
             <b-alert show variant="primary">
@@ -166,17 +178,7 @@
                     </div>
                 </div>
             </b-alert>
-
-            <!--      BUY GTN      -->
-            <b-alert show variant="success">
-                <div id="buy-gtn">
-                    <h5>💲Купить <b>густинаны (GTN):</b></h5>
-                    <span>
-                        Для покупки перейдите
-                        <b-link :to="{name: 'payment'}">сюда</b-link>
-                    </span>
-                </div>
-            </b-alert>
+            <!--      EXCHANGE GTN      -->
         </b-card>
     </div>
 </template>

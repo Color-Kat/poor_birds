@@ -396,7 +396,6 @@ class AuthController extends Controller
 
         // if successfully payment
         if ($payment) {
-            $user->money -= $contract->price; // increase user money
             $user->my_contracts()->attach($contract->id); // attach contract
             $user->update(); // update balance
         } else return false;
