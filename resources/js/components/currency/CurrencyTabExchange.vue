@@ -98,9 +98,9 @@ export default {
             let result;
             //check if there is enough money
             if (this.type == 'buy') {
-                if (this.currency_buy > this.getUserWallets[this.exchange])
-                    this.$bvModal.show('modal-no-money-exchange');
-                else {
+                // if (this.currency_buy > this.getUserWallets[this.exchange])
+                //     this.$bvModal.show('modal-no-money-exchange');
+                // else {
                     // transaction request with
                     result = await this.transaction({
                         type    : this.type, // buy or sell
@@ -108,10 +108,11 @@ export default {
                         currency: this.currency, // currency to buy (1 USD)
                         exchange: this.exchange, // currency to sell (73.5 RUB)
                     });
-                }
+                // }
             } else {
+                // check is enough currency
                 if (this.currency_sell > this.getUserWallets[this.currency])
-                    this.$bvModal.show('modal-no-money-exchange');
+                    this.$bvModal.show('modal-no-money-exchange'); // show no money modal
                 else {
                     // transaction request with
                     result = await this.transaction({

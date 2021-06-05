@@ -17,7 +17,7 @@ export default {
                     name       : contract.name,
                     description: contract.description,
                     isDonate   : +contract.isDonate,
-                    price      : ['Цена контракта', `${contract.isDonate ? +contract.price + '₽' : +contract.price + ' руб'} `],
+                    price      : ['Цена контракта', `${contract.isDonate ? +contract.price + ' GTN' : +contract.price + ' руб'} `],
                 };
             } else return false
         }
