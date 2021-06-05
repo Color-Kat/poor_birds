@@ -56,7 +56,13 @@ class CollectEggs extends Command
                 birds.egg_price * (1 + IFNULL(price_bonus, 0) / 100), -- egg price with certificate
                 birds.demand * (1 + IFNULL(demand_bonus, 0) / 100), -- demand with certificate bonus
                 count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100), -- get count of eggs from birds_count * fertility with certificate bonus
-                count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100), -- get litter with certificate bonus
+                -- count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100), -- get litter with certificate bonus
+                CASE
+                	WHEN contracts.script_name = 'auto_cleaning' THEN 0 -- user have contract - delete all litter
+                    -- user haven't contract - add litter
+                    -- get litter count + certificate litter_bonus
+                    ELSE count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100)
+                END,
                 0, -- eggs are not collected
                 IF(contracts.script_name = 'cares', 1, 0), -- remove care bonus or add it if user have contract
                 CASE
@@ -91,7 +97,12 @@ class CollectEggs extends Command
                     b_s_u.count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100) * -- count eggs with certificate bonus
                     IF ( (1 - (eggs.litter/20) / 100 ) < 0, 0, ( 1 - (eggs.litter/20) / 100 )) * -- litter deduction
                     IF (eggs.cared = 1, ( 1 + (birds.care / 100 * ( 1 + IFNULL(care_bonus, 0) / 100 ))), 1), -- care bonus
-                litter = eggs.litter + b_s_u.count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100), -- get litter count + certificate litter_bonus
+                litter = CASE
+                	WHEN contracts.script_name = 'auto_cleaning' THEN 0 -- user have contract - delete all litter
+                    -- user haven't contract - add litter
+                    -- get litter count + certificate litter_bonus
+                    ELSE eggs.litter + b_s_u.count * birds.litter * (1 + IFNULL(litter_bonus, 0) / 100)
+                    END,
                 collected = 0, -- eggs are not collected
                 cared = IF(contracts.script_name = 'cares', 1, 0), -- remove care bonus or add it if user have contract
                 fine = eggs.fine + b_s_u.count * CASE
