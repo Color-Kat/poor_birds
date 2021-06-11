@@ -45,7 +45,10 @@
                 >
                     <b-card-text>
                         <b-badge variant="success">Бонус к плодовитости {{ certificate.fertility_bonus }}%</b-badge>
-                        <b-badge variant="warning">Бонус к цене {{ certificate.fertility_bonus }}%</b-badge>
+                        <b-badge variant="warning">Бонус к цене {{ certificate.price_bonus }}%</b-badge>
+                        <b-badge variant="danger">Бонус к спросу {{ certificate.demand_bonus }}%</b-badge>
+                        <b-badge variant="dark">Бонус к кол-ву помёта {{ certificate.litter_bonus }}%</b-badge>
+                        <br>
                         <b-badge variant="primary">Цена {{ certificate.price }}руб</b-badge>
                     </b-card-text>
 
