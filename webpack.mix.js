@@ -1,5 +1,10 @@
 const mix = require('laravel-mix');
 
+const PrerenderSPAPlugin = require("prerender-spa-plugin");
+// const HtmlWebpackPlugin = require("html-webpack-plugin");
+// const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
+// const CopyPlugin = require("copy-webpack-plugin");
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,7 +16,9 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix
+    // make main bundle in public folder
+    .js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .version();
 
@@ -30,3 +37,27 @@ if(process.env.NODE_ENV.trim() !== 'production'){
 if (mix.inProduction()) {
     //
 }
+
+// make bundle for prerender
+// .sass('resources/sass/app.scss', '/prerender/')
+// .js('resources/js/app.js', '/prerender/')
+// .webpackConfig({
+//     plugins: [
+//         // copy index.html to public/prerender for PrerenderSPAPlugin
+//         new CopyPlugin({
+//             patterns: [
+//                 {
+//                     from: path.join(__dirname, '/resources/views/index.html'),
+//                     to: path.join(__dirname, '/public/prerender/index.html')
+//                 },
+//             ],
+//         }),
+//         // // == PRERENDER SPA PLUGIN == //
+//         new PrerenderSPAPlugin({
+//             staticDir: path.join(__dirname, '/public/prerender'), //
+//             routes: [
+//                 '/', '/birds'
+//             ],
+//         })
+//     ]
+// });

@@ -175,6 +175,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //prerender
+//        Nutsweb\LaravelPrerender\LaravelPrerenderServiceProvider,
+        CodebarAg\LaravelPrerender\LaravelPrerenderServiceProvider::class
+
+
         // DEBUGBAR
 //        Barryvdh\Debugbar\ServiceProvider::class,
 

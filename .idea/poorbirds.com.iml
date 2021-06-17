@@ -124,6 +124,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/minishlink/web-push" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel-notification-channels/webpush" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/psr-http-message-bridge" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/codebar-ag/laravel-prerender" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
