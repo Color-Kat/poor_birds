@@ -281,12 +281,20 @@ const routes = [
         path     : '/bank',
         name     : 'bank',
         component: Bank,
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'login'});
+        },
     },
     /* ---------- PAYMENT -----------*/
     {
         path     : '/payment',
         name     : 'payment',
         component: PayForm,
+        async beforeEnter(to, from, next) {
+            if (await store.dispatch('checkAuth')) next();
+            else next({name: 'login'});
+        },
     },
     {
         path     : '/payment/success',
