@@ -1,6 +1,6 @@
 const mix = require('laravel-mix');
 
-const PrerenderSPAPlugin = require("prerender-spa-plugin");
+// const PrerenderSPAPlugin = require("prerender-spa-plugin");
 // const HtmlWebpackPlugin = require("html-webpack-plugin");
 // const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
 // const CopyPlugin = require("copy-webpack-plugin");
@@ -16,11 +16,28 @@ const PrerenderSPAPlugin = require("prerender-spa-plugin");
  |
  */
 
+
 mix
     // make main bundle in public folder
-    .js('resources/js/app.js', 'public/js')
+    .ts('resources/js/app.ts', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .version();
+    .version()
+    .webpackConfig({
+        module: {
+            // include ts
+            rules: [
+                {
+                    test: /\.tsx?$/,
+                    loader: "ts-loader",
+                    options: { appendTsSuffixTo: [/\.vue$/] }, // can use ts into vue
+                    exclude: /node_modules/
+                }
+            ]
+        },
+        resolve: {
+            extensions: ["*", ".js", ".jsx", ".vue", ".ts", ".tsx"]
+        }
+    });
 
 if(process.env.NODE_ENV.trim() !== 'production'){
     mix

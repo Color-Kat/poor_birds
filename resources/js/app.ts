@@ -7,9 +7,16 @@ import store from './store';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import './app.scss';
 
-/* nprogress - progress bar  */
+/* nprogress - progress bar   */
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+
+// import some from './modules/request';
+
+// console.log(some);
+
+// any properties in window
+declare const window: any;
 
 /* ----- configure axios for server ----- */
 // window.axios = axios;
