@@ -11,10 +11,6 @@ import './app.scss';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
-// import some from './modules/request';
-
-// console.log(some);
-
 // any properties in window
 declare const window: any;
 

@@ -1,1 +1,1 @@
-export let some = 123;
+export let some: number = 123;
