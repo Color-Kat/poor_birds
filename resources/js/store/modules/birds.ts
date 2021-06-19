@@ -1,3 +1,14 @@
+import Req from "../../modules/Req";
+
+interface IBird {
+    care: number;
+    demand: null;
+    name: string;
+}
+
+// define axios to hide error. Axios from window.axios
+let axios = (window as any).axios;
+
 export default {
     state    : {
         birds      : [],
@@ -9,7 +20,7 @@ export default {
         },
         getBird(state) {
             const bird = state.currentBird;
-            console.log(bird)
+
             if (bird) {
                 return {
                     image      : bird.image,
@@ -29,13 +40,19 @@ export default {
         }
     },
     actions  : {
-        fetchBirds(context) {
-            axios.get('/api/birds')
-                .then(response => {
-                    context.commit('setBirds', response.data);
-                }).catch(err => {
-                console.log('ERROR: ' + err);
-            })
+        async fetchBirds(context) {
+
+            let response = await new Req('get', 'api/birds')
+                    .send<{id: number, demand: number, name: string}[]>();
+            console.log(response);
+
+            // return axios.get('/api/birds')
+            //     .then(response => {
+            //         console.log(response)
+            //         context.commit('setBirds', response.data);
+            //     }).catch(err => {
+            //     console.log('ERROR: ' + err);
+            // })
         },
         createBird({commit}, form) {
             // convert object to form data
