@@ -1,17 +1,30 @@
 import {merge} from 'lodash';
 import {UrlType} from "./types/url";
-import axios, {AxiosRequestConfig} from "axios";
+import ax, {AxiosRequestConfig, AxiosResponse} from "axios";
 import {resolve} from "chart.js/helpers";
+
 type methods = 'get' | 'post';
 
+const axios            = ax;
+axios.defaults.baseURL = 'http://127.0.0.1:8000';
+
+// const axios = ax.create({baseURL: 'https://poorbirds.tk', timeout: 100000,});
+
+interface IBird {
+    care: number;
+    demand: null;
+    name: string;
+}
+
+
 export default class Req {
-    private method: methods = 'get'; // request method
+    private method: methods            = 'get'; // request method
     private url: UrlType; // request method
     private config: AxiosRequestConfig = {}; // config for request
 
     constructor(method: methods, url: UrlType) {
         this.method = method;
-        this.url = url;
+        this.url    = url;
     }
 
     /**
@@ -50,18 +63,29 @@ export default class Req {
         return this;// return self class
     }
 
-    public send<T>(){
+    public send<T>(): Promise<boolean | T> {
         if (this.method === 'get') {
-            console.log(this);
             return axios.get<T>(
                 this.url,
                 this.config
             )
-                .then(async response => {
-                    return response;
+                .then(response => {
+                    // check request status
+                    if (
+                        response.status === 200 ||
+                        response.status === 201
+                    )
+                        return response.data; // success
+                    else {
+                        console.log(response);
+                        return false; // some error
+                    }
                 })
                 .catch((error) => {
+                    // show error
                     console.log(error);
+                    if (error.response) console.log(error.response);
+
                     return false;
                 });
         }

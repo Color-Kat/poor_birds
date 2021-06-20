@@ -1,7 +1,7 @@
 import Req from "../../modules/Req";
 
 interface IBird {
-    care: number;
+    care: number[];
     demand: null;
     name: string;
 }
@@ -42,14 +42,13 @@ export default {
     actions  : {
         async fetchBirds(context) {
 
-            let response = await new Req('get', 'api/birds')
-                    .send<{id: number, demand: number, name: string}[]>();
-            console.log(response);
+            let response = await new Req('get', 'api/birds').send<IBird[]>();
+
+            if (response) context.commit('setBirds', response);
 
             // return axios.get('/api/birds')
             //     .then(response => {
-            //         console.log(response)
-            //         context.commit('setBirds', response.data);
+            // context.commit('setBirds', response.data);
             //     }).catch(err => {
             //     console.log('ERROR: ' + err);
             // })
