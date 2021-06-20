@@ -3,7 +3,7 @@ import {UrlType} from "./types/url";
 import ax, {AxiosRequestConfig, AxiosResponse} from "axios";
 import {resolve} from "chart.js/helpers";
 
-type methods = 'get' | 'post';
+type methods = 'get' | 'post' | 'delete';
 
 const axios            = ax;
 axios.defaults.baseURL = 'http://127.0.0.1:8000';
@@ -63,10 +63,36 @@ export default class Req {
         return this;// return self class
     }
 
-    public send<T>(): Promise<boolean | T> {
-        if (this.method === 'get') {
+    public send<T>(data?: any): Promise<boolean | T> {
+        if (this.method === 'get' || this.method === 'delete') {
             return axios.get<T>(
                 this.url,
+                this.config
+            )
+                .then(response => {
+                    // check request status
+                    if (
+                        response.status === 200 ||
+                        response.status === 201
+                    )
+                        return response.data; // success
+                    else {
+                        console.log(response);
+                        return false; // some error
+                    }
+                })
+                .catch((error) => {
+                    // show error
+                    console.log(error);
+                    if (error.response) console.log(error.response);
+
+                    return false;
+                });
+        }
+        else if (this.method === 'post') {
+            return axios.post<T>(
+                this.url,
+                data,
                 this.config
             )
                 .then(response => {

@@ -1,4 +1,5 @@
 import Req from "../../modules/Req";
+import ax from "axios";
 
 interface IBird {
     care: number[];
@@ -7,7 +8,9 @@ interface IBird {
 }
 
 // define axios to hide error. Axios from window.axios
-let axios = (window as any).axios;
+// let axios = (window as any).axios;
+const axios            = ax;
+axios.defaults.baseURL = 'http://127.0.0.1:8000';
 
 export default {
     state    : {
@@ -53,30 +56,39 @@ export default {
             //     console.log('ERROR: ' + err);
             // })
         },
-        createBird({commit}, form) {
+        async createBird({commit}, form) {
             // convert object to form data
             let formData = new FormData();
             for (let key in form) {
                 formData.append(key, form[key]);
             }
 
-            // set header to upload image file
-            return axios.post(
-                'api/birds',
-                formData,
-                {headers: {'Content-Type': 'multipart/form-data'}}
-            )
-                .then(response => {
-                    if (response.status === 201) {
-                        commit('addBird', response.data);
+            let response = await new Req('post', 'api/birds')
+                .conf({headers: {'Content-Type': 'multipart/form-data'}}) // set Content-Type to transfer image
+                .send(formData);
 
-                        return true;
-                    } else return false
-                })
-                .catch((error) => {
-                    console.log(error.response);
-                    return false
-                });
+            if (response) {
+                commit('addBird', response);
+                return true;
+            } else return false;
+
+            // set header to upload image file
+            // return axios.post(
+            //     'api/birds',
+            //     formData,
+            //     {headers: {'Content-Type': 'multipart/form-data'}}
+            // )
+            //     .then(response => {
+            //         if (response.status === 201) {
+            //             commit('addBird', response.data);
+            //
+            //             return true;
+            //         } else return false
+            //     })
+            //     .catch((error) => {
+            //         console.log(error.response);
+            //         return false
+            //     });
         },
         deleteBird({commit}, id) {
             axios.delete(
