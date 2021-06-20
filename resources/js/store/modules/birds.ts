@@ -1,11 +1,6 @@
 import Req from "../../modules/Req";
 import ax from "axios";
-
-interface IBird {
-    care: number[];
-    demand: null;
-    name: string;
-}
+import {IBird} from "../../modules/types/IBird";
 
 // define axios to hide error. Axios from window.axios
 // let axios = (window as any).axios;
@@ -90,65 +85,82 @@ export default {
             //         return false
             //     });
         },
-        deleteBird({commit}, id) {
-            axios.delete(
-                `api/birds/${id}`
-            )
-                .then(response => {
-                    // successfully deleting
-                    if (response) {
-                        commit('deleteBird', id)
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        async deleteBird({commit}, id) {
+            let response = await new Req('delete', `api/birds/${id}`).send<IBird>();
+            if (response) commit('deleteBird', id);
+
+            // axios.delete(
+            //     `api/birds/${id}`
+            // )
+            //     .then(response =>6 {
+            //         // successfully deleting
+            //         if (response) {
+            //             commit('deleteBird', id)
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //     });
         },
-        fetchBird({commit}, ids) {
+        async fetchBird({commit}, ids) {
             const bird_id   = ids.bird_id,
                   seller_id = ids.seller_id;
             // console.log(bird_id, seller_id)
             // need to find just bird
             if (!seller_id) {
-                return axios.get(
-                    `api/birds/${bird_id}`
-                )
-                    .then(response => {
-                        if (response.data.status) {
-                            commit('setCurrentBird', response.data.messages);
-                        } else commit('setCurrentBird', false);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        commit('setCurrentBird', false);
-                    });
+                let response: IBird | boolean = await new Req('get', `api/birds/${bird_id}`).send<IBird>();
+
+                if (response) commit('setCurrentBird', response);
+                else commit('setCurrentBird', false);
+
+                // return axios.get(
+                //     `api/birds/${bird_id}`
+                // )
+                //     .then(response => {
+                //         if (response.data.status) {
+                //             commit('setCurrentBird', response.data.messages);
+                //         } else commit('setCurrentBird', false);
+                //     })
+                //     .catch((error) => {
+                //         console.log(error);
+                //         commit('setCurrentBird', false);
+                //     });
             }
-            // need to fin bird of specific seller
+            // need to find bird of specific seller
             if (seller_id) {
-                return axios.post(
-                    `api/sellers/getBird`,
-                    {
+                console.log('unnecessary');
+                let response: IBird | boolean = await new Req('post', `api/sellers/getBird`)
+                    .send<IBird>({
                         seller_id,
                         bird_id
-                    }
-                )
-                    .then(response => {
-                        // console.log(response)
-                        // TODO получать птиц продавца уже с сертификатом
-                        // console.log(123)
-                        if (response.data.status) {
-                            commit('setCurrentBird', response.data.messages);
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);
                     });
+
+                if (response) commit('setCurrentBird', response);
+                else commit('setCurrentBird', false);
+
+                // return axios.post(
+                //     `api/sellers/getBird`,
+                //     {
+                //         seller_id,
+                //         bird_id
+                //     }
+                // )
+                //     .then(response => {
+                //         // console.log(response)
+                //         // console.log(123)
+                //         if (response.data.status) {
+                //             commit('setCurrentBird', response.data.messages);
+                //         }
+                //     })
+                //     .catch((error) => {
+                //         console.log(error);
+                //     });
             }
         },
-        updateBird({
-                       commit,
-                       dispatch
-                   }, form) {
+        async updateBird({
+                             commit,
+                             dispatch
+                         }, form) {
             // convert object to form data
             let formData = new FormData();
             for (let key in form) {
@@ -157,19 +169,28 @@ export default {
 
             formData.append('_method', 'PATCH'); // set PATCH method
 
-            return axios.post(
-                `api/birds/${form.id}`,
-                formData,
-                {headers: {'Content-Type': 'multipart/form-data'}}
-            )
-                .then(response => {
-                    dispatch('fetchBirds');
-                    return response;
-                })
-                .catch((error) => {
-                    console.log(error.response);
-                    return false;
-                });
+            let response: boolean = await new Req('post', `api/birds/${form.id}`)
+                .conf({headers: {'Content-Type': 'multipart/form-data'}})
+                .send<boolean>(formData);
+
+            if(response) {
+                dispatch('fetchBirds');
+                return response;
+            } else return false;
+
+            // return axios.post(
+            //     `api/birds/${form.id}`,
+            //     formData,
+            //     {headers: {'Content-Type': 'multipart/form-data'}}
+            // )
+            //     .then(response => {
+            //         dispatch('fetchBirds');
+            //         return response;
+            //     })
+            //     .catch((error) => {
+            //         console.log(error.response);
+            //         return false;
+            //     });
         },
     },
     mutations: {

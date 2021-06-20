@@ -67,16 +67,18 @@ class BirdController extends Controller
         $bird = Bird::with('sellers')->find($id);
 
         if ($bird == null) {
-            return response()->json([
-                "status"   => false,
-                "messages" => "Bird not found"
-            ])->setStatusCode(404);
+//            return response()->json([
+//                "status"   => false,
+//                "messages" => "Bird not found"
+//            ])->setStatusCode(404);
+            return false;
         }
 
-        return response()->json([
-            "status"   => true,
-            "messages" => $bird
-        ]);
+//        return response()->json([
+//            "status"   => true,
+//            "messages" => $bird
+//        ]);
+        return $bird;
     }
 
     /**
