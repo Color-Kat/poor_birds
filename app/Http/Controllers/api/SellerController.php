@@ -64,17 +64,19 @@ class SellerController extends Controller
             return Bird::apply_certificate_to_bird($bird, $certificate);
         });
 
-        if ($seller == null) {
-            return response()->json([
-                "status" => false,
-                "messages" => "Seller not found"
-            ])->setStatusCode(404);
-        }
+        return $seller;
 
-        return response()->json([
-            "status" => true,
-            "messages" => $seller
-        ]);
+//        if ($seller == null) {
+//            return response()->json([
+//                "status" => false,
+//                "messages" => "Seller not found"
+//            ])->setStatusCode(404);
+//        }
+//
+//        return response()->json([
+//            "status" => true,
+//            "messages" => $seller
+//        ]);
     }
 
     /**

@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 
 import birds from './modules/birds.ts';
 import user from './modules/user.js';
-import sellers from './modules/sellers.js';
+import sellers from './modules/sellers.ts';
 import certificates from './modules/certificates.js';
 import shovels from './modules/shovels.ts';
 import contracts from './modules/contracts.js';

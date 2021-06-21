@@ -12,7 +12,9 @@ export interface IBird{
     litter: number;
     egg_price: number;
     price: number;
-    sellers: ISeller[] | null
+
+    sellers?: ISeller[] | null
+    certificate_id?: number | null;
 
     created_at: string | null;
     updated_at: string | null;

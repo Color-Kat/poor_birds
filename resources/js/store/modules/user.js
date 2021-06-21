@@ -402,7 +402,7 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    if (response.status === 200 && response.data) {
+                    if (response.status === 200 && response.data !== '') {
                         commit('changeBalance', response.data);
                         return true;
                     } else return false;
