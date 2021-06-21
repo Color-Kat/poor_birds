@@ -30,17 +30,22 @@ class ShovelController extends Controller
         $params          = $request->all();
         $params['image'] = null;
 
-        // none image
+        // image exists
         if ($request->image != "null") {
             $path            = $request->file('image')->store('shovels');
             $params['image'] = $path;
         }
 
-        if($request->price == "null ") $params['price'] = null;
+        // check is_donate
+        if(
+            $request->price == "null" ||
+            $request->donate_price
+        ) $params['price'] = null;
 
+        // create new shovel
         $shovel = Shovel::create($params);
 
-        return $shovel;
+        return $shovel; // return new shovel
     }
 
     /**
@@ -51,17 +56,20 @@ class ShovelController extends Controller
      */
     public function show(Shovel $shovel)
     {
-        if ($shovel == null) {
-            return response()->json([
-                "status"   => false,
-                "messages" => "Shovel not found"
-            ])->setStatusCode(404);
-        }
 
-        return response()->json([
-            "status"   => true,
-            "messages" => $shovel
-        ]);
+        return $shovel;
+
+//        if ($shovel == null) {
+//            return response()->json([
+//                "status"   => false,
+//                "messages" => "Shovel not found"
+//            ])->setStatusCode(404);
+//        }
+//
+//        return response()->json([
+//            "status"   => true,
+//            "messages" => $shovel
+//        ]);
     }
 
     /**

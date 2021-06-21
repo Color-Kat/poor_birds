@@ -13,11 +13,11 @@ export default {
         currentBird: null
     },
     getters  : {
-        getBirds(state) {
+        getBirds(state): IBird[] {
             return state.birds;
         },
         getBird(state) {
-            const bird = state.currentBird;
+            const bird: IBird = state.currentBird;
 
             if (bird) {
                 return {
@@ -173,7 +173,7 @@ export default {
                 .conf({headers: {'Content-Type': 'multipart/form-data'}})
                 .send<boolean>(formData);
 
-            if(response) {
+            if (response) {
                 dispatch('fetchBirds');
                 return response;
             } else return false;

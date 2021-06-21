@@ -65,7 +65,8 @@ export default class Req {
 
     public send<T>(data?: any): Promise<boolean | T> {
         if (this.method === 'get' || this.method === 'delete') {
-            return axios.get<T>(
+            // send request get | delete
+            return axios[this.method]<T>(
                 this.url,
                 this.config
             )

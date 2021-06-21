@@ -5,7 +5,7 @@ import birds from './modules/birds.ts';
 import user from './modules/user.js';
 import sellers from './modules/sellers.js';
 import certificates from './modules/certificates.js';
-import shovels from './modules/shovels.js';
+import shovels from './modules/shovels.ts';
 import contracts from './modules/contracts.js';
 import currencies from './modules/currencies.js';
 
