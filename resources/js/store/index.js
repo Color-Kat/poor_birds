@@ -7,7 +7,7 @@ import sellers from './modules/sellers.ts';
 import certificates from './modules/certificates.js';
 import shovels from './modules/shovels.ts';
 import contracts from './modules/contracts.js';
-import currencies from './modules/currencies.js';
+import currencies from './modules/currencies.ts';
 
 // import Axios from "axios";
 
