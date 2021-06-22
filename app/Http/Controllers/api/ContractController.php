@@ -24,20 +24,21 @@ class ContractController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Contract
      */
-    public function show(Contract $contract)
+    public function show(Contract $contract): Contract
     {
-        if ($contract == null) {
-            return response()->json([
-                "status"   => false,
-                "messages" => "Contract not found"
-            ])->setStatusCode(404);
-        }
-
-        return response()->json([
-            "status"   => true,
-            "messages" => $contract
-        ]);
+//        if ($contract == null) {
+//            return response()->json([
+//                "status"   => false,
+//                "messages" => "Contract not found"
+//            ])->setStatusCode(404);
+//        }
+//
+//        return response()->json([
+//            "status"   => true,
+//            "messages" => $contract
+//        ]);
+        return $contract;
     }
 }

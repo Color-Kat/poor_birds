@@ -6,7 +6,7 @@ import user from './modules/user.js';
 import sellers from './modules/sellers.ts';
 import certificates from './modules/certificates.ts';
 import shovels from './modules/shovels.ts';
-import contracts from './modules/contracts.js';
+import contracts from './modules/contracts.ts';
 import currencies from './modules/currencies.ts';
 
 // import Axios from "axios";

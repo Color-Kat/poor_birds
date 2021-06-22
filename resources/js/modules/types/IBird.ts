@@ -3,7 +3,7 @@ import {ISeller} from "./ISeller";
 export interface IBird{
     id: number;
     name: string;
-    description: string;
+    description: string | null
     quest: string | null;
     image: string | null;
     fertility: number;

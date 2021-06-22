@@ -2,7 +2,7 @@ export interface ISeller {
     id: number;
     name: string;
     quest: string | null;
-    description: string;
+    description: string | null;
     image: string | null;
     discount: number;
     demand: number;
