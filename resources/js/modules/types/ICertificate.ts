@@ -9,7 +9,7 @@ export interface ICertificate{
     grade: number;
     price: number;
 
-    minimum_bird_price: number;
+    minimum_bird_price?: number;
     created_at: string;
     updated_at: string;
 

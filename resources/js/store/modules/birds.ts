@@ -86,7 +86,7 @@ export default {
             //     });
         },
         async deleteBird({commit}, id) {
-            let response = await new Req('delete', `api/birds/${id}`).send<IBird>();
+            let response: boolean = await new Req('delete', `api/birds/${id}`).send();
             if (response) commit('deleteBird', id);
 
             // axios.delete(

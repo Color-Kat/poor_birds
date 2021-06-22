@@ -153,16 +153,14 @@ export default {
                 // check errors
                 this.error = !(await this.createCertificate(this.form));
 
-            console.log(this.error);
             // redirect to admin page
             if (!this.error) await this.$router.push({name: 'admin-certificates'})
         },
 
     },
-    mounted() {
-        console.log(this.$route.query)
-        // console.log(this.form)
-    }
+    // mounted() {
+    //     // console.log(this.form)
+    // }
 }
 </script>
 

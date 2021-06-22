@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 import birds from './modules/birds.ts';
 import user from './modules/user.js';
 import sellers from './modules/sellers.ts';
-import certificates from './modules/certificates.js';
+import certificates from './modules/certificates.ts';
 import shovels from './modules/shovels.ts';
 import contracts from './modules/contracts.js';
 import currencies from './modules/currencies.ts';

@@ -74,7 +74,8 @@ export default class Req {
                     // check request status
                     if (
                         response.status === 200 ||
-                        response.status === 201
+                        response.status === 201 ||
+                        response.status === 202
                     )
                         return response.data; // success
                     else {

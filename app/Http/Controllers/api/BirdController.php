@@ -66,13 +66,13 @@ class BirdController extends Controller
     {
         $bird = Bird::with('sellers')->find($id);
 
-        if ($bird == null) {
+//        if ($bird == null) {
 //            return response()->json([
 //                "status"   => false,
 //                "messages" => "Bird not found"
 //            ])->setStatusCode(404);
-            return false;
-        }
+//            return false;
+//        }
 
 //        return response()->json([
 //            "status"   => true,
@@ -119,9 +119,9 @@ class BirdController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return bool
      */
-    public function destroy(Bird $bird)
+    public function destroy(Bird $bird): bool
     {
         // delete bird->seller relationship
         $bird->sellers()->detach();

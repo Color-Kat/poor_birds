@@ -8,6 +8,7 @@ use App\Notifications\PushNewCertificate;
 use App\User;
 use Illuminate\Http\Request;
 use Notification;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class CertificateController extends Controller
 {
@@ -38,23 +39,25 @@ class CertificateController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return Certificate
      */
-    public function show($id)
+    public function show($id): Certificate
     {
-        $certificate = Certificate::find($id);
+//        $certificate = Certificate::find($id);
 
-        if ($certificate == null) {
-            return response()->json([
-                "status"   => false,
-                "messages" => "Certificate not found"
-            ])->setStatusCode(404);
-        }
+//        if ($certificate == null) {
+//            return response()->json([
+//                "status"   => false,
+//                "messages" => "Certificate not found"
+//            ])->setStatusCode(404);
+//        }
+//
+//        return response()->json([
+//            "status"   => true,
+//            "messages" => $certificate
+//        ]);
 
-        return response()->json([
-            "status"   => true,
-            "messages" => $certificate
-        ]);
+        return Certificate::find($id);
     }
 
     /**
@@ -75,7 +78,7 @@ class CertificateController extends Controller
      * @param int $id
      * @return int
      */
-    public function destroy($id)
+    public function destroy(int $id): int
     {
         return Certificate::destroy($id);
     }
