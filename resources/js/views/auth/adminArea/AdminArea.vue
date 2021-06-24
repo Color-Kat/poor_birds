@@ -3,6 +3,17 @@
         <b-card no-body>
             <h3 class="text-center m-3">Админ панель</h3>
 
+            <div id="admin-panel" class="p-2">
+                <span>
+                    <b>Накрутить денег: </b>
+                    <br>
+                    <input type="number" min="0" v-model="changeMoneyCount">
+                    <b-button @click="()=>changeMoney(changeMoneyCount)" variant="primary">Применить</b-button>
+                </span>
+
+                <hr>
+            </div>
+
             <div class="tabs">
                 <b-nav tabs>
                     <b-nav-item :to="{name: 'admin-birds'}" active-class="active">
@@ -24,17 +35,26 @@
             </div>
 
 
-
         </b-card>
     </div>
 </template>
 
 <script>
-import {mapState, mapGetters} from "vuex";
+import {mapState, mapGetters, mapActions} from "vuex";
 // import Birds from "../../../components/adminArea/Birds";
 
 export default {
     name      : "AdminArea",
+    data      : () => ({
+        changeMoneyCount : 0
+    }),
+    methods:{
+        ...mapActions(['changeMoney']),
+        changeMoneyHandler(){
+            console.log(124);
+            this.changeMoney(this.changeMoneyCount);
+        }
+    },
     components: {
         // Birds
     },

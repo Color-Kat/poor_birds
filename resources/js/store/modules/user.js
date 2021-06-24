@@ -612,6 +612,25 @@ export default {
                     return false;
                 });
         },
+        changeMoney({
+                        commit,
+                        state
+                    }, money) {
+            if (!state.access_token) return false;
+
+            return axios.post(
+                'api/auth/change_money',
+                {money},
+                {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            )
+                .then(response => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.log(error, error.response);
+                    return false;
+                });
+        },
     },
     mutations: {
         setUser(state, user) {

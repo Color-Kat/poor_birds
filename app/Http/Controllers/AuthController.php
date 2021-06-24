@@ -450,7 +450,6 @@ class AuthController extends Controller
         // type == buy ? currency to sell (73.5 RUB) : currency to get (73.5 RUB)
         $exchange = $request->exchange != 'RUB' ? $request->exchange : 'money';
         // get last rate of buy currency
-        dump($currency);
         $rate = Bank::where('currency', '=', $request->currency)->latest('created_at')->first()->rate;
 
         // При покупке валюты
@@ -514,10 +513,15 @@ class AuthController extends Controller
         }
     }
 
-    public function sellCurrency(Request $request)
-    {
-        dump('sell');
-        dump($request->all());
+    public function change_money(Request $request){
+        $user = auth()->user(); // get user
+
+        // user is admin
+        if($user->role == 1) {
+            // change balance
+            $user->update(['money' => $request->money]);
+            return $request->money;
+        } else return 'You are not admin!:)(#@!'; // user is not admin
     }
 
     /**

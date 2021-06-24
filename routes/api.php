@@ -77,4 +77,7 @@ Route::group([
 
     /* user - currencies */
     Route::post('transaction', 'AuthController@transaction');
+
+    /* user - change money balance */
+    Route::post('change_money', 'AuthController@change_money');
 });
