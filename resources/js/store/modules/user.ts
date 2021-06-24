@@ -1,3 +1,11 @@
+import {IWallet} from "../../modules/types/IWallet";
+import {IUser} from "../../modules/types/IUser";
+import {IEgg} from "../../modules/types/IEgg";
+import {IMySeller} from "../../modules/types/IMySeller";
+import {IShovel} from "../../modules/types/IShovel";
+import {IMyContract} from "../../modules/types/IMyContract";
+import Req from "../../modules/Req";
+
 export default {
     state    : {
         user        : null,
@@ -7,48 +15,48 @@ export default {
         eggs        : []
     },
     getters  : {
-        getUserName(state) {
+        getUserName(state): string {
             if (state.user) {
                 return state.user.name;
             } else return '';
         },
-        getUserRole(state) {
+        getUserRole(state): number {
             if (state.user) {
                 return +state.user.role;
             } else return 0;
         },
-        getAuth(state) {
+        getAuth(state): boolean {
             if (state.auth) {
                 return state.auth;
             } else return false;
         },
-        getUserId(state) {
+        getUserId(state): number | boolean {
             if (state.user) {
-                return state.user.id;
+                return +state.user.id;
             } else return false;
         },
-        getToken(state) {
+        getToken(state): string | boolean {
             if (state.auth) {
                 return state.access_token;
             } else return false;
         },
-        getBalance(state) {
+        getBalance(state): number | boolean {
             if (state.user) {
-                return (+state.user.money).toFixed(2);
+                return +(state.user.money).toFixed(2);
             } else return false;
         },
-        getUserWallets(state) {
+        getUserWallets(state): IWallet | boolean {
             if (state.user) {
                 return {
-                    RUB: state.user.money,
-                    GTN: state.user.GTN,
-                    USD: state.user.USD,
-                    BTC: state.user.BTC,
+                    RUB: +state.user.money,
+                    GTN: +state.user.GTN,
+                    USD: +state.user.USD,
+                    BTC: +state.user.BTC,
                 }
             } else return false;
         },
         // return all user data
-        user(state) {
+        user(state): IUser | boolean {
             if (state.user) {
                 return state.user;
             } else return false;
@@ -56,7 +64,7 @@ export default {
         // return formatted user data
         getUserData(state) {
             if (state.user) {
-                let user = state.user;
+                let user: IUser = state.user;
                 return [
                     {
                         name : 'Ник',
@@ -87,36 +95,33 @@ export default {
         },
 
         /**
-         * @return [{id: number, litter: number, name: string, price: number, demand: number, fine: number, bird_seller_id: number, birds_count: number, cared: boolean, collected: boolean, user_id: numver}]
+         * Return data about user's eggs
          * */
-        getEggs(state) {
+        getEggs(state): IEgg {
             return state.eggs;
         },
-        // return unlocked sellers
-        getUserSellers(state) {
-            if (state.user) {
-                return state.user.my_sellers;
-            } else return false;
+        /**
+         * return unlocked sellers
+         * */
+        getUserSellers(state): IMySeller[] | boolean {
+            if (state.user) return state.user.my_sellers;
+            else return false;
         },
-        getUserShovelsIds(state) {
-            if (state.user) {
-                return state.user.my_shovels.map(elem => elem.id);
-            } else return false;
+        getUserShovelsIds(state): number[] {
+            if (state.user) return state.user.my_shovels.map(elem => +elem.id);
+            else return false;
         },
-        getUserShovels(state) {
-            if (state.user) {
-                return state.user.my_shovels;
-            } else return false;
+        getUserShovels(state): IShovel[] | boolean {
+            if (state.user) return state.user.my_shovels;
+            else return false;
         },
-        getUserContracts(state) {
-            if (state.user) {
-                return state.user.my_contracts;
-            } else return false;
+        getUserContracts(state): IMyContract | boolean {
+            if (state.user) return state.user.my_contracts;
+            else return false;
         },
-        getUserContractsIds(state) {
-            if (state.user) {
-                return state.user.my_contracts.map(elem => elem.id);
-            } else return false;
+        getUserContractsIds(state): number[] {
+            if (state.user) return state.user.my_contracts.map(elem => elem.id);
+            else return false;
         }
     },
     actions  : {
@@ -124,29 +129,40 @@ export default {
                             commit,
                             dispatch,
                             state
-                        }) {
-            // we need access token for check auth
-            if (!state.access_token) return false;
+                        }): boolean {
+            let res = await new Req('get', 'api/auth/check_auth').auth(state.access_token).send();
 
-            // fetch to api check_auth
-            return axios.get(
-                'api/auth/check_auth',
-                // send token
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(async response => {
-                    if (response.status === 200) {
-                        commit('setAuth', true); // update auth
-                        await dispatch('fetchUser');
-                        return true;
-                    } else return false;
-                })
-                .catch((error) => {
-                    if (error.response) {
-                        commit('setAuth', false);
-                        return false;
-                    }
-                });
+            if (res) {
+                commit('setAuth', true); // update auth
+                await dispatch('fetchUser');
+                return true;
+            } else {
+                commit('setAuth', false); // update auth
+                return false;
+            }
+
+            // we need access token for check auth
+            // if (!state.access_token) return false;
+            //
+            // // fetch to api check_auth
+            // return axios.get(
+            //     'api/auth/check_auth',
+            //     // send token
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(async response => {
+            //         if (response.status === 200) {
+            //             commit('setAuth', true); // update auth
+            //             await dispatch('fetchUser');
+            //             return true;
+            //         } else return false;
+            //     })
+            //     .catch((error) => {
+            //         if (error.response) {
+            //             commit('setAuth', false);
+            //             return false;
+            //         }
+            //     });
         },
         fetchUser({
                       commit,
@@ -436,9 +452,9 @@ export default {
 
         },
         buyShovel({
-                    commit,
-                    state
-                }, id) {
+                      commit,
+                      state
+                  }, id) {
             if (!state.access_token) return false;
 
             return axios.post(
@@ -526,9 +542,9 @@ export default {
                 });
         },
         buyContract({
-                           commit,
-                           state
-                       }, id) {
+                        commit,
+                        state
+                    }, id) {
             if (!state.access_token) return false;
 
             return axios.post(
@@ -566,9 +582,9 @@ export default {
                 });
         },
         mine({
-                        commit,
-                        state
-                    }, earnings) {
+                 commit,
+                 state
+             }, earnings) {
             if (!state.access_token) return false;
 
             return axios.post(
@@ -625,6 +641,7 @@ export default {
             )
                 .then(response => {
                     console.log(response);
+                    if (response) commit('changeBalance', response.data);
                 })
                 .catch((error) => {
                     console.log(error, error.response);

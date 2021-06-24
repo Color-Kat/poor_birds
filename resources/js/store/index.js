@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex';
 
 import birds from './modules/birds.ts';
-import user from './modules/user.js';
+import user from './modules/user.ts';
 import sellers from './modules/sellers.ts';
 import certificates from './modules/certificates.ts';
 import shovels from './modules/shovels.ts';

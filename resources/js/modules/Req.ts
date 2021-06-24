@@ -22,6 +22,8 @@ export default class Req {
     private url: UrlType; // request method
     private config: AxiosRequestConfig = {}; // config for request
 
+    private error: string | null;
+
     constructor(method: methods, url: UrlType) {
         this.method = method;
         this.url    = url;
@@ -32,10 +34,6 @@ export default class Req {
      * @return token - bearer authorization access token
      * */
     private get_access_token(): string {
-        // return localStorage.getItem('access_token')
-        //     ? localStorage.getItem('access_token')
-        //     : '';
-
         return localStorage.getItem('access_token') ?? '';
     }
 
@@ -54,16 +52,29 @@ export default class Req {
      * @return Req
      * */
     public auth(token: string): Req {
+        if(!token) this.error = {
+            message: 'no authorization token',
+            show: false
+        };
+
         // set value headers if it is null
         if (!this.config.headers) this.config.headers = {};
         // add authorization token to request config
         // this.config.headers.Authorization = `Bearer ${this.get_access_token()}`;
         this.config.headers.Authorization = `Bearer ${token}`;
 
-        return this;// return self class
+        return this; // return self class
     }
 
     public send<T>(data?: any): Promise<boolean | T> {
+        // errors
+        if(this.error){
+            return new Promise((resolve, reject) => {
+                if (this.error.show) console.error(this.error);
+                resolve(false);
+            });
+        }
+
         if (this.method === 'get' || this.method === 'delete') {
             // send request get | delete
             return axios[this.method]<T>(
