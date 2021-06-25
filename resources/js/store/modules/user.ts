@@ -98,7 +98,7 @@ export default {
         /**
          * Return data about user's eggs
          * */
-        getEggs(state): IEgg {
+        getEggs(state): IEgg[] {
             return state.eggs;
         },
         /**
@@ -259,11 +259,14 @@ export default {
                     }
                 });
         },
+        /**
+         * send request to login user. If it is success load user data
+         * */
         login({
                   commit,
                   dispatch
               }, form) {
-            commit('toggleLoader', true);
+            commit('toggleLoader', true); // show loader
 
             return (window as any).axios.post('/api/auth/login', form)
                 .then(response => {
@@ -272,7 +275,7 @@ export default {
                         commit('setAuth', true); // update auth
                         commit('set_Access_token', response.data.access_token); // save jwt bearer token
                         dispatch('fetchUser'); // get user to display
-                        commit('toggleLoader', false);
+                        commit('toggleLoader', false); // hode loader
 
                         // return status
                         return {
@@ -291,11 +294,14 @@ export default {
                     // return error message
                     if (error.response) return {
                         success: false,
-                        error  : Object.values(error.response.data)[0][0]
+                        error  : Object.values(error.response.data)[0][0] // get error message...
                     }
                     return false;
                 });
         },
+        /**
+         * send request to log out user and delete user data in front
+         * */
         async logout({
                          commit,
                          state
@@ -320,7 +326,9 @@ export default {
                 //     });
             }
         },
-
+        /**
+         * send request to get user's birds
+         * */
         async fetchUserBirds({
                                  commit,
                                  state
@@ -329,7 +337,7 @@ export default {
             let res = await new Req('get', 'api/auth/get_my_birds_with_certificate')
                 .auth(state.access_token).send();
 
-            if (res) commit('setUserBirds', res);
+            if (res) commit('setUserBirds', res); // fill user's birds list
 
             // if (!state.access_token) return false;
             // // fetch to api check_auth
@@ -346,10 +354,13 @@ export default {
             //         console.log('ERROR: ', error, error.response);
             //     });
         },
+        /**
+         * send request to add bird to user by bird_seller_id.
+         * */
         async buyBird({
                           commit,
                           state
-                      }, ids) {
+                      }, ids): Promise<boolean> {
 
             let res = await new Req('post', 'api/auth/buyBird')
                 .auth(state.access_token)
@@ -388,6 +399,9 @@ export default {
             //         return false;
             //     });
         },
+        /**
+         * send request to sell user's bird if money is enough
+         * */
         async sellBird({
                            commit,
                            state
@@ -397,8 +411,8 @@ export default {
                 .send({bird_seller_user_id});
 
             if (typeof res === 'number') {
-                commit('changeBalance', res);
-                commit('reduceBird', bird_seller_user_id);
+                commit('changeBalance', res); // update balance
+                commit('reduceBird', bird_seller_user_id); // delete bird from list
             }
 
             // if (!state.access_token) return false;
@@ -418,90 +432,138 @@ export default {
             //         console.log(error, error.response);
             //     });
         },
-        fetchUserEggs({
-                          commit,
-                          state
-                      }) {
-            if (!state.access_token) return false;
+        /**
+         * send request to get user's eggs
+         * */
+        async fetchUserEggs({
+                                commit,
+                                state
+                            }) {
 
-            // fetch to get all user eggs
-            return axios.get(
-                'api/auth/get_my_eggs',
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.status === 200) {
-                        commit('setEggs', response.data); // update auth
-                    }
-                })
-                .catch((error) => {
-                    console.log('ERROR: ', error, error.response);
-                });
+            let res: IEgg[] | boolean = await new Req('get', 'api/auth/get_my_eggs')
+                .auth(state.access_token).send<IEgg[]>();
+
+            if (res) commit('setEggs', res); // fill list of user's eggs
+
+            // if (!state.access_token) return false;
+            //
+            // // fetch to get all user eggs
+            // return axios.get(
+            //     'api/auth/get_my_eggs',
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.status === 200) {
+            //             commit('setEggs', response.data); // update auth
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         console.log('ERROR: ', error, error.response);
+            //     });
         },
-        sellEggs({
-                     commit,
-                     state
-                 }, id) {
-            if (!state.access_token) return false;
-            return axios.post(
-                'api/auth/sellEggs',
-                {id},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.status === 200 && response.data.result) {
-                        commit('changeBalance', response.data.result.balance);
-                        return response.data.result.eggs_count;
-                    }
-                    return false
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
+        /**
+         * send request to sell user's eggs by id of egg.
+         * @return eggs_count
+         * */
+        async sellEggs({
+                           commit,
+                           state
+                       }, id): Promise<number | boolean> {
+            let res: {
+                message: string,
+                result: {
+                    eggs_count: number,
+                    balance: number
+                }
+            } | boolean = await new Req('post', 'api/auth/sellEggs')
+                .auth(state.access_token).send({id});
 
+            if (res && typeof res !== 'boolean') {
+                commit('changeBalance', +res.result.balance); // change balance
+                return +res.result.eggs_count; // change eggs count
+            } else return false
+
+            // if (!state.access_token) return false;
+            // return axios.post(
+            //     'api/auth/sellEggs',
+            //     {id},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.status === 200 && response.data.result) {
+            //             commit('changeBalance', response.data.result.balance);
+            //             return response.data.result.eggs_count;
+            //         }
+            //         return false
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
         },
-        clean({
-                  commit,
-                  state
-              }, id) {
-            if (!state.access_token) return false;
+        /**
+         * send request to reduce litter of bird (egg of bird)
+         * */
+        async clean({
+                        commit,
+                        state
+                    }, id): Promise<number | boolean> {
+            let res: number | boolean = await new Req('post', 'api/auth/clean')
+                .auth(state.access_token).send<number | boolean>({id});
 
-            return axios.post(
-                'api/auth/clean',
-                {id},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    return response.data;
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
+            if (res) return res;
+            else return false;
 
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/clean',
+            //     {id},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         return response.data;
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
         },
-        openSeller({
-                       commit,
-                       state
-                   }, id) {
-            if (!state.access_token) return false;
+        /**
+         * send request to add seller into seller_user table
+         * */
+        async openSeller({
+                             commit,
+                             state
+                         }, id): Promise<boolean> {
+            let res: number | boolean = await new Req('post', 'api/auth/openSeller')
+                .auth(state.access_token).send< number | boolean>({id});
 
-            return axios.post(
-                'api/auth/openSeller',
-                {id},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.status === 200 && response.data !== '') {
-                        commit('changeBalance', response.data);
-                        return true;
-                    } else return false;
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
+            console.log(res);
+
+            if (typeof res === 'number') {
+                commit('changeBalance', +res);
+                return true;
+            } else return false;
+
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/openSeller',
+            //     {id},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.status === 200 && response.data !== '') {
+            //             commit('changeBalance', response.data);
+            //             return true;
+            //         } else return false;
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
 
         },
         cares({
@@ -715,7 +777,6 @@ export default {
                 {headers: {"Authorization": `Bearer ${state.access_token}`}}
             )
                 .then(response => {
-                    console.log(response);
                     if (response) commit('changeBalance', response.data);
                 })
                 .catch((error) => {
