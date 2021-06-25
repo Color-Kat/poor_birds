@@ -18,11 +18,15 @@ interface IBird {
 
 
 export default class Req {
-    private method: methods            = 'get'; // request method
+    readonly method: methods            = 'get'; // request method
     private url: UrlType; // request method
     private config: AxiosRequestConfig = {}; // config for request
+    private isCatch: boolean = false; // if true return raw response
 
-    private error: string | null;
+    private error: {
+        message: string,
+        show: boolean
+    };
 
     constructor(method: methods, url: UrlType) {
         this.method = method;
@@ -66,6 +70,11 @@ export default class Req {
         return this; // return self class
     }
 
+    public catchMode(): Req {
+        this.isCatch = true;
+        return this;
+    }
+
     public send<T>(data?: any): Promise<boolean | T> {
         // errors
         if(this.error){
@@ -82,6 +91,8 @@ export default class Req {
                 this.config
             )
                 .then(response => {
+                    if(this.isCatch) return !response;
+
                     // check request status
                     if (
                         response.status === 200 ||
@@ -95,6 +106,9 @@ export default class Req {
                     }
                 })
                 .catch((error) => {
+                    // return raw response
+                    if(this.isCatch) return !error;
+
                     // show error
                     console.log(error);
                     if (error.response) console.log(error.response);

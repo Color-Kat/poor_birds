@@ -5,6 +5,7 @@ import {IMySeller} from "../../modules/types/IMySeller";
 import {IShovel} from "../../modules/types/IShovel";
 import {IMyContract} from "../../modules/types/IMyContract";
 import Req from "../../modules/Req";
+import {AxiosResponse} from "axios";
 
 export default {
     state    : {
@@ -107,7 +108,7 @@ export default {
             if (state.user) return state.user.my_sellers;
             else return false;
         },
-        getUserShovelsIds(state): number[] {
+        getUserShovelsIds(state): number[] | boolean {
             if (state.user) return state.user.my_shovels.map(elem => +elem.id);
             else return false;
         },
@@ -119,22 +120,25 @@ export default {
             if (state.user) return state.user.my_contracts;
             else return false;
         },
-        getUserContractsIds(state): number[] {
+        getUserContractsIds(state): number[] | boolean {
             if (state.user) return state.user.my_contracts.map(elem => elem.id);
             else return false;
         }
     },
     actions  : {
+        /**
+         * get is user authorization
+         * */
         async checkAuth({
                             commit,
                             dispatch,
                             state
-                        }): boolean {
-            let res = await new Req('get', 'api/auth/check_auth').auth(state.access_token).send();
+                        }): Promise<boolean> {
+            let res: boolean = await new Req('get', 'api/auth/check_auth').auth(state.access_token).send();
 
             if (res) {
                 commit('setAuth', true); // update auth
-                await dispatch('fetchUser');
+                await dispatch('fetchUser'); // fetch user data
                 return true;
             } else {
                 commit('setAuth', false); // update auth
@@ -164,44 +168,78 @@ export default {
             //         }
             //     });
         },
-        fetchUser({
-                      commit,
-                      dispatch,
-                      state
-                  }) {
+        /**
+         * fetch and fill user data
+         * */
+        async fetchUser({
+                            commit,
+                            dispatch,
+                            state
+                        }): Promise<void> {
 
             // check auth
             if (state.auth) {
                 // fetch user data
-                return axios.get(
-                    'api/auth/user',
-                    {headers: {"Authorization": `Bearer ${state.access_token}`}}
-                ).then(response => {
-                    if (response.status === 200) {
-                        commit('setUser', response.data); // user is logged in
-                        dispatch('fetchUserBirds'); // user is logged in
-                        dispatch('fetchUserEggs'); // user is logged in
-                    } else commit('setUser', null); // user is not logged in
-                })
-                    // some error, user is not logged in
-                    .catch((error) => {
-                        console.log('Error', error)
-                        commit('setUser', null);
-                    });
+                let res = await new Req('get', 'api/auth/user').auth(state.access_token).send();
+
+                if (res) {
+                    commit('setUser', res); // fill user data
+                    dispatch('fetchUserBirds'); // fill user's birds list
+                    dispatch('fetchUserEggs'); // fill user's eggs list
+                } else commit('setUser', null); // user is not logged in
+                // return axios.get(
+                //     'api/auth/user',
+                //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+                // ).then(response => {
+                //     if (response.status === 200) {
+                //         commit('setUser', response.data); // user is logged in
+                //         dispatch('fetchUserBirds'); // user is logged in
+                //         dispatch('fetchUserEggs'); // user is logged in
+                //     } else commit('setUser', null); // user is not logged in
+                // })
+                //     // some error, user is not logged in
+                //     .catch((error) => {
+                //         console.log('Error', error)
+                //         commit('setUser', null);
+                //     });
             } else {
                 commit('setUser', null); // user is not logged in
             }
         },
-        registration(context, form) {
-            context.commit('toggleLoader', true);
+        /**
+         * send request to register new user
+         * @return result - is success, error message
+         * */
+        async registration(context, form) {
+            context.commit('toggleLoader', true); // show loader
 
-            return axios.post('api/auth/register', form)
+            // let rawResponse: AxiosResponse<any> | boolean = await new Req('post', 'api/auth/register')
+            //     .catchMode() // set catch mode to get raw response
+            //     .send(form);
+            // context.commit('toggleLoader', false); // hide loader
+            //
+            // console.log(rawResponse);
+            //
+            // // code error
+            // if (!rawResponse) return {
+            //     success: false,
+            //     error  : 'Произошла какая-то ошибка'
+            // }
+            //
+            // if (rawResponse.status === 201) {
+            //     return {
+            //         success: true,
+            //         error  : false
+            //     };
+            // } else return {
+            //     success: false,
+            //     error  : 'Произошла какая-то ошибка'
+            // };
+
+            return (window as any).axios.post('api/auth/register', form)
                 .then(response => {
                     context.commit('toggleLoader', false);
                     if (response.status === 201) {
-                        // console.log(response.data);
-                        // context.commit('setUser', response.data);
-
                         return {
                             success: true,
                             error  : false
@@ -227,7 +265,7 @@ export default {
               }, form) {
             commit('toggleLoader', true);
 
-            return axios.post('/api/auth/login', form)
+            return (window as any).axios.post('/api/auth/login', form)
                 .then(response => {
                     if (response.status === 201) {
                         // user is logged in
@@ -258,90 +296,127 @@ export default {
                     return false;
                 });
         },
-        logout({
-                   commit,
-                   state
-               }) {
+        async logout({
+                         commit,
+                         state
+                     }): Promise<void> {
             if (state.auth) {
-                axios.get(
-                    '/api/auth/logout',
-                    {headers: {"Authorization": `Bearer ${state.access_token}`}}
-                )
-                    .then(() => {
-                        commit('setAuth', false);
-                        commit('setUser', null);
-                        commit('set_Access_token', '');
-                    });
+
+                let res = await new Req('get', '/api/auth/logout')
+                    .auth(state.access_token).send();
+
+                commit('setAuth', false); // user is not authorized now
+                commit('setUser', null); // no data about user
+                commit('set_Access_token', ''); // delete access token
+
+                // axios.get(
+                //     '/api/auth/logout',
+                //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+                // )
+                //     .then(() => {
+                //         commit('setAuth', false);
+                //         commit('setUser', null);
+                //         commit('set_Access_token', '');
+                //     });
             }
         },
 
-        fetchUserBirds({
-                           commit,
-                           state
-                       }) {
-            if (!state.access_token) return false;
-            // fetch to api check_auth
-            return axios.get(
-                'api/auth/get_my_birds_with_certificate',
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.status === 200) {
-                        commit('setUserBirds', response.data); // update auth
-                    }
-                })
-                .catch((error) => {
-                    console.log('ERROR: ', error, error.response);
-                });
-        },
-        buyBird({
-                    commit,
-                    state
-                }, ids) {
-            if (!state.access_token) return false;
+        async fetchUserBirds({
+                                 commit,
+                                 state
+                             }) {
 
-            return axios.post(
-                'api/auth/buyBird',
-                {
+            let res = await new Req('get', 'api/auth/get_my_birds_with_certificate')
+                .auth(state.access_token).send();
+
+            if (res) commit('setUserBirds', res);
+
+            // if (!state.access_token) return false;
+            // // fetch to api check_auth
+            // return axios.get(
+            //     'api/auth/get_my_birds_with_certificate',
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.status === 200) {
+            //             commit('setUserBirds', response.data); // update auth
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         console.log('ERROR: ', error, error.response);
+            //     });
+        },
+        async buyBird({
+                          commit,
+                          state
+                      }, ids) {
+
+            let res = await new Req('post', 'api/auth/buyBird')
+                .auth(state.access_token)
+                .send({
                     bird_id       : ids.bird_id,
                     bird_seller_id: ids.sold_bird_id
-                },
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (!response.data) return false;
-                    else {
-
-
-                        commit('changeBalance', response.data); // update balance from returned data
-                        return true;
-                    }
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
                 });
+
+            // returned balance
+            if (typeof res === 'number') {
+                commit('changeBalance', res); // update balance from returned data
+                return true;
+            } else return false;
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/buyBird',
+            //     {
+            //         bird_id       : ids.bird_id,
+            //         bird_seller_id: ids.sold_bird_id
+            //     },
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (!response.data) return false;
+            //         else {
+            //
+            //
+            //             commit('changeBalance', response.data); // update balance from returned data
+            //             return true;
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
         },
-        sellBird({
-                     commit,
-                     state
-                 }, bird_seller_user_id) {
-            if (!state.access_token) return false;
+        async sellBird({
+                           commit,
+                           state
+                       }, bird_seller_user_id) {
+            let res = await new Req('post', 'api/auth/sellBird')
+                .auth(state.access_token)
+                .send({bird_seller_user_id});
 
-            return axios.post(
-                'api/auth/sellBird',
-                {bird_seller_user_id},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.data) {
-                        commit('changeBalance', response.data);
-                        commit('reduceBird', bird_seller_user_id);
-                    }
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                });
+            if (typeof res === 'number') {
+                commit('changeBalance', res);
+                commit('reduceBird', bird_seller_user_id);
+            }
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/sellBird',
+            //     {bird_seller_user_id},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.data) {
+            //             commit('changeBalance', response.data);
+            //             commit('reduceBird', bird_seller_user_id);
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //     });
         },
         fetchUserEggs({
                           commit,
