@@ -286,11 +286,13 @@ class AuthController extends Controller
         } else return false;
     }
 
-    public function cares(Request $request)
+    public function cares(Request $request): bool
     {
         $eggRow = auth()->user()->my_eggs()->where('id', '=', auth()->user()->id . $request->id);
-        $eggRow->update(["cared" => 1]);
+        // no such bird
+        if (!count($eggRow->get())) return false;
 
+        $eggRow->update(["cared" => 1]);
         return true;
     }
 
@@ -316,7 +318,12 @@ class AuthController extends Controller
 
     public function selectShovel(Request $request)
     {
-        $shovels = auth()->user()->my_shovels; // get all shovels
+        $shovels = auth()->user()->my_shovels; // get all user's shovels
+
+        // user doesn't have this shovel
+        if (!$shovels->contains($request->id)) return false;
+
+        // iterate all user's shovels
         foreach ($shovels as $key => $item) {
             $item->pivot->update(['isActive' => $item->id == $request->id ? 1 : 0]);
         }
@@ -411,10 +418,10 @@ class AuthController extends Controller
         $user     = auth()->user();
         $earnings = 0;
 
-        //
+        // pay brigade service
         $payment = $user->payment('GTN', 20);
 
-        // success payment
+        // check is payment success
         if ($payment) {
             // count earnings from selling eggs
             foreach ($user->my_eggs as $egg) {
@@ -423,10 +430,10 @@ class AuthController extends Controller
 
             $user->my_eggs()->delete(); // delete all eggs, litter, fines
             $user->money += $earnings; // increase user money
-            $user->update();
+            $user->update(); // update all
 
-            return true;
-        } else return false;
+            return true; // success
+        } else return false; // no enough money
     }
 
     public function mine(Request $request)
@@ -513,15 +520,23 @@ class AuthController extends Controller
         }
     }
 
-    public function change_money(Request $request){
+    public function change_money(Request $request)
+    {
         $user = auth()->user(); // get user
 
         // user is admin
-        if($user->role == 1) {
+        if ($user->role == 1) {
             // change balance
             $user->update(['money' => $request->money]);
-            return $request->money;
-        } else return 'You are not admin!:)(#@!'; // user is not admin
+//            return $request->money;
+            return response()->json([
+                'success' => true,
+                'message' => $request->money
+            ], 200);
+        } else return response()->json([
+            'success' => false,
+            'message' => 'YoU aRe noT Am@in#12$32&^!@'
+        ], 200); // user is not admin
     }
 
     /**

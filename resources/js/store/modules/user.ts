@@ -43,7 +43,7 @@ export default {
         },
         getBalance(state): number | boolean {
             if (state.user) {
-                return +(state.user.money).toFixed(2);
+                return +(+state.user.money).toFixed(2);
             } else return false;
         },
         getUserWallets(state): IWallet | boolean {
@@ -370,7 +370,9 @@ export default {
                 });
 
             // returned balance
-            if (typeof res === 'number') {
+            // if (typeof res === 'number') {
+            // TODO number 0 is boolllllgjdiflghioadfth 0
+            if (res) {
                 commit('changeBalance', res); // update balance from returned data
                 return true;
             } else return false;
@@ -410,7 +412,9 @@ export default {
                 .auth(state.access_token)
                 .send({bird_seller_user_id});
 
-            if (typeof res === 'number') {
+            // if (typeof res === 'number') {
+            // TODO number 0 is boolllllgjdiflghioadfth 0
+            if (res) {
                 commit('changeBalance', res); // update balance
                 commit('reduceBird', bird_seller_user_id); // delete bird from list
             }
@@ -537,11 +541,11 @@ export default {
                              state
                          }, id): Promise<boolean> {
             let res: number | boolean = await new Req('post', 'api/auth/openSeller')
-                .auth(state.access_token).send< number | boolean>({id});
+                .auth(state.access_token).send<number | boolean>({id});
 
-            console.log(res);
-
-            if (typeof res === 'number') {
+            // if (typeof res === 'number') {
+            // TODO number 0 is boolllllgjdiflghioadfth 0
+            if (res) {
                 commit('changeBalance', +res);
                 return true;
             } else return false;
@@ -566,223 +570,328 @@ export default {
             //     });
 
         },
-        cares({
-                  commit,
-                  state
-              }, id) {
-            if (!state.access_token) return false;
-
-            return axios.post(
-                'api/auth/cares',
-                {id},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.status == 200) {
-                        return true;
-                    }
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
-
-        },
-        buyShovel({
-                      commit,
-                      state
-                  }, id) {
-            if (!state.access_token) return false;
-
-            return axios.post(
-                'api/auth/buyShovel',
-                {id},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.data) {
-                        commit('changeBalance', response.data);
-                        return true;
-                    }
-                    return false;
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
-        },
-        selectShovel({
-                         commit,
-                         state
-                     }, id) {
-            if (!state.access_token) return false;
-
-            return axios.post(
-                'api/auth/selectShovel',
-                {id},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.data) {
-                        return true;
-                    }
-                    return false;
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
-        },
-        payOffFines({
+        /**
+         * send request to care birds (set `cared` = 1 in eggs table)
+         * */
+        async cares({
                         commit,
                         state
-                    }) {
-            if (!state.access_token) return false;
+                    }, id): Promise<boolean> {
 
-            return axios.get(
-                'api/auth/payOffFines',
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.data) {
-                        commit('changeBalance', +response.data.money); // update balance
-                        return response.data.fines;
-                    }
-                    return false;
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
+            return await new Req('post', 'api/auth/cares')
+                .auth(state.access_token).send<boolean>({id});
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/cares',
+            //     {id},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.status == 200) {
+            //             return true;
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
         },
-        buyCertificate({
-                           commit,
-                           state
-                       }, ids) {
-            if (!state.access_token) return false;
+        /**
+         * send request to buy shovel
+         * */
+        async buyShovel({
+                            commit,
+                            state
+                        }, id): Promise<boolean> {
+            let res = await new Req('post', 'api/auth/buyShovel')
+                .auth(state.access_token).send({id});
 
-            return axios.post(
-                'api/auth/buyCertificate',
-                {...ids},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.data) {
-                        commit('changeBalance', response.data); // update balance
-                        return true;
-                    }
-                    return false;
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
+            // res must be number
+            // if (typeof res === 'number') {
+            // TODO number 0 is boolllllgjdiflghioadfth 0
+            if (res) {
+                commit('changeBalance', +res); // change balance
+                return true; // return success
+            } else return false;
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/buyShovel',
+            //     {id},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.data) {
+            //             commit('changeBalance', response.data);
+            //             return true;
+            //         }
+            //         return false;
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
         },
-        buyContract({
-                        commit,
-                        state
-                    }, id) {
-            if (!state.access_token) return false;
+        /**
+         * send request to select shovel. The user will clean with the chosen shovel
+         * */
+        async selectShovel({
+                               commit,
+                               state
+                           }, id): Promise<boolean> {
+            return await new Req('post', 'api/auth/selectShovel')
+                .auth(state.access_token).send<boolean>({id});
 
-            return axios.post(
-                'api/auth/buyContract',
-                {id},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.data) {
-                        commit('changeBalance', response.data); // update balance
-                        return true;
-                    }
-                    return false;
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/selectShovel',
+            //     {id},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.data) {
+            //             return true;
+            //         }
+            //         return false;
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
         },
-        brigadeHire({
-                        state
-                    }) {
-            if (!state.access_token) return false;
+        /**
+         * send request to reduce fines
+         * */
+        async payOffFines({
+                              commit,
+                              state
+                          }): Promise<number | boolean> {
+            let res: {
+                money: number,
+                fines: number
+            } | boolean = await new Req('get', 'api/auth/payOffFines')
+                .auth(state.access_token).send();
 
-            return axios.get(
-                'api/auth/brigadeHire',
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    return response.data;
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
+            if (res && typeof res !== 'boolean') {
+                commit('changeBalance', +res.money); // update balance
+                return +res.fines; // return count of rest fines
+            } else return false;
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.get(
+            //     'api/auth/payOffFines',
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.data) {
+            //             commit('changeBalance', +response.data.money); // update balance
+            //             return response.data.fines;
+            //         }
+            //         return false;
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
         },
-        mine({
-                 commit,
-                 state
-             }, earnings) {
-            if (!state.access_token) return false;
+        /**
+         * send request to buy certificate for user
+         * */
+        async buyCertificate({
+                                 commit,
+                                 state
+                             }, ids): Promise<boolean> {
+            let res = await new Req('post', 'api/auth/buyCertificate')
+                .auth(state.access_token).send({...ids});
 
-            return axios.post(
-                'api/auth/mine',
-                {earnings: earnings},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.data) {
-                        commit('changeBalance', +response.data); // update balance
-                        return true;
-                    }
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
+            // TODO number is boolean
+            if (res) {
+                commit('changeBalance', res); // update balance
+                return true;
+            } else return false;
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/buyCertificate',
+            //     {...ids},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.data) {
+            //             commit('changeBalance', response.data); // update balance
+            //             return true;
+            //         }
+            //         return false;
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
+        },
+        /**
+         * send request to buy contract for user
+         * */
+        async buyContract({
+                              commit,
+                              state
+                          }, id): Promise<boolean> {
+            let res: number | boolean = await new Req('post', 'api/auth/buyContract')
+                .auth(state.access_token).send<number | boolean>({id});
+
+            // TODO number 0 is boolean
+            if (res) {
+                commit('changeBalance', +res); // update balance
+                return true;
+            } else return false
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/buyContract',
+            //     {id},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.data) {
+            //             commit('changeBalance', response.data); // update balance
+            //             return true;
+            //         }
+            //         return false;
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
+        },
+        /**
+         * send request to sell all eggs, remove all fines and litter
+         * */
+        async brigadeHire({
+                              state
+                          }): Promise<boolean> {
+            return await new Req('get', 'api/auth/brigadeHire')
+                .auth(state.access_token).send<boolean>();
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.get(
+            //     'api/auth/brigadeHire',
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         return response.data;
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
+        },
+        /**
+         * send request to sell all trash (increases balance by earnings)
+         * */
+        async mine({
+                       commit,
+                       state
+                   }, earnings): Promise<boolean> {
+
+            let res: number | boolean = await new Req('post', 'api/auth/mine')
+                .auth(state.access_token).send<number>({earnings});
+
+            if (res) {
+                commit('changeBalance', +res); // update balance
+                return true;
+            } else return false
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/mine',
+            //     {earnings: earnings},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.data) {
+            //             commit('changeBalance', +response.data); // update balance
+            //             return true;
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
         },
 
         /* CURRENCIES */
-        transaction({
-                        commit,
-                        state
-                    }, transaction) {
-            if (!state.access_token) return false;
+        /**
+         * send request to exchange one currency for another currency
+         * */
+        async transaction({
+                              commit,
+                              state
+                          }, transaction): Promise<boolean> {
+            let res: number | boolean = await new Req('post', 'api/auth/transaction')
+                .auth(state.access_token).send<number | boolean>({...transaction});
 
-            return axios.post(
-                'api/auth/transaction',
-                {...transaction},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response.data !== false) {
-                        commit('changeBalance', response.data); // update balance
-                        return true;
-                    }
-                    return false;
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
+            if (res !== false) {
+                commit('changeBalance', +res); // update balance
+                return true;
+            } else return false;
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/transaction',
+            //     {...transaction},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response.data !== false) {
+            //             commit('changeBalance', response.data); // update balance
+            //             return true;
+            //         }
+            //         return false;
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
         },
-        changeMoney({
+        /**
+         * send request to increase money to admin
+         * */
+        async changeMoney({
                         commit,
                         state
                     }, money) {
-            if (!state.access_token) return false;
+            let res: {
+                success: boolean,
+                message: any
+            } | boolean = await new Req('post', 'api/auth/change_money')
+                .auth(state.access_token).send({money});
 
-            return axios.post(
-                'api/auth/change_money',
-                {money},
-                {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            )
-                .then(response => {
-                    if (response) commit('changeBalance', response.data);
-                })
-                .catch((error) => {
-                    console.log(error, error.response);
-                    return false;
-                });
+            if (typeof res !== 'boolean' && res.success) commit('changeBalance', +res.message);
+
+
+            // if (!state.access_token) return false;
+            //
+            // return axios.post(
+            //     'api/auth/change_money',
+            //     {money},
+            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
+            // )
+            //     .then(response => {
+            //         if (response) commit('changeBalance', response.data);
+            //     })
+            //     .catch((error) => {
+            //         console.log(error, error.response);
+            //         return false;
+            //     });
         },
     },
     mutations: {

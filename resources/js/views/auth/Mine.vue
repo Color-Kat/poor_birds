@@ -110,7 +110,6 @@ export default {
             this.sounds()[Math.round(Math.random())].play();
         },
         async mineSell(){
-            console.log(this.earnings)
             let result = await this.mine(this.earnings); // sell all trash
             this.clicks = 0; // zero clicks
 
