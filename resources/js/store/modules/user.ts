@@ -180,7 +180,7 @@ export default {
             // check auth
             if (state.auth) {
                 // fetch user data
-                let res = await new Req('get', 'api/auth/user').auth(state.access_token).send();
+                let res: IUser | boolean = await new Req('get', 'api/auth/user').auth(state.access_token).send();
 
                 if (res) {
                     commit('setUser', res); // fill user data
@@ -370,9 +370,7 @@ export default {
                 });
 
             // returned balance
-            // if (typeof res === 'number') {
-            // TODO number 0 is boolllllgjdiflghioadfth 0
-            if (res) {
+            if (typeof res === 'number') {
                 commit('changeBalance', res); // update balance from returned data
                 return true;
             } else return false;
@@ -412,9 +410,7 @@ export default {
                 .auth(state.access_token)
                 .send({bird_seller_user_id});
 
-            // if (typeof res === 'number') {
-            // TODO number 0 is boolllllgjdiflghioadfth 0
-            if (res) {
+            if (typeof res === 'number') {
                 commit('changeBalance', res); // update balance
                 commit('reduceBird', bird_seller_user_id); // delete bird from list
             }
@@ -515,7 +511,7 @@ export default {
             let res: number | boolean = await new Req('post', 'api/auth/clean')
                 .auth(state.access_token).send<number | boolean>({id});
 
-            if (res) return res;
+            if (typeof res !== 'boolean') return res;
             else return false;
 
             // if (!state.access_token) return false;
@@ -543,9 +539,7 @@ export default {
             let res: number | boolean = await new Req('post', 'api/auth/openSeller')
                 .auth(state.access_token).send<number | boolean>({id});
 
-            // if (typeof res === 'number') {
-            // TODO number 0 is boolllllgjdiflghioadfth 0
-            if (res) {
+            if (typeof res === 'number') {
                 commit('changeBalance', +res);
                 return true;
             } else return false;
@@ -609,9 +603,7 @@ export default {
                 .auth(state.access_token).send({id});
 
             // res must be number
-            // if (typeof res === 'number') {
-            // TODO number 0 is boolllllgjdiflghioadfth 0
-            if (res) {
+            if (typeof res === 'number') {
                 commit('changeBalance', +res); // change balance
                 return true; // return success
             } else return false;
@@ -709,8 +701,7 @@ export default {
             let res = await new Req('post', 'api/auth/buyCertificate')
                 .auth(state.access_token).send({...ids});
 
-            // TODO number is boolean
-            if (res) {
+            if (typeof res === 'number') {
                 commit('changeBalance', res); // update balance
                 return true;
             } else return false;
@@ -744,8 +735,7 @@ export default {
             let res: number | boolean = await new Req('post', 'api/auth/buyContract')
                 .auth(state.access_token).send<number | boolean>({id});
 
-            // TODO number 0 is boolean
-            if (res) {
+            if (typeof res === 'number') {
                 commit('changeBalance', +res); // update balance
                 return true;
             } else return false
@@ -803,7 +793,7 @@ export default {
             let res: number | boolean = await new Req('post', 'api/auth/mine')
                 .auth(state.access_token).send<number>({earnings});
 
-            if (res) {
+            if (typeof res === 'number') {
                 commit('changeBalance', +res); // update balance
                 return true;
             } else return false
@@ -838,7 +828,7 @@ export default {
             let res: number | boolean = await new Req('post', 'api/auth/transaction')
                 .auth(state.access_token).send<number | boolean>({...transaction});
 
-            if (res !== false) {
+            if (typeof res === 'number') {
                 commit('changeBalance', +res); // update balance
                 return true;
             } else return false;

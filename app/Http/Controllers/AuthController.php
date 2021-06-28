@@ -253,7 +253,6 @@ class AuthController extends Controller
         // get shovel effectivity to clean litter
         $shovel = auth()->user()->my_shovels()->where('isActive', '=', 1)->first();
         if (!$shovel) return false;
-
         $shovelEfficiency = $shovel->efficiency;
 
         // decrease litter count by efficiency or litter count

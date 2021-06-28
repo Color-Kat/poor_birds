@@ -1,9 +1,10 @@
 <template>
     <div>
+        {{purchasedBird}}
         <!-- --- BIRDS MODALS ---    -->
         <!--    NO MONEY MODAL    -->
         <b-modal id="modal-no-money" header-bg-variant="danger">
-            <p class="my-2">К сожалению у вас нет денег на птицу "{{ purchasedBirdName }}"</p>
+            <p class="my-2">К сожалению у вас нет денег на птицу "{{ purchasedBird ? purchasedBird.name : '' }}"</p>
 
             <template #modal-footer="{ ok }">
                 <b-button size="sm" @click="ok()">
@@ -220,11 +221,10 @@ export default {
                 sold_bird_id: bird.pivot.id
             });
 
+            this.purchasedBird = bird;
+
             // successful purchased
             if (result) {
-                // this.birdQuestMessage = bird.quest; // set quest text
-                // this.purchasedBirdName = bird.name; // set purchased bird name
-                this.purchasedBird = bird;
                 this.$bvModal.show('modal-bird-buy'); // show success modal with quest and bird name
 
                 /* Add the bird to the purchased list
