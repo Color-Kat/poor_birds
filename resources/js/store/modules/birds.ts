@@ -43,13 +43,6 @@ export default {
             let response = await new Req('get', 'api/birds').send<IBird[]>();
 
             if (response) context.commit('setBirds', response);
-
-            // return axios.get('/api/birds')
-            //     .then(response => {
-            // context.commit('setBirds', response.data);
-            //     }).catch(err => {
-            //     console.log('ERROR: ' + err);
-            // })
         },
         async createBird({commit}, form) {
             // convert object to form data
@@ -66,41 +59,10 @@ export default {
                 commit('addBird', response);
                 return true;
             } else return false;
-
-            // set header to upload image file
-            // return axios.post(
-            //     'api/birds',
-            //     formData,
-            //     {headers: {'Content-Type': 'multipart/form-data'}}
-            // )
-            //     .then(response => {
-            //         if (response.status === 201) {
-            //             commit('addBird', response.data);
-            //
-            //             return true;
-            //         } else return false
-            //     })
-            //     .catch((error) => {
-            //         console.log(error.response);
-            //         return false
-            //     });
         },
         async deleteBird({commit}, id) {
             let response: boolean = await new Req('delete', `api/birds/${id}`).send();
             if (response) commit('deleteBird', id);
-
-            // axios.delete(
-            //     `api/birds/${id}`
-            // )
-            //     .then(response =>6 {
-            //         // successfully deleting
-            //         if (response) {
-            //             commit('deleteBird', id)
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     });
         },
         async fetchBird({commit}, ids) {
             const bird_id   = ids.bird_id,
@@ -112,19 +74,6 @@ export default {
 
                 if (response) commit('setCurrentBird', response);
                 else commit('setCurrentBird', false);
-
-                // return axios.get(
-                //     `api/birds/${bird_id}`
-                // )
-                //     .then(response => {
-                //         if (response.data.status) {
-                //             commit('setCurrentBird', response.data.messages);
-                //         } else commit('setCurrentBird', false);
-                //     })
-                //     .catch((error) => {
-                //         console.log(error);
-                //         commit('setCurrentBird', false);
-                //     });
             }
             // need to find bird of specific seller
             if (seller_id) {
@@ -137,24 +86,6 @@ export default {
 
                 if (response) commit('setCurrentBird', response);
                 else commit('setCurrentBird', false);
-
-                // return axios.post(
-                //     `api/sellers/getBird`,
-                //     {
-                //         seller_id,
-                //         bird_id
-                //     }
-                // )
-                //     .then(response => {
-                //         // console.log(response)
-                //         // console.log(123)
-                //         if (response.data.status) {
-                //             commit('setCurrentBird', response.data.messages);
-                //         }
-                //     })
-                //     .catch((error) => {
-                //         console.log(error);
-                //     });
             }
         },
         async updateBird({
@@ -177,20 +108,6 @@ export default {
                 dispatch('fetchBirds');
                 return response;
             } else return false;
-
-            // return axios.post(
-            //     `api/birds/${form.id}`,
-            //     formData,
-            //     {headers: {'Content-Type': 'multipart/form-data'}}
-            // )
-            //     .then(response => {
-            //         dispatch('fetchBirds');
-            //         return response;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error.response);
-            //         return false;
-            //     });
         },
     },
     mutations: {

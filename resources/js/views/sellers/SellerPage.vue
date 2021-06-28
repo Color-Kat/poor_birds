@@ -1,16 +1,9 @@
 <template>
     <div>
-        {{purchasedBird}}
         <!-- --- BIRDS MODALS ---    -->
         <!--    NO MONEY MODAL    -->
-        <b-modal id="modal-no-money" header-bg-variant="danger">
+        <b-modal id="modal-no-money" header-bg-variant="danger" hide-footer>
             <p class="my-2">К сожалению у вас нет денег на птицу "{{ purchasedBird ? purchasedBird.name : '' }}"</p>
-
-            <template #modal-footer="{ ok }">
-                <b-button size="sm" @click="ok()">
-                    Oк(
-                </b-button>
-            </template>
         </b-modal>
 
         <!--    YOU BUY BIRD QUEST    -->

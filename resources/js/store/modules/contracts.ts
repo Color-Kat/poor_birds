@@ -33,13 +33,6 @@ export default {
             let res: IContract[] | boolean = await new Req('get', '/api/contracts').send<IContract[]>();
 
             if(res) commit('setContracts', res); // fill contracts list
-
-            // axios.get('/api/contracts')
-            //     .then(response => {
-            //         context.commit('setContracts', response.data);
-            //     }).catch(err => {
-            //     console.log('ERROR: ' + err);
-            // })
         },
         /**
          * fetch one contract by id and save it into currentContract
@@ -48,18 +41,6 @@ export default {
             // need to find just contract
             let res: IContract | boolean = await new Req('get',  `api/contracts/${id}`).send();
             if (res) commit('setCurrentContract', res);
-
-            // return axios.get(
-            //     `api/contracts/${id}`
-            // )
-            //     .then(response => {
-            //         if (response.data.status) {
-            //             commit('setCurrentContract', response.data.messages);
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     });
         },
     },
     mutations: {

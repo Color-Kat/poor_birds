@@ -18,15 +18,6 @@ export default {
 
             if (currencies) context.commit('setCurrencies', currencies);
             return !!currencies; // return  success;
-            // return axios.get('/api/currencies')
-            //     .then(response => {
-            //         context.commit('setCurrencies', response.data);
-            //         // console.log(context.getters.getCurrencies);
-            //         return true;
-            //     }).catch(err => {
-            //         console.log('ERROR: ' + err);
-            //         return false;
-            // })
         },
 
     },

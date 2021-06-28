@@ -31,13 +31,6 @@ export default {
             let response = await new Req('get', '/api/shovels').send<IShovel[]>();
             console.log(response);
             if (response) commit('setShovels', response);
-
-            // axios.get('/api/shovels')
-            //     .then(response => {
-            //         context.commit('setShovels', response.data);
-            //     }).catch(err => {
-            //     console.log('ERROR: ' + err);
-            // })
         },
         async createShovel({commit}, form) {
             // convert object to form data
@@ -53,44 +46,12 @@ export default {
             if (response) commit('addShovel', response); // add new shovel to lost
             console.log(response);
             return !!response; // return is success
-
-            // set header to upload image file
-            // return axios.post(
-            //     'api/shovels',
-            //     formData,
-            //     {headers: {'Content-Type': 'multipart/form-data'}}
-            // )
-            //     .then(response => {
-            //         console.log(response)
-            //         if (response.status === 201) {
-            //             commit('addShovel', response.data);
-            //
-            //             return true;
-            //         } else return false
-            //     })
-            //     .catch((error) => {
-            //         console.log(error.response);
-            //         return false
-            //     });
         },
         async deleteShovel({commit}, id) {
             let response: boolean = await new Req('delete', `api/shovels/${id}`).send();
             console.log(response);
 
             if(response) commit('deleteShovel', id);
-
-            // axios.delete(
-            //     `api/shovels/${id}`
-            // )
-            //     .then(response => {
-            //         // successfully deleting
-            //         if (response) {
-            //             commit('deleteShovel', id)
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     });
         },
         /**
          * send request to get
@@ -98,19 +59,6 @@ export default {
         async fetchShovel({commit}, id) {
             let response: IShovel | boolean = await new Req('get', `api/shovels/${id}`).send<IShovel>();
             commit('setCurrentShovel', response);
-
-            // need to find just shovel
-            // return axios.get(
-            //     `api/shovels/${id}`
-            // )
-            //     .then(response => {
-            //         if (response.data.status) {
-            //             commit('setCurrentShovel', response.data.messages);
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     });
         },
         async updateShovel({
                          commit,
@@ -130,20 +78,6 @@ export default {
 
             dispatch('fetchShovels');
             return response;
-
-            // return axios.post(
-            //     `api/shovels/${form.id}`,
-            //     formData,
-            //     {headers: {'Content-Type': 'multipart/form-data'}}
-            // )
-            //     .then(response => {
-            //         dispatch('fetchShovels');
-            //         return response;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error.response);
-            //         return false;
-            //     });
         },
     },
     mutations: {

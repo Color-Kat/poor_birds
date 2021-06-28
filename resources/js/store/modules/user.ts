@@ -5,7 +5,6 @@ import {IMySeller} from "../../modules/types/IMySeller";
 import {IShovel} from "../../modules/types/IShovel";
 import {IMyContract} from "../../modules/types/IMyContract";
 import Req from "../../modules/Req";
-import {AxiosResponse} from "axios";
 
 export default {
     state    : {
@@ -144,29 +143,6 @@ export default {
                 commit('setAuth', false); // update auth
                 return false;
             }
-
-            // we need access token for check auth
-            // if (!state.access_token) return false;
-            //
-            // // fetch to api check_auth
-            // return axios.get(
-            //     'api/auth/check_auth',
-            //     // send token
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(async response => {
-            //         if (response.status === 200) {
-            //             commit('setAuth', true); // update auth
-            //             await dispatch('fetchUser');
-            //             return true;
-            //         } else return false;
-            //     })
-            //     .catch((error) => {
-            //         if (error.response) {
-            //             commit('setAuth', false);
-            //             return false;
-            //         }
-            //     });
         },
         /**
          * fetch and fill user data
@@ -187,21 +163,6 @@ export default {
                     dispatch('fetchUserBirds'); // fill user's birds list
                     dispatch('fetchUserEggs'); // fill user's eggs list
                 } else commit('setUser', null); // user is not logged in
-                // return axios.get(
-                //     'api/auth/user',
-                //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-                // ).then(response => {
-                //     if (response.status === 200) {
-                //         commit('setUser', response.data); // user is logged in
-                //         dispatch('fetchUserBirds'); // user is logged in
-                //         dispatch('fetchUserEggs'); // user is logged in
-                //     } else commit('setUser', null); // user is not logged in
-                // })
-                //     // some error, user is not logged in
-                //     .catch((error) => {
-                //         console.log('Error', error)
-                //         commit('setUser', null);
-                //     });
             } else {
                 commit('setUser', null); // user is not logged in
             }
@@ -212,29 +173,6 @@ export default {
          * */
         async registration(context, form) {
             context.commit('toggleLoader', true); // show loader
-
-            // let rawResponse: AxiosResponse<any> | boolean = await new Req('post', 'api/auth/register')
-            //     .catchMode() // set catch mode to get raw response
-            //     .send(form);
-            // context.commit('toggleLoader', false); // hide loader
-            //
-            // console.log(rawResponse);
-            //
-            // // code error
-            // if (!rawResponse) return {
-            //     success: false,
-            //     error  : 'Произошла какая-то ошибка'
-            // }
-            //
-            // if (rawResponse.status === 201) {
-            //     return {
-            //         success: true,
-            //         error  : false
-            //     };
-            // } else return {
-            //     success: false,
-            //     error  : 'Произошла какая-то ошибка'
-            // };
 
             return (window as any).axios.post('api/auth/register', form)
                 .then(response => {
@@ -314,16 +252,6 @@ export default {
                 commit('setAuth', false); // user is not authorized now
                 commit('setUser', null); // no data about user
                 commit('set_Access_token', ''); // delete access token
-
-                // axios.get(
-                //     '/api/auth/logout',
-                //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-                // )
-                //     .then(() => {
-                //         commit('setAuth', false);
-                //         commit('setUser', null);
-                //         commit('set_Access_token', '');
-                //     });
             }
         },
         /**
@@ -338,21 +266,6 @@ export default {
                 .auth(state.access_token).send();
 
             if (res) commit('setUserBirds', res); // fill user's birds list
-
-            // if (!state.access_token) return false;
-            // // fetch to api check_auth
-            // return axios.get(
-            //     'api/auth/get_my_birds_with_certificate',
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.status === 200) {
-            //             commit('setUserBirds', response.data); // update auth
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log('ERROR: ', error, error.response);
-            //     });
         },
         /**
          * send request to add bird to user by bird_seller_id.
@@ -374,30 +287,6 @@ export default {
                 commit('changeBalance', res); // update balance from returned data
                 return true;
             } else return false;
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/buyBird',
-            //     {
-            //         bird_id       : ids.bird_id,
-            //         bird_seller_id: ids.sold_bird_id
-            //     },
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (!response.data) return false;
-            //         else {
-            //
-            //
-            //             commit('changeBalance', response.data); // update balance from returned data
-            //             return true;
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
         /**
          * send request to sell user's bird if money is enough
@@ -414,23 +303,6 @@ export default {
                 commit('changeBalance', res); // update balance
                 commit('reduceBird', bird_seller_user_id); // delete bird from list
             }
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/sellBird',
-            //     {bird_seller_user_id},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.data) {
-            //             commit('changeBalance', response.data);
-            //             commit('reduceBird', bird_seller_user_id);
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //     });
         },
         /**
          * send request to get user's eggs
@@ -444,22 +316,6 @@ export default {
                 .auth(state.access_token).send<IEgg[]>();
 
             if (res) commit('setEggs', res); // fill list of user's eggs
-
-            // if (!state.access_token) return false;
-            //
-            // // fetch to get all user eggs
-            // return axios.get(
-            //     'api/auth/get_my_eggs',
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.status === 200) {
-            //             commit('setEggs', response.data); // update auth
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log('ERROR: ', error, error.response);
-            //     });
         },
         /**
          * send request to sell user's eggs by id of egg.
@@ -482,24 +338,6 @@ export default {
                 commit('changeBalance', +res.result.balance); // change balance
                 return +res.result.eggs_count; // change eggs count
             } else return false
-
-            // if (!state.access_token) return false;
-            // return axios.post(
-            //     'api/auth/sellEggs',
-            //     {id},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.status === 200 && response.data.result) {
-            //             commit('changeBalance', response.data.result.balance);
-            //             return response.data.result.eggs_count;
-            //         }
-            //         return false
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
         /**
          * send request to reduce litter of bird (egg of bird)
@@ -513,21 +351,6 @@ export default {
 
             if (typeof res !== 'boolean') return res;
             else return false;
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/clean',
-            //     {id},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         return response.data;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
         /**
          * send request to add seller into seller_user table
@@ -543,26 +366,6 @@ export default {
                 commit('changeBalance', +res);
                 return true;
             } else return false;
-
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/openSeller',
-            //     {id},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.status === 200 && response.data !== '') {
-            //             commit('changeBalance', response.data);
-            //             return true;
-            //         } else return false;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
-
         },
         /**
          * send request to care birds (set `cared` = 1 in eggs table)
@@ -574,23 +377,6 @@ export default {
 
             return await new Req('post', 'api/auth/cares')
                 .auth(state.access_token).send<boolean>({id});
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/cares',
-            //     {id},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.status == 200) {
-            //             return true;
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
         /**
          * send request to buy shovel
@@ -607,25 +393,6 @@ export default {
                 commit('changeBalance', +res); // change balance
                 return true; // return success
             } else return false;
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/buyShovel',
-            //     {id},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.data) {
-            //             commit('changeBalance', response.data);
-            //             return true;
-            //         }
-            //         return false;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
         /**
          * send request to select shovel. The user will clean with the chosen shovel
@@ -636,24 +403,6 @@ export default {
                            }, id): Promise<boolean> {
             return await new Req('post', 'api/auth/selectShovel')
                 .auth(state.access_token).send<boolean>({id});
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/selectShovel',
-            //     {id},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.data) {
-            //             return true;
-            //         }
-            //         return false;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
         /**
          * send request to reduce fines
@@ -672,24 +421,6 @@ export default {
                 commit('changeBalance', +res.money); // update balance
                 return +res.fines; // return count of rest fines
             } else return false;
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.get(
-            //     'api/auth/payOffFines',
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.data) {
-            //             commit('changeBalance', +response.data.money); // update balance
-            //             return response.data.fines;
-            //         }
-            //         return false;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
         /**
          * send request to buy certificate for user
@@ -705,25 +436,6 @@ export default {
                 commit('changeBalance', res); // update balance
                 return true;
             } else return false;
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/buyCertificate',
-            //     {...ids},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.data) {
-            //             commit('changeBalance', response.data); // update balance
-            //             return true;
-            //         }
-            //         return false;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
         /**
          * send request to buy contract for user
@@ -739,25 +451,6 @@ export default {
                 commit('changeBalance', +res); // update balance
                 return true;
             } else return false
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/buyContract',
-            //     {id},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.data) {
-            //             commit('changeBalance', response.data); // update balance
-            //             return true;
-            //         }
-            //         return false;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
         /**
          * send request to sell all eggs, remove all fines and litter
@@ -767,20 +460,6 @@ export default {
                           }): Promise<boolean> {
             return await new Req('get', 'api/auth/brigadeHire')
                 .auth(state.access_token).send<boolean>();
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.get(
-            //     'api/auth/brigadeHire',
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         return response.data;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
         /**
          * send request to sell all trash (increases balance by earnings)
@@ -797,24 +476,6 @@ export default {
                 commit('changeBalance', +res); // update balance
                 return true;
             } else return false
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/mine',
-            //     {earnings: earnings},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.data) {
-            //             commit('changeBalance', +response.data); // update balance
-            //             return true;
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
 
         /* CURRENCIES */
@@ -832,25 +493,6 @@ export default {
                 commit('changeBalance', +res); // update balance
                 return true;
             } else return false;
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/transaction',
-            //     {...transaction},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response.data !== false) {
-            //             commit('changeBalance', response.data); // update balance
-            //             return true;
-            //         }
-            //         return false;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
         /**
          * send request to increase money to admin
@@ -866,22 +508,6 @@ export default {
                 .auth(state.access_token).send({money});
 
             if (typeof res !== 'boolean' && res.success) commit('changeBalance', +res.message);
-
-
-            // if (!state.access_token) return false;
-            //
-            // return axios.post(
-            //     'api/auth/change_money',
-            //     {money},
-            //     {headers: {"Authorization": `Bearer ${state.access_token}`}}
-            // )
-            //     .then(response => {
-            //         if (response) commit('changeBalance', response.data);
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false;
-            //     });
         },
     },
     mutations: {

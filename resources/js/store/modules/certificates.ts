@@ -74,34 +74,12 @@ export default {
         async fetchCertificates(context) {
             let res: ICertificate[] | boolean = await new Req('get', 'api/certificates').send();
             if (res) context.commit('setCertificates', res);
-
-            // axios.get('/api/certificates')
-            //     .then(response => {
-            //         context.commit('setCertificates', response.data);
-            //     }).catch(err => {
-            //     console.log('ERROR: ' + err);
-            // })
         },
         async createCertificate({commit}, form) {
             let res: ICertificate | boolean = await new Req('post', 'api/certificates').send(form);
             if (res) commit('addCertificate', res); // add new certificate to list
 
             return !!res; // return success
-
-            // return axios.post(
-            //     'api/certificates',
-            //     form
-            // )
-            //     .then(response => {
-            //         if (response.status === 201) {
-            //             commit('addCertificate', response.data);
-            //             return true;
-            //         } else return false;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error, error.response);
-            //         return false
-            //     });
         },
         async updateCertificate({
                                     commit,
@@ -117,60 +95,16 @@ export default {
             if (res) dispatch('fetchCertificates'); // load all certificates
 
             return res; // return success
-
-
-            // return axios.post(
-            //     `api/certificates/${form.id}`,
-            //     {
-            //         ...form,
-            //         _method: 'PATCH'
-            //     }
-            // )
-            //     .then(response => {
-            //         // console.log(response)
-            //         dispatch('fetchCertificates');
-            //         return response;
-            //     })
-            //     .catch((error) => {
-            //         console.log(error.response);
-            //         return false;
-            //     });
         },
         async deleteCertificate({commit}, id) {
             let res: boolean = await new Req('delete', `api/certificates/${id}`).send();
 
             if(res) commit('deleteCertificate', id);
-
-            // axios.delete(
-            //     `api/certificates/${id}`
-            // )
-            //     .then(response => {
-            //         // successfully deleting
-            //         if (response) {
-            //             commit('deleteCertificate', id)
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     });
         },
         async fetchCertificate({commit}, id) {
             let res = await new Req('get', `api/certificates/${id}`).send();
 
             if(res) commit('setCurrentCertificate', res);
-
-            // return axios.get(
-            //     `api/certificates/${id}`
-            // )
-            //     .then(response => {
-            //         if (response.data.status) {
-            //             commit('setCurrentCertificate', response.data.messages);
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     });
-
         },
 
     },

@@ -80,6 +80,9 @@
         <b-card>
             <h3>Новости</h3>
             <b-card class="p-1 mb-2">
+                28.06.2021 - оптимизация игры.
+            </b-card>
+            <b-card class="p-1 mb-2">
                 05.06.2021 - релиз игры.
             </b-card>
             <b-card class="p-1 mb-2">
