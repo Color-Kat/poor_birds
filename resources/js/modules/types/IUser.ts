@@ -7,6 +7,7 @@ export interface IUser{
     email: string;
     name: string;
     role: number;
+    story: any; // JSON object with users data about story
     notified: number;
 
     money: number;

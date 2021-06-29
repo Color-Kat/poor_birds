@@ -55,6 +55,9 @@ import Success from "./views/bank/Success";
 import Failed from "./views/bank/Failed";
 import Bank from "./views/bank/Bank";
 
+/* stores */
+import Stores from "./components/Stores";
+
 
 Vue.use(VueRouter);
 
@@ -305,6 +308,13 @@ const routes = [
         path     : '/payment/failed',
         name     : 'payment_failed',
         component: Failed,
+    },
+
+    /* ------ STORE -------- */
+    {
+        path     : '/stores',
+        name     : 'stores',
+        component: Stores,
     },
 ];
 

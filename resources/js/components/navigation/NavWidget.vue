@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-around actions">
         <b-button class="text-center" :to="{name: 'eggs'}" variant="success">🥚</b-button>
         <b-button class="text-center" :to="{name: 'my_birds'}" variant="warning">🦅</b-button>
-        <b-button class="text-center" :to="{name: 'sellers'}" variant="primary">🛒</b-button>
+        <b-button class="text-center" :to="{name: 'stores'}" variant="primary">🛒</b-button>
     </div>
 </template>
 

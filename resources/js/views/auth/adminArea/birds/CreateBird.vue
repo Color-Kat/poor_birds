@@ -22,6 +22,22 @@
                 ></b-form-input>
             </b-form-group>
 
+
+            <!--      STRING ID      -->
+            <b-form-group
+                id="input-string-id"
+                label="ID:"
+                label-for="string-id"
+                description="Название птицы на английском языке без пробелов и спецсимволов"
+            >
+                <b-form-input
+                    id="string-id"
+                    v-model="form.string_id"
+                    type="text"
+                    placeholder="Zaserish"
+                ></b-form-input>
+            </b-form-group>
+
             <!--      DESCRIPTION      -->
             <b-form-group id="input-description" label="Описание птицы:" label-for="description">
                 <b-form-input
@@ -151,6 +167,7 @@ export default {
         return {
             form : {
                 id         : this.$route.query.id || null,
+                string_id  : this.$route.query.string_id || null,
                 name       : this.$route.query.name || 'Tester',
                 description: this.$route.query.description || 'Тестирует приложение',
                 quest      : this.$route.query.quest || '',

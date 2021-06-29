@@ -159,6 +159,7 @@ class AuthController extends Controller
         $pivotRow = Sold_bird::find($request->bird_seller_id);
 
         $price     = round($pivotRow->bird->price * (1 + $pivotRow->seller->discount / 100));
+        $string_id = $pivotRow->bird->string_id; // get string id of bird
         $userMoney = auth()->user()->money;
 
         if ($price > $userMoney) return false; // not enough money
@@ -178,6 +179,17 @@ class AuthController extends Controller
 
         // bird has not been purchased yet
         auth()->user()->my_birds()->attach($request->bird_seller_id);
+
+        // --- check bird string_id and change other_data --- //
+        // get other_data
+        $other_data = json_decode(auth()->user()->other_data) ?? new \stdClass();
+
+        if($string_id === 'angel') {
+            $other_data->final = true; // user
+            auth()->user()->other_data = json_encode($other_data);
+            auth()->user()->update();
+        }
+
         return auth()->user()->money;
     }
 

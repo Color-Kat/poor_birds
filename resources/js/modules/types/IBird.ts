@@ -2,6 +2,7 @@ import {ISeller} from "./ISeller";
 
 export interface IBird{
     id: number;
+    string_id: string | null;
     name: string;
     description: string | null
     quest: string | null;

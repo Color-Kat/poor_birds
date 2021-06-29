@@ -11,6 +11,7 @@
             id="modal-bird-buy" title="Поздравляем! Вы купили птицу" header-bg-variant="success"
             header-text-variant="light" hide-header body-bg-variant="dark" hide-footer
         >
+
             <div
                 class="quest-box"
             >
@@ -27,17 +28,6 @@
                     <b-link :to="{name: 'my_birds'}">Мои птицы</b-link>
                 </div>
             </div>
-            <!--                    <b-card-->
-            <!--                        v-if="!(JSON.parse(localStorage.getItem('birds_purchased_list')).includes(purchasedBird?.id))"-->
-            <!--                        class="mt-2">-->
-            <!--                        {{purchasedBird ? purchasedBird.quest : ''}}-->
-            <!--                    </b-card>-->
-
-            <template #modal-footer="{ ok }">
-                <b-button size="sm" variant="success" @click="ok()">
-                    Oк
-                </b-button>
-            </template>
         </b-modal>
         <!-- --- BIRDS MODALS ---    -->
 
@@ -175,10 +165,12 @@
 import {mapActions, mapGetters} from "vuex";
 import Field from '../../components/fields/Field'
 import Loader from "../../components/Loader";
+import StoryModal from "../../components/StoryModal";
 
 export default {
     name      : "SellerPage",
     components: {
+        StoryModal,
         Loader,
         Field,
     },

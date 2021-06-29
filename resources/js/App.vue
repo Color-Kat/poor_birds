@@ -6,6 +6,14 @@
         <Loader v-show="getIsLoading"/>
         <!--    LOADER    -->
 
+        <!--    MODAL    -->
+        <b-modal
+            id="modal-main" hide-header body-bg-variant="dark" hide-footer
+        >
+            <StoryModal :title="modalTitle" :content="modalText"/>
+        </b-modal>
+        <!--    MODAL    -->
+
         <main style="z-index: 10;">
             <div
                 id="main-container"
@@ -33,14 +41,16 @@
 import Header from './components/header/Header';
 import SideBar from './components/SideBar';
 import Loader from './components/Loader';
-import {mapActions, mapGetters} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 import BlackOut from "./components/BlackOut";
 import Footer from "./components/Footer";
 import Background from "./components/visual/Background";
+import StoryModal from "./components/StoryModal";
 
 export default {
     name      : "App",
     components: {
+        StoryModal,
         Footer,
         Header,
         SideBar,
@@ -49,7 +59,8 @@ export default {
         Background
     },
     computed  : {
-        ...mapGetters(['getAuth', 'getIsLoading'])
+        ...mapGetters(['getAuth', 'getIsLoading']),
+        ...mapState(['isModalShow', 'modalTitle', 'modalText'])
     },
     methods   : {
         ...mapActions(['init']),
@@ -57,6 +68,12 @@ export default {
     // computed: mapGetters(['getAuth', 'getUser']),
     async mounted() {
         await this.init();
+    },
+    updated() {
+        // show main modal
+        if(this.isModalShow){
+            this.$bvModal.show('modal-main');
+        }
     }
 }
 </script>
