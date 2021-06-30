@@ -57,6 +57,7 @@ import Bank from "./views/bank/Bank";
 
 /* stores */
 import Stores from "./components/Stores";
+import Bribe from "./views/auth/Bribe";
 
 
 Vue.use(VueRouter);
@@ -315,6 +316,13 @@ const routes = [
         path     : '/stores',
         name     : 'stores',
         component: Stores,
+    },
+
+    /* ------ BRIBE -------- */
+    {
+        path     : '/account/bribe',
+        name     : 'bribe',
+        component: Bribe,
     },
 ];
 

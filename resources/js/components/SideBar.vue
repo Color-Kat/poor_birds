@@ -47,6 +47,12 @@
                     </b-nav-item>
                 </div>
 
+                <div style="font-size: 1.1em" v-if="getIsFinal">
+                    <b-nav-item active-class="active" :to="{name: 'bribe'}">
+                        <span>💰Взятки</span>
+                    </b-nav-item>
+                </div>
+
             </b-navbar-nav>
         </b-card>
     </aside>
@@ -60,7 +66,7 @@ import UserAvatar from "./auth/account/UserAvatar";
 export default {
     name      : "Aside",
     computed  : {
-        ...mapGetters(['getAuth', 'getUserWallets']),
+        ...mapGetters(['getAuth', 'getUserWallets', 'getIsFinal']),
         ...mapState(['active_sideBar'])
     },
     components: {
@@ -87,7 +93,12 @@ aside {
     border-radius: 0.25rem;
 
     @media screen and (max-height: 670px) {
-        max-height: 372px;
+        max-height: 372px !important;
+        overflow-y: scroll;
+    }
+
+    @media screen and (max-height: 800px) {
+        max-height: 510px;
         overflow-y: scroll;
     }
 

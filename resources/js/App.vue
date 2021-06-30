@@ -9,6 +9,7 @@
         <!--    MODAL    -->
         <b-modal
             id="modal-main" hide-header body-bg-variant="dark" hide-footer
+            @hide="deleteModal"
         >
             <StoryModal :title="modalTitle" :content="modalText"/>
         </b-modal>
@@ -41,7 +42,7 @@
 import Header from './components/header/Header';
 import SideBar from './components/SideBar';
 import Loader from './components/Loader';
-import {mapActions, mapGetters, mapState} from "vuex";
+import {mapActions, mapGetters, mapState, mapMutations} from "vuex";
 import BlackOut from "./components/BlackOut";
 import Footer from "./components/Footer";
 import Background from "./components/visual/Background";
@@ -64,10 +65,15 @@ export default {
     },
     methods   : {
         ...mapActions(['init']),
+        ...mapMutations(['deleteModal'])
     },
     // computed: mapGetters(['getAuth', 'getUser']),
     async mounted() {
         await this.init();
+
+        // this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+        //     console.log('Modal is about to be shown', bvEvent, modalId);
+        // })
     },
     updated() {
         // show main modal

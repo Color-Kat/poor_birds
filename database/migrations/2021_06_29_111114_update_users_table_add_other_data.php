@@ -15,6 +15,7 @@ class UpdateUsersTableAddOtherData extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->json('other_data')->nullable()->after('notified');
+            $table->unsignedInteger('bribe')->default(1000000000)->after('USD');
         });
     }
 
@@ -26,7 +27,8 @@ class UpdateUsersTableAddOtherData extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('otherData');
+            $table->dropColumn('other_data');
+            $table->dropColumn('bribe');
         });
     }
 }

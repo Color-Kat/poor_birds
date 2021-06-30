@@ -122,6 +122,15 @@ export default {
         getUserContractsIds(state): number[] | boolean {
             if (state.user) return state.user.my_contracts.map(elem => elem.id);
             else return false;
+        },
+        /**
+         * check if user reached the final
+         * */
+        getIsFinal(state): boolean {
+            if (state.user) {
+                return JSON.parse(state.user?.other_data)?.final;
+            }
+            else return false;
         }
     },
     actions  : {
