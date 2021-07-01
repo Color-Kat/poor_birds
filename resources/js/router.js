@@ -323,6 +323,16 @@ const routes = [
         path     : '/account/bribe',
         name     : 'bribe',
         component: Bribe,
+        async beforeEnter(to, from, next) {
+            // user is auth
+            if (await store.dispatch('checkAuth')) {
+                await store.dispatch('fetchUser'); // wait for the user to load
+
+                if(store.getters.getIsFinal && !store.getters.getRepaid) next();
+                else next('');
+            }
+            else next('');
+        },
     },
 ];
 

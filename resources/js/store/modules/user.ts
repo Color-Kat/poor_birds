@@ -129,10 +129,25 @@ export default {
         getIsFinal(state): boolean {
             if (state.user) {
                 return JSON.parse(state.user?.other_data)?.final;
-            }
-            else return false;
+            } else return false;
+        },
+        /**
+         * return count of user's rest bribe
+         * */
+        getBribe(state): number{
+            if (state.user) {
+                return state.user.bribe;
+            } else return 0;
+        },
+        /**
+         * return has user repaid bribe
+         * */
+        getRepaid(state): boolean{
+            if (state.user) {
+                return JSON.parse(state.user?.other_data)?.repaid;
+            } else return false;
         }
-    },
+     },
     actions  : {
         /**
          * get is user authorization
@@ -518,6 +533,26 @@ export default {
 
             if (typeof res !== 'boolean' && res.success) commit('changeBalance', +res.message);
         },
+
+        /**
+         * send request to decrease user's bribe count
+         * */
+        async reduceBribe({commit, state}): Promise<boolean> {
+            let res: {
+                money: number,
+                bribe: number
+            } | boolean = await new Req('get', 'api/auth/reduce_bribe')
+                .auth(state.access_token).send();
+
+            if (res && typeof res !== 'boolean') {
+                // update bribe count
+                commit('setBribe', res.bribe);
+
+                // update user balance
+                commit('changeBalance', res.money);
+                return true;
+            } else return false;
+        }
     },
     mutations: {
         setUser(state, user) {
@@ -547,6 +582,9 @@ export default {
         },
         setEggs(state, eggs) {
             state.eggs = eggs;
+        },
+        setBribe(state, bribe) {
+            state.user.bribe = bribe;
         }
     }
 }

@@ -184,8 +184,8 @@ class AuthController extends Controller
         // get other_data
         $other_data = json_decode(auth()->user()->other_data) ?? new \stdClass();
 
-        if($string_id === 'angel') {
-            $other_data->final = true; // user
+        if ($string_id === 'angel') {
+            $other_data->final         = true; // user
             auth()->user()->other_data = json_encode($other_data);
             auth()->user()->update();
         }
@@ -539,7 +539,6 @@ class AuthController extends Controller
         if ($user->role == 1) {
             // change balance
             $user->update(['money' => $request->money]);
-//            return $request->money;
             return response()->json([
                 'success' => true,
                 'message' => $request->money
@@ -548,6 +547,44 @@ class AuthController extends Controller
             'success' => false,
             'message' => 'YoU aRe noT Am@in#12$32&^!@'
         ], 200); // user is not admin
+    }
+
+    public function reduce_bribe(Request $request)
+    {
+        $user = auth()->user(); // get user
+        $money = $user->money;
+        $bribe = $user->bribe;
+        $other_data = $user->other_data;
+
+        if($money == 0) return false; // no money, end it
+        else {
+            $bribe_rest = $bribe - $money; // decrease bribe
+
+            $bribeEnd = $bribe_rest >= 0 ? $bribe_rest : 0; // bribe is 0 minimum
+            $rest_money = $bribe_rest >= 0 ? 0 : -$bribe_rest; // check rest of money
+
+            // mark that the user has repaid the bribe
+            if ($bribeEnd === 0) {
+                $other = json_decode($other_data) ?? new \stdClass();
+                $other->repaid = true; // set repaid true to
+                $other_data = json_encode($other);
+            }
+
+            // update data in DB
+            auth()->user()->update([
+                'bribe' => $bribeEnd,
+                'money' => $rest_money,
+                'other_data' => $other_data
+            ]);
+
+
+
+            // return result
+            return response()->json([
+                'bribe' => $bribeEnd,
+                'money' => $rest_money
+            ]);
+        }
     }
 
     /**

@@ -47,7 +47,7 @@
                     </b-nav-item>
                 </div>
 
-                <div style="font-size: 1.1em" v-if="getIsFinal">
+                <div style="font-size: 1.1em" v-if="getIsFinal && !getRepaid">
                     <b-nav-item active-class="active" :to="{name: 'bribe'}">
                         <span>💰Взятки</span>
                     </b-nav-item>
@@ -66,7 +66,7 @@ import UserAvatar from "./auth/account/UserAvatar";
 export default {
     name      : "Aside",
     computed  : {
-        ...mapGetters(['getAuth', 'getUserWallets', 'getIsFinal']),
+        ...mapGetters(['getAuth', 'getUserWallets', 'getIsFinal', 'getRepaid']),
         ...mapState(['active_sideBar'])
     },
     components: {

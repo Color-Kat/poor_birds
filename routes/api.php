@@ -80,4 +80,7 @@ Route::group([
 
     /* user - change money balance */
     Route::post('change_money', 'AuthController@change_money');
+
+    /* user - bribe */
+    Route::get('reduce_bribe', 'AuthController@reduce_bribe');
 });
