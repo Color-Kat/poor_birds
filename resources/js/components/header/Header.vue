@@ -3,7 +3,7 @@
         <!--    NAVBAR 1    -->
         <b-navbar
             style="z-index: 1010" type="light" variant="light"
-            class="position-relative d-flex justify-content-between"
+            class="position-relative d-flex justify-content-between shadow-sm"
         >
             <div class="d-flex align-items-center">
                 <b-button v-if="getAuth" class="d-block d-md-none mr-2 p-1" variant="primary" @click="() => toggle_sideBar()">

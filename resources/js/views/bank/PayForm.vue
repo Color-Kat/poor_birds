@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-card class="pay-form">
+        <b-card class="pay-form shadow">
             <h3> Купить густинианы 💶</h3>
 
             <BalanceWidget currency="GTN" :count="+getUserWallets.GTN"/>

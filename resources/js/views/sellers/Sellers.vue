@@ -1,5 +1,5 @@
 <template>
-    <b-card>
+    <b-card class="shadow">
         <!--      NO MONEY      -->
         <b-modal id="modal-no-money-seller" header-bg-variant="danger" hide-footer>
             <p class="my-2">К сожалению у вас нет денег на открытие продавца</p>

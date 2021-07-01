@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="shadow">
         <b-modal id="modal-shovel-buy" header-bg-variant="success" hide-footer>
             <p class="my-4">Поздравляем! Вы купили новую лопату</p>
         </b-modal>

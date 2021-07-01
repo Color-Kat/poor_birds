@@ -13,6 +13,7 @@
                     type="email"
                     placeholder="Zacerish@bruh.abr"
                     required
+                    class="shadow"
                 ></b-form-input>
             </b-form-group>
 
@@ -23,11 +24,12 @@
                     type="password"
                     placeholder=""
                     required
+                    class="shadow"
                 ></b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="primary">Войти</b-button>
-            <b-button type="reset" variant="danger">Сбросить</b-button>
+            <b-button type="submit" variant="primary" class="shadow-sm">Войти</b-button>
+            <b-button type="reset" variant="danger" class="shadow-sm">Сбросить</b-button>
         </b-form>
     </div>
 </template>

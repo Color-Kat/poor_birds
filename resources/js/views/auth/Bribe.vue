@@ -1,5 +1,5 @@
 <template>
-    <b-card>
+    <b-card class="shadow">
         <h2>💰Взятки</h2>
         <h5>Платите Густову, чтобы выжить!</h5>
         <p>
@@ -12,10 +12,10 @@
         <div class="d-flex justify-content-center flex-wrap">
             <div class="col-sm-6 col-8">
 
-                <img class="w-100" src="http://www.procuror.spb.ru/gif/gustov.jpg" alt="ГУСТОВ">
+                <img class="w-100" src="/assets/gustov.jpg" alt="ГУСТОВ">
 
                 <div class="d-flex justify-content-center flex-wrap">
-                    <b-button class="w-100" variant="danger" @click="repayLoan">💰Отдать все свои деньги💰</b-button>
+                    <b-button class="w-100 shadow-sm" variant="danger" @click="repayLoan">💰Отдать все свои деньги💰</b-button>
                     <span class="alert-info p-2 m-2 w-auto text-center">Осталось: {{getBribe}}₽</span>
                 </div>
             </div>

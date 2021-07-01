@@ -4,6 +4,7 @@
 
         <b-card
             v-else
+            class="shadow"
         >
             <b-alert show v-if="!getBird" variant="warning">
                 <span>Такой птицы нет в продаже:(</span>

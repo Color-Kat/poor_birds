@@ -1,5 +1,5 @@
 <template>
-    <b-card>
+    <b-card class="shadow">
         <Loader v-if="loading" />
 
         <div v-else>

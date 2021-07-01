@@ -1,5 +1,5 @@
 <template>
-    <div id="bank">
+    <div id="bank" class="shadow">
         <!--        <Loader v-if="loading"/>-->
 
         <b-modal id="modal-how-invest" header-bg-variant="info" hide-footer>
@@ -116,7 +116,7 @@
 <!--            </b-alert>-->
 
             <!--      BUY GTN      -->
-            <b-alert show variant="success">
+            <b-alert show variant="success" class="shadow-sm">
                 <div id="buy-gtn">
                     <h5>💲Купить <b>густинаны (GTN):</b></h5>
                     <span>
@@ -128,13 +128,14 @@
             <!--      BUY GTN      -->
 
             <!--      EXCHANGE GTN      -->
-            <b-alert show variant="primary">
+            <b-alert show variant="primary" class="shadow">
                 <div id="exchange_currency" class="position-relative">
                     <div class="m-1 position-absolute w-100 text-right">
                         <b-badge
                             v-b-toggle.collapse-shovel
                             pill size="sm"
-                            variant="dark"
+                            class="shadow"
+                            variant="primary"
                             @click="()=>{$bvModal.show('modal-how-invest')}"
                         >?</b-badge>
                     </div>
@@ -145,7 +146,7 @@
                     <b-form-group label="Выберите тип сделки:" v-slot="{ ariaDescribedby }">
                         <b-form-radio-group
                             id="btn-radios-1"
-                            class="w-100"
+                            class="w-100 shadow"
                             button-variant="primary"
                             v-model="transactionType"
                             :options="transactionOptions"

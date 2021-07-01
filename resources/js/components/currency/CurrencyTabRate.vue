@@ -1,6 +1,6 @@
 <template>
     <h5>
-        <b-badge :variant="isIncrease ? 'success' : 'danger'" v-if="type == 'buy'">
+        <b-badge :variant="isIncrease ? 'success' : 'danger'" v-if="type == 'buy'" class="shadow">
             1 {{
                 currency + ' = ' +
                 rate + ' ' +
@@ -11,7 +11,7 @@
             {{isIncrease ? '▲' : '▼'}}
         </b-badge>
 
-        <b-badge :variant="!isIncrease ? 'success' : 'danger'" v-else>
+        <b-badge :variant="!isIncrease ? 'success' : 'danger'" v-else class="shadow">
             1 {{
                 exchange + ' ≈ ' +
                 ( currency != 'BTC' ? (1/rate).toFixed(2) : (1/rate).toFixed(8)) + ' ' +

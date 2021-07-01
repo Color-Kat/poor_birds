@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="shadow">
         <b-modal id="modal-contract-buy" header-bg-variant="success" hide-footer>
             <p class="my-4">Поздравляем! Вы заключили новый контракт.</p>
         </b-modal>

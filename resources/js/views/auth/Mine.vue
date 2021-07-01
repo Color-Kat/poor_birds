@@ -1,6 +1,6 @@
 <template>
     <div class="position-relative">
-        <b-card>
+        <b-card class="shadow">
             <div class="position-relative mb-5 pb-5" style="z-index: 12">
                 <!--      toggle tooltip      -->
                 <div class="m-1 position-absolute w-100 text-right">

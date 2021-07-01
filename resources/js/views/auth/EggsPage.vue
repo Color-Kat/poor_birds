@@ -1,5 +1,5 @@
 <template>
-    <b-card>
+    <b-card class="shadow">
         <!--    DEMAND WARNING!    -->
         <b-modal
             id="modal-eggs"
@@ -71,7 +71,7 @@
                 <div class="shovels-list" v-if="getUserShovels.length > 0">
                     <div
                         v-for="shovel of getUserShovels"
-                        class="shovel-item text-center d-flex justify-content-center"
+                        class="shovel-item text-center d-flex justify-content-center shadow-sm"
                         :class="{ active: !!+shovel.pivot.isActive }"
                         @click="(e)=>selectShovelHandler(shovel, e)"
                     >
@@ -97,6 +97,7 @@
                     variant="danger"
                     v-if="!getEggs.every(elem => +elem.fine == 0)"
                     @click="payOffFinesHandler"
+                    class="shadow"
                     v-b-tooltip="'Если сумма налогов и штрафов будет больше 300, то у вас не будет доступа к яйцам!'"
                 >
                     Погасить налоги
@@ -117,7 +118,7 @@
                 <!--        EGG        -->
                 <b-card
                     v-for="egg of getEggs"
-                    class="mb-2 w-100"
+                    class="mb-2 w-100 shadow"
                     tag="article"
                     :key="egg.id"
                     body-class="p-3"
@@ -139,7 +140,7 @@
                             <b-badge variant="dark" class="egg-litter">Помёт: {{ +egg.litter }}ед.</b-badge>
                             <br>
                             <b-button
-                                class="p-1"
+                                class="p-1 shadow-sm"
                                 variant="light"
                                 @click="(e)=>cleanHandler(egg, e)"
                                 :disabled="+egg.litter == 0"
@@ -178,7 +179,7 @@
                             <span>
                             <b-button
                                 variant="primary"
-                                class="mt-2"
+                                class="mt-2 shadow"
                                 @click="e=>{
                                     sellingEggs(egg, e);
                                 }"
@@ -217,6 +218,7 @@
                             </p>
                             <b-button
                                 variant="warning"
+                                class="shadow-lg"
                                 @click="brigadeHireHandler"
                             >Нанять за 20 густинианов</b-button>
                         </span>

@@ -55,7 +55,7 @@
 
         <Loader v-if="loading"/>
 
-        <b-card v-else>
+        <b-card v-else class="shadow">
             <!--      seller not found      -->
             <b-alert show v-if="!getSeller" variant="warning">
                 <span>Такого продавца не существует :(</span>

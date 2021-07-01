@@ -13,6 +13,7 @@
                     type="email"
                     placeholder="Zacerish@bruh.abr"
                     required
+                    class="shadow"
                 ></b-form-input>
             </b-form-group>
 
@@ -22,6 +23,7 @@
                     v-model="form.name"
                     placeholder="Zacerish"
                     required
+                    class="shadow"
                 ></b-form-input>
             </b-form-group>
 
@@ -31,6 +33,7 @@
                     type="password"
                     v-model="form.password"
                     required
+                    class="shadow"
                 ></b-form-input>
             </b-form-group>
 
@@ -40,10 +43,11 @@
                     type="password"
                     v-model="form.password_confirmation"
                     required
+                    class="shadow"
                 ></b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="primary">Зарегистрироваться</b-button>
+            <b-button type="submit" variant="primary" class="shadow-sm">Зарегистрироваться</b-button>
         </b-form>
     </div>
 </template>

@@ -26,12 +26,12 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
 
         <Loader v-if="loading"/>
 
-        <b-card v-else-if="getMyBirds.length == 0">
+        <b-card v-else-if="getMyBirds.length == 0" class="shadow">
             <span>Ферма пустует, вам нужно купить птиц, чтобы начать зарабатывать ;)</span>
             <b-button :to="{name: 'birds'}" variant="success" class="mt-2">Купить первую птицу</b-button>
         </b-card>
 
-        <b-card v-else>
+        <b-card v-else class="shadow">
             <div class="position-relative">
                 <!--        Toggle tooltip button        -->
                 <div class="m-1 position-absolute w-100 text-right">
@@ -52,7 +52,6 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
                 <h2 class="text-center">Склад ваших яиц</h2>
                 <span>
                     <NavWidget />
-
 
                     <!--         collapse tooltip (from localStorage)       -->
                     <b-collapse :visible="localStorage.getItem('tooltip-my-birds') == 'true'" id="collapse-shovel">
@@ -83,7 +82,7 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
                 v-for="(my_bird, index) of get_my_birds"
                 :key="my_bird.id"
                 body-class="p-1 d-flex justify-content-between"
-                class="mb-2"
+                class="mb-2 shadow"
             >
                 <div class="text-center w-100">
                     <div class="d-flex justify-content-between">
@@ -109,6 +108,7 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
                                     :title="!my_bird.cared ?
                                     `Нажмите, чтобы погладить птицу (Увеличивает плодоносность на ${my_bird.care}% в течение часа)`: false"
                                     @click="(e)=>caresHandler(my_bird, index, e)"
+                                    class="shadow-sm"
                                 >
                                     <b-icon style="pointer-events: none" icon="hand-index"></b-icon>
                                 </b-button>
@@ -119,6 +119,7 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
                             >
                                 <b-button
                                     variant="warning"
+                                    class="shadow-sm"
                                     pill
                                     v-b-tooltip.hover
                                     title="Сертификат птицы"

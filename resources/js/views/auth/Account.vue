@@ -8,14 +8,14 @@
         <!--    NOTIFICATION ERROR    -->
 
         <!--    NOT LOGGED IN    -->
-        <b-card v-if="!user" class="not-logged-in mt-5">
+        <b-card v-if="!user" class="not-logged-in mt-5 shadow">
             <h1>Войдите в свой аккаунт ;)</h1>
             <b-button variant="primary" :to="{name: 'login'}">Войти?</b-button>
         </b-card>
         <!--    END NOT LOGGED IN    -->
 
         <!--    PROFILE    -->
-        <b-card v-else>
+        <b-card v-else class="shadow">
             <b-list-group>
                 <UserAvatar :balance="true"/>
 

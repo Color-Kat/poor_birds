@@ -20,6 +20,7 @@
                     min="0"
                     :max="getUserWallets[exchange]"
                     v-model="currency_buy"
+                    class="shadow"
                 ></b-form-input>
             </b-input-group>
 
@@ -29,12 +30,13 @@
                     type="number"
                     disabled
                     :value="currency_buy_result"
+                    class="shadow-sm"
                 ></b-form-input>
             </b-input-group>
 
             <b-button
                 variant="primary"
-                class="mt-2 w-100"
+                class="mt-2 w-100 shadow"
                 @click="transactionHandler"
             >Купить
             </b-button>
@@ -48,6 +50,7 @@
                     min="0"
                     :max="getUserWallets[currency]"
                     v-model="currency_sell"
+                    class="shadow"
                 ></b-form-input>
             </b-input-group>
 
@@ -57,12 +60,13 @@
                     type="number"
                     disabled
                     :value="currency_sell_result"
+                    class="shadow-sm"
                 ></b-form-input>
             </b-input-group>
 
             <b-button
                 variant="primary"
-                class="mt-2 w-100"
+                class="mt-2 w-100 shadow"
                 @click="transactionHandler"
             >Продать
             </b-button>
