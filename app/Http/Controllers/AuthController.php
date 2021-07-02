@@ -524,7 +524,8 @@ class AuthController extends Controller
 
                 $user[$currency] = $user[$currency] - $amount;
                 $user[$exchange] = $user[$exchange] + $currencyCount;
-                $user->update();
+
+                return $user->update();
             } else {
                 return false; // not enough
             }
