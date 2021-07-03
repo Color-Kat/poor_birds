@@ -127,12 +127,12 @@ class AuthController extends Controller
 
     /**
      * Get the authenticated User.
-     *
+     *`
      * @return \Illuminate\Http\JsonResponse
      */
     public function user()
     {
-        // set notified = 0
+        // set notified = 0 to user can get push notifies
         auth()->user()->update(['notified' => 0]);
 
         return response()->json(auth()->user()->load(['my_sellers:id', 'my_shovels', 'my_contracts:id']));

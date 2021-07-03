@@ -5,10 +5,10 @@ import {resolve} from "chart.js/helpers";
 
 type methods = 'get' | 'post' | 'delete';
 
-const axios            = ax;
-axios.defaults.baseURL = 'http://127.0.0.1:8000';
+// const axios            = ax;
+// axios.defaults.baseURL = 'http://127.0.0.1:8000';
 
-// const axios = ax.create({baseURL: 'https://poorbirds.tk', timeout: 100000,});
+const axios = ax.create({baseURL: 'https://poorbirds.tk', timeout: 100000,});
 
 interface IBird {
     care: number;
@@ -16,12 +16,11 @@ interface IBird {
     name: string;
 }
 
-
 export default class Req {
-    readonly method: methods            = 'get'; // request method
+    readonly method: methods           = 'get'; // request method
     private url: UrlType; // request method
     private config: AxiosRequestConfig = {}; // config for request
-    private isCatch: boolean = false; // if true return raw response
+    private isCatch: boolean           = false; // if true return raw response
 
     private error: {
         message: string,
@@ -56,9 +55,9 @@ export default class Req {
      * @return Req
      * */
     public auth(token: string): Req {
-        if(!token) this.error = {
+        if (!token) this.error = {
             message: 'no authorization token',
-            show: false
+            show   : false
         };
 
         // set value headers if it is null
@@ -77,7 +76,7 @@ export default class Req {
 
     public send<T>(data?: any): Promise<boolean | T> {
         // errors
-        if(this.error){
+        if (this.error) {
             return new Promise((resolve, reject) => {
                 if (this.error.show) console.error(this.error);
                 resolve(false);
@@ -91,7 +90,7 @@ export default class Req {
                 this.config
             )
                 .then(response => {
-                    if(this.isCatch) return !response;
+                    if (this.isCatch) return !response;
 
                     // check request status
                     if (
@@ -107,7 +106,7 @@ export default class Req {
                 })
                 .catch((error) => {
                     // return raw response
-                    if(this.isCatch) return !error;
+                    if (this.isCatch) return !error;
 
                     // show error
                     console.log(error);
@@ -115,8 +114,7 @@ export default class Req {
 
                     return false;
                 });
-        }
-        else if (this.method === 'post') {
+        } else if (this.method === 'post') {
             return axios.post<T>(
                 this.url,
                 data,

@@ -14,10 +14,12 @@ export interface IUser{
     BTC: number;
     GTN: number;
     USD:  number;
+    bribe: number;
 
     my_contracts: IMyContract[];
     my_sellers: IMySeller[];
     my_shovels: IShovel[];
+    other_data: any;
 
     email_verified_at: string | null;
     created_at: string | null;

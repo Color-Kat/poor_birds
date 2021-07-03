@@ -80,7 +80,6 @@ class User extends Authenticatable implements JWTSubject
         $birds = [];
 
         foreach (User::with('my_birds')->get() as $user) {
-//            $birds[] = self::get_my_birds_with_certificate($user->my_birds()->with(['sellers'])->get());
             $birds[$user->id][] = self::get_my_birds_with_certificate($user->my_birds);
         }
 
