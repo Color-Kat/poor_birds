@@ -13,8 +13,11 @@ body {
 }
 
 // Then import Bootstrap an BootstrapVue SCSS files (order is important)
-@import 'node_modules/bootstrap/scss/bootstrap.scss';
-@import 'node_modules/bootstrap-vue/src/index.scss';
+//@import 'node_modules/bootstrap/scss/bootstrap.scss';
+//@import 'node_modules/bootstrap-vue/src/index.scss';
+@import "resources/sass/tailwind.scss";
+
+
 
 // for dropdown menu in header
 .navbar-nav .dropdown-menu{

@@ -1,18 +1,20 @@
 <template>
     <div>
         <Header></Header>
-
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Button
+        </button>
         <!--    LOADER    -->
         <Loader v-show="getIsLoading"/>
         <!--    LOADER    -->
 
         <!--    MODAL    -->
-        <b-modal
+        <t-modal
             id="modal-main" hide-header body-bg-variant="dark" hide-footer
             @hide="deleteModal"
         >
             <StoryModal :title="modalTitle" :content="modalText"/>
-        </b-modal>
+        </t-modal>
         <!--    MODAL    -->
 
         <main style="z-index: 10;">

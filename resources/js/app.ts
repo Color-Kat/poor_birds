@@ -4,7 +4,10 @@ import router from './router';
 import store from './store';
 
 /* bootstrap-vue */
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+// import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+/* tailwind-vue */
+import VueTailwind from 'vue-tailwind/dist/full'
+
 import './app.scss';
 
 /* nprogress - progress bar   */
@@ -50,8 +53,13 @@ window.addEventListener("load", () => {
 });
 
 /* Bootstrap */
-Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
+// Vue.use(BootstrapVue);
+// Vue.use(IconsPlugin);
+
+/* Tailwind */
+Vue.use(VueTailwind, {});
+
+
 
 Vue.component('app', require('./App.vue').default);
 

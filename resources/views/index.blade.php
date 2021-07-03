@@ -35,7 +35,6 @@
 
     <style>
         html, body {
-            background-color: #fff;
             color: #636b6f;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
@@ -45,7 +44,7 @@
         * {box-sizing: content-box;}
     </style>
 </head>
-<body>
+<body class="blue-200">
 <div id="app">
     <app></app>
 </div>
