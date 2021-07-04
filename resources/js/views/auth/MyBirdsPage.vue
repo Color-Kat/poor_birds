@@ -31,7 +31,7 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
             <b-button :to="{name: 'birds'}" variant="success" class="mt-2">Купить первую птицу</b-button>
         </b-card>
 
-        <b-card v-else class="shadow">
+        <b-card v-else class="shadow card-rounded">
             <div class="position-relative">
                 <!--        Toggle tooltip button        -->
                 <div class="m-1 position-absolute w-100 text-right">

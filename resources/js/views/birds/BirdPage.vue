@@ -41,12 +41,12 @@
                     :to="`/sellers/${seller.id}`"
                     :key="seller.id"
                     variant="primary"
-                    class="m-1"
+                    class="m-1 w-100 d-flex justify-content-between align-items-center text-right"
                 >
-                    <img height="30px" :src="`/storage/${seller.image}`" alt="">
-                    {{
-                        seller.name
-                    }}
+                    <img height="60px" :src="`/storage/${seller.image}`" alt="">
+                    <span class="h5">
+                        {{seller.name }}
+                    </span>
                 </b-button>
             </div>
         </b-card>

@@ -1,5 +1,5 @@
 <template>
-    <b-card class="shadow">
+    <b-card class="shadow card-rounded">
         <!--    DEMAND WARNING!    -->
         <b-modal
             id="modal-eggs"
@@ -100,7 +100,7 @@
                     variant="danger"
                     v-if="!getEggs.every(elem => +elem.fine == 0)"
                     @click="payOffFinesHandler"
-                    class="shadow rounded-pill px-4"
+                    class="shadow rounded-pill px-sm-4 px-2"
                     v-b-tooltip="'Если сумма налогов и штрафов будет больше 300, то у вас не будет доступа к яйцам!'"
                 >
                     <span style="font-weight: 1000 !important;">
@@ -136,8 +136,8 @@
                     >
                         <!--          name and clean          -->
                         <div
-                            style="font-size: 1.1em; width: max-content"
-                            class="d-flex align-items-center flex-wrap mr-3"
+                            style="font-size: 1.1em; width: max-content; align-content: space-between"
+                            class="d-flex flex-wrap mr-3"
                         >
                         <span class="d-flex justify-content-center">
                             <b>{{ egg.name }}</b>
@@ -213,7 +213,7 @@
                 <div class="d-lg-flex justify-content-between d-block">
                     <img
                         src="/assets/brigade.png"
-                        height="300px"
+                        style="max-height: 300px; max-width: 100%"
                         alt="бригада"
                     >
                     <span class="p-3">

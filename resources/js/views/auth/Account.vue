@@ -15,7 +15,7 @@
         <!--    END NOT LOGGED IN    -->
 
         <!--    PROFILE    -->
-        <b-card v-else class="shadow">
+        <b-card v-else class="shadow card-rounded">
             <b-list-group>
                 <UserAvatar :balance="true"/>
 

@@ -24,7 +24,15 @@ body {
 }
 
 .card h2, .card h4, .card h3  {
-    //font-family: Nunito !important;
+    font-family: Nunito !important;
+}
+
+.card-rounded {
+    @media screen and (max-width: 767px) {
+        & {
+            border-radius: 18px !important;
+        }
+    }
 }
 
 @import "./theme";

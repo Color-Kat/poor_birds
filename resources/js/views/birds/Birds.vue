@@ -1,5 +1,5 @@
 <template>
-    <b-card class="shadow">
+    <b-card class="shadow card-rounded">
         <Loader v-if="loading" />
 
             <div v-else>
@@ -16,12 +16,16 @@
                 <div class="mt-2 grid-cards-columns">
                     <b-card
                         v-for="bird of getBirds"
-                        class="mb-2 card-item"
+                        class="mb-2 card-item shadow"
                         :title="bird.name"
                         :img-src="`/storage/${bird.image}`"
                         :img-alt="bird.name"
                         img-top
                         tag="article"
+
+                        body-class="border-0"
+
+                        style="border-radius: 24px !important; padding: 8px"
 
                         @click="()=>redirect(bird.id)"
                         :key="bird.id"
@@ -30,8 +34,11 @@
                             {{ bird.description.slice(0, 100) }}
                             {{ bird.description.length > 100 ? '...' : '' }}
                             <hr>
-                            <b-badge variant="warning">
+                            <b-badge variant="success">
                                 Плодоносность: {{bird.fertility}} яиц/час
+                            </b-badge>
+                            <b-badge variant="warning">
+                                Цена яйца: {{bird.egg_price}}₽
                             </b-badge>
                             <b-badge variant="dark">
                                 Помёт: {{bird.litter}} ед/час
@@ -39,6 +46,7 @@
                             <b-badge variant="danger">
                                 Спрос: {{bird.demand}} яиц/час
                             </b-badge>
+
                             <h4>
                                 <b-badge variant="primary">
                                     Цена: {{bird.price}}₽
