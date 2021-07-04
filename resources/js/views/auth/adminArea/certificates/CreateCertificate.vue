@@ -105,7 +105,7 @@
                 ></b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="primary">
+            <b-button type="submit" variant="primary" class="w-100">
                 {{
                     Object.keys($route.query).length == 0 ?
                         'Зарегистрировать' :

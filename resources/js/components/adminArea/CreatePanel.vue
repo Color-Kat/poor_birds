@@ -1,6 +1,6 @@
 <template>
     <div class="createPanel m-3">
-        <b-button variant="primary" :to="route">
+        <b-button variant="primary" class="w-100" :to="route">
             {{message}}
         </b-button>
     </div>

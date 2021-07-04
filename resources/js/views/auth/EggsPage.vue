@@ -127,9 +127,10 @@
                     tag="article"
                     :key="egg.id"
                     body-class="p-3"
+
                     v-if="+egg.count > 0 || +egg.litter > 0"
 
-                    style="border-radius: 24px !important; padding: 12px"
+                    style="border-radius: 24px !important; padding: 12px;"
                 >
                     <b-card-text
                         class="d-flex justify-content-between"

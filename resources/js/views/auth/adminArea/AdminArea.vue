@@ -1,15 +1,21 @@
 <template>
     <div id="admin-area">
-        <b-card no-body>
+        <b-card no-body class="shadow card-rounded">
             <h3 class="text-center m-3">Админ панель</h3>
 
             <div id="admin-panel" class="p-2">
-                <span>
+                <b-card>
                     <b>Накрутить денег: </b>
                     <br>
-                    <input type="number" min="0" v-model="changeMoneyCount">
-                    <b-button @click="()=>changeMoney(changeMoneyCount)" variant="primary">Применить</b-button>
-                </span>
+                    <b-input type="number" min="0" v-model="changeMoneyCount"/>
+                    <b-button
+                        @click="()=>changeMoney(changeMoneyCount)"
+                        variant="primary"
+                        class="mt-2 w-100"
+                    >
+                        Применить
+                    </b-button>
+                </b-card>
 
                 <hr>
             </div>

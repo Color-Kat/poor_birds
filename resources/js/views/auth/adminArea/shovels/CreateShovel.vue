@@ -77,7 +77,7 @@
                 <b-form-input id="donate_price" v-model="form.donate_price" type="number" min="0"></b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="primary">Создать</b-button>
+            <b-button type="submit" variant="primary" class="w-100">Создать</b-button>
             <!--            <b-button type="reset" variant="danger">Сбросить</b-button>-->
         </b-form>
 

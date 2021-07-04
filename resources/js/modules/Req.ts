@@ -4,10 +4,10 @@ import ax, {AxiosRequestConfig, AxiosResponse} from "axios";
 
 type methods = 'get' | 'post' | 'delete';
 
-const axios            = ax;
-axios.defaults.baseURL = 'http://127.0.0.1:8000';
+// const axios            = ax;
+// axios.defaults.baseURL = 'http://127.0.0.1:8000';
 
-// const axios = ax.create({baseURL: 'https://poorbirds.tk', timeout: 100000,});
+const axios = ax.create({baseURL: 'https://poorbirds.tk', timeout: 100000,});
 
 interface IBird {
     care: number;
