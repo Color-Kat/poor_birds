@@ -1,5 +1,5 @@
 <template>
-    <b-card class="shadow">
+    <b-card class="shadow card-rounded">
         <Loader v-if="loading"/>
 
         <div v-else class="position-relative">
@@ -32,30 +32,34 @@
             <div class="mt-2 grid-cards-columns">
                 <b-card
                     v-for="shovel of getShovels"
-                    class="mb-2 card-item"
+                    class="mb-2 card-item shadow overflow-hidden"
                     :title="shovel.name"
                     :img-src="`/storage/${shovel.image}`"
                     :img-alt="shovel.name"
                     img-top
                     tag="article"
-                    :bg-variant="shovel.price ? 'light' : 'warning'"
+
+                    :body-bg-variant="shovel.price ? 'light' : 'warning'"
+
+                    body-class="border-0 p-5"
+                    style="border-radius: 20px !important;"
 
                     @click="()=>redirect(shovel.id)"
                     :key="shovel.id"
                 >
-                    <b-card-text class="d-flex justify-content-between flex-wrap">
-                        <b-badge variant="success" class="mb-1">Эффективность: {{ shovel.efficiency }}ед.</b-badge>
+                    <b-card-text class="d-flex justify-content-between flex-wrap px-2 pb-1">
+                        <b-badge variant="success" class="mb-1 w-100">Эффективность: {{ shovel.efficiency }}ед
+                            .</b-badge>
                         <b-badge
                             v-if="shovel.price ? true : false" variant="primary"
-                            class="d-flex align-items-center justify-content-center"
+                            class="d-flex align-items-center justify-content-center w-100"
                         >Цена: {{
                                 shovel
                                     .price
                             }}₽
                         </b-badge>
-                        <b-badge v-else variant="primary" class="d-flex align-items-center">Купить за донат:
+                        <b-badge v-else variant="primary" class="d-flex align-items-center justify-content-center w-100">Купить за донат:
                             {{ shovel.donate_price }} Руб
-                            .
                         </b-badge>
                     </b-card-text>
 

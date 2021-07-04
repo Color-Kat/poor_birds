@@ -24,7 +24,6 @@
                         tag="article"
 
                         body-class="border-0"
-
                         style="border-radius: 24px !important; padding: 8px"
 
                         @click="()=>redirect(bird.id)"

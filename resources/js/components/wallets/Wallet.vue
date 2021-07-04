@@ -2,7 +2,7 @@
     <b-card
         :title="currency"
         tag="article"
-        class="wallet shadow"
+        class="wallet shadow rounded-lg"
     >
         <b-card-text>
             На счету {{ count }} {{currency}} <br>

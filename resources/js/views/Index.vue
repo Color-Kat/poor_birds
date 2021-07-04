@@ -5,6 +5,7 @@
             v-if="!getAuth"
             title="Бедные птички😭"
             class="mb-2 text-center"
+            style="border-radius: 24px; padding: 8px;"
         >
 
             <b-card-text class="text-left">
@@ -29,14 +30,14 @@
                 В игру все еще добавляется новый контент.
             </b-card-text>
             <hr>
-            <b-button class="text-center" :to="{name: 'birds'}" variant="primary">Купить пташку!</b-button>
+            <b-button class="text-center px-3" :to="{name: 'birds'}" variant="primary">Купить птицу!</b-button>
         </b-card>
         <!--    Hello page   -->
 
         <b-card
             v-else
             title="Бедные птички😭"
-            class="mb-2 text-center"
+            class="mb-2 text-center card-rounded"
         >
 
             <b-card-text class="text-left">

@@ -22,15 +22,15 @@
                 <!--                <b-list-group-item class="d-flex align-items-center">-->
                 <!--                </b-list-group-item>-->
 
-                <b-alert show variant="info" class="d-flex justify-content-between">
-                    <span>Включите уведомления, чтобы получать сообщения о том, что птицы снесли яйца</span>
-                    <b-button
-                        size="sm"
-                        variant="light"
-                        @click="enableNotifications"
-                    >Включить
-                    </b-button>
-                </b-alert>
+<!--                <b-alert show variant="info" class="d-flex justify-content-between">-->
+<!--                    <span>Включите уведомления, чтобы получать сообщения о том, что птицы снесли яйца</span>-->
+<!--                    <b-button-->
+<!--                        size="sm"-->
+<!--                        variant="light"-->
+<!--                        @click="enableNotifications"-->
+<!--                    >Включить-->
+<!--                    </b-button>-->
+<!--                </b-alert>-->
 
                 <AccountField v-for="field in getUserData" :field="field" :key="field.name"/>
 

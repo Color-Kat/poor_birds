@@ -1,5 +1,5 @@
 <template>
-    <b-card class="shadow">
+    <b-card class="shadow card-rounded">
         <Loader v-if="loading"/>
 
         <div v-else class="position-relative">
@@ -39,7 +39,7 @@
             <div class="mt-2 grid-cards-columns ">
                 <b-card
                     v-for="contract of getContracts"
-                    class="mb-2 card-item"
+                    class="mb-2 card-item shadow overflow-hidden"
                     :title="contract.name"
                     :img-src="`/storage/contracts/${contract.image}`"
                     :img-alt="contract.name"
@@ -50,15 +50,26 @@
                     :border-variant="+contract.isDonate ? 'danger' : ''"
                     :text-variant="+contract.isDonate ? 'light' : ''"
 
+
+                    body-class="border-0 p-5"
+                    style="border-radius: 20px !important;"
+
                     @click="()=>redirect(contract.id)"
                     :key="contract.id"
                 >
-                    <b-card-text>
+                    <b-card-text class="px-2 pb-1">
 <!--                        <b-badge variant="success">Бонус к плодовитости {{ certificate.fertility_bonus }}%</b-badge>-->
 <!--                        <b-badge variant="warning">Бонус к цене {{ certificate.fertility_bonus }}%</b-badge>-->
-                        <h4 class="text-right">
-                            <b-badge v-if="!(+contract.isDonate)" variant="primary">Цена {{ contract.price }}₽</b-badge>
-                            <b-badge v-else variant="warning">купить за донат {{ contract.price }} руб</b-badge>
+                        <h4 class="text-center w-100">
+                            <b-badge
+                                class="w-100"
+                                     v-if="!(+contract.isDonate)"
+                                variant="primary"
+                            >Цена {{
+                                    contract.price
+                                }}₽
+                            </b-badge>
+                            <b-badge class="w-100" v-else variant="warning">купить за донат {{ contract.price }} руб</b-badge>
                         </h4>
                     </b-card-text>
 

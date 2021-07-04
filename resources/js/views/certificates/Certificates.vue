@@ -1,5 +1,5 @@
 <template>
-    <b-card class="shadow">
+    <b-card class="shadow card-rounded">
         <Loader v-if="loading" />
 
         <div v-else>
@@ -34,11 +34,14 @@
             <div class="mt-2 grid-cards-columns grid-cards-columns-small">
                 <b-card
                     v-for="certificate of getCertificates"
-                    class="mb-2 card-item"
+                    class="mb-2 card-item shadow"
                     :title="certificate.name"
                     :img-src="`/storage/certificates/${certificate.grade}.jpg`"
                     :img-alt="certificate.name"
                     tag="article"
+
+                    body-class="border-0"
+                    style="border-radius: 24px !important; padding: 8px"
 
                     @click="()=>redirect(certificate.id)"
                     :key="certificate.id"

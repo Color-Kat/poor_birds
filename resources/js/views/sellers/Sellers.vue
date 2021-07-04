@@ -1,5 +1,5 @@
 <template>
-    <b-card class="shadow">
+    <b-card class="shadow card-rounded">
         <!--      NO MONEY      -->
         <b-modal id="modal-no-money-seller" header-bg-variant="danger" hide-footer>
             <p class="my-2">К сожалению у вас нет денег на открытие продавца</p>
@@ -48,7 +48,8 @@
                 <div
                     v-for="seller of getSellers"
                     :key="seller.id"
-                    class="mb-2 card-item position-relative"
+                    class="mb-2 card-item position-relative shadow overflow-hidden"
+                    style="border-radius: 24px !important; padding: 8px"
                 >
                     <b-card
                         :title="seller.name"
@@ -57,6 +58,8 @@
                         img-top
                         tag="article"
                         @click="()=>redirect(seller.id)"
+
+                        body-class="border-0"
                     >
                         <b-card-text>
 

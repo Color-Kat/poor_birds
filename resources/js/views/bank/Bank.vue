@@ -1,5 +1,5 @@
 <template>
-    <div id="bank" class="shadow">
+    <div id="bank">
         <!--        <Loader v-if="loading"/>-->
 
         <b-modal id="modal-how-invest" header-bg-variant="info" hide-footer>
@@ -52,7 +52,7 @@
             </span>
         </b-modal>
 
-        <b-card>
+        <b-card class="shadow card-rounded">
             <h2>🏦Банк</h2>
             <p>
                 Это главный банк Густограда. В нём вы можете купить
@@ -69,7 +69,7 @@
             <hr>
 
             <!--     WALLETS     -->
-            <b-alert show variant="secondary">
+            <b-alert show variant="secondary" class="shadow" style="border-radius: 12px;">
                 <div id="wallets">
                     <h5>👛Ваши счета</h5>
 
@@ -116,7 +116,7 @@
 <!--            </b-alert>-->
 
             <!--      BUY GTN      -->
-            <b-alert show variant="success" class="shadow-sm">
+            <b-alert show variant="success" class="shadow-sm" style="border-radius: 12px;">
                 <div id="buy-gtn">
                     <h5>💲Купить <b>густинаны (GTN):</b></h5>
                     <span>
@@ -128,7 +128,7 @@
             <!--      BUY GTN      -->
 
             <!--      EXCHANGE GTN      -->
-            <b-alert show variant="primary" class="shadow">
+            <b-alert show variant="primary" class="shadow" style="border-radius: 12px;">
                 <div id="exchange_currency" class="position-relative">
                     <div class="m-1 position-absolute w-100 text-right">
                         <b-badge

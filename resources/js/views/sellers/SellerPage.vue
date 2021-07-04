@@ -80,7 +80,7 @@
 
                 <b-button
                     v-if="getSeller.certificate_id"
-                    class="mt-2"
+                    class="mt-2 w-100"
                     variant="warning"
                     :to="`/certificates/${getSeller.certificate_id}`"
                 >
@@ -105,7 +105,7 @@
                 <b-button
                     variant="primary"
                     @click="() => {openThisSeller(getSeller)}"
-                    size="sm"
+                    class="w-100"
                 >
                     Заключить договор за <b>{{ getSeller.price[1] }}</b>
                 </b-button>

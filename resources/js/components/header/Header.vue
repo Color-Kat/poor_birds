@@ -43,8 +43,11 @@
                 >
                     Админ панель
                 </b-nav-item>
+
                 <b-nav-item class="mr-2" v-if="!auth" :to="{name: 'login'}" active-class="active">
-                    Войти
+                   <span class="bg-primary text-white rounded-lg p-2">
+                       Войти
+                   </span>
                 </b-nav-item>
 
                 <b-nav-item-dropdown v-else class="mr-2" style="z-index: 10002 !important">

@@ -1,6 +1,6 @@
 <template>
     <div class="position-relative">
-        <b-card class="shadow">
+        <b-card class="shadow card-rounded overflow-hidden">
             <div class="position-relative mb-5 pb-5" style="z-index: 12">
                 <!--      toggle tooltip      -->
                 <div class="m-1 position-absolute w-100 text-right">
@@ -58,15 +58,15 @@
                 </div>
                 <!--    litter    -->
             </div>
-        </b-card>
 
-        <!--      SHIT      -->
-        <div class="w-100 h-100 position-absolute" style="top: 0; z-index: 10">
-            <img src="/assets/shit_top.png" alt="дерьмо" class="w-100 position-absolute" style="top: 0">
-            <!--            <img src="/assets/shit_left.png" alt="дерьмо" class="w-100 position-absolute" style="top: 50%">-->
-            <img src="/assets/shit_bottom.png" alt="дерьмо" class="w-100 position-absolute" style="bottom: 0">
-        </div>
-        <!--      SHIT      -->
+            <!--      SHIT      -->
+            <div class="w-100 h-100 position-absolute" style="top: 0; z-index: 10">
+                <img src="/assets/shit_top.png" alt="дерьмо" class="w-100 position-absolute" style="top: 0">
+                <!--            <img src="/assets/shit_left.png" alt="дерьмо" class="w-100 position-absolute" style="top: 50%">-->
+                <img src="/assets/shit_bottom.png" alt="дерьмо" class="w-100 position-absolute" style="bottom: 0">
+            </div>
+            <!--      SHIT      -->
+        </b-card>
     </div>
 </template>
 

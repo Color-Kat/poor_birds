@@ -12,7 +12,7 @@
 
         <Loader v-if="loading" />
 
-        <b-card v-else class="shadow">
+        <b-card v-else class="shadow card-rounded">
             <b-alert show v-if="!getCertificate" variant="warning">
                 <span>Такой сертификат нельзя получить:(</span>
                 <b-button :to="{name: 'certificates'}" size="sm" class="mt-2" variant="danger">
@@ -53,13 +53,15 @@
                 <b-dropdown
                     id="dropdown-select-bird"
                     text="Купить для"
-                    class="mt-3"
+                    class="mt-3 w-100"
+                    size="lg"
                     variant="primary"
                     v-b-tooltip.hover
                     title="Сертификат при покупке сертификата старый удаляется"
                 >
                     <b-dropdown-item
                         v-for="myBird of getMyBirds"
+                        class="border-0"
                         :key="myBird.id"
                         @click="()=>buyCertificateHandler(myBird, getCertificate)"
                     >{{ myBird.name }} x {{ myBird.count }}</b-dropdown-item>

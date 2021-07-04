@@ -1,5 +1,5 @@
 <template>
-    <div class="shadow">
+    <div>
         <b-modal id="modal-contract-buy" header-bg-variant="success" hide-footer>
             <p class="my-4">Поздравляем! Вы заключили новый контракт.</p>
         </b-modal>
@@ -14,7 +14,7 @@
 
         <Loader v-if="loading"/>
 
-        <b-card v-else>
+        <b-card v-else class="card-rounded shadow">
             <!--     contract not found       -->
             <b-alert show v-if="!getContract" variant="warning">
                 <span>Вы не можете заключить такой контракт:(</span>
@@ -35,7 +35,7 @@
                     <!--        BUY BUTTON        -->
                     <b-button
                         v-if="!getContract.isDonate"
-                        class="mt-3"
+                        class="mt-3 w-100"
                         variant="primary"
                         @click="(e)=>{buy(getContract, e);}"
                     >
@@ -45,7 +45,7 @@
                     <!--        DONAT BUTTON        -->
                     <b-button
                         v-else
-                        class="mt-3"
+                        class="mt-3 w-100"
                         variant="warning"
                         @click="(e)=>{buy(getContract, e);}"
                     >

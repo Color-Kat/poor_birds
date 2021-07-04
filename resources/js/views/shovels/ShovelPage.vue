@@ -1,5 +1,5 @@
 <template>
-    <div class="shadow">
+    <div>
         <b-modal id="modal-shovel-buy" header-bg-variant="success" hide-footer>
             <p class="my-4">Поздравляем! Вы купили новую лопату</p>
         </b-modal>
@@ -14,7 +14,7 @@
 
         <Loader v-if="loading" />
 
-        <b-card v-else>
+        <b-card v-else class="card-rounded shadow">
             <b-alert show v-if="!getShovel" variant="warning">
                 <span>Такой лопаты нет в продаже :(</span>
                 <b-button :to="{name: 'shovels'}" size="sm" class="mt-2" variant="danger">
@@ -34,14 +34,14 @@
                 <div v-if="getUserShovelsIds.indexOf(getShovel.id) == -1">
                     <b-button
                         v-if="!getShovel.isDonate"
-                        class="mt-3"
+                        class="mt-3 w-100"
                         variant="primary"
                         @click="(e)=>{buy(getShovel, e);}"
                     >
                         Купить
                     </b-button>
                     <b-button
-                        v-else class="mt-3"
+                        v-else class="mt-3 w-100"
                         variant="warning"
                         @click="(e)=>{buy(getShovel, e);}"
                     >Купить за густинианы</b-button>

@@ -28,8 +28,14 @@
                 ></b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="primary" class="shadow-sm">Войти</b-button>
-            <b-button type="reset" variant="danger" class="shadow-sm">Сбросить</b-button>
+            <div class="row">
+                <div class="col-sm-6 col-lg-12">
+                    <b-button type="submit" variant="primary" class="shadow-sm col-12 mb-2">Войти</b-button>
+                </div>
+                <div class="col-sm-6 col-lg-12">
+                    <b-button type="reset" variant="danger" class="shadow-sm col-12">Сбросить</b-button>
+                </div>
+            </div>
         </b-form>
     </div>
 </template>
