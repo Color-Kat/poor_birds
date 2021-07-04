@@ -70,14 +70,12 @@
         <!--    NAVBAR 2    -->
         <b-navbar class="position-relative nav justify-content-center" style="z-index: 100">
             <b-navbar-brand to="/" class="d-flex d-sm-none align-items-center position-relative">
-<!--                src="https://placekitten.com/g/30/30"-->
 <!--                <img-->
 <!--                    class="d-inline-block align-top"-->
 <!--                    src="/logo.png"-->
 <!--                    height="40px"-->
 <!--                    alt="logo"-->
 <!--                >-->
-<!--                -->
 
                 <div
                     class="rounded-lg d-flex justify-content-center align-items-center mr-2"

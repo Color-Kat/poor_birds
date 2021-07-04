@@ -13,15 +13,18 @@
 <!--                alt="logo"-->
 <!--            >-->
 <!--        </div>-->
-        <div class="rounded-lg d-flex justify-content-center align-items-center mr-2" style="background: #fff; width: 42px; height:
-        42px;">
+        <div class="d-none d-md-inline-block align-top m-0">
+        <div
+            class="rounded-lg d-flex justify-content-center align-items-center mr-2 "
+            style="background: #fff; width: 42px; height: 42px;">
             <img
-                class="d-none d-md-inline-block align-top m-0"
+
                 src="/logo.png"
                 height="35px"
                 width="35px"
                 alt="logo"
             >
+        </div>
         </div>
         <span class="d-none d-sm-block" style="font-family: Montserrat;">Бедные птички</span>
     </b-navbar-brand>
