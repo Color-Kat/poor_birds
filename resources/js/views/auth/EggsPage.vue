@@ -26,7 +26,7 @@
         <!--    BRIGADE    -->
 
         <!--    LOADER    -->
-        <Loader v-if="loading" />
+        <Loader v-if="loading"/>
 
         <div class="position-relative">
             <!--      tooltip toggle       -->
@@ -42,7 +42,8 @@
                                 !( (localStorage.getItem('tooltip-eggs') || 'false') == 'true' )
                             )
                         }"
-                >?</b-badge>
+                >?
+                </b-badge>
             </div>
 
             <h2 class="text-center">Склад ваших яиц</h2>
@@ -63,7 +64,7 @@
             <hr>
 
             <p>
-                <NavWidget />
+                <NavWidget/>
             </p>
             <hr>
             <div>
@@ -75,8 +76,10 @@
                         :class="{ active: !!+shovel.pivot.isActive }"
                         @click="(e)=>selectShovelHandler(shovel, e)"
                     >
-                        <img :src="`/storage/${shovel.image}`" :alt="shovel.name" style="position:absolute;
-                        max-width: 90%; max-height: 90%">
+                        <img
+                            :src="`/storage/${shovel.image}`" :alt="shovel.name" style="position:absolute;
+                        max-width: 90%; max-height: 90%"
+                        >
                         <div class="d-flex justify-content-between">
                             <!--                        <span>{{ shovel.name }}</span>-->
                             <b-badge variant="success">{{ shovel.efficiency }}ед.</b-badge>
@@ -90,18 +93,20 @@
                 </div>
             </div>
             <hr>
-            <h2 class="d-flex justify-content-between">
+            <h2 class="d-flex justify-content-between mb-3">
                 <span>Склад:</span>
                 <!--       count all fines         -->
                 <b-button
                     variant="danger"
                     v-if="!getEggs.every(elem => +elem.fine == 0)"
                     @click="payOffFinesHandler"
-                    class="shadow"
+                    class="shadow rounded-pill px-4"
                     v-b-tooltip="'Если сумма налогов и штрафов будет больше 300, то у вас не будет доступа к яйцам!'"
                 >
-                    Погасить налоги
-                    {{ getFines }} ₽
+                    <span style="font-weight: 1000 !important;">
+                        Погасить налоги
+                        {{ getFines }} ₽
+                    </span>
                 </b-button>
             </h2>
 
@@ -123,6 +128,8 @@
                     :key="egg.id"
                     body-class="p-3"
                     v-if="+egg.count > 0 || +egg.litter > 0"
+
+                    style="border-radius: 24px !important; padding: 12px"
                 >
                     <b-card-text
                         class="d-flex justify-content-between"
@@ -186,7 +193,8 @@
                                 :disabled="!!+egg.collected || +egg.count == 0"
                             >
                                 Продать {{ Math.floor(+egg.demand < +egg.count ? +egg.demand : +egg.count) }}🥚
-                                за {{ ((+egg.demand < +egg.count ? +egg.demand : +egg.count) * +egg.price).toFixed(2)
+                                за {{
+                                    ((+egg.demand < +egg.count ? +egg.demand : +egg.count) * +egg.price).toFixed(2)
                                 }}&#8381;
                             </b-button>
                         </span>
@@ -218,7 +226,7 @@
                             </p>
                             <b-button
                                 variant="warning"
-                                class="shadow-lg"
+                                class="shadow-lg btn-lg"
                                 @click="brigadeHireHandler"
                             >Нанять за 20 густинианов</b-button>
                         </span>
@@ -235,15 +243,16 @@ import Loader from "../../components/Loader";
 import NavWidget from "../../components/navigation/NavWidget";
 
 export default {
-    name    : "EggsPage",
+    name      : "EggsPage",
     components: {
         NavWidget,
-        Loader},
-    data    : () => ({
-        fines: null,
+        Loader
+    },
+    data      : () => ({
+        fines  : null,
         loading: true
     }),
-    methods : {
+    methods   : {
         ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel', 'payOffFines', 'brigadeHire', 'fetchUser']),
         /** sell eggs request, then update data*/
         async sellingEggs(egg, event) {
@@ -253,9 +262,9 @@ export default {
                 egg.count             = eggs_count; // update number of eggs
                 event.target.disabled = true; // disable button to ban selling eggs
 
-                let money_song = new Audio();
-                money_song.volume=0.5;
-                money_song.src = '/assets/sounds/money.mp3';
+                let money_song    = new Audio();
+                money_song.volume = 0.5;
+                money_song.src    = '/assets/sounds/money.mp3';
                 money_song.play()
             } else {
                 // show modal
@@ -303,7 +312,7 @@ export default {
             let userBalance = this.getUserWallets.GTN; // get GTN balance
 
             // the brigade costs 20 gtn
-            if(userBalance < 20) {
+            if (userBalance < 20) {
                 this.$bvModal.show('modal-brigade-no-money');
                 return;
             }
@@ -312,9 +321,9 @@ export default {
 
             if (result) {
                 // cleaning song
-                let cleaning_song = new Audio();
-                cleaning_song.volume=0.5;
-                cleaning_song.src = '/assets/sounds/cleaning.mp3';
+                let cleaning_song    = new Audio();
+                cleaning_song.volume = 0.5;
+                cleaning_song.src    = '/assets/sounds/cleaning.mp3';
                 cleaning_song.play();
 
                 this.fetchUser(); // update user currencies
@@ -328,9 +337,9 @@ export default {
             }
         }
     },
-    computed: {
+    computed  : {
         ...mapGetters(['getEggs', 'getUserShovels', 'getUserWallets']),
-        Math: () => Math,
+        Math   : () => Math,
         console: () => console,
         // count fines from eggs
         getFines() {
@@ -345,7 +354,7 @@ export default {
             }
             return fines.toFixed(2);
         },
-        localStorage: ()=>localStorage // for toggle tooltip
+        localStorage: () => localStorage // for toggle tooltip
     },
     async mounted() {
         await this.fetchUserEggs();

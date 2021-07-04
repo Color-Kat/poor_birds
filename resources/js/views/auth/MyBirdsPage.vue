@@ -49,7 +49,7 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
                     >?</b-badge>
                 </div>
 
-                <h2 class="text-center">Склад ваших яиц</h2>
+                <h2 class="text-center">Ваши птицы</h2>
                 <span>
                     <NavWidget />
 
@@ -83,13 +83,14 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
                 :key="my_bird.id"
                 body-class="p-1 d-flex justify-content-between"
                 class="mb-2 shadow"
+                style="border-radius: 24px !important; padding: 12px"
             >
                 <div class="text-center w-100">
                     <div class="d-flex justify-content-between">
                         <img :src="`/storage/${my_bird.image}`" alt="" style="max-width: 90px; max-height: 90px;">
                         <div class="w-100">
                             <span><b>{{ my_bird.name }} x{{ my_bird.count }}</b></span><br>
-                            <span class="text-center pl-2 d-flex">
+                            <span class="text-left pl-2 d-flex">
                                 {{ my_bird.description.slice(0, 100) }}
                                 {{ my_bird.description.length > 100 ? '...' : '' }}
                             </span>

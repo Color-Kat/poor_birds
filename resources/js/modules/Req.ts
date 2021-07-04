@@ -1,14 +1,13 @@
 import {merge} from 'lodash';
 import {UrlType} from "./types/url";
 import ax, {AxiosRequestConfig, AxiosResponse} from "axios";
-import {resolve} from "chart.js/helpers";
 
 type methods = 'get' | 'post' | 'delete';
 
-// const axios            = ax;
-// axios.defaults.baseURL = 'http://127.0.0.1:8000';
+const axios            = ax;
+axios.defaults.baseURL = 'http://127.0.0.1:8000';
 
-const axios = ax.create({baseURL: 'https://poorbirds.tk', timeout: 100000,});
+// const axios = ax.create({baseURL: 'https://poorbirds.tk', timeout: 100000,});
 
 interface IBird {
     care: number;

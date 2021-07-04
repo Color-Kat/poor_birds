@@ -3,11 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Бедные птички - проект, в котором вы с соткой в руках решаете открыть свою
-    ферму яиц. Вы покупаете птиц, они несут вам яйца, вы их продаете. Вроде всё просто!">
+    <meta name="description" content="Бедные птички - экономическая игра с сюжетом и интересной механикой,
+ в которой нужно покупать птиц и зарабатывать, продавая их яйца. В игре есть очень много всего:
+начиная от контрактов с людьми и заканчивая игрой на реальном курсе биткойна!">
     <meta name="theme-color" content="#ffffff" />
-    <meta name="apple-mobile-web-app-title" content="Poor birds">
-    <meta name="application-name" content="Poor birds">
+    <meta name="apple-mobile-web-app-title" content="Бедные птички">
+    <meta name="application-name" content="Бедные птички">
 {{--    <meta name="msapplication-TileColor" content="#464646">--}}
     <meta name="theme-color" content="#ffffff">
     <base href="/">
@@ -35,7 +36,6 @@
 
     <style>
         html, body {
-            color: #636b6f;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
             height: 100vh;

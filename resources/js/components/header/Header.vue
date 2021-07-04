@@ -2,13 +2,13 @@
     <header class="header mb-2" style="z-index: 100">
         <!--    NAVBAR 1    -->
         <b-navbar
-            style="z-index: 1010" type="light" variant="light"
+            style="z-index: 1010; color: #F9FAFB" type="light" variant="light"
             class="position-relative d-flex justify-content-between shadow-sm"
         >
             <div class="d-flex align-items-center">
                 <b-button
                     v-if="getAuth"
-                    class="d-block d-md-none mr-2 p-1"
+                    class="d-block d-md-none mr-2 p-1 color-red-700"
                     variant="primary"
                     @click="() => toggle_sideBar()"
                 >
@@ -71,13 +71,27 @@
         <b-navbar class="position-relative nav justify-content-center" style="z-index: 100">
             <b-navbar-brand to="/" class="d-flex d-sm-none align-items-center position-relative">
 <!--                src="https://placekitten.com/g/30/30"-->
-                <img
-                    class="d-inline-block align-top"
-                    src="/logo.png"
-                    height="40px"
-                    alt="Бедные птички"
+<!--                <img-->
+<!--                    class="d-inline-block align-top"-->
+<!--                    src="/logo.png"-->
+<!--                    height="40px"-->
+<!--                    alt="logo"-->
+<!--                >-->
+<!--                -->
+
+                <div
+                    class="rounded-lg d-flex justify-content-center align-items-center mr-2"
+                    style="background: #fff; width: 42px; height: 42px;"
                 >
-                <span>Бедные птички</span>
+                    <img
+                        class="d-inline-block align-top"
+                        src="/logo.png"
+                        height="35px"
+                        width="35px"
+                        alt="logo"
+                    >
+                </div>
+                <span style="font-family: Montserrat">Бедные птички</span>
             </b-navbar-brand>
         </b-navbar>
         <!--    NAVBAR 2    -->

@@ -1,6 +1,6 @@
 <template>
     <aside v-if="getAuth" :class="{ active: active_sideBar }">
-        <t-card>
+        <b-card class="rounded-bottom mr-1">
             <b-navbar-nav class="nav-pills red">
 
                 <b-nav-item to="/account" class="border-bottom">
@@ -54,7 +54,7 @@
                 </div>
 
             </b-navbar-nav>
-        </t-card>
+        </b-card>
     </aside>
 
 </template>

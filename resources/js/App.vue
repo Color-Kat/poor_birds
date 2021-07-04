@@ -1,20 +1,19 @@
 <template>
     <div>
         <Header></Header>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Button
-        </button>
         <!--    LOADER    -->
         <Loader v-show="getIsLoading"/>
         <!--    LOADER    -->
 
         <!--    MODAL    -->
-        <t-modal
-            id="modal-main" hide-header body-bg-variant="dark" hide-footer
+        <b-modal
+            id="modal-main"
+            hide-header body-bg-variant="dark" hide-footer
+            v-model="isModalShow"
             @hide="deleteModal"
         >
             <StoryModal :title="modalTitle" :content="modalText"/>
-        </t-modal>
+        </b-modal>
         <!--    MODAL    -->
 
         <main style="z-index: 10;">
@@ -72,6 +71,8 @@ export default {
     // computed: mapGetters(['getAuth', 'getUser']),
     async mounted() {
         await this.init();
+
+
 
         // this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
         //     console.log('Modal is about to be shown', bvEvent, modalId);

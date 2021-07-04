@@ -3,11 +3,6 @@ import axios from 'axios';
 import router from './router';
 import store from './store';
 
-/* bootstrap-vue */
-// import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
-/* tailwind-vue */
-import VueTailwind from 'vue-tailwind/dist/full'
-
 import './app.scss';
 
 /* nprogress - progress bar   */
@@ -44,6 +39,7 @@ window.axios.interceptors.response.use(response => {
 NProgress.configure({ showSpinner: false }); // disable spinner
 /* ------- END NPROGRESS -------- */
 
+
 /* --------------------------------------- */
 /* ------- REGISTER SERVICE-WORKER ------- */
 /* --------------------------------------- */
@@ -51,15 +47,12 @@ import {initSW} from "./enable-push";
 window.addEventListener("load", () => {
     initSW();
 });
+/* --------------------------------------- */
 
-/* Bootstrap */
-// Vue.use(BootstrapVue);
-// Vue.use(IconsPlugin);
-
-/* Tailwind */
-Vue.use(VueTailwind, {});
-
-
+/* bootstrap-vue */
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 
 Vue.component('app', require('./App.vue').default);
 

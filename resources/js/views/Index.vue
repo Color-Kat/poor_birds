@@ -1,9 +1,9 @@
 <template>
     <div>
         <!--    Hello page   -->
-        <t-card
+        <b-card
             v-if="!getAuth"
-            header="Бедные птички😭"
+            title="Бедные птички😭"
             class="mb-2 text-center"
         >
 
@@ -30,7 +30,7 @@
             </b-card-text>
             <hr>
             <b-button class="text-center" :to="{name: 'birds'}" variant="primary">Купить пташку!</b-button>
-        </t-card>
+        </b-card>
         <!--    Hello page   -->
 
         <b-card

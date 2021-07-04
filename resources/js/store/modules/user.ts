@@ -176,7 +176,6 @@ export default {
                             dispatch,
                             state
                         }): Promise<void> {
-
             // check auth
             if (state.auth) {
                 // fetch user data

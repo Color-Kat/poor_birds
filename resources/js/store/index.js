@@ -65,7 +65,9 @@ export default new Vuex.Store({
                        commit,
                        getters
                    }) {
-            let other_data = JSON.parse(getters.user?.other_data);
+            if(!getters.getAuth) return false;
+
+            let other_data = JSON.parse(getters?.user?.other_data);
             let shown = localStorage.getItem('finalRead') ?? '0'; // check does it need to show
             if (other_data && other_data.final) { // user reached final
                 if (shown === '0') { // user has not seen this message yet
