@@ -135,33 +135,37 @@
                     <b-card-text
                         class="d-flex justify-content-between"
                     >
-                        <!--          name and clean          -->
+                        <!--          NAME and CLEAN          -->
                         <div
                             style="font-size: 1.1em; width: max-content; align-content: space-between"
                             class="d-flex flex-wrap mr-3"
                         >
-                        <span class="d-flex justify-content-center">
-                            <b>{{ egg.name }}</b>
-                            <span class="ml-1">x{{ egg.birds_count.toLocaleString() }}</span>
-                        </span>
+                            <!--           NAME           -->
+                            <span class="d-flex justify-content-center">
+                                <b>{{ formatName(egg.name) }}</b>
+                                <span class="ml-1">x{{ egg.birds_count.toLocaleString() }}</span>
+                            </span>
+
                             <span class="">
-                            <b-badge variant="dark" class="egg-litter">Помёт: {{ egg.litter.toLocaleString() }}ед.</b-badge>
-                            <br>
-                            <b-button
-                                class="p-1 shadow-sm"
-                                variant="light"
-                                @click="(e)=>cleanHandler(egg, e)"
-                                :disabled="+egg.litter === 0"
-                            >
-                                <img
-                                    style="pointer-events: none"
-                                    height="30px"
-                                    src="https://user-images.githubusercontent.com/15840617/31617371-ae68471e-b297-11e7-9981-269c9bb17330.png"
-                                    alt="Убрать"
+                                <b-badge variant="dark" class="egg-litter">Помёт: {{
+                                        egg.litter.toLocaleString()
+                                    }}ед.</b-badge>
+                                <br>
+                                <b-button
+                                    class="p-1 shadow-sm"
+                                    variant="light"
+                                    @click="(e)=>cleanHandler(egg, e)"
+                                    :disabled="+egg.litter === 0"
                                 >
-                                <span style="pointer-events: none">Убраться</span>
-                            </b-button>
-                        </span>
+                                    <img
+                                        style="pointer-events: none"
+                                        height="30px"
+                                        src="https://user-images.githubusercontent.com/15840617/31617371-ae68471e-b297-11e7-9981-269c9bb17330.png"
+                                        alt="Убрать"
+                                    >
+                                    <span style="pointer-events: none">Убраться</span>
+                                </b-button>
+                            </span>
                         </div>
 
 
@@ -188,7 +192,10 @@
                                         (egg.price * egg.count)
                                             /* to fixed(2) and format to 10 000*/
                                             .toLocaleString(undefined,
-                                            {'minimumFractionDigits':2,'maximumFractionDigits':2})
+                                                {
+                                                    'minimumFractionDigits': 2,
+                                                    'maximumFractionDigits': 2
+                                                })
                                     }}&#8381;
                                 </b-badge>
                             </div>
@@ -202,12 +209,17 @@
                                 }"
                                 :disabled="!!+egg.collected || +egg.count == 0"
                             >
-                                Продать {{ Math.floor(+egg.demand < +egg.count ? +egg.demand : +egg.count).toLocaleString() }}🥚
+                                Продать {{
+                                    Math.floor(+egg.demand < +egg.count ? +egg.demand : +egg.count).toLocaleString()
+                                }}🥚
                                 за {{
                                     ((+egg.demand < +egg.count ? +egg.demand : +egg.count) * +egg.price)
                                         // toFixed(2) and format to 10 000
                                         .toLocaleString(undefined,
-                                        {'minimumFractionDigits':2,'maximumFractionDigits':2})
+                                            {
+                                                'minimumFractionDigits': 2,
+                                                'maximumFractionDigits': 2
+                                            })
                                 }}&#8381;
                             </b-button>
                         </span>
@@ -348,6 +360,16 @@ export default {
                 // show modal
                 this.$bvModal.show('modal-brigade-no-money');
             }
+        },
+
+        formatName(name) {
+            let words = name.split(' ');
+            return String(
+                words.map(
+                    word => word.length >= 13
+                        ? word.slice(0, 13) + '...'
+                        : word
+                )).replace(/,/g,' ');
         }
     },
     computed  : {
