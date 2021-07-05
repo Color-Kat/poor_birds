@@ -1,6 +1,6 @@
 <template>
-    <aside v-if="getAuth" :class="{ active: active_sideBar }">
-        <b-card class="rounded-bottom mr-1">
+    <aside v-if="getAuth" :class="{ active: active_sideBar }" class="mr-1">
+        <b-card>
             <b-navbar-nav class="nav-pills red">
 
                 <b-nav-item to="/account" class="border-bottom">
@@ -114,6 +114,11 @@ aside {
             left: -100%;
             width: 270px;
             transition: all .2s ease-in-out;
+
+            border-radius: 24px !important;
+            margin-left: 1rem !important;
+            overflow-x: hidden;
+            box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) !important;
         }
         // active
         &.active {
