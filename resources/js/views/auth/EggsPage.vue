@@ -281,16 +281,15 @@ export default {
         ...mapActions(['fetchUserEggs', 'sellEggs', 'clean', 'selectShovel', 'payOffFines', 'brigadeHire', 'fetchUser']),
         /** sell eggs request, then update data*/
         async sellingEggs(egg, event) {
+            let money_song    = new Audio('/assets/sounds/money.mp3');
+            money_song.volume = 0.5;
+            money_song.play();
+
             let eggs_count = await this.sellEggs(+egg.id);
 
             if (eggs_count !== false) {
                 egg.count             = eggs_count; // update number of eggs
                 event.target.disabled = true; // disable button to ban selling eggs
-
-                let money_song    = new Audio();
-                money_song.volume = 0.5;
-                money_song.src    = '/assets/sounds/money.mp3';
-                money_song.play()
             } else {
                 // show modal
                 this.$bvModal.show('modal-eggs');

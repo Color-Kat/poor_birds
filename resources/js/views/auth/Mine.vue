@@ -78,7 +78,7 @@ export default {
     name    : "Mine",
     data    : () => ({
         isBig: false,
-        clicks: 0,
+        clicks: localStorage.getItem('mine-clicks') ?? 0,// get clicks from local storage or 0
         sounds: function () {
             // return array of songs;
             let song_1 = new Audio();
@@ -107,6 +107,9 @@ export default {
             this.isBig = !this.isBig; // some animation
             this.clicks++; // increase click count
 
+            // every 10 clicks update localStorage data
+            if(this.clicks % 10 === 0) localStorage.setItem('mine-clicks', this.clicks);
+
             // play random song (from 2 songs)
             this.sounds()[Math.round(Math.random())].play();
         },
@@ -114,6 +117,8 @@ export default {
             let result = await this.mine(this.earnings); // sell all trash
             this.clicks = 0; // zero clicks
 
+            // removl all click from localStorage
+            localStorage.setItem('mine-clicks', 0);
         }
     }
 }
