@@ -78,27 +78,30 @@
         </b-card>
 
         <!--    NEWS    -->
-        <b-card>
+        <b-card style="border-radius: 24px;" class="shadow">
             <h3>Новости</h3>
-            <b-card class="p-1 mb-2">
+            <b-card class="p-1 mb-2 shadow" style="border-radius: 24px;">
+                03.07.2021 - сделан редизайн игры. Полностью завершён сюжет.
+            </b-card>
+            <b-card class="p-1 mb-2 shadow" style="border-radius: 24px;">
                 28.06.2021 - оптимизация игры.
             </b-card>
-            <b-card class="p-1 mb-2">
+            <b-card class="p-1 mb-2 shadow" style="border-radius: 24px;">
                 05.06.2021 - релиз игры.
             </b-card>
-            <b-card class="p-1 mb-2">
+            <b-card class="p-1 mb-2 shadow" style="border-radius: 24px;">
                 Добавлен банк, в котором можно купить различные валюты и играть на их курсе.
             </b-card>
-            <b-card class="p-1 mb-2">
+            <b-card class="p-1 mb-2 shadow" style="border-radius: 24px;">
                 Добавлена шахта, в которой можно немного заработать денег.
                 Начата разработка банка, в котором можно будет купить Густинианы (валюта игры) за реальные деньги для
                 покупки различных эксклюзивных птиц, лопат, контрактов и бригады.
             </b-card>
-            <b-card class="p-1 mb-2">
+            <b-card class="p-1 mb-2 shadow" style="border-radius: 24px;">
                 Добавлены новый раздел - контракты. Там вы можете найти людей, с которыми можно сотрудничать.
                 Пока в игре доступно всего 3 контракта. Но это ненадолго;)
             </b-card>
-            <b-card class="p-1 mb-2">
+            <b-card class="p-1 mb-2 shadow" style="border-radius: 24px;">
                 Добавлены новые птицы:
                 <ul>
                     <li>Гусь</li>
@@ -110,7 +113,7 @@
                     <li>и другие</li>
                 </ul>
             </b-card>
-            <b-card class="p-1 mb-2">
+            <b-card class="p-1 mb-2 shadow" style="border-radius: 24px;">
                 В приложение добавлены уведомления
             </b-card>
         </b-card>

@@ -1,5 +1,12 @@
 <template>
-    <b-badge v-if="getBalance !== false" variant="primary" class="shadow-sm">{{formatBalance()}} &#8381;</b-badge>
+    <h5 v-if="getBalance !== false">
+        <b-badge
+            variant="primary"
+            class="shadow-sm"
+        >
+            {{formatBalance()}} &#8381;
+        </b-badge>
+    </h5>
     <b-spinner v-else small variant="light"></b-spinner>
 </template>
 

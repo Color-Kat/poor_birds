@@ -30,8 +30,7 @@
             <!-- Right aligned nav items -->
             <b-navbar-nav
                 class="d-flex align-items-center"
-                style="flex-direction: row
-            !important"
+                style="flex-direction: row!important; font-family: Montserrat"
             >
 
                 <b-nav-item>
@@ -52,7 +51,8 @@
 
                 <b-nav-item-dropdown v-else class="mr-2" style="z-index: 10002 !important">
                     <template #button-content>
-                        <em>{{ getUserName }}</em>
+<!--                        <em>{{ getUserName }}</em>-->
+                        <span >{{ getUserName }}</span>
                     </template>
                     <b-dropdown-item :to="{name: 'account'}" active-class="active">Профиль</b-dropdown-item>
                     <b-dropdown-item :to="{name: 'index'}" @click="logout">Выйти</b-dropdown-item>
