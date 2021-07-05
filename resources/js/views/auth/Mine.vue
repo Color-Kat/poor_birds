@@ -53,8 +53,9 @@
 
                 <!--    litter    -->
                 <div>
-                    <p>Вы собрали: {{clicks}}ед.мусора на сумму {{earnings}}₽</p>
-                    <b-button v-if="earnings > 0" variant="primary" @click="mineSell">Продать</b-button>
+                    <p>Вы собрали: {{clicks.toLocaleString()}}ед.мусора на сумму {{earnings.toLocaleString()}}₽</p>
+                    <b-button class="w-100" size="lg" v-if="earnings > 0" variant="primary" @click="mineSell">Продать
+                    </b-button>
                 </div>
                 <!--    litter    -->
             </div>

@@ -3,7 +3,7 @@
         <b-badge :variant="isIncrease ? 'success' : 'danger'" v-if="type == 'buy'" class="shadow">
             1 {{
                 currency + ' = ' +
-                rate + ' ' +
+                rate.toLocaleString() + ' ' +
                 exchange
             }}
 

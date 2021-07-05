@@ -82,7 +82,7 @@
                         >
                         <div class="d-flex justify-content-between">
                             <!--                        <span>{{ shovel.name }}</span>-->
-                            <b-badge variant="success">{{ shovel.efficiency }}ед.</b-badge>
+                            <b-badge variant="success">{{ shovel.efficiency.toLocaleString() }}ед.</b-badge>
                         </div>
                     </div>
                 </div>
@@ -142,16 +142,16 @@
                         >
                         <span class="d-flex justify-content-center">
                             <b>{{ egg.name }}</b>
-                            <span class="ml-1">x{{ egg.birds_count }}</span>
+                            <span class="ml-1">x{{ egg.birds_count.toLocaleString() }}</span>
                         </span>
                             <span class="">
-                            <b-badge variant="dark" class="egg-litter">Помёт: {{ +egg.litter }}ед.</b-badge>
+                            <b-badge variant="dark" class="egg-litter">Помёт: {{ egg.litter.toLocaleString() }}ед.</b-badge>
                             <br>
                             <b-button
                                 class="p-1 shadow-sm"
                                 variant="light"
                                 @click="(e)=>cleanHandler(egg, e)"
-                                :disabled="+egg.litter == 0"
+                                :disabled="+egg.litter === 0"
                             >
                                 <img
                                     style="pointer-events: none"
@@ -169,17 +169,26 @@
                         <div class="d-flex justify-content-end flex-wrap egg-characteristics">
                             <div class="d-flex justify-content-end flex-wrap">
                                 <b-badge variant="success" class="my-1 ml-1 d-flex align-items-center">{{
-                                        Math.floor(+egg.count)
+                                        Math.floor(+egg.count).toLocaleString()
                                     }}🥚
                                 </b-badge>
+
                                 <b-badge variant="danger" class="my-1 ml-1 d-flex align-items-center">Спрос
-                                    {{ +egg.demand }}
+                                    {{ egg.demand.toLocaleString() }}
                                     яиц/час
                                 </b-badge>
-                                <b-badge class="my-1 ml-1 d-flex align-items-center">{{ +egg.price }}&#8381; цена яйца
+
+                                <b-badge class="my-1 ml-1 d-flex align-items-center">
+                                    {{ egg.price.toLocaleString() }}&#8381; цена яйца
                                 </b-badge>
-                                <b-badge variant="warning" class="my-1 ml-1 d-flex align-items-center">Всего: {{
-                                        (+egg.price * +egg.count).toFixed(2)
+
+                                <b-badge variant="warning" class="my-1 ml-1 d-flex align-items-center">
+                                    Всего: {{
+
+                                        (egg.price * egg.count)
+                                            /* to fixed(2) and format to 10 000*/
+                                            .toLocaleString(undefined,
+                                            {'minimumFractionDigits':2,'maximumFractionDigits':2})
                                     }}&#8381;
                                 </b-badge>
                             </div>
@@ -193,9 +202,12 @@
                                 }"
                                 :disabled="!!+egg.collected || +egg.count == 0"
                             >
-                                Продать {{ Math.floor(+egg.demand < +egg.count ? +egg.demand : +egg.count) }}🥚
+                                Продать {{ Math.floor(+egg.demand < +egg.count ? +egg.demand : +egg.count).toLocaleString() }}🥚
                                 за {{
-                                    ((+egg.demand < +egg.count ? +egg.demand : +egg.count) * +egg.price).toFixed(2)
+                                    ((+egg.demand < +egg.count ? +egg.demand : +egg.count) * +egg.price)
+                                        // toFixed(2) and format to 10 000
+                                        .toLocaleString(undefined,
+                                        {'minimumFractionDigits':2,'maximumFractionDigits':2})
                                 }}&#8381;
                             </b-button>
                         </span>

@@ -1,7 +1,7 @@
 <template>
     <h5 class="position-absolute" style="right: 0; top: 0">
         <b-badge variant="light">
-            <b>💶</b>На счету: {{ count }} {{ currency }}
+            <b>💶</b>На счету: {{ count.toLocaleString() }} {{ currency }}
         </b-badge>
     </h5>
 </template>

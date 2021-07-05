@@ -89,7 +89,7 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
                     <div class="d-flex justify-content-between">
                         <img :src="`/storage/${my_bird.image}`" alt="" style="max-width: 90px; max-height: 90px;">
                         <div class="w-100">
-                            <span><b>{{ my_bird.name }} x{{ my_bird.count }}</b></span><br>
+                            <span><b>{{ my_bird.name }} x{{ my_bird.count.toLocaleString() }}</b></span><br>
                             <span class="text-left pl-2 d-flex">
                                 {{ my_bird.description.slice(0, 100) }}
                                 {{ my_bird.description.length > 100 ? '...' : '' }}
@@ -164,26 +164,26 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
                             <!--             EGG PRICE               -->
                             <b-badge class="m-1 d-flex align-items-center" variant="primary">
                                 Цена яйца:
-                                {{ my_bird.egg_price }}&#8381;
+                                {{ my_bird.egg_price.toLocaleString() }}&#8381;
                             </b-badge>
 
                             <!--             LITTER               -->
                             <b-badge class="m-1 d-flex align-items-center" variant="dark">
-                                Помет: {{ my_bird.litter }}
+                                Помет: {{ my_bird.litter.toLocaleString() }}
                                 {{
-                                    my_bird.count > 1 ? `(${my_bird.litter * my_bird.count})` : ''
+                                    my_bird.count > 1 ? `(${(my_bird.litter * my_bird.count).toLocaleString()})` : ''
                                 }}
                                 ед/час
                             </b-badge>
 
                             <!--             DEMAND               -->
-                            <b-badge class="m-1 d-flex align-items-center" variant="danger">Спрос: {{ my_bird.demand }}
-                                яиц/час
+                            <b-badge class="m-1 d-flex align-items-center" variant="danger">
+                                Спрос: {{ my_bird.demand.toLocaleString() }} яиц/час
                             </b-badge>
 
                             <!--             CARE               -->
                             <b-badge class="m-1 d-flex align-items-center" variant="success">Бонус за заботу:
-                                {{ my_bird.care }}%
+                                {{ my_bird.care.toLocaleString() }}%
                             </b-badge>
                         </div>
                         <!--     characteristics      -->

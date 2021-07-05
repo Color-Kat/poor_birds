@@ -83,7 +83,7 @@
                             </b-button>
 
                             <b-button variant="primary" @click="()=>openThisSeller(seller)">
-                                Открыть продавца за {{ seller.price }}₽
+                                Открыть продавца за {{ seller.price.toLocaleString() }}₽
                             </b-button>
                         </div>
                     </div>

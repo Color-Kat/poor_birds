@@ -19,8 +19,8 @@ export default {
                     id        : shovel.id,
                     image     : shovel.image,
                     name      : ['Название', shovel.name],
-                    efficiency: ['Эффективность', `${shovel.efficiency} ед.помёта`],
-                    price     : ['Цена лопаты', `${shovel.price ? shovel.price + '₽' : shovel.donate_price + ' густинианов'} `],
+                    efficiency: ['Эффективность', `${shovel.efficiency.toLocaleString()} ед.помёта`],
+                    price     : ['Цена лопаты', `${shovel.price ? shovel.price.toLocaleString() + '₽' : shovel.donate_price.toLocaleString() + ' густинианов'} `],
                     isDonate  : shovel.price ? false : true,
                 };
             } else return false

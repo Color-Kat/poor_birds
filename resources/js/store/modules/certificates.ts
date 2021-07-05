@@ -57,15 +57,15 @@ export default {
                     grade          : grade,
                     grade_id       : certificate.grade,
                     fertility_bonus: ['Бонус к плодоносности', `${certificate.fertility_bonus}%`, 'Насколько % увеличится характеристика "плодоносность" у птицы'],
-                    care_bonus     : ['Бонус к заботе', `${certificate.care_bonus}%`, 'Насколько % увеличится' +
+                    care_bonus     : ['Бонус к заботе', `${certificate.care_bonus.toLocaleString()}%`, 'Насколько % увеличится' +
                     ' характеристика "Бонус за заботу" у птицы'],
-                    demand_bonus   : ['Бонус на спрос', `${certificate.demand_bonus}%`, 'Насколько % увеличится' +
+                    demand_bonus   : ['Бонус на спрос', `${certificate.demand_bonus.toLocaleString()}%`, 'Насколько % увеличится' +
                     ' характеристика "спрос" у птицы'],
-                    litter_bonus   : ['Бонус на кол-во помета', `${certificate.litter_bonus}%`, 'Насколько % увеличится' +
+                    litter_bonus   : ['Бонус на кол-во помета', `${certificate.litter_bonus.toLocaleString()}%`, 'Насколько % увеличится' +
                     ' характеристика "количество помёта" у птицы'],
-                    price_bonus    : ['Бонус к цене яиц', `${certificate.price_bonus}%`, 'Насколько % увеличится' +
+                    price_bonus    : ['Бонус к цене яиц', `${certificate.price_bonus.toLocaleString()}%`, 'Насколько % увеличится' +
                     ' характеристика "цена яйца" у птицы'],
-                    price          : ['Цена', `${certificate.price}руб.`],
+                    price          : ['Цена', `${certificate.price.toLocaleString()}руб.`],
                 };
             } else return false
         }

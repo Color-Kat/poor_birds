@@ -34,21 +34,21 @@
                             {{ bird.description.length > 100 ? '...' : '' }}
                             <hr>
                             <b-badge variant="success">
-                                Плодоносность: {{bird.fertility}} яиц/час
+                                Плодоносность: {{bird.fertility.toLocaleString()}} яиц/час
                             </b-badge>
                             <b-badge variant="warning">
-                                Цена яйца: {{bird.egg_price}}₽
+                                Цена яйца: {{bird.egg_price.toLocaleString()}}₽
                             </b-badge>
                             <b-badge variant="dark">
-                                Помёт: {{bird.litter}} ед/час
+                                Помёт: {{bird.litter.toLocaleString()}} ед/час
                             </b-badge>
                             <b-badge variant="danger">
-                                Спрос: {{bird.demand}} яиц/час
+                                Спрос: {{bird.demand.toLocaleString()}} яиц/час
                             </b-badge>
 
                             <h4>
                                 <b-badge variant="primary">
-                                    Цена: {{bird.price}}₽
+                                    Цена: {{bird.price.toLocaleString()}}₽
                                 </b-badge>
                             </h4>
                         </b-card-text>

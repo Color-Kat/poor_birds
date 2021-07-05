@@ -24,14 +24,14 @@ export default {
                     image      : bird.image,
                     name       : ['Название', bird.name],
                     description: ['Описание', bird.description],
-                    fertility  : ['Плодоносность', `${bird.fertility} яиц/час`, 'Сколько яиц птица несет за 1 час'],
-                    care       : ['Бонус за заботу', `${bird.care}% к плодовитости на 1 час`, 'На сколько %' +
+                    fertility  : ['Плодоносность', `${bird.fertility.toLocaleString()} яиц/час`, 'Сколько яиц птица несет за 1 час'],
+                    care       : ['Бонус за заботу', `${bird.care.toLocaleString()}% к плодовитости на 1 час`, 'На сколько %' +
                     ' увеличивается плодоносность птицы, если нажать на кнопку "погладить" на странице "Мои птицы"'],
-                    demand     : ['Спрос на яйца', `${bird.demand} яиц/час`, 'Сколько яиц за час можно продать'],
-                    litter     : ['Кол-во помета', `${bird.litter} ед./час`, 'Сколько единиц помёта за час' +
+                    demand     : ['Спрос на яйца', `${bird.demand.toLocaleString()} яиц/час`, 'Сколько яиц за час можно продать'],
+                    litter     : ['Кол-во помета', `${bird.litter.toLocaleString()} ед./час`, 'Сколько единиц помёта за час' +
                     ' производит птица'],
-                    egg_price  : ['Цена одного яйца', `${bird.egg_price} руб`],
-                    price      : ['Цена', `${bird.price}`],
+                    egg_price  : ['Цена одного яйца', `${bird.egg_price.toLocaleString()} руб`],
+                    price      : ['Цена', `${bird.price.toLocaleString()}`],
                     sellers    : bird.sellers
                 };
             } else return false

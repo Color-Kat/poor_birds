@@ -1,5 +1,5 @@
 <template>
-    <b-badge v-if="getBalance !== false" variant="primary" class="shadow-sm">{{getBalance}} &#8381;</b-badge>
+    <b-badge v-if="getBalance !== false" variant="primary" class="shadow-sm">{{formatBalance()}} &#8381;</b-badge>
     <b-spinner v-else small variant="light"></b-spinner>
 </template>
 
@@ -8,7 +8,17 @@ import {mapGetters} from "vuex";
 
 export default {
     name: "Balance",
-    computed: mapGetters(['getBalance'])
+    computed: mapGetters(['getBalance']),
+    methods: {
+        formatBalance() {
+            let balance = parseFloat(this.getBalance);
+
+            if (balance >= 1000000000000 ) return (balance/1000000000000).toFixed(2) + 'Tr';
+            else if(balance >= 1000000000) return (balance/1000000000).toFixed(2) + 'B';
+            else if(balance >= 1000000) return (balance/1000000).toFixed(2) + 'M';
+            else return balance
+        }
+    }
 }
 </script>
 

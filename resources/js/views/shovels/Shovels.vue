@@ -48,18 +48,16 @@
                     :key="shovel.id"
                 >
                     <b-card-text class="d-flex justify-content-between flex-wrap px-2 pb-1">
-                        <b-badge variant="success" class="mb-1 w-100">Эффективность: {{ shovel.efficiency }}ед
+                        <b-badge variant="success" class="mb-1 w-100">Эффективность: {{ shovel.efficiency.toLocaleString() }}ед
                             .</b-badge>
                         <b-badge
                             v-if="shovel.price ? true : false" variant="primary"
                             class="d-flex align-items-center justify-content-center w-100"
-                        >Цена: {{
-                                shovel
-                                    .price
-                            }}₽
+                        >
+                            Цена: {{shovel.price.toLocaleString()}}₽
                         </b-badge>
                         <b-badge v-else variant="primary" class="d-flex align-items-center justify-content-center w-100">Купить за донат:
-                            {{ shovel.donate_price }} Руб
+                            {{ shovel.donate_price.toLocaleString() }} Руб
                         </b-badge>
                     </b-card-text>
 

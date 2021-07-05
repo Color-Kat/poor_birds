@@ -5,8 +5,8 @@
         class="wallet shadow rounded-lg"
     >
         <b-card-text>
-            На счету {{ count }} {{currency}} <br>
-            на сумму {{ getAmount }} {{exchange}}
+            На счету {{ count.toLocaleString() }} {{currency}} <br>
+            на сумму {{ (+getAmount).toLocaleString() }} {{exchange}}
         </b-card-text>
     </b-card>
 </template>
@@ -17,7 +17,7 @@ export default {
     props: ['currency' , 'count', 'rate', 'exchange'],
     computed: {
         getAmount() {
-            if(this.currency == 'GTN')  return (this.count / +this.rate).toFixed(2);
+            if(this.currency === 'GTN')  return (this.count / +this.rate).toFixed(2);
             else  return (this.count * +this.rate).toFixed(2);
         }
     }

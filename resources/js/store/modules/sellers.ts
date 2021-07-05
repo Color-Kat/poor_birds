@@ -27,7 +27,7 @@ export default {
                     discountText: ['Бонус к цене', `${seller.discount}%`],
                     discount    : seller.discount,
                     // birds_count : ['Кол-во птиц для договора', `${seller.birds_count}`],
-                    price: ['Цена договора', `${seller.price}руб`],
+                    price: ['Цена договора', `${seller.price.toLocaleString()}руб`],
                     birds: seller.birds,
 
                     demand_bonus   : certificate ? certificate.demand_bonus : 1,
