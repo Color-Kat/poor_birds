@@ -95,7 +95,7 @@ class CollectEggs extends Command
                 demand = birds.demand * (1 + IFNULL(demand_bonus, 0) / 100), -- get bird demand
                 count = eggs.count +
                     b_s_u.count * birds.fertility * (1 + IFNULL(fertility_bonus, 0) / 100) * -- count eggs with certificate bonus
-                    IF ( (1 - (eggs.litter/20) / 100 ) < 0, 0, ( 1 - (eggs.litter/20) / 100 )) * -- litter deduction
+                    IF ( (1 - (eggs.litter/40) / 100 ) < 0, 0, ( 1 - (eggs.litter/40) / 100 )) * -- litter deduction
                     IF (eggs.cared = 1, ( 1 + (birds.care / 100 * ( 1 + IFNULL(care_bonus, 0) / 100 ))), 1), -- care bonus
                 litter = CASE
                 	WHEN contracts.script_name = 'auto_cleaning' THEN 0 -- user have contract - delete all litter
