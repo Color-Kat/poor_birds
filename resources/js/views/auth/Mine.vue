@@ -17,7 +17,7 @@
                     </b-badge>
                 </div>
 
-                <h2 class="text-center">Навозная шахта</h2>
+                <h1 class="text-center">Навозная шахта</h1>
 
                 <!--         collapse tooltip (from localStorage)       -->
                 <b-collapse :visible="localStorage.getItem('tooltip-mine') == 'true'" id="collapse-shovel">

@@ -7,14 +7,14 @@
             class="shadow"
         >
             <b-alert show v-if="!getBird" variant="warning">
-                <span>Такой птицы нет в продаже:(</span>
+                <h1>Такой птицы нет в продаже:(</h1>
                 <b-button :to="{name: 'birds'}" size="sm" class="mt-2" variant="danger">Посмотреть других
                     птиц</b-button>
             </b-alert>
 
 
             <div v-else>
-                <h2 class="text-center">{{ getBird.name[1] }}</h2>
+                <h1 class="text-center">{{ getBird.name[1] }}</h1>
                 <img width="100%" :src="`/storage/${getBird.image}`" :alt="getBird.name">
                 <Field :field="getBird.name"></Field>
                 <Field :field="getBird.description"></Field>

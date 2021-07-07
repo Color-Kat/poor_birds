@@ -1,7 +1,7 @@
 <template>
     <div id="admin-area">
         <b-card no-body class="shadow card-rounded">
-            <h3 class="text-center m-3">Админ панель</h3>
+            <h1 class="text-center m-3">Админ панель</h1>
 
             <div id="admin-panel" class="p-2">
                 <b-card>

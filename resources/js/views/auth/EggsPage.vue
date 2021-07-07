@@ -46,10 +46,13 @@
                 </b-badge>
             </div>
 
-            <h2 class="text-center">Склад ваших яиц</h2>
+            <h1 class="text-center">Склад ваших яиц</h1>
+            <hr>
+            <NavWidget/>
+            <hr>
 
             <!--         collapse tooltip (from localStorage)       -->
-            <b-collapse :visible="localStorage.getItem('tooltip-eggs') == 'true'" id="collapse-shovel">
+            <b-collapse class="mt-4" :visible="localStorage.getItem('tooltip-eggs') == 'true'" id="collapse-shovel">
                 <p>
                     Это склад яиц, которые несут ваши птицы.У каждой птицы - свой вид яиц.
                     А у каждого яйца - свои характеристики: <b>цена яйца</b> и <b>спрос</b>
@@ -59,14 +62,10 @@
                     поэтому каждый час можно продавать только такое количество яиц, которое указано в спросе.
                     Каждый час вам приходит налог на птиц. Чем лучше сертификат птицы, тем меньше налог.
                 </p>
+                <hr>
             </b-collapse>
 
-            <hr>
 
-            <p>
-                <NavWidget/>
-            </p>
-            <hr>
             <div>
                 <h3>Выбрать лопату:</h3>
                 <div class="shovels-list" v-if="getUserShovels.length > 0">

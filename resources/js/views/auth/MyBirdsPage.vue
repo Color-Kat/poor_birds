@@ -49,7 +49,8 @@ ${selectedBird.price / 2}&#8381;? При продаже удалятся все 
                     >?</b-badge>
                 </div>
 
-                <h2 class="text-center">Ваши птицы</h2>
+                <h1 class="text-center">Ваши птицы</h1>
+                <hr>
                 <span>
                     <NavWidget />
 

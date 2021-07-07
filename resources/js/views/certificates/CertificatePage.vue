@@ -23,11 +23,13 @@
 
             <div v-else>
                 <!--            {{ getCertificate }}-->
-                <h2 class="text-center">{{ getCertificate.name[1] }}</h2>
+                <h1 class="text-center mb-3">{{ getCertificate.name[1] }}</h1>
+
                 <div class="d-flex justify-content-center">
                    <img width="30%" :src="`/storage/certificates/${getCertificate.grade_id}.jpg`"
                         :alt="getCertificate.name">
                 </div>
+
                 <h6 class="p-2 d-flex justify-content-center" width="100%">
                     <b>{{getCertificate.grade}}</b>
                     <b-badge

@@ -10,7 +10,7 @@
             <!--      SLIDE 1      -->
             <div class="row gx-5 align-items-center">
                 <div class="col-lg-6 aos-init aos-animate" data-aos="fade-up">
-                    <h1 class="page-header-ui-title">Бедные птички</h1>
+                    <h1 class="page-header-ui-title"><storng>Бедные птички</storng></h1>
 
                     <p class="page-header-ui-text mb-5">
                         Добро пожаловать в <b class="m-0">Бедные птички</b>!
@@ -34,8 +34,7 @@
                     <b-link
                         class="btn btn-lg btn-primary-soft text-primary fw-500"
                         :to="{name: 'birds'}"
-                    >Птицы
-                    </b-link>
+                    ><storng>Птицы</storng></b-link>
                 </div>
                 <div
                     class="col-lg-6 d-none d-lg-block aos-init aos-animate" data-aos="fade-up" data-aos-delay="100"
@@ -109,7 +108,7 @@
 
                 <Tip
                     title="Сюжет"
-                    text="В игре есть интересный и забавный сюжет с нотками драмы и трагедии и эпичным финалом
+                    text="В игре есть интересный и забавный сюжет с нотками драмы и трагедии, а также эпичным финалом.
                           Сюжет открывается при открытии продавцов и покупке новых птиц."
                     image="/assets/images/story.png"
                     :reverse="true"
@@ -122,96 +121,69 @@
             <div class="container mt-5 text-muted">
                 P.s. Данная игра ни в коем случае не является финансовой пирамидой.
                 В игре нет вывода средств и реферальной системы.
-                <em><a class="text-muted" href="#">Poor birds</a></em>
-                похожи на известный проект <em><a class="text-muted" href="https://rich-birds.com/">Rich birds</a></em>
+                <strong><em><a class="text-muted" href="#">Poor birds</a></em></strong>
+                похожи на известный проект <strong><em><a class="text-muted" href="https://rich-birds.com/">Rich
+                birds</a></em></strong>
                 только тем, что птицы несут яйца.
                 Все остальные механики принадлежат исключительно
-                <em><a class="text-muted" href="#">Poor birds</a></em>!!!
+                <strong><em><a class="text-muted" href="#">Poor birds</a></em></strong>!!!
             </div>
             <!--      SLIDE 4      -->
 
         </div>
 
-
-        <!--        <b-card-->
-        <!--            v-if="!getAuth"-->
-        <!--            title="Бедные птички😭"-->
-        <!--            class="mb-2 text-center col-lg-9 col-md-10 col-sm-12"-->
-        <!--            style="border-radius: 24px; padding: 8px;"-->
-        <!--        >-->
-
-        <!--           -->
-        <!--            &lt;!&ndash;            &ndash;&gt;-->
-        <!--            &lt;!&ndash;            <b-card&ndash;&gt;-->
-        <!--            &lt;!&ndash;                style="border-right: 24px;&ndash;&gt;-->
-        <!--            &lt;!&ndash;                overflow: hidden"&ndash;&gt;-->
-        <!--            &lt;!&ndash;                class="shadow"&ndash;&gt;-->
-        <!--            &lt;!&ndash;                body-class="row d-flex align-items-center"&ndash;&gt;-->
-        <!--            &lt;!&ndash;            >&ndash;&gt;-->
-        <!--            &lt;!&ndash;                &lt;!&ndash;         TEXT       &ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;                <span class="col text-center" style="font-family: Montserrat; font-size: 1.1rem">&ndash;&gt;-->
-        <!--            &lt;!&ndash;                     <b  class="m-0">Бедные птички</b>&ndash;&gt;-->
-        <!--            &lt;!&ndash;                     - это экономическая игра c сюжетом, в которой нужно покупать птиц,&ndash;&gt;-->
-        <!--            &lt;!&ndash;                     собирать их яйца и зарабатывать игровые деньги на новых птиц!&ndash;&gt;-->
-        <!--            &lt;!&ndash;                </span>&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;                &lt;!&ndash;         IMAGE       &ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;                <span class="row">&ndash;&gt;-->
-        <!--            &lt;!&ndash;                    <img src="/logo.png" alt="" class="col" style="width: 200px !important" >&ndash;&gt;-->
-        <!--            &lt;!&ndash;                </span>&ndash;&gt;-->
-        <!--            &lt;!&ndash;            </b-card>&ndash;&gt;-->
-        <!--            &lt;!&ndash;       SLIDE 1     &ndash;&gt;-->
-
-        <!--            <b-button-->
-        <!--                class="text-center px-3 mt-3" :to="{name: 'birds'}"-->
-        <!--                variant="primary"-->
-        <!--            >Купить птиц!-->
-        <!--            </b-button>-->
-        <!--        </b-card>-->
-        <!--    Hello page   -->
-
         <b-card
             v-else
-            title="Бедные птички😭"
             class="mb-2 text-center card-rounded"
         >
 
             <b-card-text class="text-left">
-                <NavWidget/>
-
+                <h1 style="font-family: Montserrat" class="text-center">Бедные птички</h1>
                 <hr>
-                <h4>Статистика:</h4>
-                <h5>
-                    <b-badge variant="danger">Налоги: {{ getFines.toFixed(2) }}₽</b-badge>
-                    <b-badge variant="success">Всего яиц: {{ getEggsCount }} шт</b-badge>
-                    <b-badge variant="primary">Я яиц на сумму: {{ getEggsTotalPrice }}₽</b-badge>
+                <NavWidget/>
+                <hr>
+
+                <h2>Статистика:</h2>
+                <h4>
+                    <b-badge variant="danger" class="w-100">Налоги: {{ getFines.toFixed(2) }}₽</b-badge>
+                    <b-badge variant="success" class="w-100">Всего яиц: {{ getEggsCount.toLocaleString() }} шт</b-badge>
+                    <b-badge variant="primary" class="w-100">Яиц на сумму: {{ getEggsTotalPrice.toLocaleString()}}₽</b-badge>
+
                     <hr>
-                    <!--                    <b-badge variant="danger">Налоги: {{ getFines }}₽</b-badge>-->
-                    <!--                    <b-badge variant="success">Всего яиц: {{ getEggsCount }} шт</b-badge>-->
-                    <b-badge variant="primary">
-                        Самая дорогая птица: {{ getMostExpensiveBird.name }} -
-                        {{ getMostExpensiveBird.price }}₽
-                    </b-badge>
-                    <br>
-                    <b-badge variant="success">
-                        Самая плодоносная птица: {{ getMostFertileBird.name }} -
-                        {{ getMostFertileBird.fertility }} яиц/час
-                    </b-badge>
-                    <br>
-                    <b-badge variant="danger">
-                        Самая дешевая птица: {{ getCheapestBird.name }} -
-                        {{ getCheapestBird.price }}₽
-                    </b-badge>
-                    <br>
-                    <b-badge variant="dark">
-                        Самая какающая птица: {{ getPoopingBird.name }} -
-                        {{ getPoopingBird.litter }} ед.помёта/час
-                    </b-badge>
-                </h5>
+<!--                    <b-badge variant="primary" class="w-100 text-wrap mb-1">-->
+<!--                        Самая дорогая птица: {{ getMostExpensiveBird.name }} - -->
+<!--                        {{ getMostExpensiveBird.price.toLocaleString() }}₽-->
+<!--                    </b-badge>-->
+<!--                    <br>-->
+<!--                    <b-badge variant="success" class="w-100 text-wrap mb-1">-->
+<!--                        Самая плодоносная птица: {{ getMostFertileBird.name }} - -->
+<!--                        {{ getMostFertileBird.fertility.toLocaleString() }} яиц/час-->
+<!--                    </b-badge>-->
+<!--                    <br>-->
+<!--                    <b-badge variant="danger" class="w-100 text-wrap mb-1">-->
+<!--                        Самая дешевая птица: {{ getCheapestBird.name }} - -->
+<!--                        {{ getCheapestBird.price.toLocaleString() }}₽-->
+<!--                    </b-badge>-->
+<!--                    <br>-->
+<!--                    <b-badge variant="dark" class="w-100 text-wrap mb-1">-->
+<!--                        Самая какающая птица: {{ getPoopingBird.name }} - -->
+<!--                        {{ getPoopingBird.litter.toLocaleString() }} ед.помёта/час-->
+<!--                    </b-badge>-->
+                </h4>
+                <h1>Начало</h1>
+                <p>
+                    Вы приехали из деревни в Густоград, чтобы открыть свою империю птиц, ведь Густоград -
+                    это самый главный центр птицеводства. Здесь есть множество компаний, которые
+                    этим занимаются.
+                    Здешнего мэра зовут Густов, Ган Христиан Густов.
+                    Это очень почетаемый здесь человек, так как он - Бог. В молодости он увлекся религиями и
+                    написал свою библию! Этим он привлек в этот город очень много паломников, и город стал процветать.
+                </p>
             </b-card-text>
 
             <!--    NEWS    -->
-            <b-card style="border-radius: 24px;" class="shadow">
+            <div>
+                <hr>
                 <h3>Новости</h3>
                 <b-card class="p-1 mb-2 shadow" style="border-radius: 24px;">
                     03.07.2021 - сделан редизайн игры. Полностью завершён сюжет.
@@ -250,7 +222,7 @@
                 <b-card class="p-1 mb-2 shadow" style="border-radius: 24px;">
                     В приложение добавлены уведомления
                 </b-card>
-            </b-card>
+            </div>
             <!--    NEWS    -->
         </b-card>
     </div>

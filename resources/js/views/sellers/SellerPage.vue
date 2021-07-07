@@ -58,14 +58,14 @@
         <b-card v-else class="shadow">
             <!--      seller not found      -->
             <b-alert show v-if="!getSeller" variant="warning">
-                <span>Такого продавца не существует :(</span>
+                <h1>Такого продавца не существует :(</h1>
                 <b-button :to="{name: 'sellers'}" size="sm" class="mt-2" variant="danger">
                     Посмотреть существующих продавцов
                 </b-button>
             </b-alert>
 
             <div v-else>
-                <h2 class="text-center">{{ getSeller.name[1] }}</h2>
+                <h1 class="text-center mb-3">{{ getSeller.name[1] }}</h1>
                 <figure class="text-center">
                     <img
                         width="60%" :src="`/storage/${getSeller.image}`"

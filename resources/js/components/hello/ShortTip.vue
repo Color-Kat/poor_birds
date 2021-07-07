@@ -22,11 +22,10 @@
             </div>
 
             <div class="px-4 text-sm-left text-center">
-                <h2 style="font-family: Montserrat;">{{ title }}</h2>
+                <h2 style="font-family: Montserrat;"><storng>{{ title }}</storng></h2>
                 <p>{{ text }}</p>
             </div>
         </div>
-        <!--                        <p><a class="btn btn-secondary"role="button">View details »</a></p>-->
     </div>
 </template>
 

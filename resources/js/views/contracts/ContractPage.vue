@@ -24,7 +24,7 @@
             </b-alert>
 
             <div v-else>
-                <h2 class="text-center">{{ getContract.name }}</h2>
+                <h1 class="text-center mb-3">{{ getContract.name }}</h1>
                 <img width="100%" :src="`/storage/contracts/${getContract.image}`" :alt="getContract.name">
                 <span class="p-2">{{ getContract.description }}</span>
                 <hr>

@@ -16,15 +16,14 @@
 
         <b-card v-else class="card-rounded shadow">
             <b-alert show v-if="!getShovel" variant="warning">
-                <span>Такой лопаты нет в продаже :(</span>
+                <h1>Такой лопаты нет в продаже :(</h1>
                 <b-button :to="{name: 'shovels'}" size="sm" class="mt-2" variant="danger">
                     Посмотреть существующие лопаты
                 </b-button>
             </b-alert>
 
             <div v-else>
-                <!--            {{ getShovel }}-->
-                <h2 class="text-center">{{ getShovel.name[1] }}</h2>
+                <h1 class="text-center mb-3">{{ getShovel.name[1] }}</h1>
                 <img width="100%" :src="`/storage/${getShovel.image}`" :alt="getShovel.name">
                 <!--            <span class="p-2">{{getShovel.description[1]}}</span>-->
                 <Field :field="getShovel.name"></Field>

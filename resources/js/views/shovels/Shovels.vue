@@ -19,7 +19,7 @@
                 </b-badge>
             </div>
 
-            <h2 class="text-center">Лопаты</h2>
+            <h1 class="text-center">Лопаты</h1>
 
             <!--         collapse tooltip (from localStorage)       -->
             <b-collapse :visible="localStorage.getItem('tooltip-shovel') == 'true'" id="collapse-shovel">
