@@ -117,12 +117,13 @@
                 >
                     <b-card
                         v-for="bird of getSeller.birds"
-                        class="mb-2 card-item"
+                        class="mb-2 card-item shadow"
                         :title="bird.name"
                         :img-src="`/storage/${bird.image}`"
                         :img-alt="bird.name"
                         tag="article"
                         :key="bird.id"
+                        style="border-radius: 24px; padding: 8px"
                     >
                         <b-card-text>
                         <span class="description">
@@ -149,7 +150,7 @@
                             <b-button
                                 variant="primary"
                                 @click="()=>birdBuy(bird)"
-
+                                class="rounded-lg"
                             >
                                 купить за <b>{{ Math.round(bird.price * (1 + getSeller.discount / 100)) }}&#8381;</b>
                             </b-button>
