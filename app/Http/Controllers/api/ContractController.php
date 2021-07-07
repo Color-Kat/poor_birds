@@ -28,17 +28,11 @@ class ContractController extends Controller
      */
     public function show(Contract $contract): Contract
     {
-//        if ($contract == null) {
-//            return response()->json([
-//                "status"   => false,
-//                "messages" => "Contract not found"
-//            ])->setStatusCode(404);
-//        }
-//
-//        return response()->json([
-//            "status"   => true,
-//            "messages" => $contract
-//        ]);
+        // 404
+        if (!$contract) {
+            return response()->json([])->setStatusCode(404);
+        }
+
         return $contract;
     }
 }

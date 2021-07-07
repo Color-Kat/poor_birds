@@ -43,21 +43,14 @@ class CertificateController extends Controller
      */
     public function show($id): Certificate
     {
-//        $certificate = Certificate::find($id);
+        $certificate = Certificate::find($id);
 
-//        if ($certificate == null) {
-//            return response()->json([
-//                "status"   => false,
-//                "messages" => "Certificate not found"
-//            ])->setStatusCode(404);
-//        }
-//
-//        return response()->json([
-//            "status"   => true,
-//            "messages" => $certificate
-//        ]);
+        // 404
+        if (!$certificate) {
+            return response()->json([])->setStatusCode(404);
+        }
 
-        return Certificate::find($id);
+        return $certificate;
     }
 
     /**

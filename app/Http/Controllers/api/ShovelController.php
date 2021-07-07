@@ -56,6 +56,10 @@ class ShovelController extends Controller
      */
     public function show(Shovel $shovel)
     {
+        // 404
+        if (!$shovel) {
+            return response()->json([])->setStatusCode(404);
+        }
 
         return $shovel;
 

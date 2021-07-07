@@ -59,6 +59,8 @@ import Bank from "./views/bank/Bank";
 import Stores from "./components/Stores";
 import Bribe from "./views/auth/Bribe";
 
+import Page404 from './components/404';
+
 
 Vue.use(VueRouter);
 
@@ -357,6 +359,9 @@ const routes = [
             else next('');
         },
     },
+
+    /* 404 */
+    { path: "*", component: Page404 }
 ];
 
 const router =  new VueRouter({

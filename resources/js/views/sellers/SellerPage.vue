@@ -19,7 +19,8 @@
                     <h4>
                         Поздравляем, Вы купили птицу "{{ purchasedBird ? purchasedBird.name : '' }}"!
                     </h4>
-                    <p v-if="!((JSON.parse(localStorage.getItem('birds_purchased_list')) || [])
+                    <p
+                        v-if="!((JSON.parse(localStorage.getItem('birds_purchased_list')) || [])
                                 .includes(purchasedBird ? purchasedBird.id : ''))"
                     >
                         {{ purchasedBird ? purchasedBird.quest : '' }}
@@ -39,8 +40,10 @@
 
         <!--    OPEN SELLER QUEST    -->
         <!--      OPEN SELLER AND QUEST      -->
-        <b-modal id="modal-open-seller" hide-footer hide-header
-                 body-bg-variant="dark">
+        <b-modal
+            id="modal-open-seller" hide-footer hide-header
+            body-bg-variant="dark"
+        >
             <div class="quest-box">
                 <div class="quest-box-inner">
                     <h4>Вы открыли продавца!</h4>
@@ -133,16 +136,11 @@
                             <hr>
 
                             <h6 class="d-inline" style="width: 10px !important; margin: 0 !important;">
-                                <b-badge variant="warning">Плодоносность: {{ bird.fertility }} яиц/час
-                                </b-badge>
-                                <b-badge variant="danger">Спрос: {{ bird.demand }} яиц/час
-                                </b-badge>
-                                <b-badge variant="success">Бонус за заботу: {{ bird.care }}%
-                                </b-badge>
-                                <b-badge variant="dark">Помет: {{ bird.litter }} ед/час
-                                </b-badge>
-                                <b-badge variant="primary">Цена яйца: {{ bird.egg_price }}&#8381;
-                                </b-badge>
+                                <b-badge variant="warning">Плодоносность: {{ bird.fertility }} яиц/час</b-badge>
+                                <b-badge variant="danger">Спрос: {{ bird.demand }} яиц/час</b-badge>
+                                <b-badge variant="success">Бонус за заботу: {{ bird.care }}%</b-badge>
+                                <b-badge variant="dark">Помет: {{ bird.litter }} ед/час</b-badge>
+                                <b-badge variant="primary">Цена яйца: {{ bird.egg_price }}&#8381;</b-badge>
                             </h6>
 
                             <hr>

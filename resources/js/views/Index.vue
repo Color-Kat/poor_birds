@@ -9,7 +9,7 @@
 
             <!--      SLIDE 1      -->
             <div class="row gx-5 align-items-center">
-                <div class="col-lg-6 aos-init aos-animate" data-aos="fade-up">
+                <div class="col-lg-6">
                     <h1 class="page-header-ui-title"><storng>Бедные птички</storng></h1>
 
                     <p class="page-header-ui-text mb-5">
@@ -37,7 +37,7 @@
                     ><storng>Птицы</storng></b-link>
                 </div>
                 <div
-                    class="col-lg-6 d-none d-lg-block aos-init aos-animate" data-aos="fade-up" data-aos-delay="100"
+                    class="col-lg-6 d-none d-lg-block"
                 >
                     <img class="img-fluid" src="/logo.png">
                 </div>

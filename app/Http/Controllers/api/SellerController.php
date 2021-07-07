@@ -56,6 +56,11 @@ class SellerController extends Controller
     {
         $seller = Seller::with(['certificate', 'birds'])->find($id);
 
+        // 404
+        if (!$seller) {
+            return response()->json([])->setStatusCode(404);
+        }
+
         $sellerBirds = $seller->birds;
         $certificate = $seller->certificate;
 
