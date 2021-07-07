@@ -29,7 +29,7 @@ export default {
     actions  : {
         async fetchShovels({commit}) {
             let response = await new Req('get', '/api/shovels').send<IShovel[]>();
-            console.log(response);
+            // console.log(response);
             if (response) commit('setShovels', response);
         },
         async createShovel({commit}, form) {
@@ -44,12 +44,11 @@ export default {
                 .send<IShovel>(formData); // send request
 
             if (response) commit('addShovel', response); // add new shovel to lost
-            console.log(response);
+
             return !!response; // return is success
         },
         async deleteShovel({commit}, id) {
             let response: boolean = await new Req('delete', `api/shovels/${id}`).send();
-            console.log(response);
 
             if(response) commit('deleteShovel', id);
         },

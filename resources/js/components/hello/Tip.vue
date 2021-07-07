@@ -1,4 +1,5 @@
 <template>
+
     <div
         class="d-flex flex-row flex-wrap"
         :class="reverse ? 'flex-md-row-reverse' : ''"
@@ -29,7 +30,7 @@
 
 <script>
 export default {
-    name: "Tip",
+    name : "Tip",
     props: ['title', 'text', 'image', 'reverse']
 }
 </script>

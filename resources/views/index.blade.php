@@ -9,7 +9,6 @@
     <meta name="theme-color" content="#ffffff" />
     <meta name="apple-mobile-web-app-title" content="Бедные птички">
     <meta name="application-name" content="Бедные птички">
-{{--    <meta name="msapplication-TileColor" content="#464646">--}}
     <meta name="theme-color" content="#ffffff">
     <base href="/">
 

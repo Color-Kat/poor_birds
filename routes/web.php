@@ -22,5 +22,4 @@ Route::post('/currency/result', 'PaymentController@handler')
 
 Route::any('/{any}', function () {
     return view('index');
-    return File::get(public_path() . '/prerender/birds/index.html');
 })->where('any', '.*');

@@ -16,6 +16,8 @@
                         Добро пожаловать в <b class="m-0">Бедные птички</b>!
                         Это экономическая игра с сюжетом, в которой нужно покупать птиц,
                         собирать их яйца и зарабатывать игровые деньги на покупку новых птиц!
+                        <br>
+                        <span class="text-muted pt-3">Игра не является финансовой пирамидой!</span>
                     </p>
 
                     <b-button class="fw-500 me-3" variant="primary" :to="{name: 'registration'}">
@@ -50,6 +52,7 @@
                         title="Покупайте птиц"
                         text="Они будут нести яйца и производить помёт ровно каждый час!"
                         image="/assets/images/money.png"
+                        link="birds"
                     />
 
                     <ShortTip
@@ -62,6 +65,7 @@
                         title="Убирайте помёт"
                         text="Покупайте лопаты, чтобы убирать птичий помёт!"
                         image="/assets/images/shovel.png"
+                        link="shovels"
                     />
 
                 </div>
@@ -71,28 +75,8 @@
 
             <!--      SLIDE 3      -->
             <div class="container mt-5">
-
                 <hr>
-
                 <h1 class="text-center mb-5" style="font-family: Montserrat">Подробнее</h1>
-
-                <!--                <div class="row">-->
-                <!--                    <div class="col-md-7">-->
-                <!--                        <h2 style="font-family: Montserrat">Покупка птиц</h2>-->
-                <!--                        <p class="lead">-->
-                <!--                            Чтобы купить птицу, игроку сначала нужно найти продавца, который-->
-                <!--                            продаст ему эту птицу и заключить с ним договор-->
-                <!--                            Продавцы отличаются наценкой на птиц и бонусами, которые дают своим птицам.-->
-                <!--                        </p>-->
-                <!--                    </div>-->
-                <!--                    <div class="col-md-5 d-flex justify-content-center align-items-center justify-content-md-end">-->
-                <!--                        <img-->
-                <!--                            class="img-fluid"-->
-                <!--                            src="/assets/images/seller.png"-->
-                <!--                        >-->
-                <!--                    </div>-->
-                <!--                </div>-->
-
 
                 <Tip
                     title="Покупка птиц"
@@ -133,6 +117,18 @@
                 <hr>
             </div>
             <!--      SLIDE 3      -->
+
+            <!--      SLIDE 4      -->
+            <div class="container mt-5 text-muted">
+                P.s. Данная игра ни в коем случае не является финансовой пирамидой.
+                В игре нет вывода средств и реферальной системы.
+                <em><a class="text-muted" href="#">Poor birds</a></em>
+                похожи на известный проект <em><a class="text-muted" href="https://rich-birds.com/">Rich birds</a></em>
+                только тем, что птицы несут яйца.
+                Все остальные механики принадлежат исключительно
+                <em><a class="text-muted" href="#">Poor birds</a></em>!!!
+            </div>
+            <!--      SLIDE 4      -->
 
         </div>
 

@@ -1,13 +1,15 @@
 <template>
     <div
-        class="col-lg-4 col-md-6 p-2"
+        class="col-lg-4 col-md-6 p-2 "
     >
         <div
             class="shadow-lg col-12 bg-white justify-content-center d-flex flex-wrap"
-
             style="border-radius: 24px; padding: 8px; transition: all .1s ease-in"
             onmouseover="this.style.transform = 'translateY(-10%) scale(1.02)';"
             onmouseout="this.style.transform = '' "
+
+            @click="go"
+            :style="{cursor: link ? 'pointer' : ''}"
         >
             <div
                 class="d-flex justify-content-center align-items-center rounded-circle my-3"
@@ -21,7 +23,7 @@
 
             <div class="px-4 text-sm-left text-center">
                 <h2 style="font-family: Montserrat;">{{ title }}</h2>
-                <p>{{text}}</p>
+                <p>{{ text }}</p>
             </div>
         </div>
         <!--                        <p><a class="btn btn-secondary"role="button">View details »</a></p>-->
@@ -30,8 +32,13 @@
 
 <script>
 export default {
-    name: "ShortTip",
-    props: ['title', 'text', 'image']
+    name   : "ShortTip",
+    props  : ['title', 'text', 'image', 'link'],
+    methods: {
+        go() {
+            if (this.link) this.$router.push({name: this.link});
+        }
+    }
 }
 </script>
 

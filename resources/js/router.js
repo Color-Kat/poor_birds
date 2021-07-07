@@ -66,11 +66,13 @@ const routes = [
     {
         path     : '/',
         name     : 'index',
+        meta     : 'Главная',
         component: Index
     },
     {
         path     : '/auth/',
         component: Auth,
+        meta     : 'Авторизация',
         // redirect authorized user to account
         async beforeEnter(to, from, next) {
             if (!await store.dispatch('checkAuth')) next(); // user is not logged in, redirect to to login or registration
@@ -81,6 +83,7 @@ const routes = [
                 path     : 'login',
                 name     : 'login',
                 component: LoginPage,
+                meta     : 'Вход',
                 props    : {
                     currentForm: 'login'
                 },
@@ -89,6 +92,7 @@ const routes = [
                 path     : 'registration',
                 name     : 'registration',
                 component: LoginPage,
+                meta     : 'Регистрация',
                 props    : {
                     currentForm: 'registration'
                 }
@@ -99,6 +103,7 @@ const routes = [
     {
         path     : '/account',
         name     : 'account',
+        meta     : 'Профиль',
         component: Account,
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
@@ -110,6 +115,7 @@ const routes = [
     {
         path     : '/account/my_birds',
         name     : 'my_birds',
+        meta     : 'Мои птицы',
         component: MyBirdsPage,
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
@@ -122,6 +128,7 @@ const routes = [
         path     : '/account/eggs',
         component: EggsPage,
         name     : 'eggs',
+        meta     : 'Яйца',
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'index'});
@@ -132,6 +139,7 @@ const routes = [
     {
         path     : '/admin_area/',
         name     : 'admin_area',
+        meta     : 'Админ панель',
         component: AdminArea,
         async beforeEnter(to, from, next) {
             let auth = await store.dispatch('checkAuth');
@@ -186,7 +194,8 @@ const routes = [
     {
         path     : '/birds',
         name     : 'birds',
-        component: Birds
+        component: Birds,
+        meta     : 'Птицы'
     },
     {
         // just bird page
@@ -204,6 +213,7 @@ const routes = [
         path     : '/sellers',
         name     : 'sellers',
         component: Sellers,
+        meta     : 'Продавцы',
         // only authorized users
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
@@ -224,11 +234,13 @@ const routes = [
     {
         path     : '/certificates',
         name     : 'certificates',
+        meta     : 'Сертификаты',
         component: Certificates,
     },
     {
         path     : '/certificates/:id',
         component: CertificatePage,
+        meta     : 'Сертификат',
         // only authorized users
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
@@ -240,11 +252,13 @@ const routes = [
     {
         path     : '/shovels',
         name     : 'shovels',
+        meta     : 'Лопаты',
         component: Shovels,
     },
     {
         path     : '/shovels/:id',
         component: ShovelPage,
+        meta     : 'Купить лопату',
         // only authorized users
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
@@ -256,11 +270,13 @@ const routes = [
     {
         path     : '/contracts',
         name     : 'contracts',
+        meta     : 'Контракты',
         component: Contracts,
     },
     {
         path     : '/contracts/:id',
         component: ContractPage,
+        meta     : 'Купить контракт',
         // only authorized users
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
@@ -273,6 +289,7 @@ const routes = [
         path     : '/mine',
         name     : 'mine',
         component: Mine,
+        meta     : 'Навозная шахта',
         // only authorized users
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
@@ -285,6 +302,7 @@ const routes = [
         path     : '/bank',
         name     : 'bank',
         component: Bank,
+        meta     : 'Банк Густограда',
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'login'});
@@ -295,6 +313,7 @@ const routes = [
         path     : '/payment',
         name     : 'payment',
         component: PayForm,
+        meta     : 'Оплата',
         async beforeEnter(to, from, next) {
             if (await store.dispatch('checkAuth')) next();
             else next({name: 'login'});
@@ -303,11 +322,13 @@ const routes = [
     {
         path     : '/payment/success',
         name     : 'payment_success',
+        meta     : 'Успешная оплата',
         component: Success,
     },
     {
         path     : '/payment/failed',
         name     : 'payment_failed',
+        meta     : 'Ошибка при оплате',
         component: Failed,
     },
 
@@ -315,6 +336,7 @@ const routes = [
     {
         path     : '/stores',
         name     : 'stores',
+        meta     : 'Магазины',
         component: Stores,
     },
 
@@ -323,6 +345,7 @@ const routes = [
         path     : '/account/bribe',
         name     : 'bribe',
         component: Bribe,
+        meta     : 'Взятки',
         async beforeEnter(to, from, next) {
             // user is auth
             if (await store.dispatch('checkAuth')) {
@@ -347,6 +370,12 @@ const router =  new VueRouter({
 // close sidebar on navigate
 router.afterEach((to, from) => {
     store.commit('toggle_active_sideBar', false);
+});
+
+router.beforeEach((to, from, next) => {
+    // change document title to title in route.meta
+    document.title = Object.keys(to.meta).length != 0  ? `Бедные птички | ${to.meta}` : 'Бедные птички';
+    next();
 })
 
 export default router;
