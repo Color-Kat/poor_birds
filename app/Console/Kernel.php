@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\CollectEggs::class,
-        Commands\UpdateCurrencies::class
+        Commands\UpdateCurrencies::class,
+        Commands\SellEggsContract::class,
     ];
 
     /**
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('collect:eggs')->everyMinute();
         $schedule->command('update:currency')->everyMinute();
+        $schedule->command('contracts:sellEggs')->everyMinute();
     }
 
     /**
