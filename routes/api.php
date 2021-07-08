@@ -25,6 +25,7 @@ Route::apiResource('shovels', 'api\ShovelController');
 Route::apiResource('contracts', 'api\ContractController');
 
 Route::get('currencies', 'api\CurrencyController@getCurrencies');
+Route::get('leaders', 'api\LeadersController@getLeaders');
 
 Route::group([
 
