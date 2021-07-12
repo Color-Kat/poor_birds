@@ -10,7 +10,7 @@
             <!--      SLIDE 1      -->
             <div class="row gx-5 align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="page-header-ui-title"><storng>Бедные птички</storng></h1>
+                    <h1 class="page-header-ui-title"><strong>Бедные птички</strong></h1>
 
                     <p class="page-header-ui-text mb-5">
                         Добро пожаловать в <b class="m-0">Бедные птички</b>!
@@ -34,7 +34,7 @@
                     <b-link
                         class="btn btn-lg btn-primary-soft text-primary fw-500"
                         :to="{name: 'birds'}"
-                    ><storng>Птицы</storng></b-link>
+                    ><strong>Птицы</strong></b-link>
                 </div>
                 <div
                     class="col-lg-6 d-none d-lg-block"

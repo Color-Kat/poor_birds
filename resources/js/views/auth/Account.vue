@@ -50,7 +50,7 @@
                         body-class="d-flex justify-content-between align-items-center"
                     >
                         <h5 style="font-family: Montserrat">{{ leader.name }}</h5>
-                        <h5><b-badge variant="primary">{{ leader.money }} Руб</b-badge></h5>
+                        <h5><b-badge variant="primary">{{ leader.money.toLocaleString() }} Руб</b-badge></h5>
                     </b-card>
                 </div>
             </div>

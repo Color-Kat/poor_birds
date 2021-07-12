@@ -60,6 +60,7 @@ import Stores from "./components/Stores";
 import Bribe from "./views/auth/Bribe";
 
 import Page404 from './components/404';
+import ResetPassword from "./components/auth/ResetPassword";
 
 
 Vue.use(VueRouter);
@@ -98,7 +99,17 @@ const routes = [
                 props    : {
                     currentForm: 'registration'
                 }
-            }
+            },
+            /* password reset */
+            {
+                path     : 'reset_password',
+                name     : 'reset_password',
+                meta     : 'Восстановить пароль',
+                props    : {
+                    currentForm: 'reset_password'
+                },
+                component: LoginPage,
+            },
         ]
     },
     /* ACCOUNT */

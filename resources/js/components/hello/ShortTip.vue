@@ -22,7 +22,7 @@
             </div>
 
             <div class="px-4 text-sm-left text-center">
-                <h2 style="font-family: Montserrat;"><storng>{{ title }}</storng></h2>
+                <h2 style="font-family: Montserrat;"><strong>{{ title }}</strong></h2>
                 <p>{{ text }}</p>
             </div>
         </div>

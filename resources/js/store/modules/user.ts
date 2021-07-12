@@ -149,6 +149,9 @@ export default {
         }
      },
     actions  : {
+        /* ---------------------------------------------- */
+        /* ------------------- LOGIN ----------------- -- */
+        /* ---------------------------------------------- */
         /**
          * get is user authorization
          * */
@@ -277,6 +280,28 @@ export default {
                 commit('set_Access_token', ''); // delete access token
             }
         },
+
+        /**
+         * send request to reset password (send email)
+         * */
+        async resetPassword({
+                         commit,
+                         state
+                     }) {
+            if (state.auth) {
+
+                let res = await new Req('get', '/api/auth/pssword-reset').send();
+
+                commit('setAuth', false); // user is not authorized now
+                commit('setUser', null); // no data about user
+                commit('set_Access_token', ''); // delete access token
+            }
+        },
+
+        /* ---------------------------------------------- */
+        /* -- Birds, sellers, eggs, purchases and more -- */
+        /* ---------------------------------------------- */
+
         /**
          * send request to get user's birds
          * */

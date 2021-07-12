@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ResetPwdReqController;
+use App\Http\Controllers\UpdatePwdController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +39,10 @@ Route::group([
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login')->name('login');
     Route::get('logout', 'AuthController@logout');
+
+    /* reset password*/
+    Route::post('/password-reset', [ResetPwdReqController::class, 'reqForgotPassword']);
+    Route::post('/update-password', [UpdatePwdController::class, 'updatePassword']);
 
     /* user */
     Route::get('user', 'AuthController@user');

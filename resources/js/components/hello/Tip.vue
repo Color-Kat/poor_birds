@@ -7,7 +7,7 @@
     >
         <!--    content    -->
         <div class="col-md-7">
-            <h2 style="font-family: Montserrat"><storng>{{ title }}</storng></h2>
+            <h2 style="font-family: Montserrat"><strong>{{ title }}</strong></h2>
             <p class="lead">
                 {{ text }}
             </p>

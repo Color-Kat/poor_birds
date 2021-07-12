@@ -89,6 +89,7 @@ export default class Req {
                 this.config
             )
                 .then(response => {
+                    console.log(this.isCatch)
                     if (this.isCatch) return !response;
 
                     // check request status
@@ -132,6 +133,9 @@ export default class Req {
                     }
                 })
                 .catch((error) => {
+                    // return raw response
+                    if (this.isCatch) return error;
+
                     // show error
                     console.log(error);
                     if (error.response) console.log(error.response);

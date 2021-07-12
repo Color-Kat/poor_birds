@@ -23,7 +23,7 @@ class PaymentController extends Controller
     }
 
     public function handler(Request $request) {
-        Log::info('New currency');
+        Log::info('New payment');
 
         // check free kassa APIs
         if (!in_array($this->getIP(), array(

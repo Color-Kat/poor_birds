@@ -1,6 +1,5 @@
 <template>
     <div id="login">
-
         <b-form @submit.prevent="login" @reset="onReset">
             <b-form-group
                 id="input-group-1"
@@ -28,14 +27,21 @@
                 ></b-form-input>
             </b-form-group>
 
-            <div class="row">
+            <div class="row position-relative">
                 <div class="col-sm-6 col-lg-12">
                     <b-button type="submit" variant="primary" class="shadow-sm col-12 mb-2">Войти</b-button>
                 </div>
                 <div class="col-sm-6 col-lg-12">
                     <b-button type="reset" variant="danger" class="shadow-sm col-12">Сбросить</b-button>
                 </div>
+
+                <div class="col my-2 text-left">
+                    <b-link variant="secondary" class="col-12 px-0 text-muted" :to="{name: 'reset_password'}">
+                        Забыли пароль?
+                    </b-link>
+                </div>
             </div>
+
         </b-form>
     </div>
 </template>
