@@ -44,12 +44,13 @@ export default {
             let res = await new Req('post','api/auth/password-reset').catchMode().send({
                 email: this.email.trim()
             });
-            console.log(res.response)
 
-            if(res.response.data.success) {
+            if(!res && res.response)
+                this.$emit('onMessage', {error: res.response.data.message});
+            else {
                 this.success = true;
                 this.message = res.message;
-            } else this.$emit('onMessage', {error: res.response.data.message});
+            }
         },
         // async login() {
         //

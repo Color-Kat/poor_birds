@@ -110,6 +110,16 @@ const routes = [
                 },
                 component: LoginPage,
             },
+            /* update password */
+            {
+                path     : 'update_password',
+                name     : 'update_password',
+                meta     : 'Обновить пароль',
+                props    : {
+                    currentForm: 'update_password'
+                },
+                component: LoginPage,
+            },
         ]
     },
     /* ACCOUNT */
@@ -364,22 +374,27 @@ const routes = [
             if (await store.dispatch('checkAuth')) {
                 await store.dispatch('fetchUser'); // wait for the user to load
 
-                if(store.getters.getIsFinal && !store.getters.getRepaid) next();
+                if (store.getters.getIsFinal && !store.getters.getRepaid) next();
                 else next('');
-            }
-            else next('');
+            } else next('');
         },
     },
 
     /* 404 */
-    { path: "*", component: Page404 }
+    {
+        path     : "*",
+        component: Page404
+    }
 ];
 
-const router =  new VueRouter({
+const router = new VueRouter({
     mode: 'history',
     routes,
-    scrollBehavior (to, from, savedPosition) {
-        return { x: 0, y: 0 }
+    scrollBehavior(to, from, savedPosition) {
+        return {
+            x: 0,
+            y: 0
+        }
     }
 });
 
@@ -390,7 +405,7 @@ router.afterEach((to, from) => {
 
 router.beforeEach((to, from, next) => {
     // change document title to title in route.meta
-    document.title = Object.keys(to.meta).length != 0  ? `Бедные птички | ${to.meta}` : 'Бедные птички';
+    document.title = Object.keys(to.meta).length != 0 ? `Бедные птички | ${to.meta}` : 'Бедные птички';
     next();
 })
 

@@ -26,6 +26,11 @@
                             v-else-if="currentForm === 'reset_password'"
                         />
 
+                        <UpdatePassword
+                            @onMessage="onMessage"
+                            v-else-if="currentForm === 'update_password'"
+                        />
+
                         <b-link
                             class="change-form-link"
                             :to="{ name: currentForm === 'login' ? 'registration' : 'login' }"
@@ -47,11 +52,13 @@
 import LoginForm from "../../components/auth/Login";
 import RegistrationForm from "../../components/auth/Registration";
 import ResetPassword from "../../components/auth/ResetPassword";
+import UpdatePassword from "../../components/auth/UpdatePassword";
 
 export default {
     name      : "loginPage",
     props     : ['currentForm'],
     components: {
+        UpdatePassword,
         ResetPassword,
         LoginForm,
         RegistrationForm
