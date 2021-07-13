@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UpdatePwdController extends Controller
 {
+
     public function updatePassword(ResetPasswordRequest $request){
         return $this->validateToken($request)->count() > 0 ? $this->changePassword($request) : $this->noToken();
     }
@@ -37,7 +38,7 @@ class UpdatePwdController extends Controller
         $this->validateToken($request)->delete();
 
         return response()->json([
-            'data' => 'Пароль успешно изменён!'
+            'success' => 'Пароль успешно изменён!'
         ],Response::HTTP_CREATED);
     }
 }

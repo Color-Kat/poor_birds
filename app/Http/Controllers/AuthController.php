@@ -70,12 +70,15 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         // it is not right! So mush code in one place!!!(((
+
+        // set rules to data from request
         $rules = [
             'name'     => 'required|string|between:2,100|alpha_dash',
             'email'    => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|confirmed|min:6|alpha_dash',
         ];
 
+        // set error messages for data
         $validatorMessages = [
             'required'     => 'Поле :attribute обязательно для заполнения',
             'min'          => 'Минимальная длина поля :attribute :min',
@@ -86,6 +89,7 @@ class AuthController extends Controller
             'password'     => 'Некорректный пароль'
         ];
 
+        // check is data valid
         $validator = Validator::make($request->all(), $rules, $validatorMessages);
 
         if ($validator->fails()) {

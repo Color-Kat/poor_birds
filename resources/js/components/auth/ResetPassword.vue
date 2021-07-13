@@ -40,27 +40,24 @@ export default {
     }),
     methods: {
         async reset() {
+
             // send request to send email
             let res = await new Req('post','api/auth/password-reset').catchMode().send({
                 email: this.email.trim()
             });
 
-            if(!res && res.response)
+            console.log(!res?.response, !res?.response?.data)
+            if(res && res.response && !res.response.data?.success)
+                // email is not sent
+                // 404 error - process returned data (err message)
                 this.$emit('onMessage', {error: res.response.data.message});
             else {
+                // email is sent
                 this.success = true;
                 this.message = res.message;
+                this.$emit('onMessage', null);
             }
-        },
-        // async login() {
-        //
-        //
-        //     // return promise<{success, error}>
-        //     let result = await this.$store.dispatch('login', this.form);
-        //
-        //     // return result for display it in the parent component
-        //     this.$emit('onMessage', result);
-        // },
+        }
     }
 }
 </script>

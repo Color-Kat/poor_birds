@@ -80,10 +80,13 @@ export default {
             }
 
             // send request to update password
-            let res = await new Req('post', 'api/auth/update-password').send({
+            let res = await new Req('post', 'api/auth/update-password').catchMode().send({
                 ...this.form,
                 passwordToken: token // add token
             });
+
+            // return result for display it in the parent component
+            this.$emit('onMessage', res?.response?.data);
 
             console.log(res);
         }
